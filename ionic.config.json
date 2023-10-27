@@ -1,0 +1,7 @@
+{
+  "name": "gtasks-app-poc",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
