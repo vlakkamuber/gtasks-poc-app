@@ -40,6 +40,7 @@ import Home from './pages/Home';
 import Training from './pages/Training';
 import Account from './pages/Account';
 import Tasks from './pages/Tasks';
+import "./App.css"
 
 setupIonicReact();
 

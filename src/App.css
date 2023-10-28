@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.tasks-tab {
+  border-radius: 11px;
+  background: #f3f3f3;
+  border: 2px solid #f3f3f3;
+}
+.tasks-tab-content{
+    border-radius: 11px;
+    background: #fff;
+    color: #000;
+    border: 2px solid;
+}
