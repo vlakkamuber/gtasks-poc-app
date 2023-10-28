@@ -7,11 +7,12 @@
 .tasks-tab {
   border-radius: 11px;
   background: #f3f3f3;
-  border: 2px solid #f3f3f3;
+  border: 2px solid hsl(0, 0%, 95%);
+  margin-top: 10px;
 }
-.tasks-tab-content{
-    border-radius: 11px;
-    background: #fff;
-    color: #000;
-    border: 2px solid;
+.tasks-tab-content {
+  border-radius: 11px;
+  background: #fff;
+  color: #000;
+  border: 2px solid;
 }

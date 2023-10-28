@@ -96,17 +96,17 @@ const Tasks: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start">
-        <div className="tasks-info">
+        <div className="tasks-info" style={{ marginTop: "30px" }}>
           <div className="task-detail">
             <div>
               <IonIcon icon={person} /> Tasks
             </div>
+            <div>9</div>
+          </div>
+          <div className="task-count">
             <div>
               <IonIcon icon={list} /> You Earned
             </div>
-          </div>
-          <div className="task-count">
-            <div>9</div>
             <div>$990</div>
           </div>
         </div>
@@ -116,10 +116,22 @@ const Tasks: React.FC = () => {
           className="tasks-tab"
           onIonChange={(e) => setSelectedSegment(e.detail.value)}
         >
-          <IonSegmentButton value="available_task" className={selectedSegment==="available_task" ? "tasks-tab-content" :""}>
+          <IonSegmentButton
+            value="available_task"
+            className={
+              selectedSegment === "available_task" ? "tasks-tab-content" : ""
+            }
+          >
             Available tasks
           </IonSegmentButton>
-          <IonSegmentButton value="my_tasks" className={selectedSegment==="my_tasks" ? "tasks-tab-content" :""}>My tasks</IonSegmentButton>
+          <IonSegmentButton
+            value="my_tasks"
+            className={
+              selectedSegment === "my_tasks" ? "tasks-tab-content" : ""
+            }
+          >
+            My tasks
+          </IonSegmentButton>
           {/* Add more segments as needed */}
         </IonSegment>
         {selectedSegment === "available_task" && (
