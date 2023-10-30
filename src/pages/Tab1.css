@@ -18,3 +18,42 @@
 .ion-content {
     /* --ion-padding-start: 20px; */
   }
+
+  .ion-badge-outline {
+    background: #3880ff; /* Set background to transparent */
+    border-radius: 16px; /* Optional: Add border radius to make it rounded */
+    color: #fff; /* Set the text color */
+    padding: 4px 8px; /* Optional: Adjust padding to your liking */
+    margin-left:10px;
+  }
+
+  .status-text-completed,.status-text-not-started-yet,.status-text-blocked{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 4px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-left:10px;
+  }
+  .status-text-inprogress{
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    padding: 4px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-left:10px;
+  }
+  .status-text-new{
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    padding: 4px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-left:10px;
+  }

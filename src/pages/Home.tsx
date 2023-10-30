@@ -1,7 +1,8 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonCard,IonCardHeader,IonCardTitle,IonCardSubtitle,IonCardContent,IonButtons,IonButton} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonCard,IonCardHeader,IonCardTitle,IonCardSubtitle,IonCardContent,IonButtons,IonButton,IonIcon} from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 import { useHistory } from 'react-router-dom';
+import { arrowBack } from 'ionicons/icons';
 
 const Home: React.FC = () => {
   const history = useHistory();
@@ -14,9 +15,10 @@ const Home: React.FC = () => {
       <IonHeader>
         <IonToolbar>
         <IonButtons slot="start">
-            <IonButton onClick={goBack}>Back</IonButton>
+          <IonIcon onClick={goBack} icon={arrowBack} />
+            {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
-          <IonTitle>Home</IonTitle>
+          <IonTitle className="ion-text-center">Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

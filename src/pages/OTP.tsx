@@ -6,8 +6,10 @@ import {
   IonButton,
   IonContent,
   IonPage,
+  IonIcon,
 } from "@ionic/react";
 import "./Tab2.css";
+import { star,arrowBack,arrowForward } from "ionicons/icons";
 
 const OTP: React.FC = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -51,13 +53,16 @@ const OTP: React.FC = () => {
             display: "flex",
             justifyContent: "space-between",
             width: "100%",
+            position: "absolute",
+            bottom: 0,
           }}
         >
-          <IonButton routerLink="/login" fill="clear">
-            Previous
+          <IonButton color="secondary" routerLink="/" >
+            <IonIcon slot="start" icon={arrowBack} />
           </IonButton>
-          <IonButton routerLink="/dashboard" fill="clear">
-            Next
+
+          <IonButton color="secondary" routerLink="/dashboard">
+            Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton>
         </div>
       </IonContent>

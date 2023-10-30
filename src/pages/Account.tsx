@@ -7,7 +7,7 @@ const Account: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Account</IonTitle>
+          <IonTitle className="ion-text-center">Account</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

@@ -12,10 +12,13 @@ import {
   IonList,
   IonItem,
   IonButton,
+  IonButtons,
+  IonBadge
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
 import "./Tab1.css";
-import { person, list } from "ionicons/icons";
+import { person, list,arrowBack } from "ionicons/icons";
+import { useHistory } from 'react-router-dom';
 const initialTasks = [
   {
     name: "Task name ID",
@@ -23,7 +26,7 @@ const initialTasks = [
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
     type: "Text to audio",
-    status: "New",
+    status: "new",
     typeDesc: "Record audio of text and earn in no time.",
   },
   {
@@ -32,7 +35,7 @@ const initialTasks = [
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
     type: "Text to audio",
-    status: "New",
+    status: "new",
     typeDesc: "Record audio of text and earn in no time.",
   },
   {
@@ -41,7 +44,7 @@ const initialTasks = [
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
     type: "Text to audio",
-    status: "Not Started Yet",
+    status: "not-started-yet",
     typeDesc: "Record audio of text and earn in no time.",
   },
   {
@@ -50,7 +53,7 @@ const initialTasks = [
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
     type: "Audio to audio",
-    status: "New",
+    status: "new",
     typeDesc: "Record audio by listening audio and earn in no time.",
   },
   {
@@ -59,7 +62,7 @@ const initialTasks = [
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
     type: "Audio to audio",
-    status: "New",
+    status: "new",
     typeDesc: "Record audio by listening audio and earn in no time.",
   },
   {
@@ -68,7 +71,7 @@ const initialTasks = [
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
     type: "Audio to audio",
-    status: "Blocked",
+    status: "blocked",
     typeDesc: "Record audio by listening audio and earn in no time.",
   },
 ];
@@ -77,6 +80,7 @@ const Tasks: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState("available_task");
   const [tasks, setTasks] = useState(groupBy(initialTasks, "type"));
   const [myTasks, setMyTasks] = useState(initialTasks);
+  const history = useHistory()
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
       const groupKey = item[key];
@@ -88,11 +92,19 @@ const Tasks: React.FC = () => {
     }, {});
   }
 
+  const goBack = () => {
+    history.goBack(); // This function navigates back to the previous page
+  };
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tasks</IonTitle>
+        <IonButtons slot="start">
+          <IonIcon onClick={goBack} icon={arrowBack} />
+            {/* <IonButton onClick={goBack}>Back</IonButton> */}
+          </IonButtons>
+          <IonTitle className="ion-text-center">Tasks</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start">
@@ -165,7 +177,11 @@ const Tasks: React.FC = () => {
                             <IonList>
                               <IonItem>
                                 <IonLabel>
-                                  <h2>{task.name}</h2>
+                                  <span style={{display:'flex'}}>
+                                    <h2>{task.name}</h2>
+                                    <IonBadge color="primary" className={`status-text-${task.status}`}>{task.status}</IonBadge>
+                                  </span>{" "}
+                                  
                                   <p>Payouts: {task.earnedPoints}</p>
                                   <p>
                                     <small>

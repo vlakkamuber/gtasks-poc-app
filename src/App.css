@@ -4,6 +4,21 @@
   box-sizing: border-box;
 }
 
+.button-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px; /* Add padding for spacing */
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center; /* Center buttons horizontally */
+}
+.button-container .signup-login-button {
+  width: 100% !important; /* Make the buttons span the full width */
+  margin: 8px 0; /* Add margin for spacing between buttons */
+}
+
 .tasks-tab {
   border-radius: 11px;
   background: #f3f3f3;

@@ -41,12 +41,14 @@ import Training from './pages/Training';
 import Account from './pages/Account';
 import Tasks from './pages/Tasks';
 import "./App.css"
+import HomeScreen from './pages/HomeScreen';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonReactRouter>
     <IonRouterOutlet>
+    <Route path="/home" component={HomeScreen} exact />
       <Route path="/login" component={Login} exact />
       <Route path="/otp" component={OTP} exact />
       <Route path="/dashboard" component={Dashboard} exact />
@@ -54,7 +56,7 @@ const App: React.FC = () => (
       <Route path="/dashboard/training" component={Training} exact />
       <Route path="/dashboard/tasks" component={Tasks} exact />
       <Route path="/dashboard/account" component={Account} exact />
-      <Redirect exact from="/" to="/login" />
+      <Redirect exact from="/" to="/home" />
     </IonRouterOutlet>
   </IonReactRouter>
 );

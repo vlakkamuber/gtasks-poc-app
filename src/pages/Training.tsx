@@ -7,7 +7,7 @@ const Training: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Training</IonTitle>
+          <IonTitle className="ion-text-center">Training</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
