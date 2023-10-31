@@ -57,7 +57,7 @@ const OTP: React.FC = () => {
             bottom: 0,
           }}
         >
-          <IonButton color="secondary" routerLink="/" >
+          <IonButton color="secondary" routerLink="/login" >
             <IonIcon slot="start" icon={arrowBack} />
           </IonButton>
 

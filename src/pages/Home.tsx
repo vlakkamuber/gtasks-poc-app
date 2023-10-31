@@ -1,8 +1,22 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonCard,IonCardHeader,IonCardTitle,IonCardSubtitle,IonCardContent,IonButtons,IonButton,IonIcon} from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
-import { useHistory } from 'react-router-dom';
-import { arrowBack } from 'ionicons/icons';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonButtons,
+  IonButton,
+  IonIcon,
+} from "@ionic/react";
+import ExploreContainer from "../components/ExploreContainer";
+import "./Tab1.css";
+import { useHistory } from "react-router-dom";
+import { arrowBack } from "ionicons/icons";
 
 const Home: React.FC = () => {
   const history = useHistory();
@@ -14,8 +28,8 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-        <IonButtons slot="start">
-          <IonIcon onClick={goBack} icon={arrowBack} />
+          <IonButtons slot="start">
+            <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
           <IonTitle className="ion-text-center">Home</IonTitle>
@@ -28,32 +42,50 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonCard>
-      <img alt="Silhouette of mountains" src="public/assets/text_to_audio.png" />
-      <IonCardHeader>
-        <IonCardTitle>Text to Audio • Localise,Record</IonCardTitle>
-        {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
-      </IonCardHeader>
+          <img
+            alt="Silhouette of mountains"
+            src="public/assets/text_to_audio.png"
+          />
+          <IonCardHeader>
+            <IonCardTitle>Text to Audio • <span className="record-text">Localise,Record </span></IonCardTitle>
+            {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
+          </IonCardHeader>
 
-      <IonCardContent>Read the documents which is assigned with local language or in English and record the voice with the same .</IonCardContent>
-    </IonCard>
-    <IonCard>
-      <img alt="Silhouette of mountains" src="public/assets/audio_to_audio.png" />
-      <IonCardHeader>
-        <IonCardTitle>Audio to Text • Localise,Record</IonCardTitle>
-        {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
-      </IonCardHeader>
+          <IonCardContent>
+            Read the documents which is assigned with local language or in
+            English and record the voice with the same .
+          </IonCardContent>
+        </IonCard>
+        <IonCard>
+          <img
+            alt="Silhouette of mountains"
+            src="public/assets/audio_to_audio.png"
+          />
+          <IonCardHeader>
+            <IonCardTitle>Audio to Text •<span className="record-text">Localise,Record </span></IonCardTitle>
+            {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
+          </IonCardHeader>
 
-      <IonCardContent>Read the documents which is assigned with local language or in English and record the voice with the same .</IonCardContent>
-    </IonCard>
-    <IonCard>
-      <img alt="Silhouette of mountains" src="public/assets/text_to_image.png" />
-      <IonCardHeader>
-        <IonCardTitle>Text to Image • Localise,Record</IonCardTitle>
-        {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
-      </IonCardHeader>
+          <IonCardContent>
+            Read the documents which is assigned with local language or in
+            English and record the voice with the same .
+          </IonCardContent>
+        </IonCard>
+        <IonCard>
+          <img
+            alt="Silhouette of mountains"
+            src="public/assets/text_to_image.png"
+          />
+          <IonCardHeader>
+            <IonCardTitle>Text to Image • <span className="record-text">Localise,Record </span></IonCardTitle>
+            {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
+          </IonCardHeader>
 
-      <IonCardContent>Read the documents which is assigned with local language or in English and record the voice with the same .</IonCardContent>
-    </IonCard>
+          <IonCardContent>
+            Read the documents which is assigned with local language or in
+            English and record the voice with the same .
+          </IonCardContent>
+        </IonCard>
       </IonContent>
     </IonPage>
   );

@@ -57,3 +57,8 @@
     border-radius: 4px;
     margin-left:10px;
   }
+
+  .record-text{
+    color: grey;
+    font-size: 0.9rem;
+  }

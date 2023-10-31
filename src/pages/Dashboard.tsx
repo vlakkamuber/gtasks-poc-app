@@ -1,21 +1,29 @@
 // src/pages/Dashboard.tsx
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel,IonRouterOutlet } from '@ionic/react';
-import { home, train, person, list } from 'ionicons/icons';
-import Home from './Home';
-import Training from './Training';
-import Account from './Account';
-import Tasks from './Tasks';
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
+import {
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+} from "@ionic/react";
+import { home, schoolOutline, person, list } from "ionicons/icons";
+import Home from "./Home";
+import Training from "./Training";
+import Account from "./Account";
+import Tasks from "./Tasks";
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC = ({content}) => {
   return (
     <IonTabs>
-       <IonRouterOutlet>
-       <Route path="/dashboard/home" component={Home} />
-      <Route path="/dashboard/training" component={Training} />
-      <Route path="/dashboard/account" component={Account} />
-      <Route path="/dashboard/tasks" component={Tasks} />
+      <IonRouterOutlet>
+      <Redirect exact from="/dashboard" to="/dashboard/home" />
+        <Route path="/dashboard/home" render={() => <>{content}</>} />
+        <Route path="/dashboard/training" render={() => <>{content}</>} />
+        <Route path="/dashboard/tasks" render={() => <>{content}</>} />
+        <Route path="/dashboard/account" render={() => <>{content}</>} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/dashboard/home">
@@ -24,21 +32,19 @@ const Dashboard: React.FC = () => {
         </IonTabButton>
 
         <IonTabButton tab="training" href="/dashboard/training">
-          <IonIcon icon={train} />
+          <IonIcon icon={schoolOutline} />
           <IonLabel>Training</IonLabel>
-        </IonTabButton>
-
-        <IonTabButton tab="account" href="/dashboard/account">
-          <IonIcon icon={person} />
-          <IonLabel>Account</IonLabel>
         </IonTabButton>
 
         <IonTabButton tab="tasks" href="/dashboard/tasks">
           <IonIcon icon={list} />
           <IonLabel>Tasks</IonLabel>
         </IonTabButton>
+        <IonTabButton tab="account" href="/dashboard/account">
+          <IonIcon icon={person} />
+          <IonLabel>Account</IonLabel>
+        </IonTabButton>
       </IonTabBar>
-     
     </IonTabs>
   );
 };

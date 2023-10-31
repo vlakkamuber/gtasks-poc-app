@@ -57,7 +57,7 @@ const Login = () => {
             bottom: 0,
           }}
         >
-          <IonButton color="secondary" routerLink="/" expand="full">
+          <IonButton color="secondary" routerLink="/home" expand="full">
             <IonIcon slot="start" icon={arrowBack} />
           </IonButton>
 

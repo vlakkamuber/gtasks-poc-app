@@ -42,20 +42,24 @@ import Account from './pages/Account';
 import Tasks from './pages/Tasks';
 import "./App.css"
 import HomeScreen from './pages/HomeScreen';
+import PerformTask from './pages/PerformTask';
+import Completed from './pages/Completed';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonReactRouter>
     <IonRouterOutlet>
-    <Route path="/home" component={HomeScreen} exact />
+      <Route path="/home" component={HomeScreen} exact />
       <Route path="/login" component={Login} exact />
       <Route path="/otp" component={OTP} exact />
       <Route path="/dashboard" component={Dashboard} exact />
-      <Route path="/dashboard/home" component={Home} exact />
-      <Route path="/dashboard/training" component={Training} exact />
-      <Route path="/dashboard/tasks" component={Tasks} exact />
-      <Route path="/dashboard/account" component={Account} exact />
+      <Route path="/dashboard/home" render={() => <Dashboard content={<Home />} />} exact />
+      <Route path="/dashboard/training" render={() => <Dashboard content={<Training />} />} exact />
+      <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks />} />} exact />
+      <Route path="/dashboard/account" render={() => <Dashboard content={<Account />} />} exact />
+      <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask} exact />
+      <Route path="/dashboard/tasks/completed" component={Completed} exact />
       <Redirect exact from="/" to="/home" />
     </IonRouterOutlet>
   </IonReactRouter>

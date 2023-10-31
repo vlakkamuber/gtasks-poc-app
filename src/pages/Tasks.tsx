@@ -22,6 +22,7 @@ import { useHistory } from 'react-router-dom';
 const initialTasks = [
   {
     name: "Task name ID",
+    id:101,
     earnedPoints: "200",
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
@@ -31,6 +32,7 @@ const initialTasks = [
   },
   {
     name: "Task name ID",
+    id:102,
     earnedPoints: "200",
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
@@ -40,6 +42,7 @@ const initialTasks = [
   },
   {
     name: "Task name ID",
+    id:102,
     earnedPoints: "200",
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
@@ -49,6 +52,7 @@ const initialTasks = [
   },
   {
     name: "Task name ID",
+    id:103,
     earnedPoints: "200",
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
@@ -58,6 +62,7 @@ const initialTasks = [
   },
   {
     name: "Task name ID",
+    id:104,
     earnedPoints: "200",
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
@@ -67,6 +72,7 @@ const initialTasks = [
   },
   {
     name: "Task name ID",
+    id:105,
     earnedPoints: "200",
     startDate: "12 /10/ 2023 ",
     endDate: "15/10/ 2023",
@@ -95,6 +101,10 @@ const Tasks: React.FC = () => {
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
+
+  const goToPerformTask = (e,task)=>{
+    history.push("/dashboard/tasks/perform-task/"+task.id)
+  }
 
   return (
     <IonPage>
@@ -196,7 +206,7 @@ const Tasks: React.FC = () => {
                                     "--background": "black",
                                     "--border-radius": "10px",
                                   }}
-                                >
+                                onClick={(e)=>goToPerformTask(e,task)}>
                                   Start Work
                                 </IonButton>
                               </IonItem>

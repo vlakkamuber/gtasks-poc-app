@@ -11,7 +11,7 @@ const HomeScreen = () => {
         <div className="ion-padding">
           <IonImg src="../../public/assets/text_to_image.png" alt="Image" />
         </div>
-        <div className="button-container">
+        <div className="button-container" style={{position: 'absolute',bottom: '32px'}}>
           <IonButton expand="block"  color="secondary" routerLink="/login" className='signup-login-button'>
             Sign Up
           </IonButton>
