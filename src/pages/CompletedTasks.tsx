@@ -87,16 +87,7 @@ const CompletedTasks: React.FC = () => {
                           </small>
                         </p>
                       </IonLabel>
-                      {/* <IonButton
-                                  slot="end"
-                                  style={{
-                                    "--background": "black",
-                                    "--border-radius": "10px",
-                                  }}
-                                onClick={(e)=>goToPerformTask(e,task)}>
-                                  continue
-                                </IonButton> */}
-                      <ion-icon icon={chevronForward}></ion-icon>
+                      <ion-icon icon={chevronForward} onClick={(e)=>goToPerformTask(e,task)}></ion-icon>
                     </IonItem>
                     {/* Add more IonItem elements as needed */}
                   </IonList>

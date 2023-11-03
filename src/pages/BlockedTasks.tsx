@@ -19,7 +19,7 @@ const BlockedTasks: React.FC = () => {
       let completedTasks =
         user.tasks &&
         user.tasks.filter(function (item) {
-          return item.status === "Completed";
+          return item.status === "Blocked";
         });
       setTasks(groupBy(completedTasks, "type"));
     }

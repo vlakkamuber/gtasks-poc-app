@@ -3,25 +3,57 @@ import {
   IonButton,
   IonContent,
   IonPage,
-  IonIcon
+  IonIcon,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
-import {arrowBack,arrowForward } from "ionicons/icons";
+import { arrowBack, arrowForward } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
-  const [phone,setPhone] = useState("")
+  const [phone, setPhone] = useState("");
   const history = useHistory();
+  const countryOptions = [
+    { value: "us", label: "United States", flag: "🇺🇸" },
+    { value: "ca", label: "Canada", flag: "🇨🇦" },
+    { value: "in", label: "India", flag: "🇮🇳", phoneCode: "+91" },
+    // Add more countries as needed
+  ];
+  const [selectedCountry, setSelectedCountry] = useState({
+    value: "us",
+    label: "United States",
+    flag: "🇺🇸",
+  });
 
-  const sendOtp = ()=>{
-    localStorage.setItem("phone",phone)
-    history.push("/otp")
-  }
+  const sendOtp = () => {
+    localStorage.setItem("phone", phone);
+    history.push("/otp");
+  };
 
   return (
-    <IonPage style={{padding:'15px'}}>
+    <IonPage style={{ padding: "15px" }}>
       <IonContent>
-        <label style={{fontWeight:'600',fontSize:'1.5rem'}}>What's your mobile number?</label>
-        <input type="text" value={phone} className="phone-input" onChange={(e)=>setPhone(e.target.value)}/>
+        <label style={{ fontWeight: "600", fontSize: "1.4rem" }}>
+          What's your mobile number?
+        </label>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'5px'}}>
+          <IonSelect placeholder={selectedCountry.flag} className="country-select-box" value={selectedCountry.flag} style={{height:'5vh',minHeight:'unset'}}>
+            {countryOptions.map(function (country) {
+              return (
+                <IonSelectOption value={country.value}>
+                  {country.flag}
+                </IonSelectOption>
+              );
+            })}
+          </IonSelect>
+          <input
+            type="text"
+            value={phone}
+            className="phone-input"
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+
         <p style={{ padding: "10px" }}>
           <small>
             By proceeding, you consent to get calls, Whatsapp or SMS Email ID
@@ -38,11 +70,21 @@ const Login = () => {
             bottom: 0,
           }}
         >
-          <IonButton color="secondary" routerLink="/home" expand="block" className="prev-next-button">
+          <IonButton
+            color="secondary"
+            routerLink="/home"
+            expand="block"
+            className="prev-next-button"
+          >
             <IonIcon slot="start" icon={arrowBack} />
           </IonButton>
 
-          <IonButton color="secondary" onClick={()=>sendOtp()}  expand="block" className="prev-next-button">
+          <IonButton
+            color="secondary"
+            onClick={() => sendOtp()}
+            expand="block"
+            className="prev-next-button"
+          >
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton>
         </div>

@@ -16,7 +16,7 @@ import {
   IonBadge,
 } from "@ionic/react";
 import "./Tab1.css";
-import { person, list, arrowBack } from "ionicons/icons";
+import { person, list, arrowBack, people, medal, business } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import MyTasks from "./MyTasks";
 
@@ -72,16 +72,17 @@ const Tasks: React.FC = () => {
       <IonContent className="ion-padding-start">
         <div className="tasks-info" style={{ marginTop: "30px" }}>
           <div className="task-detail">
-            <div>
-              <IonIcon icon={person} /> Tasks
+            <div style={{color: '#5e5e5e'}}>
+              <IonIcon icon={people} /> Tasks
             </div>
-            <div>9</div>
+            <div style={{fontSize: '2rem'}}>9</div>
           </div>
+          <div className="vertical-bar" style={{borderLeft:'2px solid #ddd'}}></div>
           <div className="task-count">
-            <div>
-              <IonIcon icon={list} /> You Earned
+            <div style={{color: '#5e5e5e'}}>
+              <IonIcon icon={business} /> You Earned
             </div>
-            <div>$990</div>
+            <div style={{fontSize: '2rem'}}>$990</div>
           </div>
         </div>
         <IonSegment
@@ -118,7 +119,7 @@ const Tasks: React.FC = () => {
               {Object.keys(tasks).map((key) => {
                 return (
                   <>
-                    <div className="ion-padding">
+                    <div className="ion-padding" key={key}>
                       <div
                         style={{
                           display: "flex",

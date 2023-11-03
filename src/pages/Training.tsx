@@ -1,7 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonButtons,
-  IonButton,
   IonIcon, } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+
 import './Tab1.css';
 import { useHistory } from "react-router-dom";
 import { arrowBack } from "ionicons/icons";
@@ -22,12 +21,9 @@ const Training: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Training</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+        <div>
+          <h1>Learning Center</h1>
+        </div>
       </IonContent>
     </IonPage>
   );
