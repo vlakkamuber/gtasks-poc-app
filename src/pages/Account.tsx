@@ -1,10 +1,21 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonButtons,
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
   IonButton,
-  IonIcon,  } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
+  IonList,
+  IonItem,
+  IonLabel,
+  IonMenuButton,
+  IonIcon,
+} from "@ionic/react";
+import ExploreContainer from "../components/ExploreContainer";
+import "./Tab1.css";
 import { useHistory } from "react-router-dom";
-import { arrowBack } from "ionicons/icons";
+import { arrowBack, person, settings, logOut } from "ionicons/icons";
 const Account: React.FC = () => {
   const history = useHistory();
   const goBack = () => {
@@ -12,7 +23,7 @@ const Account: React.FC = () => {
   };
   return (
     <IonPage>
-     <IonHeader>
+      <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
@@ -21,13 +32,47 @@ const Account: React.FC = () => {
           <IonTitle className="ion-text-center">Account</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Account</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+      <IonContent>
+        <div className="ion-padding">
+          <h2>Evan Rob</h2>
+        </div>
+
+        <IonList style={{padding:'20px'}}>
+          <IonItem button className="no-border">
+            <IonIcon icon={person} slot="start" />
+            <IonLabel>My Account</IonLabel>
+          </IonItem>
+
+          <IonItem button className="no-border">
+            <IonIcon icon={settings} slot="start" />
+            <IonLabel>Documents</IonLabel>
+          </IonItem>
+
+          <IonItem button className="no-border">
+            <IonIcon icon={logOut} slot="start" />
+            <IonLabel>Payments</IonLabel>
+          </IonItem>
+          <IonItem button className="no-border">
+            <IonIcon icon={logOut} slot="start" />
+            <IonLabel>Earnings</IonLabel>
+          </IonItem>
+          <IonItem button className="no-border">
+            <IonIcon icon={logOut} slot="start" />
+            <IonLabel>Security and privacy</IonLabel>
+          </IonItem>
+          <IonItem button className="no-border">
+            <IonIcon icon={logOut} slot="start" />
+            <IonLabel>App settings</IonLabel>
+          </IonItem>
+          <IonItem button className="no-border">
+            <IonIcon icon={logOut} slot="start" />
+            <IonLabel>Trainings modules</IonLabel>
+          </IonItem>
+          <IonItem button className="no-border">
+            <IonIcon icon={logOut} slot="start" />
+            <IonLabel>Help</IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   );

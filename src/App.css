@@ -1,7 +1,20 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+} */
+
+.phone-input {
+  width: 100%;
+  height: 20%;
+  background-color: #f3f3f3;
+  height: 6vh;
+  border: 2px solid #f3f3f3;
+  margin-top: 20px;
+}
+
+ion-button.prev-next-button {
+  border-radius: 10px; /* Adjust as needed */
 }
 .card-title {
   padding-inline: 16px;
@@ -40,7 +53,7 @@
 .label-with-margin {
   /* margin-left: 20px;  */
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 /* .container {
@@ -67,12 +80,30 @@
 }
 */
 
+.no-padding-margin{
+  margin:0px;
+  padding: 0px;
+}
 .save-icon {
   font-size: 36px;
-  margin-top: 20px;
-  color: white;
+  color: #fff;
   cursor: pointer;
-} 
+}
+.tap-save-icon {
+  font-size: 36px;
+  color: #000;
+  cursor: pointer;
+}
+.tap-save-container {
+  border-radius: 50%;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+}
 
 .center-content {
   display: flex;
@@ -80,7 +111,7 @@
   justify-content: center;
   align-items: center;
   height: 50vh; /* 100% of the viewport height */
-  gap:10px;
+  gap: 10px;
 }
 
 .button-container-completed {
@@ -90,4 +121,63 @@
   position: absolute;
   bottom: 50px;
   gap: 10px; /* Adjust the spacing between buttons as needed */
+}
+
+.mytask-segment-content {
+  display: flex;
+  align-items: center; /* Align content vertically in the center */
+  gap: 4px;
+}
+.mytask-segmnet-badge {
+  border-radius: -9px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: #3171e0;
+  padding: 4px 7px;
+  color: white;
+  text-align: center;
+}
+
+.mytask-segment-text {
+  flex-grow: 1; /* Allow the text to grow and take up available space */
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+ion-button {
+  text-transform: capitalize;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+  gap:2px;
+}
+
+.icon {
+  width: 35px;
+  height: 35px;
+  background-color: #f3f3f3; /* Grey background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000; /* Black icon color */
+}
+
+ion-icon {
+  font-size: 16px;
+}
+
+.black-circle-checkbox {
+  --border-radius: 50%;       /* Make the checkbox a circle */
+  --background: #000;        /* Black background color */
+  --inner-background: #fff;  /* White inner circle color when checked */
+  --border: 2px solid #000;  /* Black border color */
+}
+.no-border {
+  --border-width: 0; /* Remove the bottom border */
+  --border-color: transparent; /* Set the border color to transparent */
+  --highlight-color-focused: transparent; /* Remove focus color */
+  --highlight-color-focused-background: transparent; /* Remove focus background color */
 }

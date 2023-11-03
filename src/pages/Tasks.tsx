@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IonContent,
   IonHeader,
@@ -13,80 +13,18 @@ import {
   IonItem,
   IonButton,
   IonButtons,
-  IonBadge
+  IonBadge,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./Tab1.css";
-import { person, list,arrowBack } from "ionicons/icons";
-import { useHistory } from 'react-router-dom';
-const initialTasks = [
-  {
-    name: "Task name ID",
-    id:101,
-    earnedPoints: "200",
-    startDate: "12 /10/ 2023 ",
-    endDate: "15/10/ 2023",
-    type: "Text to audio",
-    status: "new",
-    typeDesc: "Record audio of text and earn in no time.",
-  },
-  {
-    name: "Task name ID",
-    id:102,
-    earnedPoints: "200",
-    startDate: "12 /10/ 2023 ",
-    endDate: "15/10/ 2023",
-    type: "Text to audio",
-    status: "new",
-    typeDesc: "Record audio of text and earn in no time.",
-  },
-  {
-    name: "Task name ID",
-    id:102,
-    earnedPoints: "200",
-    startDate: "12 /10/ 2023 ",
-    endDate: "15/10/ 2023",
-    type: "Text to audio",
-    status: "not-started-yet",
-    typeDesc: "Record audio of text and earn in no time.",
-  },
-  {
-    name: "Task name ID",
-    id:103,
-    earnedPoints: "200",
-    startDate: "12 /10/ 2023 ",
-    endDate: "15/10/ 2023",
-    type: "Audio to audio",
-    status: "new",
-    typeDesc: "Record audio by listening audio and earn in no time.",
-  },
-  {
-    name: "Task name ID",
-    id:104,
-    earnedPoints: "200",
-    startDate: "12 /10/ 2023 ",
-    endDate: "15/10/ 2023",
-    type: "Audio to audio",
-    status: "new",
-    typeDesc: "Record audio by listening audio and earn in no time.",
-  },
-  {
-    name: "Task name ID",
-    id:105,
-    earnedPoints: "200",
-    startDate: "12 /10/ 2023 ",
-    endDate: "15/10/ 2023",
-    type: "Audio to audio",
-    status: "blocked",
-    typeDesc: "Record audio by listening audio and earn in no time.",
-  },
-];
+import { person, list, arrowBack } from "ionicons/icons";
+import { useHistory } from "react-router-dom";
+import MyTasks from "./MyTasks";
 
 const Tasks: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState("available_task");
-  const [tasks, setTasks] = useState(groupBy(initialTasks, "type"));
-  const [myTasks, setMyTasks] = useState(initialTasks);
-  const history = useHistory()
+  const [user,setUser] = useState({})
+  const [tasks, setTasks] = useState([]);
+  const history = useHistory();
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
       const groupKey = item[key];
@@ -98,20 +36,34 @@ const Tasks: React.FC = () => {
     }, {});
   }
 
+  useEffect(() => {
+    let userTasks = JSON.parse(localStorage.getItem("tasks"));
+    let user = userTasks.find(function(item){
+      return item.phone===localStorage.getItem("phone")
+    })
+    if(user){
+      let newTasks = user.tasks && user.tasks.filter(function(item){
+        return item.status==='new' || item.status==='New'
+      })
+      setTasks(groupBy(newTasks, "type"));
+    }
+   
+  }, []);
+
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
 
-  const goToPerformTask = (e,task)=>{
-    history.push("/dashboard/tasks/perform-task/"+task.id)
-  }
+  const goToPerformTask = (e, task) => {
+    history.push("/dashboard/tasks/perform-task/" + task.id);
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-        <IonButtons slot="start">
-          <IonIcon onClick={goBack} icon={arrowBack} />
+          <IonButtons slot="start">
+            <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
           <IonTitle className="ion-text-center">Tasks</IonTitle>
@@ -141,7 +93,9 @@ const Tasks: React.FC = () => {
           <IonSegmentButton
             value="available_task"
             className={
-              selectedSegment === "available_task" ? "tasks-tab-content" : ""
+              selectedSegment === "available_task"
+                ? "tasks-tab-content capitalize"
+                : "capitalize"
             }
           >
             Available tasks
@@ -149,7 +103,9 @@ const Tasks: React.FC = () => {
           <IonSegmentButton
             value="my_tasks"
             className={
-              selectedSegment === "my_tasks" ? "tasks-tab-content" : ""
+              selectedSegment === "my_tasks"
+                ? "tasks-tab-content capitalize"
+                : "capitalize"
             }
           >
             My tasks
@@ -158,77 +114,79 @@ const Tasks: React.FC = () => {
         </IonSegment>
         {selectedSegment === "available_task" && (
           <>
-            <IonContent>
-              <React.Fragment>
-                {Object.keys(tasks).map((key) => {
-                  return (
-                    <>
-                      <div className="ion-padding">
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <h1 style={{ margin: "0", marginBottom: "-4px" }}>
-                            {key}
-                          </h1>
-                          <span>2 New</span>
-                        </div>
-
-                        <p style={{ margin: "0" }}>
-                          <small>{tasks[key][0].typeDesc}</small>
-                        </p>
+            <React.Fragment>
+              {Object.keys(tasks).map((key) => {
+                return (
+                  <>
+                    <div className="ion-padding">
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <h1 style={{ margin: "0", marginBottom: "-4px" }}>
+                          {key}
+                        </h1>
+                        <span style={{ color: "#467ff4" }}>{tasks[key].length} New</span>
                       </div>
-                      {tasks[key].map((task, index) => {
-                        return (
-                          <>
-                            <IonList>
-                              <IonItem>
-                                <IonLabel>
-                                  <span style={{display:'flex'}}>
-                                    <h2>{task.name}</h2>
-                                    <IonBadge color="primary" className={`status-text-${task.status}`}>{task.status}</IonBadge>
-                                  </span>{" "}
-                                  
-                                  <p>Payouts: {task.earnedPoints}</p>
-                                  <p>
-                                    <small>
-                                      Assigned time: {task.startDate} End time:{" "}
-                                      {task.startDate}
-                                    </small>
-                                  </p>
-                                </IonLabel>
-                                <IonButton
-                                  slot="end"
-                                  style={{
-                                    "--background": "black",
-                                    "--border-radius": "10px",
-                                  }}
-                                onClick={(e)=>goToPerformTask(e,task)}>
-                                  Start Work
-                                </IonButton>
-                              </IonItem>
-                              {/* Add more IonItem elements as needed */}
-                            </IonList>
-                          </>
-                        );
-                      })}
-                    </>
-                  );
-                })}
-              </React.Fragment>
-              <></>
-            </IonContent>
+
+                      <p style={{ margin: "0" }}>
+                        <small>{tasks[key][0].taskDesc}</small>
+                      </p>
+                    </div>
+                    {tasks[key].map((task, index) => {
+                      return (
+                        <>
+                          <IonList key={task.id}>
+                            <IonItem>
+                              <IonLabel>
+                                <span style={{ display: "flex" }}>
+                                  <h2>{task.name} {task.id} </h2>
+                                  <IonBadge
+                                    color="primary"
+                                    className={`status-text-${task.status}`}
+                                  >
+                                    {task.status}
+                                  </IonBadge>
+                                </span>{" "}
+                                <p>Payouts: {task.pay}</p>
+                                <p>
+                                  <small>
+                                    Assigned time: {task.startDate} End time:{" "}
+                                    {task.startDate}
+                                  </small>
+                                </p>
+                              </IonLabel>
+                              <IonButton
+                                slot="end"
+                                style={{
+                                  "--background": "black",
+                                  "--border-radius": "10px",
+                                }}
+                                onClick={(e) => goToPerformTask(e, task)}
+                              >
+                                Start Work
+                              </IonButton>
+                            </IonItem>
+                            {/* Add more IonItem elements as needed */}
+                          </IonList>
+                        </>
+                      );
+                    })}
+                  </>
+                );
+              })}
+            </React.Fragment>
+            <></>
           </>
         )}
 
         {selectedSegment === "my_tasks" && (
-          <div>
-            <h2>Content for Segment 2</h2>
-            {/* Add content for Segment 2 */}
-          </div>
+          <React.Fragment>
+            <MyTasks />
+          </React.Fragment>
         )}
       </IonContent>
     </IonPage>

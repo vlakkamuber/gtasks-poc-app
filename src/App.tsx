@@ -44,6 +44,7 @@ import "./App.css"
 import HomeScreen from './pages/HomeScreen';
 import PerformTask from './pages/PerformTask';
 import Completed from './pages/Completed';
+import LoginSuccess from './pages/LoginSuccess';
 
 setupIonicReact();
 
@@ -53,6 +54,7 @@ const App: React.FC = () => (
       <Route path="/home" component={HomeScreen} exact />
       <Route path="/login" component={Login} exact />
       <Route path="/otp" component={OTP} exact />
+      <Route path="/login-success" component={LoginSuccess} exact />
       <Route path="/dashboard" component={Dashboard} exact />
       <Route path="/dashboard/home" render={() => <Dashboard content={<Home />} />} exact />
       <Route path="/dashboard/training" render={() => <Dashboard content={<Training />} />} exact />

@@ -32,9 +32,10 @@ const OTP: React.FC = () => {
     setOtp(updatedOtp);
   };
   return (
-    <IonPage>
+    <IonPage style={{padding:'15px'}}>
       <IonContent>
-        <h2>Enter the OTP:</h2>
+        <p>Enter the 4 digit code sent you at:</p>
+        <p>abc@gmail.com</p>
         <div className="otp-input">
           {otp.map((value, index) => (
             <input
@@ -47,6 +48,9 @@ const OTP: React.FC = () => {
             />
           ))}
         </div>
+        <IonButton color="secondary" style={{marginTop:'20px'}} className="capitalize">
+            Resend
+          </IonButton>
         {/* Add a button to submit the OTP and handle the verification logic */}
         <div
           style={{
@@ -61,7 +65,7 @@ const OTP: React.FC = () => {
             <IonIcon slot="start" icon={arrowBack} />
           </IonButton>
 
-          <IonButton color="secondary" routerLink="/dashboard">
+          <IonButton color="primary" routerLink="/login-success">
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton>
         </div>

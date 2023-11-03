@@ -27,7 +27,17 @@
     margin-left:10px;
   }
 
-  .status-text-completed,.status-text-not-started-yet,.status-text-blocked{
+  .status-text-completed{
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding: 4px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-left:10px;
+  }
+  .status-text-not-started-yet,.status-text-blocked,.status-text-pending-submission{
     color: #a94442;
     background-color: #f2dede;
     border-color: #ebccd1;
