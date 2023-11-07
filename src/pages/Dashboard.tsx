@@ -24,6 +24,7 @@ const Dashboard: React.FC = ({content}) => {
         <Route path="/dashboard/training" render={() => <>{content}</>} />
         <Route path="/dashboard/tasks" render={() => <>{content}</>} forceRefresh={true}/>
         <Route path="/dashboard/account" render={() => <>{content}</>} forceRefresh={true}/>
+        <Route path="/dashboard/help" render={() => <>{content}</>} forceRefresh={true}/>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/dashboard/home">

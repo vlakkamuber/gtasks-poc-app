@@ -46,6 +46,7 @@ import PerformTask from './pages/PerformTask';
 import Completed from './pages/Completed';
 import LoginSuccess from './pages/LoginSuccess';
 import PerformTask2 from './pages/PerformTask2';
+import Help from './pages/Help';
 
 setupIonicReact();
 
@@ -61,6 +62,7 @@ const App: React.FC = () => (
       <Route path="/dashboard/training" render={() => <Dashboard content={<Training />} />} exact />
       <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks />} />} exact forceRefresh={true}/>
       <Route path="/dashboard/account" render={() => <Dashboard content={<Account />} />} exact forceRefresh={true}/>
+      <Route path="/dashboard/help" render={() => <Dashboard content={<Help />} />} exact forceRefresh={true}/>
       <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask2} exact forceRefresh={true}/>
       <Route path="/dashboard/tasks/completed" component={Completed} exact forceRefresh={true}/>
       <Redirect exact from="/" to="/home" />

@@ -44,15 +44,26 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonCard>
+        <div style={{display:'flex',justifyContent:'space-between',padding:'15px',alignItems:'center'}}>
+          <div>
+            <h4>Tasks Hub</h4>
+            <p>Localize text and video documents.</p>
+          </div>
+          <IonButton routerLink="/dashboard/tasks" style={{
+                                  "--background": "#f3f3f3",
+                                  "--border-radius": "23px",
+                                  "height": "30px",
+                                  "color": "rgb(0, 0, 0)",
+                                  "fontSize": "0.7rem"
+                                }}>
+            View all tasks
+          </IonButton>
+        </div>
+        <IonCard style={{borderRadius:'10px'}}>
           <img
             alt="Silhouette of mountains"
             src="public/assets/text_to_audio.png"
+            style={{objectFit:'cover'}}
           />
           <IonCardHeader>
             <IonCardTitle>Text to Audio • <span className="record-text">Localise,Record </span></IonCardTitle>
@@ -64,10 +75,11 @@ const Home: React.FC = () => {
             English and record the voice with the same .
           </IonCardContent>
         </IonCard>
-        <IonCard>
+        <IonCard style={{borderRadius:'10px'}}>
           <img
             alt="Silhouette of mountains"
             src="public/assets/audio_to_audio.png"
+            style={{objectFit:'cover'}}
           />
           <IonCardHeader>
             <IonCardTitle>Audio to Audio •<span className="record-text">Localise,Record </span></IonCardTitle>
@@ -79,10 +91,11 @@ const Home: React.FC = () => {
             English and record the voice with the same .
           </IonCardContent>
         </IonCard>
-        <IonCard>
+        <IonCard style={{borderRadius:'10px'}}>
           <img
             alt="Silhouette of mountains"
             src="public/assets/text_to_image.png"
+            style={{objectFit:'cover'}}
           />
           <IonCardHeader>
             <IonCardTitle>Text to Image • <span className="record-text">Localise,Record </span></IonCardTitle>
