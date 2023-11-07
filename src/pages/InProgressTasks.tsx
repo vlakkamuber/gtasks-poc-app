@@ -11,7 +11,7 @@ const InProgressTasks: React.FC = () => {
   };
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = userTasks.find(function (item) {
+    let user = userTasks && userTasks.find(function (item) {
       return item.phone === localStorage.getItem("phone");
     });
     if (user) {
@@ -38,10 +38,10 @@ const InProgressTasks: React.FC = () => {
   };
   return (
     <React.Fragment>
-      {Object.keys(tasks).map((key) => {
+      {Object.keys(tasks).map((key,index) => {
         return (
           <>
-            <div className="ion-padding">
+            <div className="ion-padding" key={index}>
               <div
                 style={{
                   display: "flex",
@@ -62,7 +62,7 @@ const InProgressTasks: React.FC = () => {
             {tasks[key].map((task, index) => {
               return (
                 <>
-                  <IonList>
+                  <IonList key={task.id}>
                     <IonItem>
                       <IonLabel>
                         <span style={{ display: "flex" }}>

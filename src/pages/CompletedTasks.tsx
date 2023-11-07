@@ -18,7 +18,7 @@ const CompletedTasks: React.FC = () => {
   };
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = userTasks.find(function (item) {
+    let user = userTasks && userTasks.find(function (item) {
       return item.phone === localStorage.getItem("phone");
     });
     if (user) {
@@ -101,4 +101,4 @@ const CompletedTasks: React.FC = () => {
   );
 };
 
-export default CompletedTasks;
+export default CompletedTasks

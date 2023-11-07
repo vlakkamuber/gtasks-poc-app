@@ -34,8 +34,8 @@ const OTP: React.FC = () => {
   return (
     <IonPage style={{padding:'15px'}}>
       <IonContent>
-        <p>Enter the 4 digit code sent you at:</p>
-        <p>abc@gmail.com</p>
+        <p>Enter the 6 digit code sent you at:</p>
+        <p>8686478524</p>
         <div className="otp-input">
           {otp.map((value, index) => (
             <input

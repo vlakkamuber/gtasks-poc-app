@@ -20,9 +20,7 @@ const Login = () => {
     // Add more countries as needed
   ];
   const [selectedCountry, setSelectedCountry] = useState({
-    value: "us",
-    label: "United States",
-    flag: "🇺🇸",
+    value: "in", label: "India", flag: "🇮🇳", phoneCode: "+91" 
   });
 
   const sendOtp = () => {
@@ -58,7 +56,7 @@ const Login = () => {
           <small>
             By proceeding, you consent to get calls, Whatsapp or SMS Email ID
             messages, including by automated means, from Uber and its affiliates
-            to the number provided. abc@gmail.com
+            to the number provided. 8686478524
           </small>
         </p>
         <div

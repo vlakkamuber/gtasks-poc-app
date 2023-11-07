@@ -45,6 +45,7 @@ import HomeScreen from './pages/HomeScreen';
 import PerformTask from './pages/PerformTask';
 import Completed from './pages/Completed';
 import LoginSuccess from './pages/LoginSuccess';
+import PerformTask2 from './pages/PerformTask2';
 
 setupIonicReact();
 
@@ -58,10 +59,10 @@ const App: React.FC = () => (
       <Route path="/dashboard" component={Dashboard} exact />
       <Route path="/dashboard/home" render={() => <Dashboard content={<Home />} />} exact />
       <Route path="/dashboard/training" render={() => <Dashboard content={<Training />} />} exact />
-      <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks />} />} exact />
-      <Route path="/dashboard/account" render={() => <Dashboard content={<Account />} />} exact />
-      <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask} exact />
-      <Route path="/dashboard/tasks/completed" component={Completed} exact />
+      <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks />} />} exact forceRefresh={true}/>
+      <Route path="/dashboard/account" render={() => <Dashboard content={<Account />} />} exact forceRefresh={true}/>
+      <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask2} exact forceRefresh={true}/>
+      <Route path="/dashboard/tasks/completed" component={Completed} exact forceRefresh={true}/>
       <Redirect exact from="/" to="/home" />
     </IonRouterOutlet>
   </IonReactRouter>

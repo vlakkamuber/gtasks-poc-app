@@ -22,13 +22,17 @@ const Dashboard: React.FC = ({content}) => {
       <Redirect exact from="/dashboard" to="/dashboard/home" />
         <Route path="/dashboard/home" render={() => <>{content}</>} />
         <Route path="/dashboard/training" render={() => <>{content}</>} />
-        <Route path="/dashboard/tasks" render={() => <>{content}</>} />
-        <Route path="/dashboard/account" render={() => <>{content}</>} />
+        <Route path="/dashboard/tasks" render={() => <>{content}</>} forceRefresh={true}/>
+        <Route path="/dashboard/account" render={() => <>{content}</>} forceRefresh={true}/>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/dashboard/home">
           <IonIcon icon={home} />
           <IonLabel>Home</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="tasks" href="/dashboard/tasks">
+          <IonIcon icon={list} />
+          <IonLabel>Tasks</IonLabel>
         </IonTabButton>
 
         <IonTabButton tab="training" href="/dashboard/training">
@@ -36,10 +40,7 @@ const Dashboard: React.FC = ({content}) => {
           <IonLabel>Training</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="tasks" href="/dashboard/tasks">
-          <IonIcon icon={list} />
-          <IonLabel>Tasks</IonLabel>
-        </IonTabButton>
+        
         <IonTabButton tab="account" href="/dashboard/account">
           <IonIcon icon={person} />
           <IonLabel>Account</IonLabel>

@@ -70,7 +70,7 @@ const Home: React.FC = () => {
             src="public/assets/audio_to_audio.png"
           />
           <IonCardHeader>
-            <IonCardTitle>Audio to Text •<span className="record-text">Localise,Record </span></IonCardTitle>
+            <IonCardTitle>Audio to Audio •<span className="record-text">Localise,Record </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 

@@ -16,14 +16,24 @@ import {
   IonBadge,
 } from "@ionic/react";
 import "./Tab1.css";
-import { person, list, arrowBack, people, medal, business } from "ionicons/icons";
+import {
+  person,
+  list,
+  arrowBack,
+  people,
+  medal,
+  business,
+} from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import MyTasks from "./MyTasks";
 
 const Tasks: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState("available_task");
-  const [user,setUser] = useState({})
+  const [user, setUser] = useState({});
   const [tasks, setTasks] = useState([]);
+  const [completedCount,setCompletedCount] = useState(0)
+  const [availableCount,setAvailableCount] = useState(0)
+  const [totalEarned,setTotalEarned] = useState(0)
   const history = useHistory();
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -38,17 +48,30 @@ const Tasks: React.FC = () => {
 
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = userTasks.find(function(item){
-      return item.phone===localStorage.getItem("phone")
-    })
-    if(user){
-      let newTasks = user.tasks && user.tasks.filter(function(item){
-        return item.status==='new' || item.status==='New'
-      })
+    let user =
+      userTasks &&
+      userTasks.find(function (item) {
+        return item.phone === localStorage.getItem("phone");
+      });
+    if (user) {
+      let newTasks =
+        user.tasks &&
+        user.tasks.filter(function (item) {
+          return item.status === "new" || item.status === "New";
+        });
       setTasks(groupBy(newTasks, "type"));
+      let completedTasks = user.tasks && user.tasks.filter(function(item){
+        return item.status==='Completed'
+      })
+      setAvailableCount(newTasks.length)
+      setCompletedCount(completedTasks.length)
+      setTotalEarned(completedCount*200)
+      
     }
-   
   }, []);
+  useEffect(()=>{
+    setTotalEarned(completedCount*200)
+  },[completedCount])
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
@@ -72,17 +95,20 @@ const Tasks: React.FC = () => {
       <IonContent className="ion-padding-start">
         <div className="tasks-info" style={{ marginTop: "30px" }}>
           <div className="task-detail">
-            <div style={{color: '#5e5e5e'}}>
-              <IonIcon icon={people} /> Tasks
+            <div style={{ color: "#5e5e5e" }}>
+              <IonIcon icon={people} /> Completed tasks
             </div>
-            <div style={{fontSize: '2rem'}}>9</div>
+            <div style={{ fontSize: "2rem" }}>{completedCount}</div>
           </div>
-          <div className="vertical-bar" style={{borderLeft:'2px solid #ddd'}}></div>
+          <div
+            className="vertical-bar"
+            style={{ borderLeft: "2px solid #ddd" }}
+          ></div>
           <div className="task-count">
-            <div style={{color: '#5e5e5e'}}>
-              <IonIcon icon={business} /> You Earned
+            <div style={{ color: "#5e5e5e" }}>
+              <IonIcon icon={business} /> You earned
             </div>
-            <div style={{fontSize: '2rem'}}>$990</div>
+            <div style={{ fontSize: "2rem" }}>${totalEarned}</div>
           </div>
         </div>
         <IonSegment
@@ -99,7 +125,10 @@ const Tasks: React.FC = () => {
                 : "capitalize"
             }
           >
-            Available tasks
+            <div className="mytask-segment-content">
+              <div className="mytask-segment-text"> Available tasks </div>
+              {availableCount > 0 && <IonBadge className="mytask-segmnet-badge">{availableCount}</IonBadge>}
+            </div>
           </IonSegmentButton>
           <IonSegmentButton
             value="my_tasks"
@@ -109,17 +138,21 @@ const Tasks: React.FC = () => {
                 : "capitalize"
             }
           >
-            My tasks
+            {" "}
+            <div className="mytask-segment-content">
+              <div className="mytask-segment-text"> My tasks </div>
+              {completedCount > 0&& <IonBadge className="mytask-segmnet-badge">{completedCount}</IonBadge>}
+            </div>
           </IonSegmentButton>
           {/* Add more segments as needed */}
         </IonSegment>
         {selectedSegment === "available_task" && (
-          <>
+          <React.Fragment>
             <React.Fragment>
-              {Object.keys(tasks).map((key) => {
+              {Object.keys(tasks).map((key, index) => {
                 return (
-                  <>
-                    <div className="ion-padding" key={key}>
+                  <React.Fragment key={index}>
+                    <div className="ion-padding">
                       <div
                         style={{
                           display: "flex",
@@ -130,7 +163,9 @@ const Tasks: React.FC = () => {
                         <h1 style={{ margin: "0", marginBottom: "-4px" }}>
                           {key}
                         </h1>
-                        <span style={{ color: "#467ff4" }}>{tasks[key].length} New</span>
+                        <span style={{ color: "#467ff4" }}>
+                          {tasks[key].length} New
+                        </span>
                       </div>
 
                       <p style={{ margin: "0" }}>
@@ -139,12 +174,14 @@ const Tasks: React.FC = () => {
                     </div>
                     {tasks[key].map((task, index) => {
                       return (
-                        <>
+                        <React.Fragment>
                           <IonList key={task.id}>
                             <IonItem>
                               <IonLabel>
                                 <span style={{ display: "flex" }}>
-                                  <h2>{task.name} {task.id} </h2>
+                                  <h2>
+                                    {task.name} {task.id}{" "}
+                                  </h2>
                                   <IonBadge
                                     color="primary"
                                     className={`status-text-${task.status}`}
@@ -173,15 +210,14 @@ const Tasks: React.FC = () => {
                             </IonItem>
                             {/* Add more IonItem elements as needed */}
                           </IonList>
-                        </>
+                        </React.Fragment>
                       );
                     })}
-                  </>
+                  </React.Fragment>
                 );
               })}
             </React.Fragment>
-            <></>
-          </>
+          </React.Fragment>
         )}
 
         {selectedSegment === "my_tasks" && (

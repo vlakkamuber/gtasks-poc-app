@@ -16,7 +16,8 @@ export const tasks = [
           "input": "pronounce hyderabad",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task2",
@@ -28,7 +29,8 @@ export const tasks = [
           "input": "pronounce hyderabad",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task3",
@@ -40,7 +42,8 @@ export const tasks = [
           "input": "pronounce Bengaluru",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         
         {
@@ -53,7 +56,8 @@ export const tasks = [
           "input": "http://localhost:8000/audio/audio-clip-task-104.wav",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task5",
@@ -65,7 +69,8 @@ export const tasks = [
           "input": "http://localhost:8000/audio/audio-clip-task-105.wav",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task6",
@@ -77,7 +82,8 @@ export const tasks = [
           "input": "http://localhost:8000/audio/audio-clip-task-106.wav",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task7",
@@ -89,7 +95,8 @@ export const tasks = [
           "input": "Pronounce Bengaluru",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task8",
@@ -101,7 +108,8 @@ export const tasks = [
           "input": "Pronounce Bengaluru",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task9",
@@ -113,7 +121,8 @@ export const tasks = [
           "input": "Pronounce Hyderabad",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task10",
@@ -125,7 +134,8 @@ export const tasks = [
           "input": "",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task11",
@@ -137,7 +147,8 @@ export const tasks = [
           "input": "",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task12",
@@ -149,79 +160,8 @@ export const tasks = [
           "input": "",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
-        },
-        {
-          "name": "Task13",
-          "id": "113",
-          "pay": "200",
-          "status": "Completed",
-          "type": "Text to audio",
-          "taskDesc": "Record audio of text and earn in no time.",
-          "input": "pronounce hyderabad",
-          "output": "http://localhost:8000/audio/113",
-          "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
-        },
-        {
-          "name": "Task14",
-          "id": "114",
-          "pay": "200",
-          "status": "Completed",
-          "type": "Text to audio",
-          "taskDesc": "Record audio of text and earn in no time.",
-          "input": "Pronounce Bengaluru",
-          "output": "",
-          "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
-        },
-        {
-          "name": "Task15",
-          "id": "115",
-          "pay": "200",
-          "status": "Completed",
-          "type": "Text to audio",
-          "taskDesc": "Record audio of text and earn in no time.",
-          "input": "pronounce Hyderabad",
-          "output": "",
-          "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
-        },
-        {
-          "name": "Task16",
-          "id": "116",
-          "pay": "200",
-          "status": "Completed",
-          "type": "Audio to audio",
-          "taskDesc": "Record audio by listening audio and earn in no time.",
-          "input": "pronounce Hyderabad",
-          "output": "",
-          "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
-        },
-        {
-          "name": "Task17",
-          "id": "117",
-          "pay": "200",
-          "status": "Completed",
-          "type": "Audio to audio",
-          "taskDesc": "Record audio by listening audio and earn in no time.",
-          "input": "Hyderabad",
-          "output": "",
-          "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
-        },
-        {
-          "name": "Task18",
-          "id": "118",
-          "pay": "200",
-          "status": "Completed",
-          "type": "Audio to audio",
-          "taskDesc": "Record audio by listening audio and earn in no time.",
-          "input": "Hyderabad",
-          "output": "",
-          "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task19",
@@ -233,7 +173,8 @@ export const tasks = [
           "input": "Hyderabad",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task20",
@@ -245,7 +186,8 @@ export const tasks = [
           "input": "Hyderabad",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         },
         {
           "name": "Task21",
@@ -257,7 +199,8 @@ export const tasks = [
           "input": "Hyderabad",
           "output": "",
           "startDate": "12/10/2023 ",
-          "endDate": "15/10/ 2023"
+          "endDate": "15/10/ 2023",
+          "audioSavedId":""
         }
       ]
     }

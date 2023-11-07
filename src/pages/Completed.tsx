@@ -12,8 +12,9 @@ import { useHistory } from 'react-router-dom';
 
 const Completed: React.FC = () => {
     const history = useHistory()
+    let selectedTask = JSON.parse(localStorage.getItem("selectedTask"));
     const goToTasks = ()=>{
-        history.push("/dashboard/tasks")
+      history.push("/dashboard/tasks");
     }
   return (
     <IonPage>
@@ -25,7 +26,7 @@ const Completed: React.FC = () => {
           <div className="center-content">
             <img src="../../public/assets/completed-right-tick.jpeg" width="30%"/>
             <h4>Completed</h4>
-            <p>Text to audio</p>
+            <p>{selectedTask.type}</p>
             <p>Enjoying and earning while at work </p>
             <div className="button-container-completed">
               <IonButton expand="full" color="primary" style={{width:'100%'}} onClick={()=>goToTasks()}>Back to Task</IonButton>
