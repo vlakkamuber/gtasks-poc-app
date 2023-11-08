@@ -8,6 +8,7 @@ import {
 import {arrowBack,arrowForward } from "ionicons/icons";
 import {Button, KIND,SHAPE} from 'baseui/button';
 import {ArrowLeft,ArrowRight} from 'baseui/icon';
+import {Block} from 'baseui/block';
 import { useHistory } from "react-router";
 const OTP: React.FC = () => {
   const history = useHistory()
@@ -47,9 +48,11 @@ const OTP: React.FC = () => {
             />
           ))}
         </div>
-        <IonButton color="secondary" style={{marginTop:'20px'}} className="capitalize">
+        {/* <IonButton color="secondary" style={{marginTop:'20px'}} className="capitalize">
             Resend
-          </IonButton>
+          </IonButton> */}
+          <Block marginBottom="scale300" />
+           <Button kind={KIND.secondary} shape={SHAPE.pill}>Resend</Button>
         {/* Add a button to submit the OTP and handle the verification logic */}
         <div
           style={{
