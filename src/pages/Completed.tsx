@@ -2,12 +2,10 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
   IonToolbar,
   IonButton,
 } from "@ionic/react";
 
-import "./Tab1.css";
 import { useHistory } from 'react-router-dom';
 
 const Completed: React.FC = () => {

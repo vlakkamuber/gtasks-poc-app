@@ -4,6 +4,91 @@
   box-sizing: border-box;
 } */
 
+.otp-input {
+  display: flex;
+}
+
+.otp-input input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border: 1px solid #ccc;
+  margin: 0 5px;
+  background: #f3f3f3;
+}
+
+.tasks-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 29px;
+  font-size: 1.3rem;
+}
+.task-detail{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.task-count{
+  display: flex;
+  flex-direction: column;
+ align-items: flex-start;
+}
+
+.ion-badge-outline {
+  background: #3880ff; 
+  border-radius: 16px; 
+  color: #fff;
+  padding: 4px 8px;
+  margin-left:10px;
+}
+
+.status-text-completed{
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-left:10px;
+}
+.status-text-not-started-yet,.status-text-blocked,.status-text-pending-submission{
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-left:10px;
+}
+.status-text-inprogress{
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-left:10px;
+}
+.status-text-new{
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-left:10px;
+}
+
+.record-text{
+  color: grey;
+  font-size: 0.9rem;
+}
+
 .phone-input {
   width: 100%;
   height: 20%;
@@ -46,6 +131,7 @@ ion-button.prev-next-button {
 .button-container .signup-login-button {
   width: 100% !important; /* Make the buttons span the full width */
   margin: 8px 0; /* Add margin for spacing between buttons */
+  height: 50px;
 }
 
 .tasks-tab {
@@ -66,30 +152,6 @@ ion-button.prev-next-button {
   font-weight: 500;
   font-size: 1.3rem;
 }
-
-/* .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.square {
-  background-color: black;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 10px;
-  color: white;
-}
-
-.save-text {
-  font-size: 18px;
-  margin-top: 20px;
-}
-*/
 
 .no-padding-margin{
   margin:0px;

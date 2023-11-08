@@ -9,7 +9,7 @@ const HomeScreen = () => {
       </IonHeader>
       <IonContent>
         <div className="ion-padding" style={{height:'40vh'}}>
-          <IonImg src="../../public/assets/text_to_image.png" alt="Image" style={{height: '40vh',objectFit:'cover'}}/>
+          <IonImg src="../../public/assets/home.png" alt="Image" style={{objectFit:'cover'}}/>
         </div>
         <div className="button-container" style={{position: 'absolute',bottom: '32px'}}>
           <IonButton expand="block"  color="secondary" routerLink="/login" className='signup-login-button'>

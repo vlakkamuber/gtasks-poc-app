@@ -1,7 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonButtons,
   IonIcon, } from '@ionic/react';
 
-import './Tab1.css';
 import { useHistory } from "react-router-dom";
 import { arrowBack } from "ionicons/icons";
 const Training: React.FC = () => {

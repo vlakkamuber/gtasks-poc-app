@@ -10,10 +10,6 @@ import {
   IonRouterOutlet,
 } from "@ionic/react";
 import { home, schoolOutline, person, list } from "ionicons/icons";
-import Home from "./Home";
-import Training from "./Training";
-import Account from "./Account";
-import Tasks from "./Tasks";
 
 const Dashboard: React.FC = ({content}) => {
   return (

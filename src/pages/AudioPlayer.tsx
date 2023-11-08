@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import Wavesurfer from "wavesurfer.js";
-import { IonIcon, IonContent, IonButton, IonPage } from "@ionic/react";
+import { IonIcon } from "@ionic/react";
 import { play, pause } from "ionicons/icons";
 
 const AudioPlayer = ({ audioSrc }) => {

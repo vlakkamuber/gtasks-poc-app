@@ -15,7 +15,6 @@ import {
   IonRadio,
 } from "@ionic/react";
 
-import "./Tab3.css";
 import { useHistory, useParams } from "react-router-dom";
 import {
   arrowBack,

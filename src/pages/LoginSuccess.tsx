@@ -1,13 +1,8 @@
 import {
     IonContent,
-    IonHeader,
     IonPage,
-    IonTitle,
-    IonToolbar,
     IonButton,
   } from "@ionic/react";
-  
-  import "./Tab1.css";
   import { useHistory } from 'react-router-dom';
   
   const LoginSuccess: React.FC = () => {
@@ -25,7 +20,7 @@ import {
               <h2 style={{margin:'0'}}>ABC!</h2>
               <p style={{margin:'0'}}>Your account has been created</p>
               <div className="button-container-completed">
-                <IonButton expand="full" color="primary" style={{width:'100%'}} onClick={()=>goToHome()}>Continue</IonButton>
+                <IonButton expand="full" color="primary" style={{width:'100%',height:'40px'}} onClick={()=>goToHome()}>Continue</IonButton>
               </div>
             </div>
           </IonContent>

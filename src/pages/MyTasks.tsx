@@ -2,14 +2,9 @@ import React, { useState,useEffect } from "react";
 import {
   IonSegment,
   IonSegmentButton,
-  IonBadge,
-  IonContent,
 } from "@ionic/react";
-import "./Tab1.css";
 import { useHistory } from "react-router-dom";
-import InProgressTasks from "./InProgressTasks";
 import CompletedTasks from "./CompletedTasks";
-import BlockedTasks from "./BlockedTasks";
 const MyTasks: React.FC = () => {
   const [inProgressCount,setInProgressCount] = useState("")
   const [completedCount,setCompletedCount] = useState("")

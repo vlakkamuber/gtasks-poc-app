@@ -1,5 +1,4 @@
 import { IonList, IonItem, IonBadge, IonLabel } from "@ionic/react";
-import "./Tab1.css";
 import { useHistory } from "react-router-dom";
 import { chevronForward } from "ionicons/icons";
 import React, { useState,useEffect } from "react";

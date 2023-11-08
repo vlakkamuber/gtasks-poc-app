@@ -15,10 +15,7 @@ import {
   IonButtons,
   IonBadge,
 } from "@ionic/react";
-import "./Tab1.css";
 import {
-  person,
-  list,
   arrowBack,
   people,
   medal,

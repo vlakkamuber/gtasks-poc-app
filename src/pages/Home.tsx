@@ -7,14 +7,12 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardSubtitle,
   IonCardContent,
   IonButtons,
   IonButton,
   IonIcon,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
-import "./Tab1.css";
+
 import { useHistory } from "react-router-dom";
 import { arrowBack } from "ionicons/icons";
 import { useEffect } from "react";

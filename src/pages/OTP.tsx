@@ -1,15 +1,11 @@
 import React, { useState, useRef } from "react";
 import {
-  IonInput,
-  IonLabel,
-  IonItem,
   IonButton,
   IonContent,
   IonPage,
   IonIcon,
 } from "@ionic/react";
-import "./Tab2.css";
-import { star,arrowBack,arrowForward } from "ionicons/icons";
+import {arrowBack,arrowForward } from "ionicons/icons";
 
 const OTP: React.FC = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
