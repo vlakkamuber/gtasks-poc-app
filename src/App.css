@@ -200,6 +200,11 @@ ion-button.prev-next-button {
   gap: 10px;
 }
 
+.button-login-success{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
 .button-container-completed {
   display: flex;
   flex-direction: column;
