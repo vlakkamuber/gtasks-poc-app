@@ -6,8 +6,11 @@ import {
   IonIcon,
 } from "@ionic/react";
 import {arrowBack,arrowForward } from "ionicons/icons";
-
+import {Button, KIND,SHAPE} from 'baseui/button';
+import {ArrowLeft,ArrowRight} from 'baseui/icon';
+import { useHistory } from "react-router";
 const OTP: React.FC = () => {
+  const history = useHistory()
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = [
     useRef(null),
@@ -57,13 +60,15 @@ const OTP: React.FC = () => {
             bottom: 0,
           }}
         >
-          <IonButton color="secondary" routerLink="/login" >
+          {/* <IonButton color="secondary" routerLink="/login" >
             <IonIcon slot="start" icon={arrowBack} />
           </IonButton>
 
           <IonButton color="primary" routerLink="/login-success">
             Next <IonIcon slot="end" icon={arrowForward} />
-          </IonButton>
+          </IonButton> */}
+           <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/home")}><ArrowLeft/></Button>
+          <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login-success")}>Next <ArrowRight/></Button>
         </div>
       </IonContent>
     </IonPage>

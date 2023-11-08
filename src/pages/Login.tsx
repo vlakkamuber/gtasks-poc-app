@@ -9,6 +9,8 @@ import {
 } from "@ionic/react";
 import { arrowBack, arrowForward } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
+import {Button, KIND,SHAPE} from 'baseui/button';
+import {ArrowLeft,ArrowRight} from 'baseui/icon';
 
 const Login = () => {
   const [phone, setPhone] = useState("");
@@ -35,7 +37,7 @@ const Login = () => {
           What's your mobile number?
         </label>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'5px'}}>
-          <IonSelect placeholder={selectedCountry.flag} className="country-select-box" value={selectedCountry.flag} style={{height:'5vh',minHeight:'unset'}}>
+          <IonSelect placeholder={selectedCountry.flag} className="country-select-box" value={selectedCountry.flag} style={{height:'5vh',minHeight:'unset',paddingeft: '9px'}}>
             {countryOptions.map(function (country) {
               return (
                 <IonSelectOption value={country.value}>
@@ -68,7 +70,7 @@ const Login = () => {
             bottom: 0,
           }}
         >
-          <IonButton
+          {/* <IonButton
             color="secondary"
             routerLink="/home"
             expand="block"
@@ -84,7 +86,9 @@ const Login = () => {
             className="prev-next-button"
           >
             Next <IonIcon slot="end" icon={arrowForward} />
-          </IonButton>
+          </IonButton> */}
+          <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/home")}><ArrowLeft/></Button>
+          <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => sendOtp()}>Next <ArrowRight/></Button>
         </div>
       </IonContent>
     </IonPage>

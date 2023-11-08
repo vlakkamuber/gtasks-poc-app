@@ -29,8 +29,12 @@ import {
   openDB,
   saveRecordingToIndexedDB,
   getRecordingsFromIndexedDB,
-  getRecordingsFromIndexedDBByKeyStore
+  getRecordingsFromIndexedDBByKeyStore,
 } from "./IndexDb";
+import { ButtonDock } from "baseui/button-dock";
+import { Button, KIND } from "baseui/button";
+import { Textarea } from "baseui/textarea";
+import {SIZE} from 'baseui/input';
 const PerformTask2: React.FC = () => {
   const history = useHistory();
   const params = useParams();
@@ -54,17 +58,16 @@ const PerformTask2: React.FC = () => {
     let selectedTask = user.tasks.find(function (item) {
       return item.id === params.id;
     });
-    if(selectedTask){
-        setSelectedTask(selectedTask);
-        localStorage.setItem("selectedTask",JSON.stringify(selectedTask))
+    if (selectedTask) {
+      setSelectedTask(selectedTask);
+      localStorage.setItem("selectedTask", JSON.stringify(selectedTask));
     }
-   
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     getAllRecordingsFromIndexDB();
     getRecordedAudioByAudioId();
-  },[selectedTask])
+  }, [selectedTask]);
 
   const startRecording = async () => {
     setIsRecording(true);
@@ -118,23 +121,23 @@ const PerformTask2: React.FC = () => {
   };
 
   const getRecordedAudioByAudioId = () => {
-      getRecordingsFromIndexedDBByKeyStore(selectedTask.id)
-        .then((recordings) => {
-          if (recordings) {
-            const lastRecording = recordings
-            const audioBlobURL = URL.createObjectURL(lastRecording);
-            setSavedAudio(audioBlobURL);
-          }
-        })
-        .catch((error) => {
-          console.error("Error getting recordings:", error);
-        });
+    getRecordingsFromIndexedDBByKeyStore(selectedTask.id)
+      .then((recordings) => {
+        if (recordings) {
+          const lastRecording = recordings;
+          const audioBlobURL = URL.createObjectURL(lastRecording);
+          setSavedAudio(audioBlobURL);
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting recordings:", error);
+      });
   };
 
   const saveAudioToAPI = async (e) => {
     e.preventDefault();
     const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-    saveRecordingToIndexedDB(audioBlob,selectedTask.id)
+    saveRecordingToIndexedDB(audioBlob, selectedTask.id)
       .then((id) => {
         let userTasks = JSON.parse(localStorage.getItem("tasks"));
         let user = userTasks.find(function (item) {
@@ -207,7 +210,11 @@ const PerformTask2: React.FC = () => {
             selectedTask.type === "Text To audio") && (
             <div>
               <IonLabel className="label-with-margin">Text Script</IonLabel>
-              <IonTextarea
+              <Textarea
+                value={selectedTask.input}
+                size={SIZE.large}
+              />
+              {/* <IonTextarea
                 style={{
                   background: "#f3f3f3", // Set the grey background color
                   height: "200px", // Set the desired height// Set the desired width
@@ -216,7 +223,7 @@ const PerformTask2: React.FC = () => {
                   borderRadius: "10px",
                 }}
                 value={selectedTask.input}
-              ></IonTextarea>
+              ></IonTextarea> */}
             </div>
           )}
           {(selectedTask.type === "Audio to audio" ||
@@ -238,7 +245,7 @@ const PerformTask2: React.FC = () => {
                 )}
               />
             )}
-            {(selectedTask.status === "Completed") && (
+            {selectedTask.status === "Completed" && (
               <div>
                 <h5>Saved audio version</h5>
                 <div
@@ -331,7 +338,7 @@ const PerformTask2: React.FC = () => {
               </IonRow>
             )}
           </IonGrid>
-          <div className="button-container">
+          {/* <div className="button-container">
             <IonButton
               expand="block"
               color="primary"
@@ -359,7 +366,17 @@ const PerformTask2: React.FC = () => {
             >
               Cancel
             </IonButton>
-          </div>
+          </div> */}
+          <ButtonDock
+            primaryAction={<Button onClick={(e) => saveAudioToAPI(e)}
+            disabled={selectedTask.status === "Completed"}>Submit</Button>}
+            secondaryActions={[
+              <Button kind={KIND.secondary} key="first"  onClick={(e) => history.push("/dashboard/help")}  disabled={selectedTask.status === "Completed"}>
+                Help
+              </Button>,
+            ]}
+            dismissiveAction={<Button kind={KIND.tertiary} onClick={(e) => history.push("/dashboard/tasks")} >Cancel</Button>}
+          />
         </div>
       </IonContent>
     </IonPage>
