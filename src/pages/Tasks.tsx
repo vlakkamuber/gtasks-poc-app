@@ -202,7 +202,7 @@ const Tasks: React.FC = () => {
                                 }}
                                 onClick={(e) => goToPerformTask(e, task)}
                               >
-                                Start Work
+                                Start work
                               </IonButton>
                             </IonItem>
                             {/* Add more IonItem elements as needed */}

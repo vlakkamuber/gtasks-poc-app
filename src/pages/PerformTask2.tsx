@@ -209,7 +209,7 @@ const PerformTask2: React.FC = () => {
           {(selectedTask.type === "Text to audio" ||
             selectedTask.type === "Text To audio") && (
             <div>
-              <IonLabel className="label-with-margin">Text Script</IonLabel>
+              <IonLabel className="label-with-margin">Text script</IonLabel>
               <Textarea
                 value={selectedTask.input}
                 size={SIZE.large}
