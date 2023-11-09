@@ -230,7 +230,7 @@ const PerformTask2: React.FC = () => {
             selectedTask.type === "Audio To Audio") && (
             <div>
               <h5>Audio clips</h5>
-              <AudioPlayer audioSrc={audioClip} />
+              <AudioPlayer audioSrc={"assets/sample-audio-clip.mp3"} />
             </div>
           )}
 

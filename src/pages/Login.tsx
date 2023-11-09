@@ -88,7 +88,7 @@ const Login = () => {
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton> */}
           <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/home")}><ArrowLeft/></Button>
-          <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => sendOtp()}>Next <ArrowRight/></Button>
+          <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => sendOtp()} disabled={phone.length===0}>Next <ArrowRight/></Button>
         </div>
       </IonContent>
     </IonPage>

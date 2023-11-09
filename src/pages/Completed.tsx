@@ -23,7 +23,7 @@ const Completed: React.FC = () => {
       <IonContent fullscreen>
         <div className="center-content">
           <img
-            src="../../public/assets/completed-right-tick.jpeg"
+            src="assets/completed-right-tick.jpeg"
             width="30%"
           />
           <h4>Completed</h4>

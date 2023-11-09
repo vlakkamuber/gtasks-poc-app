@@ -22,6 +22,7 @@ const Home: React.FC = () => {
   const history = useHistory();
   useEffect(()=>{
     if(!JSON.parse(localStorage.getItem("tasks"))){
+      tasks[0]["phone"]=localStorage.getItem("phone")
       localStorage.setItem("tasks",JSON.stringify(tasks))
     }
   })
@@ -60,7 +61,7 @@ const Home: React.FC = () => {
         <IonCard style={{borderRadius:'10px'}}>
           <img
             alt="Silhouette of mountains"
-            src="public/assets/text_to_audio.png"
+            src="assets/text_to_audio.png"
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
@@ -76,7 +77,7 @@ const Home: React.FC = () => {
         <IonCard style={{borderRadius:'10px'}}>
           <img
             alt="Silhouette of mountains"
-            src="public/assets/audio_to_audio.png"
+            src="assets/audio_to_audio.png"
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
@@ -92,7 +93,7 @@ const Home: React.FC = () => {
         <IonCard style={{borderRadius:'10px'}}>
           <img
             alt="Silhouette of mountains"
-            src="public/assets/text_to_image.png"
+            src="assets/text_to_image.png"
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>

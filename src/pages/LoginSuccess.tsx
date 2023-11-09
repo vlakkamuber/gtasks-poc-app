@@ -16,7 +16,7 @@ import {Button, KIND} from 'baseui/button';
         <IonContent fullscreen>
           <IonContent>
             <div className="center-content">
-              <img src="../../public/assets/completed-right-tick.jpeg" width="30%"/>
+              <img src="assets/completed-right-tick.jpeg" width="30%"/>
               <h2 style={{margin:'0'}}>Thanks,</h2>
               <h2 style={{margin:'0'}}>ABC!</h2>
               <p style={{margin:'0'}}>Your account has been created</p>

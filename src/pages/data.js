@@ -1,8 +1,8 @@
 export const tasks = [
     {
       "id": "101",
-      "phone": "8686478524",
-      "name": "sameer mishra",
+      "phone": "",
+      "name": "ABC",
       "ratings": 3.4,
       "totalPoints": "",
       "tasks": [

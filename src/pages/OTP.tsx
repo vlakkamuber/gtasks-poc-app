@@ -35,7 +35,7 @@ const OTP: React.FC = () => {
     <IonPage style={{padding:'15px'}}>
       <IonContent>
         <p>Enter the 6 digit code sent you at:</p>
-        <p>8686478524</p>
+        <p>{localStorage.getItem("phone")}</p>
         <div className="otp-input">
           {otp.map((value, index) => (
             <input

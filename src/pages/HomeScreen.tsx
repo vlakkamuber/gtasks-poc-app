@@ -18,7 +18,7 @@ const HomeScreen = () => {
       <IonContent>
         <div className="ion-padding" style={{ height: "40vh" }}>
           <IonImg
-            src="../../public/assets/home.png"
+            src="assets/home.png"
             alt="Image"
             style={{ objectFit: "cover" }}
           />
