@@ -28,7 +28,7 @@ const Completed: React.FC = () => {
           />
           <h4>Completed</h4>
           <p>{selectedTask.type}</p>
-          <p>Enjoying and earning while at work</p>
+          <p>Good job!</p>
           <div className="button-container-completed">
             <Button kind={KIND.primary} onClick={()=>goToTasks()}>Back to tasks</Button>
             <Button kind={KIND.secondary} onClick={()=>goToTasks()}>Exit</Button>

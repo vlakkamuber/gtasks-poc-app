@@ -188,7 +188,7 @@ const PerformTask2: React.FC = () => {
           </h4>
           <p className="no-padding-margin" style={{ fontSize: "0.9rem" }}>
             <samll>
-              Assigned time: {selectedTask.startDate} End time:{" "}
+              Created date: {selectedTask.startDate} Due date:{" "}
               {selectedTask.endDate}
             </samll>
           </p>
@@ -209,7 +209,7 @@ const PerformTask2: React.FC = () => {
           {(selectedTask.type === "Text to audio" ||
             selectedTask.type === "Text To audio") && (
             <div>
-              <IonLabel className="label-with-margin">Text script</IonLabel>
+              <IonLabel className="label-with-margin">Text input</IonLabel>
               <Textarea
                 value={selectedTask.input}
                 size={SIZE.large}
@@ -229,13 +229,13 @@ const PerformTask2: React.FC = () => {
           {(selectedTask.type === "Audio to audio" ||
             selectedTask.type === "Audio To Audio") && (
             <div>
-              <h5>Audio clips</h5>
+              <h5>Input audio</h5>
               <AudioPlayer audioSrc={"assets/sample-audio-clip.mp3"} />
             </div>
           )}
 
           {/* Label for Audio Recording */}
-          <IonLabel className="label-with-margin">Convert into audio</IonLabel>
+          {selectedTask.status === "new" && <IonLabel className="label-with-margin">Record audio</IonLabel>}
           <div>
             {/* Display the recorded audio for playback (Step 4) */}
             {audioChunks.length > 0 && (
@@ -247,7 +247,7 @@ const PerformTask2: React.FC = () => {
             )}
             {selectedTask.status === "Completed" && (
               <div>
-                <h5>Saved audio version</h5>
+                <h5>Output audio</h5>
                 <div
                   style={{
                     display: "flex",
@@ -330,6 +330,7 @@ const PerformTask2: React.FC = () => {
                       expand="block"
                       color="primary"
                       className="ion-small"
+                      disabled={selectedTask.status==="Completed"}
                     >
                       Start Recording
                     </IonButton>

@@ -81,7 +81,7 @@ const CompletedTasks: React.FC = () => {
                         <p>Payouts: {task.pay}</p>
                         <p>
                           <small>
-                            Assigned time: {task.startDate} End time:{" "}
+                            Created date: {task.startDate} Due date:{" "}
                             {task.startDate}
                           </small>
                         </p>
