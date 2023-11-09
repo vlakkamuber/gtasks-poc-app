@@ -16,7 +16,7 @@ const HomeScreen = () => {
     <IonPage>
       <IonHeader>{/* Add header content if needed */}</IonHeader>
       <IonContent>
-        <div className="ion-padding" style={{ height: "40vh" }}>
+        <div className="ion-padding">
           <IonImg
             src="assets/home.png"
             alt="Image"
@@ -45,7 +45,7 @@ const HomeScreen = () => {
         </div> */}
          <div
           className="button-container"
-          style={{ position: "absolute", bottom: "32px" }}
+          style={{}}
         >
           <ButtonDock
           // secondaryActions={[

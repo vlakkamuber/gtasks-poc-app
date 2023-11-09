@@ -42,7 +42,7 @@ import Help from './pages/Help';
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonReactRouter>
+  <IonReactRouter forceRefresh={true}>
     <IonRouterOutlet>
       <Route path="/home" component={HomeScreen} exact />
       <Route path="/login" component={Login} exact />

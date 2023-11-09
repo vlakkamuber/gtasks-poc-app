@@ -52,9 +52,9 @@ const PerformTask2: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState({});
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = userTasks.find(function (item) {
+    let user = (userTasks.find(function (item) {
       return item.phone === localStorage.getItem("phone");
-    });
+    })) || userTasks[0]
     let selectedTask = user.tasks.find(function (item) {
       return item.id === params.id;
     });

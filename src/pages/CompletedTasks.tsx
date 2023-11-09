@@ -17,9 +17,9 @@ const CompletedTasks: React.FC = () => {
   };
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = userTasks && userTasks.find(function (item) {
+    let user = (userTasks && userTasks.find(function (item) {
       return item.phone === localStorage.getItem("phone");
-    });
+    })) || userTasks[0]
     if (user) {
       let completedTasks =
         user.tasks &&

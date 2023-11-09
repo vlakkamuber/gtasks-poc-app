@@ -46,10 +46,10 @@ const Tasks: React.FC = () => {
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
     let user =
-      userTasks &&
+      (userTasks &&
       userTasks.find(function (item) {
         return item.phone === localStorage.getItem("phone");
-      });
+      }) ) || userTasks[0]
     if (user) {
       let newTasks =
         user.tasks &&
