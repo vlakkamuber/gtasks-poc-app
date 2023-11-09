@@ -58,7 +58,7 @@ const Login = () => {
           <small>
             By proceeding, you consent to get calls, Whatsapp or SMS Email ID
             messages, including by automated means, from Uber and its affiliates
-            to the number provided. 8686478524
+            to the number provided.
           </small>
         </p>
         <div

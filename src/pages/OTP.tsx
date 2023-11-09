@@ -70,7 +70,7 @@ const OTP: React.FC = () => {
           <IonButton color="primary" routerLink="/login-success">
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton> */}
-           <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/home")}><ArrowLeft/></Button>
+           <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login")}><ArrowLeft/></Button>
           <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login-success")}>Next <ArrowRight/></Button>
         </div>
       </IonContent>

@@ -48,11 +48,11 @@ const HomeScreen = () => {
           style={{ position: "absolute", bottom: "32px" }}
         >
           <ButtonDock
-          secondaryActions={[
-            <Button kind={KIND.secondary} key="first" onClick={()=>history.push("/signup")}>
-              Sign up
-            </Button>,
-          ]}
+          // secondaryActions={[
+          //   <Button kind={KIND.secondary} key="first" onClick={()=>history.push("/signup")}>
+          //     Sign up
+          //   </Button>,
+          // ]}
           primaryAction={<Button onClick={()=>history.push("/login")}>Sign in</Button>}
         />
         </div>

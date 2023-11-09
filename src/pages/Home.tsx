@@ -46,7 +46,7 @@ const Home: React.FC = () => {
         <div style={{display:'flex',justifyContent:'space-between',padding:'15px',alignItems:'center'}}>
           <div>
             <h4 className="mt-0 mb-0">Tasks Hub</h4>
-            <p className="mt-0 mb-0">Localize text and video documents.</p>
+            <p className="mt-0 mb-0">Localize text and audio documents.</p>
           </div>
           <IonButton routerLink="/dashboard/tasks" style={{
                                   "--background": "#f3f3f3",

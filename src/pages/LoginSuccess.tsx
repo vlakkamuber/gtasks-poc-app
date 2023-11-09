@@ -17,9 +17,8 @@ import {Button, KIND} from 'baseui/button';
           <IonContent>
             <div className="center-content">
               <img src="assets/completed-right-tick.jpeg" width="30%"/>
-              <h2 style={{margin:'0'}}>Thanks,</h2>
-              <h2 style={{margin:'0'}}>ABC!</h2>
-              <p style={{margin:'0'}}>Your account has been created</p>
+              <h2 style={{margin:'0'}}>Welcome!</h2>
+              {/* <h2 style={{margin:'0'}}>ABC!</h2> */}
               <div className="button-login-success" style={{marginTop: '90px'}}>
                 {/* <IonButton expand="full" color="primary" style={{width:'100%',height:'40px'}} onClick={()=>goToHome()}>Continue</IonButton> */}
                 <Button kind={KIND.primary} onClick={()=>goToHome()}>Continue</Button>
