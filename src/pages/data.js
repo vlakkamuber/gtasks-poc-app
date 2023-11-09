@@ -9,11 +9,11 @@ export const tasks = [
         {
           "name": "Task1",
           "id": "101",
-          "pay": "200",
+          "pay": "2",
           "status": "new",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
-          "input": "pronounce hyderabad",
+          "input": "Hyderabad",
           "output": "",
           "startDate": "12/10/2023 ",
           "endDate": "15/10/ 2023",
@@ -22,11 +22,11 @@ export const tasks = [
         {
           "name": "Task2",
           "id": "102",
-          "pay": "200",
+          "pay": "2",
           "status": "new",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
-          "input": "pronounce hyderabad",
+          "input": "Mallapur",
           "output": "",
           "startDate": "12/10/2023 ",
           "endDate": "15/10/ 2023",
@@ -35,11 +35,11 @@ export const tasks = [
         {
           "name": "Task3",
           "id": "103",
-          "pay": "200",
+          "pay": "2",
           "status": "new",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
-          "input": "pronounce Bengaluru",
+          "input": "Kondapur",
           "output": "",
           "startDate": "12/10/2023 ",
           "endDate": "15/10/ 2023",
@@ -49,7 +49,7 @@ export const tasks = [
         {
           "name": "Task4",
           "id": "104",
-          "pay": "200",
+          "pay": "2",
           "status": "new",
           "type": "Audio to audio",
           "taskDesc": "Listen to the audio, record and submit.",
@@ -62,7 +62,7 @@ export const tasks = [
         {
           "name": "Task5",
           "id": "105",
-          "pay": "200",
+          "pay": "2",
           "status": "new",
           "type": "Audio to audio",
           "taskDesc": "Listen to the audio, record and submit.",
@@ -75,7 +75,7 @@ export const tasks = [
         {
           "name": "Task6",
           "id": "106",
-          "pay": "200",
+          "pay": "2",
           "status": "new",
           "type": "Audio to audio",
           "taskDesc": "Listen to the audio, record and submit.",
@@ -88,7 +88,7 @@ export const tasks = [
         {
           "name": "Task7",
           "id": "107",
-          "pay": "200",
+          "pay": "2",
           "status": "In Progress",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
@@ -101,7 +101,7 @@ export const tasks = [
         {
           "name": "Task8",
           "id": "108",
-          "pay": "200",
+          "pay": "2",
           "status": "In Progress",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
@@ -114,7 +114,7 @@ export const tasks = [
         {
           "name": "Task9",
           "id": "109",
-          "pay": "200",
+          "pay": "2",
           "status": "In Progress",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
@@ -127,7 +127,7 @@ export const tasks = [
         {
           "name": "Task10",
           "id": "110",
-          "pay": "200",
+          "pay": "2",
           "status": "In Progress",
           "type": "Audio to audio",
           "taskDesc": "Listen to the audio, record and submit.",
@@ -140,7 +140,7 @@ export const tasks = [
         {
           "name": "Task11",
           "id": "111",
-          "pay": "200",
+          "pay": "2",
           "status": "In Progress",
           "type": "Audio to audio",
           "taskDesc": "Listen to the audio, record and submit.",
@@ -153,7 +153,7 @@ export const tasks = [
         {
           "name": "Task12",
           "id": "112",
-          "pay": "200",
+          "pay": "2",
           "status": "In Progress",
           "type": "Audio to audio",
           "taskDesc": "Listen to the audio, record and submit.",
@@ -166,7 +166,7 @@ export const tasks = [
         {
           "name": "Task19",
           "id": "119",
-          "pay": "200",
+          "pay": "2",
           "status": "Blocked",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
@@ -179,7 +179,7 @@ export const tasks = [
         {
           "name": "Task20",
           "id": "120",
-          "pay": "200",
+          "pay": "2",
           "status": "Blocked",
           "type": "Text to audio",
           "taskDesc": "Record audio of the text and submit.",
@@ -192,7 +192,7 @@ export const tasks = [
         {
           "name": "Task21",
           "id": "121",
-          "pay": "200",
+          "pay": "2",
           "status": "Blocked",
           "type": "Audio to audio",
           "taskDesc": "Listen to the audio, record and submit.",
