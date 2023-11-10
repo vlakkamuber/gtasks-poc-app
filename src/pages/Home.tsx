@@ -35,10 +35,9 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
+          {/* <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
-            {/* <IonButton onClick={goBack}>Back</IonButton> */}
-          </IonButtons>
+          </IonButtons> */}
           <IonTitle className="ion-text-center">Home</IonTitle>
         </IonToolbar>
       </IonHeader>

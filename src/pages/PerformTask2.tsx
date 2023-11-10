@@ -96,7 +96,7 @@ const PerformTask2: React.FC = () => {
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
       };
 
       recorder.start();
@@ -116,7 +116,7 @@ const PerformTask2: React.FC = () => {
 
   useEffect(() => {
     if (audioChunks.length) {
-      const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+      const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
       console.log(audioBlob.size, audioBlob.type);
     }
   }, [audioChunks]);
@@ -152,7 +152,7 @@ const PerformTask2: React.FC = () => {
   const saveAudioToAPI = async (e) => {
     e.preventDefault();
     setSubmitted(true)
-    const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+    const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
     saveRecordingToIndexedDB(audioBlob, selectedTask.id)
       .then(async (id) => {
         let userTasks = await JSON.parse(localStorage.getItem("tasks"));
@@ -192,7 +192,6 @@ const PerformTask2: React.FC = () => {
         <IonToolbar>
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
-            {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
           <IonTitle className="ion-text-center">Tasks</IonTitle>
         </IonToolbar>
@@ -271,7 +270,7 @@ const PerformTask2: React.FC = () => {
             {audioChunks.length > 0 && (
               <AudioPlayer
                 audioSrc={URL.createObjectURL(
-                  new Blob(audioChunks, { type: "audio/wav" })
+                  new Blob(audioChunks, { type: "audio/mpeg" })
                 )}
               />
             )}
