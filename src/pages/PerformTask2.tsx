@@ -32,7 +32,7 @@ import {
   getRecordingsFromIndexedDBByKeyStore,
 } from "./IndexDb";
 import { ButtonDock } from "baseui/button-dock";
-import { Button, KIND,SHAPE } from "baseui/button";
+import { Button, KIND, SHAPE } from "baseui/button";
 import { Textarea } from "baseui/textarea";
 import { SIZE } from "baseui/input";
 const PerformTask2: React.FC = () => {
@@ -53,7 +53,11 @@ const PerformTask2: React.FC = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       let userTasks = JSON.parse(localStorage.getItem("tasks"));
-      let user = userTasks[0];
+      if (!userTasks) {
+        history.push("/dashboard/home");
+      }
+
+      let user = userTasks && userTasks[0];
       // let user = (userTasks.find(function (item) {
       //   return item.phone === localStorage.getItem("phone");
       // })) || userTasks[0]
@@ -341,8 +345,11 @@ const PerformTask2: React.FC = () => {
                         style={{ fontSize: "4rem", color: "#467ff4" }}
                       ></IonIcon>
                     </div>
-                    <Button shape={SHAPE.pill} size={SIZE.compact}
-                      disabled={selectedTask.status === "Completed"} onClick={startRecording}
+                    <Button
+                      shape={SHAPE.pill}
+                      size={SIZE.compact}
+                      disabled={selectedTask.status === "Completed"}
+                      onClick={startRecording}
                     >
                       Start Recording
                     </Button>
