@@ -30,9 +30,12 @@ export const saveRecordingToIndexedDB = (blob,taskId) => {
       const transaction = db.transaction(STORE_NAME, 'readwrite');
       const store = transaction.objectStore(STORE_NAME);
 
-      const request = store.put(blob,taskId);
+      const request = await store.put(blob,taskId);
       request.onsuccess = (event) => {
-        resolve(event.target.result);
+        setTimeout(()=>{
+          resolve(event.target.result);
+        },2000)
+        
       };
       request.onerror = () => {
         reject('Error saving recording to IndexedDB');
@@ -70,7 +73,7 @@ export const getRecordingsFromIndexedDBByKeyStore = (keyToRetrieve) => {
         const transaction = db.transaction(STORE_NAME);
         const objectStore = transaction.objectStore(STORE_NAME);
   
-        const getRequest = objectStore.get(keyToRetrieve);
+        const getRequest = await objectStore.get(keyToRetrieve);
   
         getRequest.onsuccess = (event) => {
           const data = event.target.result;

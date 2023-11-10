@@ -34,7 +34,7 @@ import {
 import { ButtonDock } from "baseui/button-dock";
 import { Button, KIND } from "baseui/button";
 import { Textarea } from "baseui/textarea";
-import {SIZE} from 'baseui/input';
+import { SIZE } from "baseui/input";
 const PerformTask2: React.FC = () => {
   const history = useHistory();
   const params = useParams();
@@ -51,21 +51,28 @@ const PerformTask2: React.FC = () => {
   const [savedAudio, setSavedAudio] = useState("");
   const [selectedTask, setSelectedTask] = useState({});
   useEffect(() => {
-    let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = (userTasks.find(function (item) {
-      return item.phone === localStorage.getItem("phone");
-    })) || userTasks[0]
-    let selectedTask = user.tasks.find(function (item) {
-      return item.id === params.id;
-    });
-    if (selectedTask) {
-      setSelectedTask(selectedTask);
-      localStorage.setItem("selectedTask", JSON.stringify(selectedTask));
-    }
+    const fetchTasks = async () => {
+      let userTasks = JSON.parse(localStorage.getItem("tasks"));
+      let user = userTasks[0];
+      // let user = (userTasks.find(function (item) {
+      //   return item.phone === localStorage.getItem("phone");
+      // })) || userTasks[0]
+      let selectedTask = user.tasks.find(function (item) {
+        return item.id === params.id;
+      });
+      if (selectedTask) {
+        await localStorage.setItem(
+          "selectedTask",
+          JSON.stringify(selectedTask)
+        );
+        setSelectedTask(selectedTask);
+      }
+    };
+    fetchTasks();
   }, []);
 
   useEffect(() => {
-    getAllRecordingsFromIndexDB();
+    //getAllRecordingsFromIndexDB();
     getRecordedAudioByAudioId();
   }, [selectedTask]);
 
@@ -106,19 +113,19 @@ const PerformTask2: React.FC = () => {
     }
   }, [audioChunks]);
 
-  const getAllRecordingsFromIndexDB = () => {
-    getRecordingsFromIndexedDB()
-      .then((recordings) => {
-        if (recordings.length > 0) {
-          const lastRecording = recordings[recordings.length - 1];
-          const audioBlobURL = URL.createObjectURL(lastRecording);
-          setAudioClip(audioBlobURL);
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting recordings:", error);
-      });
-  };
+  // const getAllRecordingsFromIndexDB = () => {
+  //   getRecordingsFromIndexedDB()
+  //     .then((recordings) => {
+  //       if (recordings.length > 0) {
+  //         const lastRecording = recordings[recordings.length - 1];
+  //         const audioBlobURL = URL.createObjectURL(lastRecording);
+  //         setAudioClip(audioBlobURL);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error getting recordings:", error);
+  //     });
+  // };
 
   const getRecordedAudioByAudioId = () => {
     getRecordingsFromIndexedDBByKeyStore(selectedTask.id)
@@ -138,23 +145,31 @@ const PerformTask2: React.FC = () => {
     e.preventDefault();
     const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
     saveRecordingToIndexedDB(audioBlob, selectedTask.id)
-      .then((id) => {
-        let userTasks = JSON.parse(localStorage.getItem("tasks"));
-        let user = userTasks.find(function (item) {
-          return item.phone === localStorage.getItem("phone");
+      .then(async (id) => {
+        let userTasks = await JSON.parse(localStorage.getItem("tasks"));
+        let user = userTasks[0];
+        // let user = (userTasks.find(function (item) {
+        //   return item.phone === localStorage.getItem("phone");
+        // })) || userTasks[0];
+        let updatedTasks =
+          user &&
+          user.tasks.map((item) =>
+            item.id === selectedTask.id
+              ? { ...item, status: "Completed", audioSavedId: id }
+              : item
+          );
+        // userTasks = userTasks.map((item) => return
+        // { ...item, tasks: updatedTasks }
+        // );
+
+        userTasks = userTasks.map((item) => {
+          return {
+            ...item,
+            tasks: updatedTasks,
+          };
         });
-        let updatedTasks = user.tasks.map((item) =>
-          item.id === selectedTask.id
-            ? { ...item, status: "Completed", audioSavedId: id }
-            : item
-        );
-        userTasks = userTasks.map((item) =>
-          item.phone === localStorage.getItem("phone")
-            ? { ...item, tasks: updatedTasks }
-            : item
-        );
-        console.log(userTasks);
-        localStorage.setItem("tasks", JSON.stringify(userTasks));
+
+        await localStorage.setItem("tasks", JSON.stringify(userTasks));
         console.log("Audio saved to the API.");
         history.push("/dashboard/tasks/completed");
       })
@@ -210,10 +225,7 @@ const PerformTask2: React.FC = () => {
             selectedTask.type === "Text To audio") && (
             <div>
               <IonLabel className="label-with-margin">Text input</IonLabel>
-              <Textarea
-                value={selectedTask.input}
-                size={SIZE.large}
-              />
+              <Textarea value={selectedTask.input} size={SIZE.large} />
               {/* <IonTextarea
                 style={{
                   background: "#f3f3f3", // Set the grey background color
@@ -230,12 +242,14 @@ const PerformTask2: React.FC = () => {
             selectedTask.type === "Audio To Audio") && (
             <div>
               <h5>Input audio</h5>
-              <AudioPlayer audioSrc={"assets/sample-audio-clip.mp3"} />
+              <AudioPlayer audioSrc={"assets/"+selectedTask.input} />
             </div>
           )}
 
           {/* Label for Audio Recording */}
-          {selectedTask.status === "new" && <IonLabel className="label-with-margin">Record audio</IonLabel>}
+          {selectedTask.status === "new" && (
+            <IonLabel className="label-with-margin">Record audio</IonLabel>
+          )}
           <div>
             {/* Display the recorded audio for playback (Step 4) */}
             {audioChunks.length > 0 && (
@@ -285,10 +299,9 @@ const PerformTask2: React.FC = () => {
           </div>
 
           {/* Centered Audio Recording Component */}
-          <IonGrid style={{ width: "100%" }}>
+          <div style={{ width: "100%",marginTop:'20px' }}>
             {isRecording ? (
-              <IonRow>
-                <IonCol
+              <div
                   style={{
                     height: "300px",
                     backgroundColor: "#000",
@@ -299,16 +312,17 @@ const PerformTask2: React.FC = () => {
                   }}
                 >
                   <div style={audioRecordingStyle} onClick={stopRecording}>
-                    <div className="tap-save-container">
+                  <span>Recording in progress...</span>
+                    <div className="tap-save-container" style={{width: '100px',height: '100px'}}>
                       <IonIcon icon={saveOutline} className="tap-save-icon" />
+                      
                     </div>
                     <span className="save-text">Tap to Save</span>
                   </div>
-                </IonCol>
-              </IonRow>
+              </div>
             ) : (
-              <IonRow>
-                <IonCol
+              <div>
+                <div
                   style={{
                     height: "300px",
                     backgroundColor: "#f3f3f3",
@@ -330,15 +344,15 @@ const PerformTask2: React.FC = () => {
                       expand="block"
                       color="primary"
                       className="ion-small"
-                      disabled={selectedTask.status==="Completed"}
+                      disabled={selectedTask.status === "Completed"}
                     >
                       Start Recording
                     </IonButton>
                   </div>
-                </IonCol>
-              </IonRow>
+                </div>
+              </div>
             )}
-          </IonGrid>
+          </div>
           {/* <div className="button-container">
             <IonButton
               expand="block"
@@ -369,14 +383,32 @@ const PerformTask2: React.FC = () => {
             </IonButton>
           </div> */}
           <ButtonDock
-            primaryAction={<Button onClick={(e) => saveAudioToAPI(e)}
-            disabled={selectedTask.status === "Completed"}>Submit</Button>}
+            primaryAction={
+              <Button
+                onClick={(e) => saveAudioToAPI(e)}
+                disabled={selectedTask.status === "Completed"}
+              >
+                Submit
+              </Button>
+            }
             secondaryActions={[
-              <Button kind={KIND.secondary} key="first"  onClick={(e) => history.push("/dashboard/help")}  disabled={selectedTask.status === "Completed"}>
+              <Button
+                kind={KIND.secondary}
+                key="first"
+                onClick={(e) => history.push("/dashboard/help")}
+                disabled={selectedTask.status === "Completed"}
+              >
                 Help
               </Button>,
             ]}
-            dismissiveAction={<Button kind={KIND.tertiary} onClick={(e) => history.push("/dashboard/tasks")} >Cancel</Button>}
+            dismissiveAction={
+              <Button
+                kind={KIND.tertiary}
+                onClick={(e) => history.push("/dashboard/tasks")}
+              >
+                Cancel
+              </Button>
+            }
           />
         </div>
       </IonContent>
@@ -388,9 +420,9 @@ const audioRecordingStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  height: "100px",
+  // height: "100px",
   color: "#fff",
-  width: "100px",
+  // width: "100px",
   borderRadius: "50%",
   gap: "2px",
 };

@@ -15,9 +15,10 @@ const MyTasks: React.FC = () => {
   };
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = (userTasks && userTasks.find(function(item){
-      return item.phone===localStorage.getItem("phone")
-    })) || userTasks[0]
+    let user = userTasks[0]
+    // let user = (userTasks && userTasks.find(function(item){
+    //   return item.phone===localStorage.getItem("phone")
+    // })) || userTasks[0]
     if(user){
       let inProgressTasks = user.tasks && user.tasks.filter(function(item){
         return item.status==='In Progress'
@@ -42,29 +43,30 @@ const MyTasks: React.FC = () => {
   };
   return (
     <React.Fragment>
-      <IonSegment onIonChange={handleSegmentChange} value={selectedSegment} style={{marginTop:'30px'}}>
+      {/* <IonSegment onIonChange={handleSegmentChange} value={selectedSegment} style={{marginTop:'30px'}}> */}
         {/* <IonSegmentButton value="inProgress" style={{'textTransform': 'capitalize'}}>
           <div className="mytask-segment-content">
             <div className="mytask-segment-text">In Progress</div>
             {selectedSegment === 'inProgress' && <IonBadge className="mytask-segmnet-badge">{inProgressCount}</IonBadge>}
           </div>
         </IonSegmentButton> */}
-        <IonSegmentButton value="completed" style={{'textTransform': 'capitalize'}}>
+        {/* <IonSegmentButton value="completed" style={{'textTransform': 'capitalize'}}>
           <div className="mytask-segment-content">
-            <div className="mytask-segment-text">Completed</div>
+            <div className="mytask-segment-text">Completed</div> */}
             {/* {selectedSegment === 'completed' && <IonBadge  className="mytask-segmnet-badge">{completedCount}</IonBadge>} */}
-          </div>
-        </IonSegmentButton>
+          {/* </div>
+        </IonSegmentButton> */}
         {/* <IonSegmentButton value="blocked" style={{'textTransform': 'capitalize'}}>
           <div className="mytask-segment-content">
             <div className="mytask-segment-text">Blocked</div>
             {selectedSegment === 'blocked' &&<IonBadge className="mytask-segmnet-badge">{blockedCount}</IonBadge>}
           </div>
         </IonSegmentButton> */}
-      </IonSegment>
+      {/* </IonSegment> */}
       {/* {selectedSegment === 'inProgress' && <InProgressTasks />} */}
-      {selectedSegment === 'completed' && <CompletedTasks />}
+      {/* {selectedSegment === 'completed' && <CompletedTasks />} */}
       {/* {selectedSegment === 'blocked' && <BlockedTasks />} */}
+      <CompletedTasks />
     </React.Fragment>
   );
 };

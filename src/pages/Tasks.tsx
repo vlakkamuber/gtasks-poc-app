@@ -45,11 +45,12 @@ const Tasks: React.FC = () => {
 
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user =
-      (userTasks &&
-      userTasks.find(function (item) {
-        return item.phone === localStorage.getItem("phone");
-      }) ) || userTasks[0]
+    let user = userTasks[0]
+    // let user =
+    //   (userTasks &&
+    //   userTasks.find(function (item) {
+    //     return item.phone === localStorage.getItem("phone");
+    //   }) ) || userTasks[0]
     if (user) {
       let newTasks =
         user.tasks &&
@@ -177,7 +178,7 @@ const Tasks: React.FC = () => {
                               <IonLabel>
                                 <span style={{ display: "flex" }}>
                                   <h2>
-                                    {task.name} {task.id}{" "}
+                                    {task.name}{" "}
                                   </h2>
                                   <IonBadge
                                     color="primary"
