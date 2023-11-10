@@ -50,6 +50,7 @@ const PerformTask2: React.FC = () => {
   const [audioClip, setAudioClip] = useState("");
   const [savedAudio, setSavedAudio] = useState("");
   const [selectedTask, setSelectedTask] = useState({});
+  const [submitted,setSubmitted] = useState(false)
   useEffect(() => {
     const fetchTasks = async () => {
       let userTasks = JSON.parse(localStorage.getItem("tasks"));
@@ -82,6 +83,8 @@ const PerformTask2: React.FC = () => {
 
   const startRecording = async () => {
     setIsRecording(true);
+    setSubmitted(false)
+    audioChunks.length=0
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream);
@@ -105,6 +108,7 @@ const PerformTask2: React.FC = () => {
 
   const stopRecording = () => {
     if (mediaRecorder) {
+      audioChunks.length=0
       mediaRecorder.stop();
       setIsRecording(false);
     }
@@ -147,6 +151,7 @@ const PerformTask2: React.FC = () => {
 
   const saveAudioToAPI = async (e) => {
     e.preventDefault();
+    setSubmitted(true)
     const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
     saveRecordingToIndexedDB(audioBlob, selectedTask.id)
       .then(async (id) => {
@@ -414,7 +419,7 @@ const PerformTask2: React.FC = () => {
             primaryAction={
               <Button
                 onClick={(e) => saveAudioToAPI(e)}
-                disabled={selectedTask.status === "Completed"}
+                disabled={selectedTask.status === "Completed" || audioChunks.length===0 || submitted===true}
               >
                 Submit
               </Button>
