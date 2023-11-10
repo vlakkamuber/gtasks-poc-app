@@ -187,7 +187,7 @@ const Tasks: React.FC = () => {
                                     {task.status}
                                   </IonBadge>
                                 </span>{" "}
-                                <p>Payouts: {task.pay}</p>
+                                <p>Payouts: ${task.pay}</p>
                                 <p>
                                   <small>
                                     Created date: {task.startDate} Due date:{" "}

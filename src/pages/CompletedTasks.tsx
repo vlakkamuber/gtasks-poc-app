@@ -57,7 +57,7 @@ const CompletedTasks: React.FC = () => {
                 }}
               >
                 <h1 style={{ margin: "0", marginBottom: "-4px" }}>{key}</h1>
-                <span>View all</span>
+                {/* <span>View all</span> */}
               </div>
 
               <p style={{ margin: "0" }}>
@@ -71,7 +71,7 @@ const CompletedTasks: React.FC = () => {
                     <IonItem>
                       <IonLabel>
                         <span style={{ display: "flex" }}>
-                          <h2>{task.name} {task.id}</h2>
+                          <h2>{task.name}</h2>
                           <IonBadge
                             color="primary"
                             className={`status-text-completed`}

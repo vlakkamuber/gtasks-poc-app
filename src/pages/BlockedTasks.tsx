@@ -50,7 +50,7 @@ const BlockedTasks: React.FC = () => {
                 }}
               >
                 <h1 style={{ margin: "0", marginBottom: "-4px" }}>{key}</h1>
-                <span>View all</span>
+                {/* <span>View all</span> */}
               </div>
 
               <p style={{ margin: "0" }}>

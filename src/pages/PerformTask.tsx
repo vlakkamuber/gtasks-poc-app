@@ -197,6 +197,7 @@ const PerformTask: React.FC = () => {
             flexDirection: "column",
             padding: "10px",
             margin: "20px",
+            marginBottom:'0px'
           }}
         >
           {(selectedTask.type === "Text to audio" ||

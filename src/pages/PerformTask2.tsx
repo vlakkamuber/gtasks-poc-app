@@ -202,9 +202,9 @@ const PerformTask2: React.FC = () => {
             margin: "20px",
           }}
         >
-          <h4 className="no-padding-margin">
-            {selectedTask.name} {selectedTask.id}
-          </h4>
+          <h2 className="no-padding-margin" style={{marginBottom: '8px'}}>
+            {selectedTask.name}
+          </h2>
           <p className="no-padding-margin" style={{ fontSize: "0.9rem" }}>
             <samll>
               Created date: {selectedTask.startDate} Due date:{" "}
@@ -222,14 +222,21 @@ const PerformTask2: React.FC = () => {
             justifyContent: "center",
             flexDirection: "column",
             padding: "10px",
-            margin: "20px",
+            marginLeft:'20px',
+            marginRight:'20px'
           }}
         >
           {(selectedTask.type === "Text to audio" ||
-            selectedTask.type === "Text To audio") && (
+            selectedTask.type === "Text to Audio") && (
             <div>
-              <IonLabel className="label-with-margin">Text input</IonLabel>
-              <Textarea value={selectedTask.input} size={SIZE.large} />
+              <IonLabel className="label-with-margin">Text Input</IonLabel>
+              <Textarea value={selectedTask.input}  style={{marginTop:'10px'}} rows="1" overrides={{
+            Root: {
+              style: () => ({
+                marginTop:'10px'
+              })
+            },
+          }}/>
               {/* <IonTextarea
                 style={{
                   background: "#f3f3f3", // Set the grey background color
@@ -243,18 +250,18 @@ const PerformTask2: React.FC = () => {
             </div>
           )}
           {(selectedTask.type === "Audio to audio" ||
-            selectedTask.type === "Audio To Audio") && (
+            selectedTask.type === "Audio to Audio") && (
             <div>
-              <h5>Input audio</h5>
+              <h5>Input Audio</h5>
               <AudioPlayer audioSrc={"assets/" + selectedTask.input} />
             </div>
           )}
 
           {/* Label for Audio Recording */}
           {selectedTask.status === "new" && (
-            <IonLabel className="label-with-margin">Record audio</IonLabel>
+            <IonLabel className="label-with-margin" style={{marginTop:'20px'}}>Record Audio</IonLabel>
           )}
-          <div>
+          <div style={{marginTop:'10px'}}>
             {/* Display the recorded audio for playback (Step 4) */}
             {audioChunks.length > 0 && (
               <AudioPlayer
@@ -265,11 +272,11 @@ const PerformTask2: React.FC = () => {
             )}
             {selectedTask.status === "Completed" && (
               <div>
-                <h5>Output audio</h5>
+                <h5>Output Audio</h5>
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent: "",
                     alignItems: "center",
                     marginBottom: "5px",
                   }}
@@ -284,30 +291,30 @@ const PerformTask2: React.FC = () => {
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      width: "60vw",
+                      width: "80vw",
                     }}
                   >
                     <AudioPlayer audioSrc={savedAudio} />
                   </div>
-                  <div className="icon-container">
+                  {/* <div className="icon-container">
                     <div className="icon">
                       <IonIcon icon={pencil}></IonIcon>
                     </div>
                     <div className="icon">
                       <IonIcon icon={trash}></IonIcon>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
           </div>
 
           {/* Centered Audio Recording Component */}
-          <div style={{ width: "100%", marginTop: "20px" }}>
+          {(selectedTask.status === "new" || selectedTask.status === "New" )  &&  <div style={{ width: "100%", marginTop: "10px" }}>
             {isRecording ? (
               <div
                 style={{
-                  height: "300px",
+                  height: "200px",
                   backgroundColor: "#000",
                   display: "flex",
                   justifyContent: "center",
@@ -330,7 +337,7 @@ const PerformTask2: React.FC = () => {
               <div>
                 <div
                   style={{
-                    height: "300px",
+                    height: "200px",
                     backgroundColor: "#f3f3f3",
                     display: "flex",
                     justifyContent: "center",
@@ -365,7 +372,7 @@ const PerformTask2: React.FC = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div>}
           {/* <div className="button-container">
             <IonButton
               expand="block"
@@ -395,7 +402,15 @@ const PerformTask2: React.FC = () => {
               Cancel
             </IonButton>
           </div> */}
-          <ButtonDock
+          {(selectedTask.status === "new" || selectedTask.status === "New" )  && <ButtonDock
+          overrides={{
+            Root: {
+              style: () => ({
+                paddingLeft:'0px',
+                paddingRight:'0px'
+              })
+            },
+          }}
             primaryAction={
               <Button
                 onClick={(e) => saveAudioToAPI(e)}
@@ -422,7 +437,7 @@ const PerformTask2: React.FC = () => {
                 Cancel
               </Button>
             }
-          />
+          />}
         </div>
       </IonContent>
     </IonPage>

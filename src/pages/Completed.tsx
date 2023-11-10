@@ -27,10 +27,10 @@ const Completed: React.FC = () => {
             width="30%"
           />
           <h4>Completed</h4>
-          <p>{selectedTask.type}</p>
+          <p>{selectedTask.name}</p>
           <p>Good job!</p>
           <div className="button-container-completed">
-            <Button kind={KIND.primary} onClick={()=>goToTasks()}>Back to tasks</Button>
+            <Button kind={KIND.primary} onClick={()=>goToTasks()}>Back to Tasks</Button>
             <Button kind={KIND.secondary} onClick={()=>goToTasks()}>Exit</Button>
           </div>
         </div>
