@@ -32,7 +32,7 @@ import {
   getRecordingsFromIndexedDBByKeyStore,
 } from "./IndexDb";
 import { ButtonDock } from "baseui/button-dock";
-import { Button, KIND } from "baseui/button";
+import { Button, KIND,SHAPE } from "baseui/button";
 import { Textarea } from "baseui/textarea";
 import { SIZE } from "baseui/input";
 const PerformTask2: React.FC = () => {
@@ -242,7 +242,7 @@ const PerformTask2: React.FC = () => {
             selectedTask.type === "Audio To Audio") && (
             <div>
               <h5>Input audio</h5>
-              <AudioPlayer audioSrc={"assets/"+selectedTask.input} />
+              <AudioPlayer audioSrc={"assets/" + selectedTask.input} />
             </div>
           )}
 
@@ -299,26 +299,28 @@ const PerformTask2: React.FC = () => {
           </div>
 
           {/* Centered Audio Recording Component */}
-          <div style={{ width: "100%",marginTop:'20px' }}>
+          <div style={{ width: "100%", marginTop: "20px" }}>
             {isRecording ? (
               <div
-                  style={{
-                    height: "300px",
-                    backgroundColor: "#000",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <div style={audioRecordingStyle} onClick={stopRecording}>
+                style={{
+                  height: "300px",
+                  backgroundColor: "#000",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: "10px",
+                }}
+              >
+                <div style={audioRecordingStyle} onClick={stopRecording}>
                   <span>Recording in progress...</span>
-                    <div className="tap-save-container" style={{width: '100px',height: '100px'}}>
-                      <IonIcon icon={saveOutline} className="tap-save-icon" />
-                      
-                    </div>
-                    <span className="save-text">Tap to Save</span>
+                  <div
+                    className="tap-save-container"
+                    style={{ width: "100px", height: "100px" }}
+                  >
+                    <IonIcon icon={saveOutline} className="tap-save-icon" />
                   </div>
+                  <span className="save-text">Tap to Save</span>
+                </div>
               </div>
             ) : (
               <div>
@@ -332,22 +334,26 @@ const PerformTask2: React.FC = () => {
                     borderRadius: "10px",
                   }}
                 >
-                  <div style={audioRecordingStyle} onClick={startRecording}>
+                  <div style={audioRecordingStyle}>
                     <div>
                       <IonIcon
                         icon={micOutline}
                         style={{ fontSize: "4rem", color: "#467ff4" }}
                       ></IonIcon>
                     </div>
-
-                    <IonButton
+                    <Button shape={SHAPE.pill} size={SIZE.compact}
+                      disabled={selectedTask.status === "Completed"} onClick={startRecording}
+                    >
+                      Start Recording
+                    </Button>
+                    {/* <IonButton
                       expand="block"
                       color="primary"
                       className="ion-small"
                       disabled={selectedTask.status === "Completed"}
                     >
                       Start Recording
-                    </IonButton>
+                    </IonButton> */}
                   </div>
                 </div>
               </div>

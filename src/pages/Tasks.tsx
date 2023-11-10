@@ -63,12 +63,12 @@ const Tasks: React.FC = () => {
       })
       setAvailableCount(newTasks.length)
       setCompletedCount(completedTasks.length)
-      setTotalEarned(completedCount*200)
+      setTotalEarned(completedCount*2)
       
     }
   }, []);
   useEffect(()=>{
-    setTotalEarned(completedCount*200)
+    setTotalEarned(completedCount*2)
   },[completedCount])
 
   const goBack = () => {
