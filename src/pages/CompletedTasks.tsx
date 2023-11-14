@@ -83,7 +83,7 @@ const CompletedTasks: React.FC = () => {
                         <p>
                           <small>
                             Created date: {task.startDate} Due date:{" "}
-                            {task.startDate}
+                            {task.endDate}
                           </small>
                         </p>
                       </IonLabel>
