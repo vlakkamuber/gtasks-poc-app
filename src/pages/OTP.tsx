@@ -71,7 +71,7 @@ const OTP: React.FC = () => {
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton> */}
            <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login")}><ArrowLeft/></Button>
-          <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login-success")}>Next <ArrowRight/></Button>
+          <Button shape={SHAPE.pill} kind={otp.every((digit) => digit !== "") ? KIND.primary : KIND.secondary} onClick={() => history.push("/login-success")} disabled={otp.every((digit) => digit !== "") ? false : true}>Next <ArrowRight/></Button>
         </div>
       </IonContent>
     </IonPage>

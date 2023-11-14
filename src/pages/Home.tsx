@@ -44,14 +44,14 @@ const Home: React.FC = () => {
       <IonContent fullscreen>
         <div style={{display:'flex',justifyContent:'space-between',padding:'15px',alignItems:'center'}}>
           <div>
-            <h4 className="mt-0 mb-0">Tasks Hub</h4>
+            <h3 className="mt-0 mb-0">Tasks Hub</h3>
             <p className="mt-0 mb-0">Localize text and audio documents.</p>
           </div>
           <IonButton routerLink="/dashboard/tasks" style={{
-                                  "--background": "#f3f3f3",
+                                  "--background": "#000",
                                   "--border-radius": "23px",
                                   "height": "30px",
-                                  "color": "rgb(0, 0, 0)",
+                                  "color": "#fff",
                                   "fontSize": "0.7rem"
                                 }}>
             View all tasks
