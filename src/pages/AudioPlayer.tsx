@@ -36,7 +36,12 @@ const AudioPlayer = ({ audioSrc }) => {
     wavesurfer.current.load(audioSrc);
     wavesurfer.current.on('ready', () => {
         setDuration(wavesurfer.current.getDuration());
-      });
+    });
+    wavesurfer.current.on('finish', () => {
+      // Pause the audio when it reaches the end
+      wavesurfer.current.pause();
+      setIsPlaying(false);
+    });
 
     // Clean up Wavesurfer on unmount
     return () => {
