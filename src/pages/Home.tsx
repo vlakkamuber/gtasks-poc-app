@@ -57,7 +57,7 @@ const Home: React.FC = () => {
             View all tasks
           </IonButton>
         </div>
-        <IonCard style={{borderRadius:'10px'}} onClick={()=>history.push("/dashboard/tasks")}>
+        <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
           <img
             alt="Silhouette of mountains"
             src="assets/text_to_audio.png"
@@ -73,7 +73,7 @@ const Home: React.FC = () => {
             English and record the voice with the same .
           </IonCardContent>
         </IonCard>
-        <IonCard style={{borderRadius:'10px'}} onClick={()=>history.push("/dashboard/tasks")}>
+        <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
           <img
             alt="Silhouette of mountains"
             src="assets/audio_to_audio.png"
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
             English and record the voice with the same .
           </IonCardContent>
         </IonCard>
-        <IonCard style={{borderRadius:'10px'}} onClick={()=>history.push("/dashboard/tasks")}>
+        <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
           <img
             alt="Silhouette of mountains"
             src="assets/text_to_image.png"
