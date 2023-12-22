@@ -12,6 +12,9 @@ import {Block} from 'baseui/block';
 import { useHistory } from "react-router";
 const OTP: React.FC = () => {
   const history = useHistory()
+  const [error, setError] = useState("");
+  const [flag, setFlag] = useState(false);
+  const [result, setResult] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = [
     useRef(null),
@@ -30,6 +33,17 @@ const OTP: React.FC = () => {
     const updatedOtp = [...otp];
     updatedOtp[index] = e.target.value;
     setOtp(updatedOtp);
+  };
+  const verifyOtp = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (otp === "" || otp === null) return;
+    try {
+      await result.confirm(otp);
+      navigate("/students");
+    } catch (err) {
+      setError(err.message);
+    }
   };
   return (
     <IonPage style={{padding:'15px'}}>
@@ -71,7 +85,7 @@ const OTP: React.FC = () => {
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton> */}
            <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login")}><ArrowLeft/></Button>
-          <Button shape={SHAPE.pill} kind={otp.every((digit) => digit !== "") ? KIND.primary : KIND.secondary} onClick={() => history.push("/login-success")} disabled={otp.every((digit) => digit !== "") ? false : true}>Next <ArrowRight/></Button>
+          <Button shape={SHAPE.pill} kind={otp.every((digit) => digit !== "") ? KIND.primary : KIND.secondary} onClick={(e) => verifyOtp(e)} disabled={otp.every((digit) => digit !== "") ? false : true}>Next <ArrowRight/></Button>
         </div>
       </IonContent>
     </IonPage>

@@ -38,10 +38,12 @@ import Completed from './pages/Completed';
 import LoginSuccess from './pages/LoginSuccess';
 import PerformTask2 from './pages/PerformTask2';
 import Help from './pages/Help';
+import { UserAuthContextProvider } from './context/UserAuthContext';
 
 setupIonicReact();
 
 const App: React.FC = () => (
+  <UserAuthContextProvider>
   <IonReactRouter forceRefresh={true}>
     <IonRouterOutlet>
       <Route path="/home" component={HomeScreen} exact />
@@ -59,6 +61,7 @@ const App: React.FC = () => (
       <Redirect exact from="/" to="/home" />
     </IonRouterOutlet>
   </IonReactRouter>
+  </UserAuthContextProvider>
 );
 
 export default App;
