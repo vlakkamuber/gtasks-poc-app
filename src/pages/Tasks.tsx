@@ -23,8 +23,10 @@ import {
 } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import MyTasks from "./MyTasks";
+import { useTranslation } from 'react-i18next';
 
 const Tasks: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState("available_task");
   const [user, setUser] = useState({});
   const [tasks, setTasks] = useState([]);
@@ -86,14 +88,14 @@ const Tasks: React.FC = () => {
           {/* <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
           </IonButtons> */}
-          <IonTitle className="ion-text-center">Tasks</IonTitle>
+          <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start">
         <div className="tasks-info" style={{ marginTop: "30px" }}>
           <div className="task-detail">
             <div style={{ color: "#5e5e5e" }}>
-              <IonIcon icon={people} /> Completed tasks
+              <IonIcon icon={people} /> {t(`dcag.tasks.page.completedTask.label`)}
             </div>
             <div style={{ fontSize: "2rem" }}>{completedCount}</div>
           </div>
@@ -103,7 +105,7 @@ const Tasks: React.FC = () => {
           ></div>
           <div className="task-count">
             <div style={{ color: "#5e5e5e" }}>
-              <IonIcon icon={business} /> You earned
+              <IonIcon icon={business} /> {t(`dcag.tasks.page.youEarned.label`)}
             </div>
             <div style={{ fontSize: "2rem" }}>${totalEarned}</div>
           </div>
@@ -123,7 +125,7 @@ const Tasks: React.FC = () => {
             }
           >
             <div className="mytask-segment-content">
-              <div className="mytask-segment-text"> Available tasks </div>
+              <div className="mytask-segment-text"> {t(`dcag.tasks.tabs.availableTask.label`)} </div>
               {availableCount > 0 && <IonBadge className="mytask-segmnet-badge">{availableCount}</IonBadge>}
             </div>
           </IonSegmentButton>
@@ -137,7 +139,7 @@ const Tasks: React.FC = () => {
           >
             {" "}
             <div className="mytask-segment-content">
-              <div className="mytask-segment-text"> My tasks </div>
+              <div className="mytask-segment-text"> {t(`dcag.tasks.tabs.myTask.label`)} </div>
               {completedCount > 0&& <IonBadge className="mytask-segmnet-badge">{completedCount}</IonBadge>}
             </div>
           </IonSegmentButton>
@@ -158,10 +160,10 @@ const Tasks: React.FC = () => {
                         }}
                       >
                         <h1 style={{ margin: "0", marginBottom: "-4px" }}>
-                          {key}
+                        {t(`dcag.tasks.${key.replace(/\s+/g, '')}.title`)}
                         </h1>
                         <span style={{ color: "#467ff4" }}>
-                          {tasks[key].length} New
+                          {tasks[key].length} {t(`dcag.home.btn.new.label`)}
                         </span>
                       </div>
 
@@ -183,13 +185,13 @@ const Tasks: React.FC = () => {
                                     color="primary"
                                     className={`status-text-${task.status}`}
                                   >
-                                    {task.status}
+                                    {t(`dcag.home.taskHub.status.${task.status}`)}
                                   </IonBadge>
                                 </span>{" "}
-                                <p>Payouts: ${task.pay}</p>
+                                <p>{t(`dcag.tasks.payouts.label`)}: ${task.pay}</p>
                                 <p>
                                   <small>
-                                    Created date: {task.startDate} Due date:{" "}
+                                  {t(`dcag.tasks.createdAt.label`)}: {task.startDate} {t(`dcag.tasks.dueDate.label`)}:{" "}
                                     {task.endDate}
                                   </small>
                                 </p>
@@ -202,7 +204,7 @@ const Tasks: React.FC = () => {
                                 }}
                                 onClick={(e) => goToPerformTask(e, task)}
                               >
-                                Start work
+                                {t(`dcag.home.btn.startWork.label`)}
                               </IonButton>
                             </IonItem>
                             {/* Add more IonItem elements as needed */}

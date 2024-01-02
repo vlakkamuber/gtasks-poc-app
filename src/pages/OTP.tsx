@@ -10,7 +10,9 @@ import {Button, KIND,SHAPE} from 'baseui/button';
 import {ArrowLeft,ArrowRight} from 'baseui/icon';
 import {Block} from 'baseui/block';
 import { useHistory } from "react-router";
+import { useTranslation } from 'react-i18next';
 const OTP: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory()
   const [error, setError] = useState("");
   const [flag, setFlag] = useState(false);
@@ -48,7 +50,7 @@ const OTP: React.FC = () => {
   return (
     <IonPage style={{padding:'15px'}}>
       <IonContent>
-        <p>Enter the 6 digit code sent you at:</p>
+        <p>{t(`dcag.home.verifyotp.label`)}</p>
         <p>{localStorage.getItem("phone")}</p>
         <div className="otp-input">
           {otp.map((value, index) => (
@@ -66,7 +68,7 @@ const OTP: React.FC = () => {
             Resend
           </IonButton> */}
           <Block marginBottom="scale300" />
-           <Button kind={KIND.secondary} shape={SHAPE.pill}>Resend</Button>
+           <Button kind={KIND.secondary} shape={SHAPE.pill}>{t(`dcag.home.verifyotp.resend.label`)}</Button>
         {/* Add a button to submit the OTP and handle the verification logic */}
         <div
           style={{
@@ -85,7 +87,7 @@ const OTP: React.FC = () => {
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton> */}
            <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login")}><ArrowLeft/></Button>
-          <Button shape={SHAPE.pill} kind={otp.every((digit) => digit !== "") ? KIND.primary : KIND.secondary} onClick={(e) => verifyOtp(e)} disabled={otp.every((digit) => digit !== "") ? false : true}>Next <ArrowRight/></Button>
+          <Button shape={SHAPE.pill} kind={otp.every((digit) => digit !== "") ? KIND.primary : KIND.secondary} onClick={(e) => verifyOtp(e)} disabled={otp.every((digit) => digit !== "") ? false : true}>{t(`dcag.home.verifyotp.nextBtn.label`)} <ArrowRight/></Button>
         </div>
       </IonContent>
     </IonPage>

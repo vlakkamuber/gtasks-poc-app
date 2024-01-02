@@ -35,7 +35,9 @@ import { ButtonDock } from "baseui/button-dock";
 import { Button, KIND, SHAPE } from "baseui/button";
 import { Textarea } from "baseui/textarea";
 import { SIZE } from "baseui/input";
+import { useTranslation } from 'react-i18next';
 const PerformTask2: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const params = useParams();
 
@@ -193,7 +195,7 @@ const PerformTask2: React.FC = () => {
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
           </IonButtons>
-          <IonTitle className="ion-text-center">Tasks</IonTitle>
+          <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -211,12 +213,12 @@ const PerformTask2: React.FC = () => {
           </h2>
           <p className="no-padding-margin" style={{ fontSize: "0.9rem" }}>
             <samll>
-              Created date: {selectedTask.startDate} Due date:{" "}
+            {t(`dcag.tasks.createdAt.label`)}: {selectedTask.startDate} {t(`dcag.tasks.dueDate.label`)}:{" "}
               {selectedTask.endDate}
             </samll>
           </p>
           <p className="no-padding-margin">
-            <span style={{ fontSize: "0.9rem" }}>Payouts:</span>{" "}
+            <span style={{ fontSize: "0.9rem" }}>{t(`dcag.tasks.payouts.label`)}:</span>{" "}
             <span style={{ fontWeight: "600" }}>${selectedTask.pay}</span>
           </p>
         </div>
@@ -233,7 +235,7 @@ const PerformTask2: React.FC = () => {
           {(selectedTask.type === "Text to audio" ||
             selectedTask.type === "Text to Audio") && (
             <div>
-              <IonLabel className="label-with-margin">Text Input</IonLabel>
+              <IonLabel className="label-with-margin">{t(`dcag.tasks.performTask.input.label`)}</IonLabel>
               <Textarea value={selectedTask.input}  style={{marginTop:'10px'}} rows="1" overrides={{
             Root: {
               style: () => ({
@@ -256,14 +258,14 @@ const PerformTask2: React.FC = () => {
           {(selectedTask.type === "Audio to audio" ||
             selectedTask.type === "Audio to Audio") && (
             <div>
-              <h5>Input Audio</h5>
+              <h5>{t(`dcag.tasks.performTask.input.label`)}</h5>
               <AudioPlayer audioSrc={"assets/" + selectedTask.input} />
             </div>
           )}
 
           {/* Label for Audio Recording */}
           {selectedTask.status === "new" && (
-            <IonLabel className="label-with-margin" style={{marginTop:'20px'}}>Record Audio</IonLabel>
+            <IonLabel className="label-with-margin" style={{marginTop:'20px'}}>{t(`dcag.tasks.performTask.recordAudio.label`)}</IonLabel>
           )}
           <div style={{marginTop:'10px'}}>
             {/* Display the recorded audio for playback (Step 4) */}
@@ -276,7 +278,7 @@ const PerformTask2: React.FC = () => {
             )}
             {selectedTask.status === "Completed" && (
               <div>
-                <h5>Output Audio</h5>
+                <h5>{t(`dcag.tasks.performTask.output.label`)}</h5>
                 <div
                   style={{
                     display: "flex",
@@ -334,7 +336,7 @@ const PerformTask2: React.FC = () => {
                   >
                     <IonIcon icon={saveOutline} className="tap-save-icon" />
                   </div>
-                  <span className="save-text">Tap to Save</span>
+                  <span className="save-text">{t(`dcag.home.btn.tapToSave.label`)}</span>
                 </div>
               </div>
             ) : (
@@ -362,7 +364,7 @@ const PerformTask2: React.FC = () => {
                       disabled={selectedTask.status === "Completed"}
                       onClick={startRecording}
                     >
-                      Start Recording
+                      {t(`dcag.home.btn.startRecording.label`)}
                     </Button>
                     {/* <IonButton
                       expand="block"
@@ -420,7 +422,7 @@ const PerformTask2: React.FC = () => {
                 onClick={(e) => saveAudioToAPI(e)}
                 disabled={selectedTask.status === "Completed" || audioChunks.length===0 || submitted===true}
               >
-                Submit
+                {t(`dcag.home.btn.submit.label`)}
               </Button>
             }
             secondaryActions={[
@@ -430,7 +432,7 @@ const PerformTask2: React.FC = () => {
                 onClick={(e) => history.push("/dashboard/help")}
                 disabled={selectedTask.status === "Completed"}
               >
-                Help
+                {t(`dcag.home.btn.help.label`)}
               </Button>,
             ]}
             dismissiveAction={
@@ -438,7 +440,7 @@ const PerformTask2: React.FC = () => {
                 kind={KIND.tertiary}
                 onClick={(e) => history.push("/dashboard/tasks")}
               >
-                Cancel
+                {t(`dcag.home.btn.cancel.label`)}
               </Button>
             }
           />}

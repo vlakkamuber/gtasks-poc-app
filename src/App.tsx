@@ -39,12 +39,17 @@ import LoginSuccess from './pages/LoginSuccess';
 import PerformTask2 from './pages/PerformTask2';
 import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
+import LanguageSwitcher from './pages/LanguageSwitcher';
+import { LanguageProvider } from './context/LanguageContext';
+import i18n from './i18n';
 
 setupIonicReact();
 
 const App: React.FC = () => (
+  // <LanguageProvider i18n={i18n}>
   <UserAuthContextProvider>
-  <IonReactRouter forceRefresh={true}>
+
+  <IonReactRouter>
     <IonRouterOutlet>
       <Route path="/home" component={HomeScreen} exact />
       <Route path="/login" component={Login} exact />
@@ -53,15 +58,16 @@ const App: React.FC = () => (
       <Route path="/dashboard" component={Dashboard} exact />
       <Route path="/dashboard/home" render={() => <Dashboard content={<Home />} />} exact />
       <Route path="/dashboard/training" render={() => <Dashboard content={<Training />} />} exact />
-      <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks />} />} exact forceRefresh={true}/>
-      <Route path="/dashboard/account" render={() => <Dashboard content={<Account />} />} exact forceRefresh={true}/>
-      <Route path="/dashboard/help" render={() => <Dashboard content={<Help />} />} exact forceRefresh={true}/>
-      <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask2} exact forceRefresh={true}/>
-      <Route path="/dashboard/tasks/completed" component={Completed} exact forceRefresh={true}/>
+      <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks />} />} exact/>
+      <Route path="/dashboard/account" render={() => <Dashboard content={<Account />} />} exact/>
+      <Route path="/dashboard/help" render={() => <Dashboard content={<Help />} />} exact/>
+      <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask2} exact />
+      <Route path="/dashboard/tasks/completed" component={Completed} exact/>
       <Redirect exact from="/" to="/home" />
     </IonRouterOutlet>
   </IonReactRouter>
   </UserAuthContextProvider>
+  // </LanguageProvider>
 );
 
 export default App;

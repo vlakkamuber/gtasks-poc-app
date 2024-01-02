@@ -7,8 +7,10 @@ import {
 import { useHistory } from "react-router-dom";
 import { chevronForward } from "ionicons/icons";
 import React, { useState,useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 const CompletedTasks: React.FC = () => {
+  const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
 
   const history = useHistory();
@@ -56,7 +58,7 @@ const CompletedTasks: React.FC = () => {
                   alignItems: "center",
                 }}
               >
-                <h1 style={{ margin: "0", marginBottom: "-4px" }}>{key}</h1>
+                <h1 style={{ margin: "0", marginBottom: "-4px" }}>{t(`dcag.tasks.${key.replace(/\s+/g, '')}.title`)}</h1>
                 {/* <span>View all</span> */}
               </div>
 
@@ -76,13 +78,13 @@ const CompletedTasks: React.FC = () => {
                             color="primary"
                             className={`status-text-completed`}
                           >
-                            {task.status}
+                             {t(`dcag.home.taskHub.status.${task.status}`)}
                           </IonBadge>
                         </span>{" "}
-                        <p>Payouts: ${task.pay}</p>
+                        <p>{t(`dcag.tasks.payouts.label`)}: ${task.pay}</p>
                         <p>
                           <small>
-                            Created date: {task.startDate} Due date:{" "}
+                          {t(`dcag.tasks.createdAt.label`)}: {task.startDate} {t(`dcag.tasks.dueDate.label`)}:{" "}
                             {task.endDate}
                           </small>
                         </p>

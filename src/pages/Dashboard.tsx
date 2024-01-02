@@ -10,37 +10,39 @@ import {
   IonRouterOutlet,
 } from "@ionic/react";
 import { home, schoolOutline, person, list } from "ionicons/icons";
+import { useTranslation } from 'react-i18next';
 
 const Dashboard: React.FC = ({content}) => {
+  const { t } = useTranslation();
   return (
     <IonTabs>
       <IonRouterOutlet>
       <Redirect exact from="/dashboard" to="/dashboard/home" />
         <Route path="/dashboard/home" render={() => <>{content}</>} />
         <Route path="/dashboard/training" render={() => <>{content}</>} />
-        <Route path="/dashboard/tasks" render={() => <>{content}</>} forceRefresh={true}/>
-        <Route path="/dashboard/account" render={() => <>{content}</>} forceRefresh={true}/>
-        <Route path="/dashboard/help" render={() => <>{content}</>} forceRefresh={true}/>
+        <Route path="/dashboard/tasks" render={() => <>{content}</>}/>
+        <Route path="/dashboard/account" render={() => <>{content}</>}/>
+        <Route path="/dashboard/help" render={() => <>{content}</>}/>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/dashboard/home">
           <IonIcon icon={home} />
-          <IonLabel>Home</IonLabel>
+          <IonLabel>{t(`dcag.home.bottomTabs.home`)}</IonLabel>
         </IonTabButton>
         <IonTabButton tab="tasks" href="/dashboard/tasks">
           <IonIcon icon={list} />
-          <IonLabel>Tasks</IonLabel>
+          <IonLabel>{t(`dcag.home.bottomTabs.tasks`)}</IonLabel>
         </IonTabButton>
 
         <IonTabButton tab="training" href="/dashboard/training">
           <IonIcon icon={schoolOutline} />
-          <IonLabel>Training</IonLabel>
+          <IonLabel>{t(`dcag.home.bottomTabs.training`)}</IonLabel>
         </IonTabButton>
 
         
         <IonTabButton tab="account" href="/dashboard/account">
           <IonIcon icon={person} />
-          <IonLabel>Account</IonLabel>
+          <IonLabel>{t(`dcag.home.bottomTabs.account`)}</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>

@@ -13,6 +13,7 @@ import { Button, KIND, SHAPE } from "baseui/button";
 import {Block} from 'baseui/block';
 import { ArrowLeft, ArrowRight } from "baseui/icon";
 import { useUserAuth } from "../context/UserAuthContext";
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const [phone, setPhone] = useState("");
@@ -20,6 +21,7 @@ const Login = () => {
   const [result, setResult] = useState("");
   const [flag, setFlag] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const { t } = useTranslation();
   const inputRefs = [
     useRef(null),
     useRef(null),
@@ -85,7 +87,7 @@ const Login = () => {
     <IonPage style={{ padding: "15px" }}>
       {flag===false && <IonContent>
         <label style={{ fontWeight: "600", fontSize: "1.4rem" }}>
-          What's your mobile number?
+        {t(`dcag.home.otp.mobilenumber.label`)}
         </label>
         <div
           style={{
@@ -119,9 +121,7 @@ const Login = () => {
 
         <p style={{ padding: "10px" }}>
           <small>
-            By proceeding, you consent to get calls, Whatsapp or SMS Email ID
-            messages, including by automated means, from Uber and its affiliates
-            to the number provided.
+          {t(`dcag.home.otp.mobilenumber.helptext`)}
           </small>
         </p>
         <div id="recaptcha-container"></div>
@@ -164,12 +164,12 @@ const Login = () => {
             onClick={(e) => sendOtp(e)}
             disabled={phone.length === 0}
           >
-            Next <ArrowRight />
+            {t(`dcag.home.verifyotp.nextBtn.label`)} <ArrowRight />
           </Button>
         </div>
       </IonContent>}
       {flag===true &&<IonContent>
-        <p>Enter the 6 digit code sent you at:</p>
+        <p>{t(`dcag.home.verifyotp.label`)}:</p>
         <p>{localStorage.getItem("phone")}</p>
         <div className="otp-input">
           {otp.map((value, index) => (
@@ -187,7 +187,7 @@ const Login = () => {
             Resend
           </IonButton> */}
           <Block marginBottom="scale300" />
-           <Button kind={KIND.secondary} shape={SHAPE.pill}>Resend</Button>
+           <Button kind={KIND.secondary} shape={SHAPE.pill}>{t(`dcag.home.verifyotp.resend.label`)}</Button>
         {/* Add a button to submit the OTP and handle the verification logic */}
         <div
           style={{
@@ -206,7 +206,7 @@ const Login = () => {
             Next <IonIcon slot="end" icon={arrowForward} />
           </IonButton> */}
            <Button shape={SHAPE.pill} kind={KIND.secondary} onClick={() => history.push("/login")}><ArrowLeft/></Button>
-          <Button shape={SHAPE.pill} kind={otp.every((digit) => digit !== "") ? KIND.primary : KIND.secondary} onClick={(e) => verifyOtp(e)} disabled={otp.every((digit) => digit !== "") ? false : true}>Next <ArrowRight/></Button>
+          <Button shape={SHAPE.pill} kind={otp.every((digit) => digit !== "") ? KIND.primary : KIND.secondary} onClick={(e) => verifyOtp(e)} disabled={otp.every((digit) => digit !== "") ? false : true}>{t(`dcag.home.verifyotp.nextBtn.label`)} <ArrowRight/></Button>
         </div>
       </IonContent>}
 

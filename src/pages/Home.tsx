@@ -17,8 +17,10 @@ import { useHistory } from "react-router-dom";
 import { arrowBack } from "ionicons/icons";
 import { useEffect } from "react";
 import {tasks} from "./data"
+import { useTranslation } from 'react-i18next';
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   useEffect(()=>{
     if(!JSON.parse(localStorage.getItem("tasks"))){
@@ -38,14 +40,14 @@ const Home: React.FC = () => {
           {/* <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
           </IonButtons> */}
-          <IonTitle className="ion-text-center">Home</IonTitle>
+          <IonTitle className="ion-text-center">{t(`dcag.home.bottomTabs.home`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <div style={{display:'flex',justifyContent:'space-between',padding:'15px',alignItems:'center'}}>
           <div>
-            <h3 className="mt-0 mb-0">Tasks Hub</h3>
-            <p className="mt-0 mb-0">Localize text and audio documents.</p>
+            <h3 className="mt-0 mb-0">{t(`dcag.home.taskHub.title`)}</h3>
+            <p className="mt-0 mb-0">{t(`dcag.home.taskHub.subtitle`)}</p>
           </div>
           <IonButton routerLink="/dashboard/tasks" style={{
                                   "--background": "#000",
@@ -54,7 +56,7 @@ const Home: React.FC = () => {
                                   "color": "#fff",
                                   "fontSize": "0.7rem"
                                 }}>
-            View all tasks
+            {t(`dcag.home.taskHub.btn.viewAllTasks`)}
           </IonButton>
         </div>
         <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
@@ -64,13 +66,12 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle>Text to Audio • <span className="record-text">Localise,Record </span></IonCardTitle>
+            <IonCardTitle>{t(`dcag.home.taskHub.textToAudio.title`)} <span className="record-text">Localise,Record </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
-            Read the documents which is assigned with local language or in
-            English and record the voice with the same .
+            {t(`dcag.home.taskHub.textToAudio.subtitle`)}.
           </IonCardContent>
         </IonCard>
         <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
@@ -80,13 +81,12 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle>Audio to Audio •<span className="record-text">Localise,Record </span></IonCardTitle>
+            <IonCardTitle>{t(`dcag.home.taskHub.audioToAudio.title`)} <span className="record-text">Localise,Record </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
-            Read the documents which is assigned with local language or in
-            English and record the voice with the same .
+          {t(`dcag.home.taskHub.audioToAudio.subtitle`)}.
           </IonCardContent>
         </IonCard>
         <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
@@ -96,13 +96,12 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle>Text to Image • <span className="record-text">Localise,Record </span></IonCardTitle>
+            <IonCardTitle> {t(`dcag.home.taskHub.textToImage.title`)} <span className="record-text">Localise,Record </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
-            Read the documents which is assigned with local language or in
-            English and record the voice with the same .
+          {t(`dcag.home.taskHub.textToImage.subtitle`)}.
           </IonCardContent>
         </IonCard>
       </IonContent>

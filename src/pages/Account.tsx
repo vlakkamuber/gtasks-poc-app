@@ -13,7 +13,10 @@ import {
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { arrowBack, person, settings, logOut, star, documentText, card, school, lockClosed, help, information, informationCircle } from "ionicons/icons";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from 'react-i18next';
 const Account: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
@@ -26,7 +29,7 @@ const Account: React.FC = () => {
             <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
-          <IonTitle className="ion-text-center">Account</IonTitle>
+          <IonTitle className="ion-text-center">{t(`dcag.account.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent style={{padding:'10px'}}>
@@ -42,37 +45,40 @@ const Account: React.FC = () => {
         <IonList style={{padding:'20px'}}>
           <IonItem button className="no-border">
             <IonIcon icon={informationCircle} slot="start" />
-            <IonLabel>My Account</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.myaccount`)}</IonLabel>
           </IonItem>
 
           <IonItem button className="no-border">
           <IonIcon icon={documentText} slot="start" />
-            <IonLabel>Documents</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.documents`)}</IonLabel>
           </IonItem>
 
           <IonItem button className="no-border">
           <IonIcon icon={card} slot="start" />
-            <IonLabel>Payments</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.payments`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border">
             <IonIcon icon={logOut} slot="start" />
-            <IonLabel>Earnings</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.earnings`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border">
           <IonIcon icon={lockClosed} slot="start" />
-            <IonLabel>Security and privacy</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.SecurityPrivacy`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border">
           <IonIcon icon={settings} slot="start" />
-            <IonLabel>App settings</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.appSettings`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border">
           <IonIcon icon={school} slot="start" />
-            <IonLabel>Trainings modules</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.trainingmodule`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border">
           <IonIcon icon={help} slot="start" />
-            <IonLabel>Help</IonLabel>
+            <IonLabel>{t(`dcag.account.page.link.help`)}</IonLabel>
+          </IonItem>
+          <IonItem>
+          <IonLabel>App Language</IonLabel> <LanguageSwitcher/>
           </IonItem>
         </IonList>
       </IonContent>

@@ -9,8 +9,10 @@ import {
 import { ButtonDock } from "baseui/button-dock";
 import { Button, KIND } from "baseui/button";
 import {useHistory} from "react-router-dom"
+import { useTranslation } from 'react-i18next';
 
 const HomeScreen = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   return (
     <IonPage>
@@ -53,7 +55,7 @@ const HomeScreen = () => {
           //     Sign up
           //   </Button>,
           // ]}
-          primaryAction={<Button onClick={()=>history.push("/login")}>Sign in</Button>}
+          primaryAction={<Button onClick={()=>history.push("/login")}>{t(`dcag.home.login.label`)}</Button>}
         />
         </div>
         
