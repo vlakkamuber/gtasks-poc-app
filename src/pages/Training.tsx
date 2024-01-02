@@ -18,7 +18,9 @@ import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { arrowBack } from "ionicons/icons";
 import { ListItem, ListItemLabel } from "baseui/list";
+import { useTranslation } from 'react-i18next';
 const Training: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
@@ -38,18 +40,17 @@ const Training: React.FC = () => {
             <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
-          <IonTitle className="ion-text-center">Training</IonTitle>
+          <IonTitle className="ion-text-center">{t(`dcag.home.training.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <div style={{ padding: "10px" }}>
-          <h2 style={{ marginLeft: "16px" }}>Learning Center</h2>
+          <h2 style={{ marginLeft: "16px" }}>{t(`dcag.home.training.page.title`)}</h2>
           <ListItem>
             <ListItemLabel
-              description="You’re required to complete these courses before you can go online.
-"
+              description={t(`dcag.home.training.page.subtitle`)}
             >
-              <h2>Required</h2>
+              <h2>{t(`dcag.home.training.page.required`)}</h2>
             </ListItemLabel>
           </ListItem>
           <IonCard className="rounded-card">

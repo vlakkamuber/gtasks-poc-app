@@ -47,7 +47,7 @@
     "dcag.tasks.performTask.recordAudio.label":"రికార్డ్ ఆడియో",
     "dcag.tasks.performTask.btn.backToTask.label": "తిరిగి టాస్క్‌లకు",
     "dcag.tasks.performTask.btn.exit.label": "నిష్క్రమించు",
-    "dcag.training.page.heading": "శిక్షణ",
+    "dcag.home.training.page.heading": "శిక్షణ",
     "dcag.account.page.heading": "ఖాతా",
     "dcag.account.page.link.myaccount": "నా ఖాతా",
     "dcag.account.page.link.documents": "డాక్యుమెంట్‌లు",
@@ -62,6 +62,9 @@
     "dcag.tasks.TexttoAudio.title": "ఆడియోకి వచనం పంపండి",
     "dcag.tasks.AudiotoAudio.title": "ఆడియో నుండి ఆడియో",
     "dcag.home.taskHub.status.new":"కొత్త",
-    "dcag.home.taskHub.status.Completed":"పూర్తయింది"
+    "dcag.home.taskHub.status.Completed":"పూర్తయింది",
+    "dcag.home.training.page.title":"లెర్నింగ్ సెంటర్",
+    "dcag.home.training.page.subtitle":"మీరు ఆన్‌లైన్‌కి వెళ్లడానికి ముందు మీరు ఈ కోర్సులను పూర్తి చేయాలి.",
+    "dcag.home.training.page.required":"అవసరం"
 }
 
