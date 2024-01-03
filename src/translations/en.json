@@ -66,5 +66,9 @@
     "dcag.home.taskHub.status.Completed":"Completed",
     "dcag.home.training.page.title":"Learning Center",
     "dcag.home.training.page.subtitle":"You’re required to complete these courses before you can go online.",
-    "dcag.home.training.page.required":"Required"
+    "dcag.home.training.page.required":"Required",
+    "dcag.tasks.textToAudioTaskDesc": "Record audio of the text and submit.",
+    "dcag.tasks.audioToAudioTaskDesc": "Listen to the audio, record and submit.",
+    "dcag.home.taskHub.localize": "Localise",
+    "dcag.home.taskHub.record": "Record"
 }

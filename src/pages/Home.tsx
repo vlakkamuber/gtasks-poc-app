@@ -66,7 +66,7 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.textToAudio.title`)} <span className="record-text">Localise,Record </span></IonCardTitle>
+            <IonCardTitle>{t(`dcag.home.taskHub.textToAudio.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
@@ -81,7 +81,7 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.audioToAudio.title`)} <span className="record-text">Localise,Record </span></IonCardTitle>
+            <IonCardTitle>{t(`dcag.home.taskHub.audioToAudio.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle> {t(`dcag.home.taskHub.textToImage.title`)} <span className="record-text">Localise,Record </span></IonCardTitle>
+            <IonCardTitle> {t(`dcag.home.taskHub.textToImage.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 

@@ -168,7 +168,7 @@ const Tasks: React.FC = () => {
                       </div>
 
                       <p style={{ margin: "0" }}>
-                        <small>{tasks[key][0].taskDesc}</small>
+                        <small>{t(`dcag.tasks.${tasks[key][0].taskDesc}`)}</small>
                       </p>
                     </div>
                     {tasks[key].map((task, index) => {
