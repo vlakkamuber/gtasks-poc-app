@@ -14,6 +14,11 @@ import { useTranslation } from 'react-i18next';
 const HomeScreen = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  useEffect(()=>{
+    fetch("https://dcag-gateway-cpypkzbg.an.gateway.dev/").then(function(res){
+        console.log(res)
+    })
+  },[])
   return (
     <IonPage>
       <IonHeader>{/* Add header content if needed */}</IonHeader>
