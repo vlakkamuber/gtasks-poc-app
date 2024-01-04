@@ -27,7 +27,7 @@ const Home: React.FC = () => {
       tasks[0]["phone"]=localStorage.getItem("phone")
       localStorage.setItem("tasks",JSON.stringify(tasks))
     }
-  })
+  },[])
   
 
   const goBack = () => {
