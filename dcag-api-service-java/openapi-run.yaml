@@ -11,17 +11,17 @@ produces:
 x-google-endpoints:
   - name: https://dcag-api-service-s4osc3diiq-el.a.run.app
     allowCors: True
-securityDefinitions:
-  firebase:
-    authorizationUrl: ""
-    flow: "implicit"
-    type: "oauth2"
-    # Replace YOUR-PROJECT-ID with your project ID
-    x-google-issuer: "https://securetoken.google.com/anz-driver-ops-ritu"
-    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
-    x-google-audiences: "anz-driver-ops-ritu"
-security:
-  - firebase: []
+#securityDefinitions:
+#  firebase:
+#    authorizationUrl: ""
+#    flow: "implicit"
+#    type: "oauth2"
+#    # Replace YOUR-PROJECT-ID with your project ID
+#    x-google-issuer: "https://securetoken.google.com/anz-driver-ops-ritu"
+#    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+#    x-google-audiences: "anz-driver-ops-ritu"
+#security:
+#  - firebase: []
 paths:
   /:
     get:
@@ -36,8 +36,8 @@ paths:
             type: string
   /users:
     get:
-      summary: Get Tasks
-      operationId: tasks
+      summary: "Get all users"
+      operationId: "getUsers"
       x-google-backend:
         address: https://dcag-api-service-s4osc3diiq-el.a.run.app/users
       responses:
@@ -45,3 +45,22 @@ paths:
           description: A successful response
           schema:
             type: array
+  /users/{userId}:
+    get:
+      summary: "Get user by id"
+      operationId: "getUserById"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      x-google-backend:
+        address: https://dcag-api-service-s4osc3diiq-el.a.run.app/users/{userId}
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+        '404':
+          description: "User not found"
