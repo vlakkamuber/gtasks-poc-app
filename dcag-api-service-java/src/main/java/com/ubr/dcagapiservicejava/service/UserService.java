@@ -2,6 +2,7 @@ package com.ubr.dcagapiservicejava.service;
 
  
 import com.ubr.dcagapiservicejava.dto.UserDTO;
+import com.ubr.dcagapiservicejava.dto.UserResponse;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import com.ubr.dcagapiservicejava.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,44 +20,42 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<UserDTO> findAll() {
+    public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
-                .map(UserDTO::new)
+                .map(UserResponse::new)
                 .collect(toList());
     }
 
-    public UserDTO create(UserDTO userDTO) {
+    public UserResponse create(UserDTO userDTO) {
         User user = new User()
+                .id(userDTO.id())
                 .email(userDTO.email())
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
-                .locationLat(userDTO.locationLat())
-                .locationLong(userDTO.locationLong())
                 .phoneNumber(userDTO.phoneNumber());
-        return new UserDTO(userRepository.save(user));
+
+        return new UserResponse(userRepository.save(user));
     }
 
-    public UserDTO findById(String userId) {
+    public UserResponse findById(String userId) {
         return userRepository
-                .findById(String.valueOf(userId))
-                .map(UserDTO::new)
+                .findById(userId)
+                .map(UserResponse::new)
                 .orElseThrow(userNotFound(userId));
     }
 
-    public UserDTO update(String userId, UserDTO userDTO) {
+    public UserResponse update(String userId, UserDTO userDTO) {
         User userToSave = new User()
                 .id(userId)
                 .email(userDTO.email())
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
-                .locationLat(userDTO.locationLat())
-                .locationLong(userDTO.locationLong())
                 .phoneNumber(userDTO.phoneNumber());
 
         return userRepository
                 .findById(userId)
                 .map(existingUser -> userRepository.save(userToSave))
-                .map(UserDTO::new)
+                .map(UserResponse::new)
                 .orElseThrow(userNotFound(userId));
     }
 
@@ -72,10 +71,10 @@ public class UserService {
         return () -> new UserNotFoundException("User not found: " + userId);
     }
 
-    public UserDTO getUserByPhoneNumber(String phoneNumber) {
+    public UserResponse getUserByPhoneNumber(String phoneNumber) {
         return userRepository
                 .findByPhoneNumber(phoneNumber)
-                .map(UserDTO::new)
-                .orElseThrow(userNotFound(phoneNumber));
+                .map(UserResponse::new)
+                .orElse(null);
     }
 }

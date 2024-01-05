@@ -1,13 +1,12 @@
 package com.ubr.dcagapiservicejava.domain;
 
 //import com.google.cloud.firestore.annotation.DocumentId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Set;
 
 //@Document(collectionName = "users")
 
@@ -16,20 +15,20 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(fluent = true, chain = true)
-@Table(name = "Users")
+@Table(name = "users")
+public class User implements Serializable {
 
-public class User {
-    //@DocumentId
     @Id
-    String id;
+    private String id;
+    //@DocumentId
 
     String email;
     String firstName;
     String lastName;
-    Double locationLat;
-    Double locationLong;
+    String cityName;
     String phoneNumber;
 
+    @OneToMany(mappedBy = "user")
+    Set<UserTask> userTasks;
 
-//    List<UserTask> utasks;
 }

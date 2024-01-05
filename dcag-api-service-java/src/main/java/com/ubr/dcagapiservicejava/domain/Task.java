@@ -1,13 +1,18 @@
 package com.ubr.dcagapiservicejava.domain;
 
 //import com.google.cloud.firestore.annotation.DocumentId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ubr.dcagapiservicejava.domain.enums.TaskType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.locationtech.jts.geom.Point;
+
+import java.io.Serializable;
+import java.util.Set;
 
 //@Document(collectionName = "users")
 
@@ -16,20 +21,30 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(fluent = true, chain = true)
-@Table(name = "Tasks")
+@Table(name = "tasks")
 
-public class Task {
-    //@DocumentId
+public class Task implements Serializable {
+
     @Id
-    String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String email;
-    String firstName;
-    String lastName;
-    Double locationLat;
-    Double locationLong;
-    String phoneNumber;
+    private String name;
 
+//    @Column(columnDefinition = "geometry")
+//    @JsonIgnore
+//    private Point location;
 
-//    List<UserTask> utasks;
+    @Enumerated
+    private TaskType taskType=TaskType.NA;
+
+    private String input;
+
+    private String currency;
+
+    private Integer price;
+
+    @OneToMany(mappedBy = "task")
+    Set<UserTask> userTasks;
+
 }
