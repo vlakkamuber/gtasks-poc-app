@@ -2,7 +2,7 @@
 swagger: '2.0'
 info:
   title: dcag-api-gateway
-  description: Sample API on API Gateway with a Cloud Run backend
+  description: DCAG API on API Gateway with a Cloud Run backend
   version: 1.0.0
 schemes:
   - https
@@ -11,6 +11,10 @@ produces:
 x-google-endpoints:
   - name: https://dcag-api-service-s4osc3diiq-el.a.run.app
     allowCors: True
+x-google-backend:
+  address: https://dcag-api-service-s4osc3diiq-el.a.run.app
+
+
 #securityDefinitions:
 #  firebase:
 #    authorizationUrl: ""
@@ -27,8 +31,6 @@ paths:
     get:
       summary: Hello World
       operationId: root
-      x-google-backend:
-        address: https://dcag-api-service-s4osc3diiq-el.a.run.app
       responses:
         '200':
           description: A successful response
@@ -38,8 +40,6 @@ paths:
     get:
       summary: "Get all users"
       operationId: "getUsers"
-      x-google-backend:
-        address: https://dcag-api-service-s4osc3diiq-el.a.run.app/users
       responses:
         '200':
           description: A successful response
@@ -55,8 +55,23 @@ paths:
           required: true
           type: string
           description: "ID of the user"
-      x-google-backend:
-        address: https://dcag-api-service-s4osc3diiq-el.a.run.app/users/{userId}
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+        '404':
+          description: "User not found"
+  /users/byPhoneNumber/{phoneNumber}:
+    get:
+      summary: "Get user by phone number"
+      operationId: "getUserByPhoneNumber"
+      parameters:
+        - name: phoneNumber
+          in: path
+          required: true
+          type: string
+          description: "Phone number of the user"
       responses:
         '200':
           description: "A successful response"
