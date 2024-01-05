@@ -3,6 +3,9 @@ package com.ubr.dcagapiservicejava.controller;
 import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.dto.UserDTO;
 import com.ubr.dcagapiservicejava.dto.UserResponse;
+import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
+import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
+import com.ubr.dcagapiservicejava.service.TaskService;
 import com.ubr.dcagapiservicejava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TaskService taskService;
 
     /*@GetMapping
     private Flux<User> getAllUsers() {
@@ -66,5 +72,20 @@ public class UserController {
     ResponseEntity<?> delete(@PathVariable String userId) {
         userService.delete(userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/{userId}/tasks/{taskId}", consumes = "application/json")
+    ResponseEntity<UserTaskResponse> createUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
+        return ResponseEntity.ok(taskService.createUserTask(userId, taskId, userTaskDTO));
+    }
+
+    @PutMapping(value = "/{userId}/tasks/{taskId}", consumes = "application/json")
+    ResponseEntity<UserTaskResponse> updateUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
+        return ResponseEntity.ok(taskService.updateUserTask(userId, taskId, userTaskDTO));
+    }
+
+    @GetMapping(value = "/{userId}/tasks", produces = "application/json")
+    ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId) {
+        return ResponseEntity.ok(taskService.findUserTask(userId));
     }
 }

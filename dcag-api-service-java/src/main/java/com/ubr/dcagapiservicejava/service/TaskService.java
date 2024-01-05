@@ -88,7 +88,7 @@ public class TaskService {
                         });
     }
 
-    private Supplier<UserNotFoundException> userNotFound(Long userId) {
+    private Supplier<UserNotFoundException> userNotFound(String userId) {
         return () -> new UserNotFoundException("User not found: " + userId);
     }
 
@@ -96,11 +96,11 @@ public class TaskService {
         return () -> new TaskNotFoundException("Task not found: " + taskId);
     }
 
-    public UserTaskResponse createUserTask(UserTaskDTO userTaskDTO) {
+    public UserTaskResponse createUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
 
         UserTask userTask = new UserTask()
-                .user(new User().id(userTaskDTO.userId()))
-                .task(new Task().id(userTaskDTO.taskId()))
+                .user(new User().id(userId))
+                .task(new Task().id(taskId))
                 .status(userTaskDTO.status())
                 .startTime(convertEpochToLocalDateTime(userTaskDTO.startTime()));
         return new UserTaskResponse(userTasksRepository.save(userTask));
@@ -118,11 +118,26 @@ public class TaskService {
      Optional<List<UserTask>> userTasks =  userTasksRepository.findByUserId(userId);
 
      if(userTasks.isPresent()){
-
          return userTasks.get().stream().map(UserTaskResponse::new).toList();
      }else{
          throw new TaskNotFoundException("Task not found for user: " + userId);
      }
+    }
+
+    public UserTaskResponse updateUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
+
+        UserTask userTask = new UserTask()
+                .user(new User().id(userId))
+                .task(new Task().id(taskId))
+                .status(userTaskDTO.status())
+                .startTime(convertEpochToLocalDateTime(userTaskDTO.startTime()))
+                .completionTime(convertEpochToLocalDateTime(userTaskDTO.completionTime()));
+
+        return userTasksRepository
+                .findByUserId(userId)
+                .map(existingUser -> userTasksRepository.save(userTask))
+                .map(UserTaskResponse::new)
+                .orElseThrow(userNotFound(userId));
     }
 
 

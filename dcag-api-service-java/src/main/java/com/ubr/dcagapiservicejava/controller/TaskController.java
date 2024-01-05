@@ -56,17 +56,6 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-
-    @PostMapping(value = "/users", consumes = "application/json")
-    ResponseEntity<UserTaskResponse> createUserTask(@RequestBody UserTaskDTO userTaskDTO) {
-        return ResponseEntity.ok(taskService.createUserTask(userTaskDTO));
-    }
-
-    @GetMapping(value = "/users/{userId}", produces = "application/json")
-    ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId) {
-        return ResponseEntity.ok(taskService.findUserTask(userId));
-    }
-
 //    @GetMapping("/tasks/nearer")
 //    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
 //        return taskService.findAAllNearerTasks(latitude, longitude, distance);
