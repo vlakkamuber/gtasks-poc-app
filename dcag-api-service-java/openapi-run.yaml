@@ -1,0 +1,36 @@
+# openapi2-run.yaml
+swagger: '2.0'
+info:
+  title: dcag-api-gateway
+  description: Sample API on API Gateway with a Cloud Run backend
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
+x-google-endpoints:
+  - name: https://dcag-api-service-s4osc3diiq-el.a.run.app
+    allowCors: True
+paths:
+  /:
+    get:
+      summary: Hello World
+      operationId: root
+      x-google-backend:
+        address: https://dcag-api-service-s4osc3diiq-el.a.run.app
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  /users:
+    get:
+      summary: Get Tasks
+      operationId: tasks
+      x-google-backend:
+        address: https://dcag-api-service-s4osc3diiq-el.a.run.app/users
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: array
