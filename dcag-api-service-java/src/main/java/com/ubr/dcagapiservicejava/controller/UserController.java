@@ -1,10 +1,7 @@
 package com.ubr.dcagapiservicejava.controller;
 
 import com.ubr.dcagapiservicejava.domain.User;
-import com.ubr.dcagapiservicejava.dto.UserDTO;
-import com.ubr.dcagapiservicejava.dto.UserResponse;
-import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
-import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
+import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.service.TaskService;
 import com.ubr.dcagapiservicejava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +84,10 @@ public class UserController {
     @GetMapping(value = "/{userId}/tasks", produces = "application/json")
     ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId) {
         return ResponseEntity.ok(taskService.findUserTask(userId));
+    }
+
+    @GetMapping("/tasks/nearer")
+    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
+        return taskService.findAAllNearerTasks(latitude, longitude, distance);
     }
 }

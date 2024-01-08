@@ -15,7 +15,7 @@ public record TaskResponse(
 
         String currency,
 
-        Integer price
+        Double price
 ) {
 
     public TaskResponse(Task task) {

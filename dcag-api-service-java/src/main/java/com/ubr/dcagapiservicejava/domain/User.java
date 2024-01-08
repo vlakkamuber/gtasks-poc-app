@@ -22,13 +22,21 @@ public class User implements Serializable {
     private String id;
     //@DocumentId
 
-    String email;
-    String firstName;
-    String lastName;
-    String cityName;
-    String phoneNumber;
+    private String email;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "city_name")
+    private String cityName;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "user")
-    Set<UserTask> userTasks;
+    private Set<UserTask> userTasks;
 
 }

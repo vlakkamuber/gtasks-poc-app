@@ -6,6 +6,10 @@ public record UserTaskDTO(
 
         TaskStatus status,
 
+        String output,
+
+        String outputDesc,
+
         Long startTime,
 
         Long completionTime

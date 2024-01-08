@@ -35,7 +35,7 @@ public class TaskService {
     @Autowired
     private UserTasksRepository userTasksRepository;
 
-    //GeometryFactory factory = new GeometryFactory();
+    GeometryFactory factory = new GeometryFactory();
 
     public List<TaskResponse> findAll() {
         return taskRepository.findAll().stream()
@@ -51,6 +51,7 @@ public class TaskService {
                 .input(taskDTO.input())
                 .currency(taskDTO.currency())
                 .price(taskDTO.price());
+//                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
         return new TaskResponse(taskRepository.save(task));
     }
 
@@ -70,7 +71,7 @@ public class TaskService {
                 .input(taskDTO.input())
                 .currency(taskDTO.currency())
                 .price(taskDTO.price());
-                //.location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
+//                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
 
 
         return taskRepository
@@ -141,10 +142,10 @@ public class TaskService {
     }
 
 
-//    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
-//
-//        return taskRepository
-//                .findAAllNearerTasks(factory.createPoint(new Coordinate(latitude,longitude,4326)),distance)
-//                .stream().map(TaskResponse::new).toList();
-//    }
+    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
+
+        return taskRepository
+                .findAAllNearerTasks(factory.createPoint(new Coordinate(latitude,longitude,4326)),distance)
+                .stream().map(TaskResponse::new).toList();
+    }
 }

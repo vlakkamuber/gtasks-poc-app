@@ -55,9 +55,4 @@ public class TaskController {
         taskService.delete(taskId);
         return ResponseEntity.noContent().build();
     }
-
-//    @GetMapping("/tasks/nearer")
-//    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
-//        return taskService.findAAllNearerTasks(latitude, longitude, distance);
-//    }
 }

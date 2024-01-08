@@ -1,20 +1,16 @@
 package com.ubr.dcagapiservicejava.domain;
 
-//import com.google.cloud.firestore.annotation.DocumentId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.locationtech.jts.geom.Point;
 
 import java.io.Serializable;
 import java.util.Set;
-
-//@Document(collectionName = "users")
 
 @Entity
 @Data
@@ -36,13 +32,19 @@ public class Task implements Serializable {
 //    private Point location;
 
     @Enumerated
+    @Column(name = "task_type")
     private TaskType taskType=TaskType.NA;
+
+    @Transient
+    @Column(columnDefinition = "geometry")
+    @JsonIgnore
+    private Point location;
 
     private String input;
 
     private String currency;
 
-    private Integer price;
+    private Double price;
 
     @OneToMany(mappedBy = "task")
     Set<UserTask> userTasks;

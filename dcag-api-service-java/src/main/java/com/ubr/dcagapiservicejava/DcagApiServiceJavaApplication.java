@@ -21,16 +21,16 @@ public class DcagApiServiceJavaApplication {
 		SpringApplication.run(DcagApiServiceJavaApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner init(UserRepository repository, TaskRepository taskRepository) {
-		return (args) -> {
-			repository.save(new User().id("abcdefg").email("jack@xyz.com").firstName("Jack").lastName("Smith").phoneNumber("1234567890"));
-
-			taskRepository.save(new Task().name("CityName").taskType(TaskType.TEXT_TO_AUDIO).currency("INR").price(100));
-
-			taskRepository.save(new Task().name("CityName12").taskType(TaskType.AUDIO_TO_AUDIO).currency("INR").price(100));
-		};
-	}
+//	@Bean
+//	public CommandLineRunner init(UserRepository repository, TaskRepository taskRepository) {
+//		return (args) -> {
+//			repository.save(new User().id("abcdefg").email("jack@xyz.com").firstName("Jack").lastName("Smith").phoneNumber("1234567890"));
+//
+//			taskRepository.save(new Task().name("CityName").taskType(TaskType.TEXT_TO_AUDIO).currency("INR").price(100));
+//
+//			taskRepository.save(new Task().name("CityName12").taskType(TaskType.AUDIO_TO_AUDIO).currency("INR").price(100));
+//		};
+//	}
 
 	/*
 	    String id;

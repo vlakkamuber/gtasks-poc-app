@@ -24,22 +24,27 @@ public class UserTask implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 //    @DocumentId
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "task_id")
-    Task task;
+    private Task task;
 
-    TaskStatus status;
+    private TaskStatus status;
 
-    String output;
+    private String output;
 
-    LocalDateTime startTime;
+    @Column(name = "output_desc")
+    private String outputDesc;
 
-    LocalDateTime completionTime;
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
+
+    @Column(name = "completion_time")
+    private LocalDateTime completionTime;
 }

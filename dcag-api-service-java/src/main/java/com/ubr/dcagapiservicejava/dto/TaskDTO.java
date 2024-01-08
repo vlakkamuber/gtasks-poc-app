@@ -16,7 +16,7 @@ public record TaskDTO(
 
         String currency,
 
-        Integer price
+        Double price
 
 ) {
 }

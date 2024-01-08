@@ -28,7 +28,7 @@ public class UserService {
 
     public UserResponse create(UserDTO userDTO) {
         User user = new User()
-                .id(userDTO.id())
+                .id(userDTO.userId())
                 .email(userDTO.email())
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
