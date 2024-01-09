@@ -14,6 +14,7 @@ import {Block} from 'baseui/block';
 import { ArrowLeft, ArrowRight } from "baseui/icon";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useTranslation } from 'react-i18next';
+import {mapTeluguDigitsToNumeric} from "../utils/mapTeluguDigitsToNumeric.js"
 
 const Login = () => {
   const [phone, setPhone] = useState("");
@@ -22,6 +23,7 @@ const Login = () => {
   const [flag, setFlag] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const { t } = useTranslation();
+  const [isValidPhone,setIsValidPhone] = useState(true)
   const inputRefs = [
     useRef(null),
     useRef(null),
@@ -59,7 +61,8 @@ const Login = () => {
     setError("");
     if (otp === "" || otp === null) return;
     try {
-      await result.confirm(otp.join(""));
+      const otpnumeric = mapTeluguDigitsToNumeric(otp.join(""));
+      await result.confirm(otpnumeric);
       history.push("/login-success");
     } catch (err) {
       setError(err.message);
@@ -67,11 +70,15 @@ const Login = () => {
   };
 
   const sendOtp = async (e) => {
+    setIsValidPhone(true)
+    let phoneRegex = /^[6789]\d{9}$/;
     e.preventDefault();
     console.log(phone);
     setError("");
-    if (phone === "" || phone === undefined)
+    if (!phoneRegex.test(phone)){
+      setIsValidPhone(false)
       return setError("Please enter a valid phone number!");
+    }
     try {
       const response = await setUpRecaptha("+91"+phone);
       setResult(response);
@@ -118,7 +125,7 @@ const Login = () => {
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
-
+        {isValidPhone ? null : <p style={{ color: 'red' }}>Invalid phone number.</p>}
         <p style={{ padding: "10px" }}>
           <small>
           {t(`dcag.home.otp.mobilenumber.helptext`)}

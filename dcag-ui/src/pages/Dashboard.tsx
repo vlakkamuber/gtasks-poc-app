@@ -18,9 +18,9 @@ const Dashboard: React.FC = ({content}) => {
     <IonTabs>
       <IonRouterOutlet>
       <Redirect exact from="/dashboard" to="/dashboard/home" />
-        <Route path="/dashboard/home" render={() => <>{content}</>} />
+        <Route path="/dashboard/home" render={() => <>{content}</>} forceRefresh={true}/>
         <Route path="/dashboard/training" render={() => <>{content}</>} />
-        <Route path="/dashboard/tasks" render={() => <>{content}</>}/>
+        <Route path="/dashboard/tasks" render={() => <>{content}</>} forceRefresh={true}/>
         <Route path="/dashboard/account" render={() => <>{content}</>}/>
         <Route path="/dashboard/help" render={() => <>{content}</>}/>
       </IonRouterOutlet>

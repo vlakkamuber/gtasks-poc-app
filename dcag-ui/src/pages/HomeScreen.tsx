@@ -15,8 +15,10 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const history = useHistory();
   useEffect(()=>{
-    fetch("https://dcag-gateway-cpypkzbg.an.gateway.dev/").then(function(res){
-        console.log(res)
+    fetch("https://dcag-gateway-cpypkzbg.an.gateway.dev/users").then(function(res){
+      return res.json();
+    }).then(function(result){
+      console.log(result)
     })
   },[])
   return (

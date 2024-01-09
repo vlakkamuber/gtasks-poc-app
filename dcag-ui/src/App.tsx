@@ -49,18 +49,18 @@ const App: React.FC = () => (
   // <LanguageProvider i18n={i18n}>
   <UserAuthContextProvider>
 
-  <IonReactRouter>
+  <IonReactRouter forceRefresh={true}>
     <IonRouterOutlet>
       <Route path="/home" component={HomeScreen} exact />
       <Route path="/login" component={Login} exact />
       <Route path="/otp" component={OTP} exact />
       <Route path="/login-success" component={LoginSuccess} exact />
-      <Route path="/dashboard" component={Dashboard} exact />
-      <Route path="/dashboard/home" render={() => <Dashboard content={<Home />} />} exact />
-      <Route path="/dashboard/training" render={() => <Dashboard content={<Training />} />} exact />
-      <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks />} />} exact/>
-      <Route path="/dashboard/account" render={() => <Dashboard content={<Account />} />} exact/>
-      <Route path="/dashboard/help" render={() => <Dashboard content={<Help />} />} exact/>
+      <Route path="/dashboard" component={Dashboard} exact/>
+      <Route path="/dashboard/home" render={() => <Dashboard content={<Home forceRefresh={true}/>} />} exact/>
+      <Route path="/dashboard/training" render={() => <Dashboard content={<Training forceRefresh={true}/>} />} exact />
+      <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks forceRefresh={true}/>} />} exact />
+      <Route path="/dashboard/account" render={() => <Dashboard content={<Account forceRefresh={true}/>} />} exact/>
+      <Route path="/dashboard/help" render={() => <Dashboard content={<Help forceRefresh={true}/>} />} exact />
       <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask2} exact />
       <Route path="/dashboard/tasks/completed" component={Completed} exact/>
       <Redirect exact from="/" to="/home" />
