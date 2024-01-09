@@ -1,28 +1,23 @@
 package com.ubr.dcagapiservicejava.dto;
 
-import com.ubr.dcagapiservicejava.domain.Task;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
-import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-public record TaskResponse(
-
-        
-        Long id,
-
-        String name,
-        
-        TaskType taskType,
-
-        String currency,
-
-        Double price
-) {
-
-    public TaskResponse(Task task) {
-        this(task.id(),
-                task.name(),
-                task.taskType(),
-                task.currency(),
-                task.price());
-    }
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class TaskResponse {
+    private Long id;
+    private String name;
+    private TaskType taskType;
+    private String currency;
+    private Double price;
+    private String inputUrl;
+    private String outputUrl;
+    private String uploadUrl;
 }

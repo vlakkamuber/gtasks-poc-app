@@ -4,13 +4,16 @@ package com.ubr.dcagapiservicejava.service;
 import com.ubr.dcagapiservicejava.domain.Task;
 import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.domain.UserTask;
-import com.ubr.dcagapiservicejava.dto.*;
+import com.ubr.dcagapiservicejava.domain.enums.TaskType;
+import com.ubr.dcagapiservicejava.dto.TaskDTO;
+import com.ubr.dcagapiservicejava.dto.TaskResponse;
+import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
+import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
-import com.ubr.dcagapiservicejava.repository.UserRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
-import org.locationtech.jts.geom.Coordinate;
+import com.ubr.dcagapiservicejava.utils.GCPUtils;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +24,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -35,13 +36,23 @@ public class TaskService {
     @Autowired
     private UserTasksRepository userTasksRepository;
 
+    @Autowired
+    private GCPUtils gcpUtils;
+
     GeometryFactory factory = new GeometryFactory();
 
     public List<TaskResponse> findAll() {
         return taskRepository.findAll().stream()
-                .map(TaskResponse::new)
+                .map(task -> TaskResponse.builder()
+                        .id(task.id())
+                        .name(task.name())
+                        .taskType(task.taskType())
+                        .currency(task.currency())
+                        .price(task.price())
+                        .build())
                 .collect(toList());
     }
+
 
     public TaskResponse create(TaskDTO taskDTO) {
 
@@ -52,14 +63,39 @@ public class TaskService {
                 .currency(taskDTO.currency())
                 .price(taskDTO.price());
 //                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
-        return new TaskResponse(taskRepository.save(task));
+        Task savedTask = taskRepository.save(task);
+        return TaskResponse.builder()
+                .id(savedTask.id())
+                .name(savedTask.name())
+                .taskType(savedTask.taskType())
+                .currency(savedTask.currency())
+                .price(savedTask.price())
+                .build();
     }
 
     public TaskResponse findById(Long taskId) {
         return taskRepository
                 .findById(taskId)
-                .map(TaskResponse::new)
+                .map(this::taskToTaskResponse)
                 .orElseThrow(taskNotFound(taskId));
+    }
+
+    private TaskResponse taskToTaskResponse(Task task) {
+        TaskResponse.TaskResponseBuilder taskResponseBuilder = TaskResponse.builder()
+                .id(task.id())
+                .name(task.name())
+                .taskType(task.taskType())
+                .currency(task.currency())
+                .price(task.price());
+
+        if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
+            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl();
+            taskResponseBuilder.inputUrl(inputUrl);
+        }
+        String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl();
+        taskResponseBuilder.uploadUrl(uploadUrl);
+
+        return taskResponseBuilder.build();
     }
 
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
@@ -73,11 +109,16 @@ public class TaskService {
                 .price(taskDTO.price());
 //                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
 
-
         return taskRepository
                 .findById(taskId)
                 .map(existingUser -> taskRepository.save(task))
-                .map(TaskResponse::new)
+                .map(savedTask -> TaskResponse.builder()
+                        .id(savedTask.id())
+                        .name(savedTask.name())
+                        .taskType(savedTask.taskType())
+                        .currency(savedTask.currency())
+                        .price(savedTask.price())
+                        .build())
                 .orElseThrow(taskNotFound(taskId));
     }
 
@@ -108,7 +149,7 @@ public class TaskService {
 
     }
 
-    private LocalDateTime convertEpochToLocalDateTime(Long epoch){
+    private LocalDateTime convertEpochToLocalDateTime(Long epoch) {
         Instant instant = Instant.ofEpochMilli(epoch);
         ZoneId zoneId = ZoneId.systemDefault(); // Use the system default time zone
         return instant.atZone(zoneId).toLocalDateTime();
@@ -116,13 +157,13 @@ public class TaskService {
 
     public List<UserTaskResponse> findUserTask(String userId) {
 
-     Optional<List<UserTask>> userTasks =  userTasksRepository.findByUserId(userId);
+        Optional<List<UserTask>> userTasks = userTasksRepository.findByUserId(userId);
 
-     if(userTasks.isPresent()){
-         return userTasks.get().stream().map(UserTaskResponse::new).toList();
-     }else{
-         throw new TaskNotFoundException("Task not found for user: " + userId);
-     }
+        if (userTasks.isPresent()) {
+            return userTasks.get().stream().map(UserTaskResponse::new).toList();
+        } else {
+            throw new TaskNotFoundException("Task not found for user: " + userId);
+        }
     }
 
     public UserTaskResponse updateUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {

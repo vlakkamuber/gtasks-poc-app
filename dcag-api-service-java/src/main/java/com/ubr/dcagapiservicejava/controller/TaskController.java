@@ -33,16 +33,16 @@ public class TaskController {
 
     @PostMapping(produces = "application/json")
     ResponseEntity<TaskResponse> create(/*@Valid*/ @RequestBody TaskDTO taskDTO) {
-        TaskResponse savedUser = taskService.create(taskDTO);
+        TaskResponse savedTask = taskService.create(taskDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}") //UriComponentsBuilder.fromPath("/{id}")
-                .buildAndExpand(savedUser.id())
+                .buildAndExpand(savedTask.getId())
                 .toUri();
 
         return ResponseEntity
                 .created(location)
-                .body(savedUser);
+                .body(savedTask);
     }
 
     @PutMapping(value = "/{taskId}", produces = "application/json")
