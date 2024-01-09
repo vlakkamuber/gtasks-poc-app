@@ -142,10 +142,10 @@ public class TaskService {
     }
 
 
-    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
-
-        return taskRepository
-                .findAAllNearerTasks(factory.createPoint(new Coordinate(latitude,longitude,4326)),distance)
-                .stream().map(TaskResponse::new).toList();
-    }
+//    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
+//
+//        return taskRepository
+//                .findAAllNearerTasks(factory.createPoint(new Coordinate(latitude,longitude,4326)),distance)
+//                .stream().map(TaskResponse::new).toList();
+//    }
 }

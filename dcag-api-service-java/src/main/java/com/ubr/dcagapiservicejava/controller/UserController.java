@@ -86,8 +86,8 @@ public class UserController {
         return ResponseEntity.ok(taskService.findUserTask(userId));
     }
 
-    @GetMapping("/tasks/nearer")
-    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
-        return taskService.findAAllNearerTasks(latitude, longitude, distance);
-    }
+//    @GetMapping("/tasks/nearer")
+//    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
+//        return taskService.findAAllNearerTasks(latitude, longitude, distance);
+//    }
 }

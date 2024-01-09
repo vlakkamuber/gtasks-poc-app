@@ -35,10 +35,10 @@ public class Task implements Serializable {
     @Column(name = "task_type")
     private TaskType taskType=TaskType.NA;
 
-    @Transient
-    @Column(columnDefinition = "geometry")
-    @JsonIgnore
-    private Point location;
+//    @Transient
+//    @Column(columnDefinition = "geometry")
+//    @JsonIgnore
+//    private Point location;
 
     private String input;
 

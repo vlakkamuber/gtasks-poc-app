@@ -12,6 +12,6 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task,Long> {
 
 
-    @Query("SELECT T FROM Task T, User U WHERE ST_Distance_Sphere(T.location, :location) <= :distance")
-    List<Task> findAAllNearerTasks(Point location, Integer distance);
+//    @Query("SELECT T FROM Task T, User U WHERE ST_Distance_Sphere(T.location, :location) <= :distance")
+//    List<Task> findAAllNearerTasks(Point location, Integer distance);
 }
