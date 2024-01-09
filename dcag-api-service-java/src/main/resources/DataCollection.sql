@@ -16,9 +16,11 @@ CREATE TABLE tasks (
     name VARCHAR(255),
     task_type VARCHAR(255),
     input TEXT,
-    location POINT NOT NULL,
+    location POINT,
     currency VARCHAR(10),
     price DOUBLE PRECISION,
+    create_time TIMESTAMP,
+    due_time TIMESTAMP,
     PRIMARY KEY (id)
 );
 

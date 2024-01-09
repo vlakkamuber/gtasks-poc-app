@@ -4,11 +4,9 @@ package com.ubr.dcagapiservicejava.service;
 import com.ubr.dcagapiservicejava.domain.Task;
 import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.domain.UserTask;
+import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
-import com.ubr.dcagapiservicejava.dto.TaskDTO;
-import com.ubr.dcagapiservicejava.dto.TaskResponse;
-import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
-import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
+import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
@@ -98,6 +96,38 @@ public class TaskService {
         return taskResponseBuilder.build();
     }
 
+    private UserTaskResponse userTaskToUserTaskResponse(UserTask task) {
+        UserTaskResponse.UserTaskResponseBuilder taskResponseBuilder = UserTaskResponse.builder()
+                .id(task.id())
+                .userId(task.user().id())
+                .taskName(task.task().name())
+                .taskType(task.task().taskType())
+                .status(task.status())
+                .startTime(task.startTime()!=null ?
+                                task.startTime().atZone(ZoneId.systemDefault()).toEpochSecond()*1000 :
+                        null)
+                .completedTime(task.completionTime()!=null ?
+                        task.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond()*1000 :
+                        null
+                );
+
+        if (task.task().taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
+            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl();
+            taskResponseBuilder.inputUrl(inputUrl);
+        }
+        if(task.status().equals(TaskStatus.IN_PROGRESS)) {
+            String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl();
+            taskResponseBuilder.uploadUrl(uploadUrl);
+        }
+
+        if(task.status().equals(TaskStatus.COMPLETED)) {
+            String outputUrl = gcpUtils.generateV4PutObjectSignedUrl();
+            taskResponseBuilder.outputUrl(outputUrl);
+        }
+
+        return taskResponseBuilder.build();
+    }
+
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
 
 
@@ -145,7 +175,7 @@ public class TaskService {
                 .task(new Task().id(taskId))
                 .status(userTaskDTO.status())
                 .startTime(convertEpochToLocalDateTime(userTaskDTO.startTime()));
-        return new UserTaskResponse(userTasksRepository.save(userTask));
+        return userTaskToUserTaskResponse(userTasksRepository.save(userTask));
 
     }
 
@@ -160,7 +190,7 @@ public class TaskService {
         Optional<List<UserTask>> userTasks = userTasksRepository.findByUserId(userId);
 
         if (userTasks.isPresent()) {
-            return userTasks.get().stream().map(UserTaskResponse::new).toList();
+            return userTasks.get().stream().map(this::userTaskToUserTaskResponse).toList();
         } else {
             throw new TaskNotFoundException("Task not found for user: " + userId);
         }
@@ -178,8 +208,35 @@ public class TaskService {
         return userTasksRepository
                 .findByUserId(userId)
                 .map(existingUser -> userTasksRepository.save(userTask))
-                .map(UserTaskResponse::new)
+                .map(this::userTaskToUserTaskResponse)
                 .orElseThrow(userNotFound(userId));
+    }
+
+    public UserTaskResponse findUserTaskById(String userId, Long taskId) {
+
+        Optional<UserTask> userTask = userTasksRepository.findByUserIdAndTaskId(userId,taskId);
+        if (userTask.isPresent()){
+            return userTaskToUserTaskResponse(userTask.get());
+        }else{
+            throw new TaskNotFoundException("User not found: " + userId);
+        }
+    }
+
+    public UserTaskSummaryResponse getUserTasksSummary(String userId) {
+
+        Optional<List<UserTask>> userTasks = userTasksRepository.findByUserId(userId);
+
+        if(userTasks.isPresent()){
+            List<UserTask> userTasksList = userTasks.get().stream().filter(e -> e.status().equals(TaskStatus.COMPLETED)).toList();
+            UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
+                    .completedTaskCount((long) userTasksList.size()).totalEarning(userTasksList.stream().mapToDouble(e -> e.task().price()).sum());
+
+            return summaryResponseBuilder.build();
+        }else{
+            UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
+                    .completedTaskCount(0L).totalEarning(0.0);
+            return summaryResponseBuilder.build();
+        }
     }
 
 

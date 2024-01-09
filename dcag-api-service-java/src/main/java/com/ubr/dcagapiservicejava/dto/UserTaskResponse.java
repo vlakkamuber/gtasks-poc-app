@@ -3,39 +3,36 @@ package com.ubr.dcagapiservicejava.dto;
 import com.ubr.dcagapiservicejava.domain.UserTask;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.ZoneId;
 
-public record UserTaskResponse(
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserTaskResponse{
 
 
-        Long id,
-        String userId,
+        private Long id;
 
-        String taskName,
+        private String userId;
 
-        TaskType taskType,
+        private String taskName;
 
-        TaskStatus status,
+        private TaskType taskType;
 
-        Long startTime,
+        private TaskStatus status;
 
-        Long completedTime
-) {
+        private Long startTime;
 
-    public UserTaskResponse(UserTask userTask) {
-        this(userTask.id(),
-                userTask.user().id(),
-                userTask.task().name(),
-                userTask.task().taskType(),
-                userTask.status(),
-                userTask.startTime()!=null ?
-                        userTask.startTime().atZone(ZoneId.systemDefault()).toEpochSecond()*1000 :
-                        null,
-                userTask.completionTime()!=null ?
-                        userTask.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond()*1000 :
-                        null
-                );
-    }
+        private Long completedTime;
+
+        private String inputUrl;
+        private String outputUrl;
+        private String uploadUrl;
 
 }

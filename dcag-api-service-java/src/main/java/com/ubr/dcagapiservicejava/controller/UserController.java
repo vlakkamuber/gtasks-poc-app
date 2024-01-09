@@ -86,6 +86,16 @@ public class UserController {
         return ResponseEntity.ok(taskService.findUserTask(userId));
     }
 
+    @GetMapping(value = "/{userId}/tasks/{taskId}", produces = "application/json")
+    ResponseEntity<UserTaskResponse> findUserTaskById(@PathVariable String userId, @PathVariable Long taskId) {
+        return ResponseEntity.ok(taskService.findUserTaskById(userId,taskId));
+    }
+
+    @GetMapping(value = "/{userId}/tasks/summary", produces = "application/json")
+    ResponseEntity<UserTaskSummaryResponse> getUserTasksSummary(@PathVariable String userId) {
+        return ResponseEntity.ok(taskService.getUserTasksSummary(userId));
+    }
+
 //    @GetMapping("/tasks/nearer")
 //    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
 //        return taskService.findAAllNearerTasks(latitude, longitude, distance);

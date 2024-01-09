@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 import org.locationtech.jts.geom.Point;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -45,6 +46,12 @@ public class Task implements Serializable {
     private String currency;
 
     private Double price;
+
+    @Column(name = "create_time")
+    private LocalDateTime createTime;
+
+    @Column(name = "due_time")
+    private LocalDateTime dueDate;
 
     @OneToMany(mappedBy = "task")
     Set<UserTask> userTasks;
