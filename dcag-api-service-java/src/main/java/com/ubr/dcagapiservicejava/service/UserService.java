@@ -75,6 +75,6 @@ public class UserService {
         return userRepository
                 .findByPhoneNumber(phoneNumber)
                 .map(UserResponse::new)
-                .orElse(null);
+                .orElseThrow(userNotFound(phoneNumber));
     }
 }
