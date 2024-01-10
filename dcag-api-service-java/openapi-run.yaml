@@ -26,6 +26,7 @@ x-google-backend:
 #    x-google-audiences: "anz-driver-ops-ritu"
 #security:
 #  - firebase: []
+
 paths:
   /:
     get:
@@ -45,6 +46,14 @@ paths:
           description: A successful response
           schema:
             type: array
+    post:
+      summary: "Create new user"
+      operationId: "createUser"
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: object
   /users/{userId}:
     get:
       summary: "Get user by id"
@@ -62,6 +71,20 @@ paths:
             type: object
         '404':
           description: "User not found"
+    put:
+      summary: "Update user"
+      operationId: "updateUserById"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: object
   /users/byPhoneNumber/{phoneNumber}:
     get:
       summary: "Get user by phone number"
@@ -79,6 +102,62 @@ paths:
             type: object
         '404':
           description: "User not found"
+  /users/{userId}/tasks:
+    get:
+      summary: "Get tasks of the user"
+      operationId: "getUserTasks"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+        '404':
+          description: "User not found"
+  /users/{userId}/tasks/{taskId}:
+    post:
+      summary: "Assign task to the user"
+      operationId: "createUserTask"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskId
+          in: path
+          required: true
+          type: string
+          description: "ID of the task"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+    put:
+      summary: "Update assigned task of the user"
+      operationId: "updateUserTask"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskId
+          in: path
+          required: true
+          type: string
+          description: "ID of the task"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
   /tasks:
     get:
       summary: "Get all tasks"
@@ -88,6 +167,14 @@ paths:
           description: A successful response
           schema:
             type: array
+    post:
+      summary: "Create new task"
+      operationId: "createTask"
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: object
   /tasks/{taskId}:
     get:
       summary: "Get task by id"
@@ -105,3 +192,17 @@ paths:
             type: object
         '404':
           description: "Task not found"
+    put:
+      summary: "Update task"
+      operationId: "updateTaskById"
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          type: string
+          description: "ID of the task"
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: object

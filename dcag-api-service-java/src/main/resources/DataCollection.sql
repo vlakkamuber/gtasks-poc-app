@@ -37,7 +37,7 @@ CREATE TABLE user_tasks (
     output TEXT,
     output_desc TEXT,
     start_time TIMESTAMP,
-    completion_time TIMESTAMP,  -- Corrected the data type name
+    completion_time TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (task_id) REFERENCES tasks(id)
