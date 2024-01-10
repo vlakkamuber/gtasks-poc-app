@@ -41,7 +41,7 @@ public class Task implements Serializable {
 //    private Point location;
 
     @Column(name = "max_number_of_users")
-    private Long maxNoOfUsers;
+    private long maxNoOfUsers;
 
     private String input;
 
@@ -58,7 +58,7 @@ public class Task implements Serializable {
     private LocalDateTime dueDate;
 
     @Column(name = "is_available")
-    private Boolean isAvailable;
+    private Boolean isAvailable = true;
 
     @OneToMany(mappedBy = "task")
     Set<UserTask> userTasks;
