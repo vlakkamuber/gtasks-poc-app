@@ -141,7 +141,6 @@ public class TaskService {
 
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
 
-
         Task task = new Task()
                 .name(taskDTO.name())
                 .taskType(taskDTO.taskType())
@@ -184,18 +183,13 @@ public class TaskService {
 
     public UserTaskResponse createUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
 
-
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
-
         Optional<Task> task = taskRepository.findById(taskId);
-
 
         if(task.isPresent()) {
 
             if(userTaskList.isEmpty() || (userTaskList.get().size() < task.get().maxNoOfUsers())) {
-
                 UserTaskStatus status = userTaskDTO.status();
-
                 UserTask userTask = new UserTask()
                         .user(new User().id(userId))
                         .task(new Task().id(taskId))
@@ -203,7 +197,7 @@ public class TaskService {
                 if(status.equals(UserTaskStatus.IN_PROGRESS)) {
                     userTask.startTime(convertEpochToLocalDateTime(System.currentTimeMillis()));
                 } else if (status.equals(UserTaskStatus.COMPLETED)) {
-                    userTask.completionTime(convertEpochToLocalDateTime(userTaskDTO.completionTime()));
+                    userTask.completionTime(convertEpochToLocalDateTime(System.currentTimeMillis()));
                 }
                 userTask = userTasksRepository.save(userTask);
 
