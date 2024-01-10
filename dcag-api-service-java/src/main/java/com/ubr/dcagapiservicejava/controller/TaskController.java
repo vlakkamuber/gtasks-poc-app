@@ -2,8 +2,6 @@ package com.ubr.dcagapiservicejava.controller;
 
 import com.ubr.dcagapiservicejava.dto.TaskDTO;
 import com.ubr.dcagapiservicejava.dto.TaskResponse;
-import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
-import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
 import com.ubr.dcagapiservicejava.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +19,14 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
+//    @GetMapping(produces = "application/json")
+//    ResponseEntity<List<TaskResponse>> findAll() {
+//        return ResponseEntity.ok(taskService.findAll());
+//    }
+
     @GetMapping(produces = "application/json")
-    ResponseEntity<List<TaskResponse>> findAll() {
-        return ResponseEntity.ok(taskService.findAll());
+    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false,defaultValue = "true") Boolean available) {
+        return ResponseEntity.ok(taskService.findAvailableTasks(available));
     }
 
     @GetMapping(value = "/{taskId}", produces = "application/json")

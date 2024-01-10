@@ -4,7 +4,7 @@ package com.ubr.dcagapiservicejava.domain;
 import com.google.cloud.spring.data.firestore.Document;
 import lombok.Data;*/
 
-import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
+import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,7 +35,7 @@ public class UserTask implements Serializable {
     @JoinColumn(name = "task_id")
     private Task task;
 
-    private TaskStatus status;
+    private UserTaskStatus status;
 
     private String output;
 

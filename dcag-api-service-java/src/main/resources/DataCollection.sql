@@ -15,10 +15,13 @@ CREATE TABLE tasks (
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
     task_type VARCHAR(255),
+    max_number_of_users bigint,
     input TEXT,
+    status VARCHAR(255) NOT NULL,
     location POINT,
     currency VARCHAR(10),
     price DOUBLE PRECISION,
+    is_available boolean default true,
     create_time TIMESTAMP,
     due_time TIMESTAMP,
     PRIMARY KEY (id)

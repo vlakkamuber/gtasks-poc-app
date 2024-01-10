@@ -1,13 +1,12 @@
 package com.ubr.dcagapiservicejava.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.locationtech.jts.geom.Point;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -34,14 +33,19 @@ public class Task implements Serializable {
 
     @Enumerated
     @Column(name = "task_type")
-    private TaskType taskType=TaskType.NA;
+    private TaskType taskType = TaskType.NA;
 
 //    @Transient
 //    @Column(columnDefinition = "geometry")
 //    @JsonIgnore
 //    private Point location;
 
+    @Column(name = "max_number_of_users")
+    private Long maxNoOfUsers;
+
     private String input;
+
+    private TaskStatus status = TaskStatus.NEW;
 
     private String currency;
 
@@ -52,6 +56,9 @@ public class Task implements Serializable {
 
     @Column(name = "due_time")
     private LocalDateTime dueDate;
+
+    @Column(name = "is_available")
+    private Boolean isAvailable;
 
     @OneToMany(mappedBy = "task")
     Set<UserTask> userTasks;

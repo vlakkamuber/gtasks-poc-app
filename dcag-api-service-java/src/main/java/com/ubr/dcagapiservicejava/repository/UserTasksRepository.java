@@ -18,5 +18,6 @@ public interface UserTasksRepository extends JpaRepository<UserTask,Long> {
     Optional<UserTask> findByUserIdAndTaskId(String userId, Long taskId);
 
 
+    Optional<List<UserTask>> findByTaskId(Long taskId);
 }
 

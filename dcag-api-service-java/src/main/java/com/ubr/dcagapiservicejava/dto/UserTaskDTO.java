@@ -1,10 +1,10 @@
 package com.ubr.dcagapiservicejava.dto;
 
-import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
+import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 
 public record UserTaskDTO(
 
-        TaskStatus status,
+        UserTaskStatus status,
 
         String output,
 
