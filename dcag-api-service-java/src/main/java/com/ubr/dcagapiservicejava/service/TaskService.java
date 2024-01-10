@@ -49,6 +49,7 @@ public class TaskService {
                         .id(task.id())
                         .name(task.name())
                         .taskType(task.taskType())
+                        .maxNoOfUsers(task.maxNoOfUsers())
                         .currency(task.currency())
                         .price(task.price())
                         .build())
@@ -63,6 +64,7 @@ public class TaskService {
                 .taskType(taskDTO.taskType())
                 .input(taskDTO.input())
                 .currency(taskDTO.currency())
+                .maxNoOfUsers(taskDTO.maxNoOfUsers())
                 .price(taskDTO.price());
 //                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
         Task savedTask = taskRepository.save(task);
@@ -70,6 +72,7 @@ public class TaskService {
                 .id(savedTask.id())
                 .name(savedTask.name())
                 .taskType(savedTask.taskType())
+                .maxNoOfUsers(savedTask.maxNoOfUsers())
                 .currency(savedTask.currency())
                 .price(savedTask.price())
                 .build();
@@ -87,6 +90,8 @@ public class TaskService {
                 .id(task.id())
                 .name(task.name())
                 .taskType(task.taskType())
+                .input(task.input())
+                .maxNoOfUsers(task.maxNoOfUsers())
                 .currency(task.currency())
                 .price(task.price());
 
@@ -138,6 +143,7 @@ public class TaskService {
         Task task = new Task()
                 .name(taskDTO.name())
                 .taskType(taskDTO.taskType())
+                .maxNoOfUsers(taskDTO.maxNoOfUsers())
                 .input(taskDTO.input())
                 .currency(taskDTO.currency())
                 .price(taskDTO.price());
@@ -150,6 +156,7 @@ public class TaskService {
                         .id(savedTask.id())
                         .name(savedTask.name())
                         .taskType(savedTask.taskType())
+                        .maxNoOfUsers(savedTask.maxNoOfUsers())
                         .currency(savedTask.currency())
                         .price(savedTask.price())
                         .build())
@@ -184,11 +191,17 @@ public class TaskService {
 
             if(userTaskList.isEmpty() || (userTaskList.get().size() < task.get().maxNoOfUsers())) {
 
+                UserTaskStatus status = userTaskDTO.status();
+
                 UserTask userTask = new UserTask()
                         .user(new User().id(userId))
                         .task(new Task().id(taskId))
-                        .status(userTaskDTO.status())
-                        .startTime(convertEpochToLocalDateTime(userTaskDTO.startTime()));
+                        .status(status);
+                if(status.equals(UserTaskStatus.IN_PROGRESS)) {
+                    userTask.startTime(convertEpochToLocalDateTime(System.currentTimeMillis()));
+                } else if (status.equals(UserTaskStatus.COMPLETED)) {
+                    userTask.completionTime(convertEpochToLocalDateTime(userTaskDTO.completionTime()));
+                }
                 userTask = userTasksRepository.save(userTask);
 
                 updateTaskStatus(taskId);
@@ -297,6 +310,7 @@ public class TaskService {
                         .id(task.id())
                         .name(task.name())
                         .taskType(task.taskType())
+                        .maxNoOfUsers(task.maxNoOfUsers())
                         .currency(task.currency())
                         .price(task.price())
                         .build())

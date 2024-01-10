@@ -16,7 +16,9 @@ public record TaskDTO(
 
         String currency,
 
-        Double price
+        Double price,
+
+        long maxNoOfUsers
 
 ) {
 }

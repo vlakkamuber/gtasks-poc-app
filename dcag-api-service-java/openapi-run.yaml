@@ -162,6 +162,12 @@ paths:
     get:
       summary: "Get all tasks"
       operationId: "getAllTasks"
+      parameters:
+        - name: available
+          in: query
+          required: false
+          type: string
+          description: "set available flag to true to retrieve only available tasks"
       responses:
         '200':
           description: A successful response

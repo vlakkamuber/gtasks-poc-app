@@ -15,8 +15,10 @@ public class TaskResponse {
     private Long id;
     private String name;
     private TaskType taskType;
+    private long  maxNoOfUsers;
     private String currency;
     private Double price;
+    private String input;
     private String inputUrl;
     private String outputUrl;
     private String uploadUrl;
