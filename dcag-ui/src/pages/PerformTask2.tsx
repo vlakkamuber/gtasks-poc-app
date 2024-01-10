@@ -35,7 +35,8 @@ import { ButtonDock } from "baseui/button-dock";
 import { Button, KIND, SHAPE } from "baseui/button";
 import { Textarea } from "baseui/textarea";
 import { SIZE } from "baseui/input";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import apiService from './apiService'
 const PerformTask2: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -52,7 +53,20 @@ const PerformTask2: React.FC = () => {
   const [audioClip, setAudioClip] = useState("");
   const [savedAudio, setSavedAudio] = useState("");
   const [selectedTask, setSelectedTask] = useState({});
-  const [submitted,setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
+
+  const getTaskDetail = async () => {
+    let taskId = "1";
+    apiService
+      .getTaskDetail(taskId)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching task data:", error);
+      });
+  };
+
   useEffect(() => {
     const fetchTasks = async () => {
       let userTasks = JSON.parse(localStorage.getItem("tasks"));
@@ -76,8 +90,8 @@ const PerformTask2: React.FC = () => {
       }
     };
     fetchTasks();
+    getTaskDetail();
   }, []);
-
   useEffect(() => {
     //getAllRecordingsFromIndexDB();
     getRecordedAudioByAudioId();
@@ -85,8 +99,8 @@ const PerformTask2: React.FC = () => {
 
   const startRecording = async () => {
     setIsRecording(true);
-    setSubmitted(false)
-    audioChunks.length=0
+    setSubmitted(false);
+    audioChunks.length = 0;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream);
@@ -110,7 +124,7 @@ const PerformTask2: React.FC = () => {
 
   const stopRecording = () => {
     if (mediaRecorder) {
-      audioChunks.length=0
+      audioChunks.length = 0;
       mediaRecorder.stop();
       setIsRecording(false);
     }
@@ -153,7 +167,7 @@ const PerformTask2: React.FC = () => {
 
   const saveAudioToAPI = async (e) => {
     e.preventDefault();
-    setSubmitted(true)
+    setSubmitted(true);
     const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
     saveRecordingToIndexedDB(audioBlob, selectedTask.id)
       .then(async (id) => {
@@ -195,7 +209,9 @@ const PerformTask2: React.FC = () => {
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
           </IonButtons>
-          <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
+          <IonTitle className="ion-text-center">
+            {t(`dcag.tasks.page.heading`)}
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -208,17 +224,19 @@ const PerformTask2: React.FC = () => {
             margin: "20px",
           }}
         >
-          <h2 className="no-padding-margin" style={{marginBottom: '8px'}}>
+          <h2 className="no-padding-margin" style={{ marginBottom: "8px" }}>
             {selectedTask.name}
           </h2>
           <p className="no-padding-margin" style={{ fontSize: "0.9rem" }}>
             <samll>
-            {t(`dcag.tasks.createdAt.label`)}: {selectedTask.startDate} {t(`dcag.tasks.dueDate.label`)}:{" "}
-              {selectedTask.endDate}
+              {t(`dcag.tasks.createdAt.label`)}: {selectedTask.startDate}{" "}
+              {t(`dcag.tasks.dueDate.label`)}: {selectedTask.endDate}
             </samll>
           </p>
           <p className="no-padding-margin">
-            <span style={{ fontSize: "0.9rem" }}>{t(`dcag.tasks.payouts.label`)}:</span>{" "}
+            <span style={{ fontSize: "0.9rem" }}>
+              {t(`dcag.tasks.payouts.label`)}:
+            </span>{" "}
             <span style={{ fontWeight: "600" }}>${selectedTask.pay}</span>
           </p>
         </div>
@@ -228,21 +246,28 @@ const PerformTask2: React.FC = () => {
             justifyContent: "center",
             flexDirection: "column",
             padding: "10px",
-            marginLeft:'20px',
-            marginRight:'20px'
+            marginLeft: "20px",
+            marginRight: "20px",
           }}
         >
           {(selectedTask.type === "Text to audio" ||
             selectedTask.type === "Text to Audio") && (
             <div>
-              <IonLabel className="label-with-margin">{t(`dcag.tasks.performTask.input.label`)}</IonLabel>
-              <Textarea value={selectedTask.input}  style={{marginTop:'10px'}} rows="1" overrides={{
-            Root: {
-              style: () => ({
-                marginTop:'10px'
-              })
-            },
-          }}/>
+              <IonLabel className="label-with-margin">
+                {t(`dcag.tasks.performTask.input.label`)}
+              </IonLabel>
+              <Textarea
+                value={selectedTask.input}
+                style={{ marginTop: "10px" }}
+                rows="1"
+                overrides={{
+                  Root: {
+                    style: () => ({
+                      marginTop: "10px",
+                    }),
+                  },
+                }}
+              />
               {/* <IonTextarea
                 style={{
                   background: "#f3f3f3", // Set the grey background color
@@ -265,9 +290,14 @@ const PerformTask2: React.FC = () => {
 
           {/* Label for Audio Recording */}
           {selectedTask.status === "new" && (
-            <IonLabel className="label-with-margin" style={{marginTop:'20px'}}>{t(`dcag.tasks.performTask.recordAudio.label`)}</IonLabel>
+            <IonLabel
+              className="label-with-margin"
+              style={{ marginTop: "20px" }}
+            >
+              {t(`dcag.tasks.performTask.recordAudio.label`)}
+            </IonLabel>
           )}
-          <div style={{marginTop:'10px'}}>
+          <div style={{ marginTop: "10px" }}>
             {/* Display the recorded audio for playback (Step 4) */}
             {audioChunks.length > 0 && (
               <AudioPlayer
@@ -316,57 +346,60 @@ const PerformTask2: React.FC = () => {
           </div>
 
           {/* Centered Audio Recording Component */}
-          {(selectedTask.status === "new" || selectedTask.status === "New" )  &&  <div style={{ width: "100%", marginTop: "10px" }}>
-            {isRecording ? (
-              <div
-                style={{
-                  height: "200px",
-                  backgroundColor: "#000",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: "10px",
-                }}
-              >
-                <div style={audioRecordingStyle} onClick={stopRecording}>
-                  <span>Recording in progress...</span>
-                  <div
-                    className="tap-save-container"
-                    style={{ width: "100px", height: "100px" }}
-                  >
-                    <IonIcon icon={saveOutline} className="tap-save-icon" />
-                  </div>
-                  <span className="save-text">{t(`dcag.home.btn.tapToSave.label`)}</span>
-                </div>
-              </div>
-            ) : (
-              <div>
+          {(selectedTask.status === "new" || selectedTask.status === "New") && (
+            <div style={{ width: "100%", marginTop: "10px" }}>
+              {isRecording ? (
                 <div
                   style={{
                     height: "200px",
-                    backgroundColor: "#f3f3f3",
+                    backgroundColor: "#000",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: "10px",
                   }}
                 >
-                  <div style={audioRecordingStyle}>
-                    <div>
-                      <IonIcon
-                        icon={micOutline}
-                        style={{ fontSize: "4rem", color: "#467ff4" }}
-                      ></IonIcon>
-                    </div>
-                    <Button
-                      shape={SHAPE.pill}
-                      size={SIZE.compact}
-                      disabled={selectedTask.status === "Completed"}
-                      onClick={startRecording}
+                  <div style={audioRecordingStyle} onClick={stopRecording}>
+                    <span>Recording in progress...</span>
+                    <div
+                      className="tap-save-container"
+                      style={{ width: "100px", height: "100px" }}
                     >
-                      {t(`dcag.home.btn.startRecording.label`)}
-                    </Button>
-                    {/* <IonButton
+                      <IonIcon icon={saveOutline} className="tap-save-icon" />
+                    </div>
+                    <span className="save-text">
+                      {t(`dcag.home.btn.tapToSave.label`)}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div
+                    style={{
+                      height: "200px",
+                      backgroundColor: "#f3f3f3",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    <div style={audioRecordingStyle}>
+                      <div>
+                        <IonIcon
+                          icon={micOutline}
+                          style={{ fontSize: "4rem", color: "#467ff4" }}
+                        ></IonIcon>
+                      </div>
+                      <Button
+                        shape={SHAPE.pill}
+                        size={SIZE.compact}
+                        disabled={selectedTask.status === "Completed"}
+                        onClick={startRecording}
+                      >
+                        {t(`dcag.home.btn.startRecording.label`)}
+                      </Button>
+                      {/* <IonButton
                       expand="block"
                       color="primary"
                       className="ion-small"
@@ -374,11 +407,12 @@ const PerformTask2: React.FC = () => {
                     >
                       Start Recording
                     </IonButton> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>}
+              )}
+            </div>
+          )}
           {/* <div className="button-container">
             <IonButton
               expand="block"
@@ -408,42 +442,48 @@ const PerformTask2: React.FC = () => {
               Cancel
             </IonButton>
           </div> */}
-          {(selectedTask.status === "new" || selectedTask.status === "New" )  && <ButtonDock
-          overrides={{
-            Root: {
-              style: () => ({
-                paddingLeft:'0px',
-                paddingRight:'0px'
-              })
-            },
-          }}
-            primaryAction={
-              <Button
-                onClick={(e) => saveAudioToAPI(e)}
-                disabled={selectedTask.status === "Completed" || audioChunks.length===0 || submitted===true}
-              >
-                {t(`dcag.home.btn.submit.label`)}
-              </Button>
-            }
-            secondaryActions={[
-              <Button
-                kind={KIND.secondary}
-                key="first"
-                onClick={(e) => history.push("/dashboard/help")}
-                disabled={selectedTask.status === "Completed"}
-              >
-                {t(`dcag.home.btn.help.label`)}
-              </Button>,
-            ]}
-            dismissiveAction={
-              <Button
-                kind={KIND.tertiary}
-                onClick={(e) => history.push("/dashboard/tasks")}
-              >
-                {t(`dcag.home.btn.cancel.label`)}
-              </Button>
-            }
-          />}
+          {(selectedTask.status === "new" || selectedTask.status === "New") && (
+            <ButtonDock
+              overrides={{
+                Root: {
+                  style: () => ({
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                  }),
+                },
+              }}
+              primaryAction={
+                <Button
+                  onClick={(e) => saveAudioToAPI(e)}
+                  disabled={
+                    selectedTask.status === "Completed" ||
+                    audioChunks.length === 0 ||
+                    submitted === true
+                  }
+                >
+                  {t(`dcag.home.btn.submit.label`)}
+                </Button>
+              }
+              secondaryActions={[
+                <Button
+                  kind={KIND.secondary}
+                  key="first"
+                  onClick={(e) => history.push("/dashboard/help")}
+                  disabled={selectedTask.status === "Completed"}
+                >
+                  {t(`dcag.home.btn.help.label`)}
+                </Button>,
+              ]}
+              dismissiveAction={
+                <Button
+                  kind={KIND.tertiary}
+                  onClick={(e) => history.push("/dashboard/tasks")}
+                >
+                  {t(`dcag.home.btn.cancel.label`)}
+                </Button>
+              }
+            />
+          )}
         </div>
       </IonContent>
     </IonPage>
