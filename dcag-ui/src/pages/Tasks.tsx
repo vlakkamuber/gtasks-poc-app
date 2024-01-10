@@ -24,6 +24,8 @@ import {
 import { useHistory } from "react-router-dom";
 import MyTasks from "./MyTasks";
 import { useTranslation } from 'react-i18next';
+import apiService from './apiService'
+
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -44,6 +46,22 @@ const Tasks: React.FC = () => {
       return acc;
     }, {});
   }
+
+  const getMyTasks = async ()=>{
+    let userId = "abcdefg"
+    apiService.getMyTasks(userId)
+      .then((result) => {
+        console.log(result)
+      })
+      .catch((error) => {
+        console.error('Error fetching task data:', error);
+      });
+
+  }
+
+  useEffect(()=>{
+    getMyTasks();
+  },[])
 
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
