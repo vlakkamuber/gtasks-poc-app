@@ -53,7 +53,12 @@ const apiService = {
     const endpoint = `users/byPhoneNumber/${phoneNumber}`;
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
+  },
+  async getTaskDetail(taskId) {
+    const endpoint = `tasks/${taskId}`;
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    return response.json();
   }
-};
+ };
 
 export default apiService;
