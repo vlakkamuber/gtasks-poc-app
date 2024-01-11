@@ -56,6 +56,7 @@
     "dcag.account.page.link.SecurityPrivacy": "భద్రత మరియు గోప్యత",
     "dcag.account.page.link.appSettings": "యాప్ సెట్టింగ్‌లు",
     "dcag.account.page.link.trainingmodule": "శిక్షణ మాడ్యూల్స్",
+    "dcag.account.page.link.logout": "",
     "dcag.account.page.link.help": "సహాయం",
     "dcag.home.taskHub.btn.viewAllTasks": "అన్ని టాస్క్‌లను వీక్షించండి",
     "dcag.home.welcome": "స్వాగతం",
@@ -71,4 +72,3 @@
     "dcag.home.taskHub.localize": "స్థానికీకరించండి",
     "dcag.home.taskHub.record": "రికార్డ్ చేయండి"
 }
-

@@ -6,15 +6,18 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  browserLocalPersistence,
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
+import type { User } from "firebase/auth";
 import { auth } from "../firebase";
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -33,13 +36,14 @@ export function UserAuthContextProvider({ children }) {
   function setUpRecaptha(number) {
     const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
     recaptchaVerifier.render();
-    return signInWithPhoneNumber(auth, number, recaptchaVerifier);
+    return auth.setPersistence(browserLocalPersistence).then(() => signInWithPhoneNumber(auth, number, recaptchaVerifier));
   }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       console.log("Auth", currentuser);
       setUser(currentuser);
+      setLoading(false);
     });
 
     return () => {
@@ -51,9 +55,11 @@ export function UserAuthContextProvider({ children }) {
     <userAuthContext.Provider
       value={{
         user,
+        loading,
         logIn,
         signUp,
         logOut,
+        onAuthStateChanged,
         googleSignIn,
         setUpRecaptha,
       }}
