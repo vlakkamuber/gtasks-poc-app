@@ -36,7 +36,7 @@ import "./App.css"
 import HomeScreen from './pages/HomeScreen';
 import Completed from './pages/Completed';
 import LoginSuccess from './pages/LoginSuccess';
-import PerformTask2 from './pages/PerformTask2';
+import PerformTask from './pages/PerformTask';
 import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import LanguageSwitcher from './pages/LanguageSwitcher';
@@ -61,7 +61,7 @@ const App: React.FC = () => (
       <Route path="/dashboard/tasks" render={() => <Dashboard content={<Tasks forceRefresh={true}/>} />} exact />
       <Route path="/dashboard/account" render={() => <Dashboard content={<Account forceRefresh={true}/>} />} exact/>
       <Route path="/dashboard/help" render={() => <Dashboard content={<Help forceRefresh={true}/>} />} exact />
-      <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask2} exact />
+      <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask} exact />
       <Route path="/dashboard/tasks/completed" component={Completed} exact/>
       <Redirect exact from="/" to="/home" />
     </IonRouterOutlet>

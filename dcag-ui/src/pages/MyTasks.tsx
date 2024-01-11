@@ -5,6 +5,7 @@ import {
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import CompletedTasks from "./CompletedTasks";
+import apiService from './apiService'
 const MyTasks: React.FC = () => {
   const [inProgressCount,setInProgressCount] = useState("")
   const [completedCount,setCompletedCount] = useState("")
@@ -13,6 +14,18 @@ const MyTasks: React.FC = () => {
   const handleSegmentChange = (e: CustomEvent) => {
     setSelectedSegment(e.detail.value);
   };
+
+  const getMyTasksList = ()=>{
+    let userId = "abcdefg"
+    apiService
+      .getMyTasksList(userId)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching task data:", error);
+      });
+  }
   useEffect(() => {
     let userTasks = JSON.parse(localStorage.getItem("tasks"));
     let user = userTasks && userTasks[0]
@@ -33,6 +46,8 @@ const MyTasks: React.FC = () => {
       setCompletedCount(completedTasks.length)
       setBlockedCount(blockedTasks.length)
     }
+
+    getMyTasksList();
    
   }, []);
 
