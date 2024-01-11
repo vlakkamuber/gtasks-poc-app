@@ -49,6 +49,11 @@ const apiService = {
     });
     return response.json();
   },
+  async verifyPhoneNumber(phoneNumber: string) {
+    const endpoint = `users/byPhoneNumber/${phoneNumber}`;
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    return response.json();
+  }
 };
 
 export default apiService;

@@ -6,6 +6,7 @@ import {
   IonIcon,
   IonSelect,
   IonSelectOption,
+  useIonLoading
 } from "@ionic/react";
 import { arrowBack, arrowForward } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
@@ -14,7 +15,8 @@ import {Block} from 'baseui/block';
 import { ArrowLeft, ArrowRight } from "baseui/icon";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useTranslation } from 'react-i18next';
-import {mapTeluguDigitsToNumeric} from "../utils/mapTeluguDigitsToNumeric.js"
+import {mapTeluguDigitsToNumeric} from "../utils/mapTeluguDigitsToNumeric.js";
+import apiService from './apiService'
 
 const Login = () => {
   const [phone, setPhone] = useState("");
@@ -32,6 +34,7 @@ const Login = () => {
     useRef(null),
     useRef(null),
   ];
+  const [present, dismiss] = useIonLoading();
   const { setUpRecaptha } = useUserAuth();
   const history = useHistory();
   const countryOptions = [
@@ -69,16 +72,7 @@ const Login = () => {
     }
   };
 
-  const sendOtp = async (e) => {
-    setIsValidPhone(true)
-    let phoneRegex = /^[6789]\d{9}$/;
-    e.preventDefault();
-    console.log(phone);
-    setError("");
-    if (!phoneRegex.test(phone)){
-      setIsValidPhone(false)
-      return setError("Please enter a valid phone number!");
-    }
+  const sendOtp = async (phone: string) => {
     try {
       const response = await setUpRecaptha("+91"+phone);
       setResult(response);
@@ -89,6 +83,32 @@ const Login = () => {
       setError(err.message);
     }
   };
+
+  const validatePhoneAndSendOtp = async (e) => {
+    setIsValidPhone(true)
+    let phoneRegex = /^[6789]\d{9}$/;
+    e.preventDefault();
+    setError("");
+    if (!phoneRegex.test(phone)){
+      setIsValidPhone(false)
+      return setError("Please enter a valid phone number!");
+    }
+    try{
+      present({
+        message: 'Loading...',
+      });
+    const res = await apiService.verifyPhoneNumber(phone);
+    if(res.id){
+      await sendOtp(phone)
+    }else {
+      setError('User not found!');
+    }
+  }catch(err){
+    setError(err.message);
+  }finally{
+    dismiss();
+  }
+  }
 
   return (
     <IonPage style={{ padding: "15px" }}>
@@ -126,6 +146,7 @@ const Login = () => {
           />
         </div>
         {isValidPhone ? null : <p style={{ color: 'red' }}>Invalid phone number.</p>}
+        {error &&  <p style={{ color: 'red' }}>{error}</p> }
         <p style={{ padding: "10px" }}>
           <small>
           {t(`dcag.home.otp.mobilenumber.helptext`)}
@@ -168,7 +189,7 @@ const Login = () => {
           <Button
             shape={SHAPE.pill}
             kind={KIND.secondary}
-            onClick={(e) => sendOtp(e)}
+            onClick={(e) => validatePhoneAndSendOtp(e)}
             disabled={phone.length === 0}
           >
             {t(`dcag.home.verifyotp.nextBtn.label`)} <ArrowRight />
