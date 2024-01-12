@@ -45,7 +45,7 @@ public class Task implements Serializable {
 
     private String input;
 
-    private TaskStatus status = TaskStatus.NEW;
+    private TaskStatus status;
 
     private String currency;
 

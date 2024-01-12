@@ -1,6 +1,9 @@
 package com.ubr.dcagapiservicejava.dto;
 
+import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
+
+import java.time.LocalDateTime;
 
 public record TaskDTO(
 
@@ -10,6 +13,8 @@ public record TaskDTO(
 
         String input,
 
+        TaskStatus status,
+
         Double latitude,
 
         Double longitude,
@@ -18,7 +23,8 @@ public record TaskDTO(
 
         Double price,
 
-        long maxNoOfUsers
+        long maxNoOfUsers,
 
+        String dueDateTime
 ) {
 }

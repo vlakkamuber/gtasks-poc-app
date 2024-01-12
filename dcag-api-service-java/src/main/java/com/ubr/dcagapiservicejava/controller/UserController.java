@@ -1,6 +1,5 @@
 package com.ubr.dcagapiservicejava.controller;
 
-import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.service.TaskService;
 import com.ubr.dcagapiservicejava.service.UserService;
@@ -83,7 +82,7 @@ public class UserController {
 
     @GetMapping(value = "/{userId}/tasks", produces = "application/json")
     ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId) {
-        return ResponseEntity.ok(taskService.findUserTask(userId));
+        return ResponseEntity.ok(taskService.findUserTasks(userId));
     }
 
     @GetMapping(value = "/{userId}/tasks/{taskId}", produces = "application/json")

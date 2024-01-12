@@ -5,8 +5,8 @@ import com.ubr.dcagapiservicejava.domain.Task;
 import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.domain.UserTask;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
-import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
+import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.error.TaskException;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
@@ -16,12 +16,13 @@ import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -49,34 +50,41 @@ public class TaskService {
                         .id(task.id())
                         .name(task.name())
                         .taskType(task.taskType())
-                        .maxNoOfUsers(task.maxNoOfUsers())
                         .input(task.input())
+                        .status(task.status())
+                        .maxNoOfUsers(task.maxNoOfUsers())
                         .currency(task.currency())
                         .price(task.price())
+                        .createDateTime(task.createTime())
+                        .dueDateTime(task.dueDate())
                         .build())
                 .collect(toList());
     }
 
 
     public TaskResponse create(TaskDTO taskDTO) {
-
         Task task = new Task()
                 .name(taskDTO.name())
                 .taskType(taskDTO.taskType())
                 .input(taskDTO.input())
+                .status(TaskStatus.NEW)
                 .currency(taskDTO.currency())
+                .price(taskDTO.price())
                 .maxNoOfUsers(taskDTO.maxNoOfUsers())
-                .price(taskDTO.price());
-//                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
+                .createTime(convertEpochToLocalDateTime(System.currentTimeMillis()))
+                .dueDate(covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
         return TaskResponse.builder()
                 .id(savedTask.id())
                 .name(savedTask.name())
                 .taskType(savedTask.taskType())
                 .input(savedTask.input())
+                .status(savedTask.status())
                 .maxNoOfUsers(savedTask.maxNoOfUsers())
                 .currency(savedTask.currency())
                 .price(savedTask.price())
+                .createDateTime(savedTask.createTime())
+                .dueDateTime(savedTask.dueDate())
                 .build();
     }
 
@@ -93,9 +101,12 @@ public class TaskService {
                 .name(task.name())
                 .taskType(task.taskType())
                 .input(task.input())
+                .status(task.status())
                 .maxNoOfUsers(task.maxNoOfUsers())
                 .currency(task.currency())
-                .price(task.price());
+                .price(task.price())
+                .createDateTime(task.createTime())
+                .dueDateTime(task.dueDate());
 
         if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
             String inputUrl = gcpUtils.generateV4GetObjectSignedUrl();
@@ -107,31 +118,35 @@ public class TaskService {
         return taskResponseBuilder.build();
     }
 
-    private UserTaskResponse userTaskToUserTaskResponse(UserTask task) {
+    private UserTaskResponse userTaskToUserTaskResponse(UserTask userTask) {
+
+        Task task = userTask.task();
         UserTaskResponse.UserTaskResponseBuilder taskResponseBuilder = UserTaskResponse.builder()
-                .id(task.id())
-                .userId(task.user().id())
-                .taskName(task.task().name())
-                .taskType(task.task().taskType())
-                .status(task.status())
-                .startTime(task.startTime()!=null ?
-                                task.startTime().atZone(ZoneId.systemDefault()).toEpochSecond()*1000 :
+                .id(userTask.id())
+                .userId(userTask.user().id())
+                .taskName(task.name())
+                .taskType(task.taskType())
+                .currency(task.currency())
+                .price(task.price())
+                .status(userTask.status())
+                .startTime(userTask.startTime() != null ?
+                        userTask.startTime().atZone(ZoneId.systemDefault()).toEpochSecond() * 1000 :
                         null)
-                .completedTime(task.completionTime()!=null ?
-                        task.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond()*1000 :
+                .completedTime(userTask.completionTime() != null ?
+                        userTask.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond() * 1000 :
                         null
                 );
 
-        if (task.task().taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
+        if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
             String inputUrl = gcpUtils.generateV4GetObjectSignedUrl();
             taskResponseBuilder.inputUrl(inputUrl);
         }
-        if(task.status().equals(UserTaskStatus.IN_PROGRESS)) {
+        if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
             String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl();
             taskResponseBuilder.uploadUrl(uploadUrl);
         }
 
-        if(task.status().equals(UserTaskStatus.COMPLETED)) {
+        if (userTask.status().equals(UserTaskStatus.COMPLETED)) {
             String outputUrl = gcpUtils.generateV4PutObjectSignedUrl();
             taskResponseBuilder.outputUrl(outputUrl);
         }
@@ -144,8 +159,9 @@ public class TaskService {
         Task task = new Task()
                 .name(taskDTO.name())
                 .taskType(taskDTO.taskType())
-                .maxNoOfUsers(taskDTO.maxNoOfUsers())
                 .input(taskDTO.input())
+                .status(taskDTO.status())
+                .maxNoOfUsers(taskDTO.maxNoOfUsers())
                 .currency(taskDTO.currency())
                 .price(taskDTO.price());
 //                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
@@ -157,8 +173,9 @@ public class TaskService {
                         .id(savedTask.id())
                         .name(savedTask.name())
                         .taskType(savedTask.taskType())
-                        .maxNoOfUsers(savedTask.maxNoOfUsers())
                         .input(savedTask.input())
+                        .status(savedTask.status())
+                        .maxNoOfUsers(savedTask.maxNoOfUsers())
                         .currency(savedTask.currency())
                         .price(savedTask.price())
                         .build())
@@ -186,15 +203,15 @@ public class TaskService {
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
         Optional<Task> task = taskRepository.findById(taskId);
 
-        if(task.isPresent()) {
+        if (task.isPresent()) {
 
-            if(userTaskList.isEmpty() || (userTaskList.get().size() < task.get().maxNoOfUsers())) {
+            if (userTaskList.isEmpty() || (userTaskList.get().size() < task.get().maxNoOfUsers())) {
                 UserTaskStatus status = userTaskDTO.status();
                 UserTask userTask = new UserTask()
                         .user(new User().id(userId))
                         .task(new Task().id(taskId))
                         .status(status);
-                if(status.equals(UserTaskStatus.IN_PROGRESS)) {
+                if (status.equals(UserTaskStatus.IN_PROGRESS)) {
                     userTask.startTime(convertEpochToLocalDateTime(System.currentTimeMillis()));
                 } else if (status.equals(UserTaskStatus.COMPLETED)) {
                     userTask.completionTime(convertEpochToLocalDateTime(System.currentTimeMillis()));
@@ -204,10 +221,10 @@ public class TaskService {
                 updateTaskStatus(taskId);
 
                 return userTaskToUserTaskResponse(userTask);
-            }else {
-                throw new TaskException("Task not available for user "+userId);
+            } else {
+                throw new TaskException("Task not available for user " + userId);
             }
-        }else {
+        } else {
             throw new TaskNotFoundException("Task not found: " + taskId);
         }
 
@@ -217,22 +234,22 @@ public class TaskService {
 
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
         TaskStatus status = null;
-        if(userTaskList.isPresent()){
+        if (userTaskList.isPresent()) {
 
             long totalCount = userTaskList.get().size();
 
             long completedCount = userTaskList.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
-            if(completedCount==0){
+            if (completedCount == 0) {
                 status = TaskStatus.IN_PROGRESS;
-            } else if (totalCount==completedCount) {
+            } else if (totalCount == completedCount) {
                 status = TaskStatus.COMPLETED_PARTIALLY;
-            }else {
+            } else {
                 status = TaskStatus.COMPLETED;
             }
         }
         Optional<Task> taskOptional = taskRepository.findById(taskId);
-        if(taskOptional.isPresent()) {
+        if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.status(status);
             taskRepository.save(task);
@@ -242,11 +259,19 @@ public class TaskService {
 
     private LocalDateTime convertEpochToLocalDateTime(Long epoch) {
         Instant instant = Instant.ofEpochMilli(epoch);
-        ZoneId zoneId = ZoneId.systemDefault(); // Use the system default time zone
-        return instant.atZone(zoneId).toLocalDateTime();
+        return instant.atZone(ZoneOffset.UTC).toLocalDateTime();
     }
 
-    public List<UserTaskResponse> findUserTask(String userId) {
+    private long convertLocalDateTimeToEpoch(LocalDateTime dateTime) {
+        return dateTime.toEpochSecond(ZoneOffset.UTC);
+    }
+
+    private LocalDateTime covertDateStringToLocalDateTime(String dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        return LocalDateTime.parse(dateTime, formatter);
+    }
+
+    public List<UserTaskResponse> findUserTasks(String userId) {
 
         Optional<List<UserTask>> userTasks = userTasksRepository.findByUserId(userId);
 
@@ -254,6 +279,16 @@ public class TaskService {
             return userTasks.get().stream().map(this::userTaskToUserTaskResponse).toList();
         } else {
             throw new TaskNotFoundException("Task not found for user: " + userId);
+        }
+    }
+
+    public UserTaskResponse findUserTaskById(String userId, Long taskId) {
+
+        Optional<UserTask> userTask = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
+        if (userTask.isPresent()) {
+            return userTaskToUserTaskResponse(userTask.get());
+        } else {
+            throw new TaskNotFoundException("User not found: " + userId);
         }
     }
 
@@ -273,27 +308,17 @@ public class TaskService {
                 .orElseThrow(userNotFound(userId));
     }
 
-    public UserTaskResponse findUserTaskById(String userId, Long taskId) {
-
-        Optional<UserTask> userTask = userTasksRepository.findByUserIdAndTaskId(userId,taskId);
-        if (userTask.isPresent()){
-            return userTaskToUserTaskResponse(userTask.get());
-        }else{
-            throw new TaskNotFoundException("User not found: " + userId);
-        }
-    }
-
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
 
         Optional<List<UserTask>> userTasks = userTasksRepository.findByUserId(userId);
 
-        if(userTasks.isPresent()){
+        if (userTasks.isPresent()) {
             List<UserTask> userTasksList = userTasks.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).toList();
             UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount((long) userTasksList.size()).totalEarning(userTasksList.stream().mapToDouble(e -> e.task().price()).sum());
 
             return summaryResponseBuilder.build();
-        }else{
+        } else {
             UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount(0L).totalEarning(0.0);
             return summaryResponseBuilder.build();
@@ -307,10 +332,13 @@ public class TaskService {
                         .id(task.id())
                         .name(task.name())
                         .taskType(task.taskType())
-                        .maxNoOfUsers(task.maxNoOfUsers())
                         .input(task.input())
+                        .status(task.status())
+                        .maxNoOfUsers(task.maxNoOfUsers())
                         .currency(task.currency())
                         .price(task.price())
+                        .createDateTime(task.createTime())
+                        .dueDateTime(task.dueDate())
                         .build())
                 .collect(toList());
     }
