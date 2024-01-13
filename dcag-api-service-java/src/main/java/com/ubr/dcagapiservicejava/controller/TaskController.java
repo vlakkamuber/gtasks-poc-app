@@ -34,6 +34,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.findById(taskId));
     }
 
+    @CrossOrigin
     @PostMapping(produces = "application/json")
     ResponseEntity<TaskResponse> create(/*@Valid*/ @RequestBody TaskDTO taskDTO) {
         TaskResponse savedTask = taskService.create(taskDTO);

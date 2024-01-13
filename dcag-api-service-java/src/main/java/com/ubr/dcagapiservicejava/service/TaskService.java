@@ -14,6 +14,7 @@ import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -267,6 +268,9 @@ public class TaskService {
     }
 
     private LocalDateTime covertDateStringToLocalDateTime(String dateTime) {
+        if(StringUtils.isEmpty(dateTime)) {
+            return null;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         return LocalDateTime.parse(dateTime, formatter);
     }
