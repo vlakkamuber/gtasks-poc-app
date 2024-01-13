@@ -37,6 +37,14 @@ paths:
           description: A successful response
           schema:
             type: string
+    options:
+      description: "Cors associated request to root"
+      operationId: "root CORS"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
   /users:
     get:
       summary: "Get all users"
@@ -158,6 +166,25 @@ paths:
           description: "A successful response"
           schema:
             type: object
+    options:
+      description: "Cors for createUserTask"
+      operationId: "createUserTask CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskId
+          in: path
+          required: true
+          type: string
+          description: "ID of the task"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
   /tasks:
     get:
       summary: "Get all tasks"
@@ -181,6 +208,14 @@ paths:
           description: A successful response
           schema:
             type: object
+    options:
+      description: "Cors associated request to tasks"
+      operationId: "createTask CORS"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
   /tasks/{taskId}:
     get:
       summary: "Get task by id"
