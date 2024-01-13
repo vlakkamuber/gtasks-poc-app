@@ -45,6 +45,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserByPhoneNumber(phoneNumber));
     }
 
+    @CrossOrigin
     @PostMapping(produces = "application/json")
     ResponseEntity<UserResponse> create(/*@Valid*/ @RequestBody UserDTO userDTO) {
         UserResponse savedUser = userService.create(userDTO);
@@ -70,11 +71,13 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @CrossOrigin
     @PostMapping(value = "/{userId}/tasks/{taskId}", consumes = "application/json")
     ResponseEntity<UserTaskResponse> createUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
         return ResponseEntity.ok(taskService.createUserTask(userId, taskId, userTaskDTO));
     }
 
+    @CrossOrigin
     @PutMapping(value = "/{userId}/tasks/{taskId}", consumes = "application/json")
     ResponseEntity<UserTaskResponse> updateUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
         return ResponseEntity.ok(taskService.updateUserTask(userId, taskId, userTaskDTO));
