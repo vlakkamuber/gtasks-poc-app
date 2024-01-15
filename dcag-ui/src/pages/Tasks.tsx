@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -13,25 +13,24 @@ import {
   IonItem,
   IonButton,
   IonButtons,
-  IonBadge,
-} from "@ionic/react";
-import {people, business } from "ionicons/icons";
-import { useHistory } from "react-router-dom";
-import MyTasks from "./MyTasks";
-import { useTranslation } from "react-i18next";
-import apiService from "./apiService";
-import { formatDate } from "../utils/mapTeluguDigitsToNumeric";
-import LoadingComponent from "../components/Loader"
-
+  IonBadge
+} from '@ionic/react';
+import { people, business } from 'ionicons/icons';
+import { useHistory } from 'react-router-dom';
+import MyTasks from './MyTasks';
+import { useTranslation } from 'react-i18next';
+import apiService from './apiService';
+import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
+import LoadingComponent from '../components/Loader';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedSegment, setSelectedSegment] = useState("available_task");
+  const [selectedSegment, setSelectedSegment] = useState('available_task');
   const [user, setUser] = useState({});
   const [tasks, setTasks] = useState([]);
   const [completedCount, setCompletedCount] = useState(0);
   const [availableCount, setAvailableCount] = useState(0);
-  const [myTasksCount,setMyTasksCount] = useState(0)
+  const [myTasksCount, setMyTasksCount] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
   const history = useHistory();
@@ -46,48 +45,46 @@ const Tasks: React.FC = () => {
     }, {});
   }
   const getAvailableTasks = () => {
-    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
+    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getAvailableTasks(userId)
       .then((result) => {
-        setShowLoading(false)
+        setShowLoading(false);
         console.log(result);
-        setAvailableCount(result.length)
-        setTasks(groupBy(result, "taskType"));
-
+        setAvailableCount(result.length);
+        setTasks(groupBy(result, 'taskType'));
       })
       .catch((error) => {
-        console.error("Error fetching task data:", error);
+        console.error('Error fetching task data:', error);
       });
   };
   const getTaskSummary = () => {
-    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
+    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getTaskSummary(userId)
       .then((result) => {
         console.log(result);
-       setCompletedCount(result.completedTaskCount)
-       setTotalEarned(result.totalEarning)
-
+        setCompletedCount(result.completedTaskCount);
+        setTotalEarned(result.totalEarning);
       })
       .catch((error) => {
-        console.error("Error fetching task data:", error);
+        console.error('Error fetching task data:', error);
       });
   };
 
-  const getMyTasksList = ()=>{
-    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
+  const getMyTasksList = () => {
+    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getMyTasksList(userId)
       .then((result) => {
-        setMyTasksCount(result.length)
+        setMyTasksCount(result.length);
       })
       .catch((error) => {
-        console.error("Error fetching task data:", error);
+        console.error('Error fetching task data:', error);
       });
-  }
+  };
   useEffect(() => {
-    setShowLoading(true)
+    setShowLoading(true);
     getAvailableTasks();
     getTaskSummary();
     getMyTasksList();
@@ -98,15 +95,15 @@ const Tasks: React.FC = () => {
   };
 
   const assignTask = async (task) => {
-    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
+    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .assignTask(userId,task.id)
+      .assignTask(userId, task.id)
       .then((result) => {
-        history.push("/dashboard/tasks/perform-task/" + task.id);
+        history.push('/dashboard/tasks/perform-task/' + task.id);
         console.log(result);
       })
       .catch((error) => {
-        console.error("Error fetching task data:", error);
+        console.error('Error fetching task data:', error);
       });
   };
 
@@ -121,82 +118,62 @@ const Tasks: React.FC = () => {
           {/* <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
           </IonButtons> */}
-          <IonTitle className="ion-text-center">
-            {t(`dcag.tasks.page.heading`)}
-          </IonTitle>
+          <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start">
-      <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
-        <div className="tasks-info" style={{ marginTop: "30px" }}>
+        <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
+        <div className="tasks-info" style={{ marginTop: '30px' }}>
           <div className="task-detail">
-            <div style={{ color: "#5e5e5e" }}>
-              <IonIcon icon={people} />{" "}
-              {t(`dcag.tasks.page.completedTask.label`)}
+            <div style={{ color: '#5e5e5e' }}>
+              <IonIcon icon={people} /> {t(`dcag.tasks.page.completedTask.label`)}
             </div>
-            <div style={{ fontSize: "2rem" }}>{completedCount}</div>
+            <div style={{ fontSize: '2rem' }}>{completedCount}</div>
           </div>
-          <div
-            className="vertical-bar"
-            style={{ borderLeft: "2px solid #ddd" }}
-          ></div>
+          <div className="vertical-bar" style={{ borderLeft: '2px solid #ddd' }}></div>
           <div className="task-count">
-            <div style={{ color: "#5e5e5e" }}>
+            <div style={{ color: '#5e5e5e' }}>
               <IonIcon icon={business} /> {t(`dcag.tasks.page.youEarned.label`)}
             </div>
-            <div style={{ fontSize: "2rem" }}>${totalEarned}</div>
+            <div style={{ fontSize: '2rem' }}>${totalEarned}</div>
           </div>
         </div>
         <IonSegment
           color="default"
           value={selectedSegment}
           className="tasks-tab"
-          onIonChange={(e) => setSelectedSegment(e.detail.value)}
-        >
+          onIonChange={(e) => setSelectedSegment(e.detail.value)}>
           <IonSegmentButton
             value="available_task"
             className={
-              selectedSegment === "available_task"
-                ? "tasks-tab-content capitalize"
-                : "capitalize"
-            }
-          >
+              selectedSegment === 'available_task' ? 'tasks-tab-content capitalize' : 'capitalize'
+            }>
             <div className="mytask-segment-content">
               <div className="mytask-segment-text">
-                {" "}
-                {t(`dcag.tasks.tabs.availableTask.label`)}{" "}
+                {' '}
+                {t(`dcag.tasks.tabs.availableTask.label`)}{' '}
               </div>
               {availableCount > 0 && (
-                <IonBadge className="mytask-segmnet-badge">
-                  {availableCount}
-                </IonBadge>
+                <IonBadge className="mytask-segmnet-badge">{availableCount}</IonBadge>
               )}
             </div>
           </IonSegmentButton>
           <IonSegmentButton
             value="my_tasks"
             className={
-              selectedSegment === "my_tasks"
-                ? "tasks-tab-content capitalize"
-                : "capitalize"
-            }
-          >
-            {" "}
+              selectedSegment === 'my_tasks' ? 'tasks-tab-content capitalize' : 'capitalize'
+            }>
+            {' '}
             <div className="mytask-segment-content">
-              <div className="mytask-segment-text">
-                {" "}
-                {t(`dcag.tasks.tabs.myTask.label`)}{" "}
-              </div>
+              <div className="mytask-segment-text"> {t(`dcag.tasks.tabs.myTask.label`)} </div>
               {myTasksCount > 0 && (
-                <IonBadge className="mytask-segmnet-badge">
-                  {myTasksCount}
-                </IonBadge>
+                <IonBadge className="mytask-segmnet-badge">{myTasksCount}</IonBadge>
               )}
             </div>
           </IonSegmentButton>
           {/* Add more segments as needed */}
         </IonSegment>
-        {selectedSegment === "available_task" && (
+        {selectedSegment === 'available_task' && (
           <React.Fragment>
             <React.Fragment>
               {Object.keys(tasks).map((key, index) => {
@@ -205,12 +182,11 @@ const Tasks: React.FC = () => {
                     <div className="ion-padding">
                       <div
                         style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <h1 style={{ margin: "0", marginBottom: "-4px" }}>
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center'
+                        }}>
+                        <h1 style={{ margin: '0', marginBottom: '-4px' }}>
                           {t(`dcag.tasks.${key}.title`)}
                         </h1>
                         {/* <span style={{ color: "#467ff4" }}>
@@ -218,10 +194,8 @@ const Tasks: React.FC = () => {
                         </span> */}
                       </div>
 
-                      <p style={{ margin: "0" }}>
-                        <small>
-                          {t(`dcag.tasks.${key}.taskDesc`)}
-                        </small>
+                      <p style={{ margin: '0' }}>
+                        <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
                       </p>
                     </div>
                     {tasks[key].map((task, index) => {
@@ -230,7 +204,7 @@ const Tasks: React.FC = () => {
                           <IonList key={task.id}>
                             <IonItem>
                               <IonLabel>
-                                <span style={{ display: "flex" }}>
+                                <span style={{ display: 'flex' }}>
                                   <h2>{task.name} </h2>
                                   {/* <IonBadge
                                     color="primary"
@@ -240,27 +214,25 @@ const Tasks: React.FC = () => {
                                       `dcag.home.taskHub.status.${task.status}`
                                     )}
                                   </IonBadge> */}
-                                </span>{" "}
+                                </span>{' '}
                                 <p>
                                   {t(`dcag.tasks.payouts.label`)}: ${task.price}
                                 </p>
                                 <p>
                                   <small>
-                                    {t(`dcag.tasks.createdAt.label`)}:{" "}
-                                    {formatDate(task.createDateTime)}{" "}
-                                    {t(`dcag.tasks.dueDate.label`)}:{" "}
-                                    {formatDate(task.dueDateTime)}
+                                    {t(`dcag.tasks.createdAt.label`)}:{' '}
+                                    {formatDate(task.createDateTime)}{' '}
+                                    {t(`dcag.tasks.dueDate.label`)}: {formatDate(task.dueDateTime)}
                                   </small>
                                 </p>
                               </IonLabel>
                               <IonButton
                                 slot="end"
                                 style={{
-                                  "--background": "black",
-                                  "--border-radius": "10px",
+                                  '--background': 'black',
+                                  '--border-radius': '10px'
                                 }}
-                                onClick={(e) => goToPerformTask(e, task)}
-                              >
+                                onClick={(e) => goToPerformTask(e, task)}>
                                 {t(`dcag.home.btn.startWork.label`)}
                               </IonButton>
                             </IonItem>
@@ -276,7 +248,7 @@ const Tasks: React.FC = () => {
           </React.Fragment>
         )}
 
-        {selectedSegment === "my_tasks" && (
+        {selectedSegment === 'my_tasks' && (
           <React.Fragment>
             <MyTasks />
           </React.Fragment>
