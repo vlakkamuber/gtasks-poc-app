@@ -41,7 +41,7 @@ public class GCPUtils {
     public String generateV4PutObjectSignedUrl() throws StorageException {
         String projectId = "anz-driver-ops-ritu";
         String bucketName = "dcag-tasks-output";
-        String objectName = "audio/";
+        String objectName = "audio/output_file.mp3";
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 
@@ -63,7 +63,7 @@ public class GCPUtils {
 
         System.out.println("Generated PUT signed URL:" + url);
         System.out.println(
-                "You can use this URL with any user agent, for example: curl -X PUT -H 'Content-Type: application/octet-stream' --upload-file my-file '"
+                "You can use this URL with any user agent, for example: curl -X PUT -H 'Content-Type: application/octet-stream' --upload-file test.txt '"
                         + url
                         + "'");
         return url.toString();

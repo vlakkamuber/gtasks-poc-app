@@ -126,7 +126,24 @@ paths:
           schema:
             type: object
         '404':
-          description: "User not found"
+          description: "User tasks not found"
+  /users/{userId}/tasks/summary:
+    get:
+      summary: "Get task summary of the user"
+      operationId: "getUserTasksSummary"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+        '404':
+          description: "User task summary not found"
   /users/{userId}/tasks/{taskId}:
     post:
       summary: "Assign task to the user"
