@@ -51,6 +51,7 @@ public class GCPUtils {
         // Generate Signed URL
         Map<String, String> extensionHeaders = new HashMap<>();
         extensionHeaders.put("Content-Type", "application/octet-stream");
+        extensionHeaders.put("Access-Control-Allow-Origin", "*"); //TODO: Remove this as this is a response header
 
         URL url =
                 storage.signUrl(

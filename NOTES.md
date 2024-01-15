@@ -19,3 +19,8 @@
 ### Test API Gateway
 `curl https://dcag-gateway-cpypkzbg.an.gateway.dev/health`
 `curl https://dcag-gateway-cpypkzbg.an.gateway.dev/users`
+
+### Cloud storage allow cors 
+`gcloud storage buckets update gs://dcag-tasks-output/ --cors-file=dcag_cloud_storage_cors_file.json`
+- verify 
+`gcloud storage buckets  describe gs://dcag-tasks-output/`
