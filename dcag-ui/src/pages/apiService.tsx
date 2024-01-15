@@ -20,8 +20,8 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async getTaskDetail(taskId) {
-    const endpoint = `tasks/${taskId}`;
+  async getTaskDetail(userId,taskId) {
+    const endpoint = `users/${userId}/tasks/${taskId}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
@@ -71,12 +71,12 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async getTaskDetail(taskId) {
-    const endpoint = `tasks/${taskId}`;
-    const headers = getHeaders();
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
-    return response.json();
-  },
+  // async getTaskDetail(taskId) {
+  //   const endpoint = `tasks/${taskId}`;
+  //   const headers = getHeaders();
+  //   const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+  //   return response.json();
+  // },
   async getTaskSummary(userId) {
     const endpoint = `users/${userId}/tasks/summary`;
     const headers = getHeaders();
@@ -87,13 +87,15 @@ const apiService = {
     const headers = getHeaders();
     try {
       const response = await fetch(uploadUrl, {
-        method: 'POST',
+        method: 'PUT',
+        'processData': false,
         headers: {
           'Content-Type': 'application/octet-stream',
+          'Access-Control-Allow-Origin': '*',
         },
         body: audioBlob,
       });
-      return response.json();
+      return response;
     } catch (error) {
       console.error('Error saving audio blob:', error.message);
     }

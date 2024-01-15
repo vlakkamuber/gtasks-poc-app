@@ -1,6 +1,5 @@
 import React, { useState,useRef } from "react";
 import {
-  IonButton,
   IonContent,
   IonPage,
   IonIcon,
@@ -97,7 +96,7 @@ const Login = () => {
       present({
         message: 'Loading...',
       });
-    const res = await apiService.verifyPhoneNumber(phone);
+    const res = await apiService.verifyPhoneNumber(`+91${phone}`);
     if(res.id){
       await sendOtp(phone)
     }else {

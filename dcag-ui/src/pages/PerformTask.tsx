@@ -7,11 +7,6 @@ import {
   IonButtons,
   IonIcon,
   IonLabel,
-  IonTextarea,
-  IonButton,
-  IonRow,
-  IonCol,
-  IonGrid,
   IonRadio,
 } from "@ionic/react";
 
@@ -25,12 +20,6 @@ import {
 } from "ionicons/icons";
 import { useState, useEffect } from "react";
 import AudioPlayer from "./AudioPlayer";
-import {
-  openDB,
-  saveRecordingToIndexedDB,
-  getRecordingsFromIndexedDB,
-  getRecordingsFromIndexedDBByKeyStore,
-} from "./IndexDb";
 import { ButtonDock } from "baseui/button-dock";
 import { Button, KIND, SHAPE } from "baseui/button";
 import { Textarea } from "baseui/textarea";
@@ -57,8 +46,9 @@ const PerformTask: React.FC = () => {
 
   const getTaskDetail = async () => {
     let taskId = params.id;
+    let userId = "user0"
     apiService
-      .getTaskDetail(taskId)
+      .getTaskDetail(userId,taskId)
       .then((result) => {
         console.log(result);
         setSelectedTask(result)
@@ -69,34 +59,8 @@ const PerformTask: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      let userTasks = JSON.parse(localStorage.getItem("tasks"));
-      if (!userTasks) {
-        history.push("/dashboard/home");
-      }
-
-      let user = userTasks && userTasks[0];
-      // let user = (userTasks.find(function (item) {
-      //   return item.phone === localStorage.getItem("phone");
-      // })) || userTasks[0]
-      let selectedTask = user.tasks.find(function (item) {
-        return item.id === params.id;
-      });
-      if (selectedTask) {
-        await localStorage.setItem(
-          "selectedTask",
-          JSON.stringify(selectedTask)
-        );
-        setSelectedTask(selectedTask);
-      }
-    };
-    //fetchTasks();
     getTaskDetail();
   }, []);
-  // useEffect(() => {
-  //   getAllRecordingsFromIndexDB();
-  //   getRecordedAudioByAudioId();
-  // }, [selectedTask]);
 
   const startRecording = async () => {
     setIsRecording(true);
@@ -138,36 +102,8 @@ const PerformTask: React.FC = () => {
     }
   }, [audioChunks]);
 
-  // const getAllRecordingsFromIndexDB = () => {
-  //   getRecordingsFromIndexedDB()
-  //     .then((recordings) => {
-  //       if (recordings.length > 0) {
-  //         const lastRecording = recordings[recordings.length - 1];
-  //         const audioBlobURL = URL.createObjectURL(lastRecording);
-  //         setAudioClip(audioBlobURL);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting recordings:", error);
-  //     });
-  // };
-
-  const getRecordedAudioByAudioId = () => {
-    getRecordingsFromIndexedDBByKeyStore(selectedTask.id)
-      .then((recordings) => {
-        if (recordings) {
-          const lastRecording = recordings;
-          const audioBlobURL = URL.createObjectURL(lastRecording);
-          setSavedAudio(audioBlobURL);
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting recordings:", error);
-      });
-  };
-
   const assignTaskToCompleted = (taskId)=>{
-    let userId = "abcdefg"
+    let userId = "user0"
     apiService
     .assignTaskToCompleted(userId,taskId)
     .then((result) => {
@@ -186,31 +122,12 @@ const PerformTask: React.FC = () => {
     .saveAudioBlobToStorage(selectedTask.uploadUrl,audioBlob)
     .then((result) => {
       console.log("Audio saved to the API.");
-        //assignTaskToCompleted(selectedTask.id)
-        //history.push("/dashboard/tasks/completed");
+        assignTaskToCompleted(selectedTask.taskId)
+        history.push("/dashboard/tasks/completed");
     })
     .catch((error) => {
       console.error("Error fetching task data:", error);
     });
-    // saveRecordingToIndexedDB(audioBlob, selectedTask.id)
-    //   .then(async (id) => {
-    //     let userTasks = await JSON.parse(localStorage.getItem("tasks"));
-    //     let user = userTasks[0];
-    //     let updatedTasks =
-    //       user &&
-    //       user.tasks.map((item) =>
-    //         item.id === selectedTask.id
-    //           ? { ...item, status: "COMPLETED", audioSavedId: id }
-    //           : item
-    //       );
-    //     userTasks = userTasks.map((item) => {
-    //       return {
-    //         ...item,
-    //         tasks: updatedTasks,
-    //       };
-    //     });
-
-    //     await localStorage.setItem("tasks", JSON.stringify(userTasks));
   };
   return (
     <IonPage>
@@ -340,7 +257,7 @@ const PerformTask: React.FC = () => {
                       width: "80vw",
                     }}
                   >
-                    <AudioPlayer audioSrc={savedAudio} />
+                    <AudioPlayer audioSrc={selectedTask.outputUrl} />
                   </div>
                   {/* <div className="icon-container">
                     <div className="icon">

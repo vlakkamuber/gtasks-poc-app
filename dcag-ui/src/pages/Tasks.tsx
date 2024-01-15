@@ -15,12 +15,12 @@ import {
   IonButtons,
   IonBadge,
 } from "@ionic/react";
-import { arrowBack, people, medal, business } from "ionicons/icons";
+import {people, business } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import MyTasks from "./MyTasks";
 import { useTranslation } from "react-i18next";
 import apiService from "./apiService";
-import { TEXT_TO_AUDIO,AUDIO_TO_AUDIO } from '../constants/contant';
+
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -42,23 +42,17 @@ const Tasks: React.FC = () => {
       return acc;
     }, {});
   }
-
-  // const getMyTasks = async ()=>{
-  //   let userId = "abcdefg"
-  //   apiService.getMyTasks(userId)
-  //     .then((result) => {
-  //       console.log(result)
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching task data:', error);
-  //     });
-
-  // }
   const getAvailableTasks = () => {
     apiService
       .getAvailableTasks()
       .then((result) => {
         console.log(result);
+            let newTasks =
+        result &&
+        result.filter(function (item) {
+          return item.status === "NEW"
+        });
+        setNewTasksCount(newTasks.length)
         setTasks(groupBy(result, "taskType"));
 
       })
@@ -87,30 +81,6 @@ const Tasks: React.FC = () => {
     getTaskSummary();
     //getMyTasks();
   }, []);
-
-  // useEffect(() => {
-  //   let userTasks = JSON.parse(localStorage.getItem("tasks"));
-  //   let user = userTasks && userTasks[0];
-  //   if (user) {
-  //     let newTasks =
-  //       user.tasks &&
-  //       user.tasks.filter(function (item) {
-  //         return item.status === "new" || item.status === "New";
-  //       });
-  //     setTasks(groupBy(newTasks, "type"));
-  //     let completedTasks =
-  //       user.tasks &&
-  //       user.tasks.filter(function (item) {
-  //         return item.status === "Completed";
-  //       });
-  //     setAvailableCount(newTasks.length);
-  //     setCompletedCount(completedTasks.length);
-  //     setTotalEarned(completedCount * 2);
-  //   }
-  // }, []);
-  // useEffect(() => {
-  //   setTotalEarned(completedCount * 2);
-  // }, [completedCount]);
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
