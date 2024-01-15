@@ -29,7 +29,7 @@ const CompletedTasks: React.FC = () => {
     history.goBack(); // This function navigates back to the previous page
   };
   const getMyTasksList = ()=>{
-    let userId = "user0"
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
     apiService
       .getMyTasksList(userId)
       .then((result) => {

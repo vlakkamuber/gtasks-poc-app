@@ -61,9 +61,9 @@ const Tasks: React.FC = () => {
       });
   };
   const getTaskSummary = () => {
-    let usserId = "user0"
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
     apiService
-      .getTaskSummary(usserId)
+      .getTaskSummary(userId)
       .then((result) => {
         console.log(result);
        setCompletedCount(result.completedTaskCount)
@@ -87,7 +87,7 @@ const Tasks: React.FC = () => {
   };
 
   const assignTask = async (task) => {
-    let userId = "user0"
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
     apiService
       .assignTask(userId,task.id)
       .then((result) => {

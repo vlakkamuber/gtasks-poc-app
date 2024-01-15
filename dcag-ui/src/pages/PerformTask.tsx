@@ -46,7 +46,7 @@ const PerformTask: React.FC = () => {
 
   const getTaskDetail = async () => {
     let taskId = params.id;
-    let userId = "user0"
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
     apiService
       .getTaskDetail(userId,taskId)
       .then((result) => {
@@ -103,7 +103,7 @@ const PerformTask: React.FC = () => {
   }, [audioChunks]);
 
   const assignTaskToCompleted = (taskId)=>{
-    let userId = "user0"
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
     apiService
     .assignTaskToCompleted(userId,taskId)
     .then((result) => {

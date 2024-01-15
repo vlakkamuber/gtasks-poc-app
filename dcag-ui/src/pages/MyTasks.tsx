@@ -16,7 +16,7 @@ const MyTasks: React.FC = () => {
   };
 
   const getMyTasksList = ()=>{
-    let userId = "user0"
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
     apiService
       .getMyTasksList(userId)
       .then((result) => {
@@ -44,7 +44,7 @@ const MyTasks: React.FC = () => {
     //   setBlockedCount(blockedTasks.length)
     // }
 
-    //getMyTasksList();
+    getMyTasksList();
    
   }, []);
 
