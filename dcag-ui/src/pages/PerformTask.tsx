@@ -37,7 +37,7 @@ import { Textarea } from "baseui/textarea";
 import { SIZE } from "baseui/input";
 import { useTranslation } from "react-i18next";
 import apiService from './apiService'
-const PerformTask2: React.FC = () => {
+const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = useParams();
@@ -56,11 +56,12 @@ const PerformTask2: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const getTaskDetail = async () => {
-    let taskId = "1";
+    let taskId = params.id;
     apiService
       .getTaskDetail(taskId)
       .then((result) => {
         console.log(result);
+        setSelectedTask(result)
       })
       .catch((error) => {
         console.error("Error fetching task data:", error);
@@ -89,13 +90,13 @@ const PerformTask2: React.FC = () => {
         setSelectedTask(selectedTask);
       }
     };
-    fetchTasks();
+    //fetchTasks();
     getTaskDetail();
   }, []);
-  useEffect(() => {
-    //getAllRecordingsFromIndexDB();
-    getRecordedAudioByAudioId();
-  }, [selectedTask]);
+  // useEffect(() => {
+  //   getAllRecordingsFromIndexDB();
+  //   getRecordedAudioByAudioId();
+  // }, [selectedTask]);
 
   const startRecording = async () => {
     setIsRecording(true);
@@ -181,39 +182,35 @@ const PerformTask2: React.FC = () => {
     e.preventDefault();
     setSubmitted(true);
     const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
-    saveRecordingToIndexedDB(audioBlob, selectedTask.id)
-      .then(async (id) => {
-        let userTasks = await JSON.parse(localStorage.getItem("tasks"));
-        let user = userTasks[0];
-        // let user = (userTasks.find(function (item) {
-        //   return item.phone === localStorage.getItem("phone");
-        // })) || userTasks[0];
-        let updatedTasks =
-          user &&
-          user.tasks.map((item) =>
-            item.id === selectedTask.id
-              ? { ...item, status: "Completed", audioSavedId: id }
-              : item
-          );
-        // userTasks = userTasks.map((item) => return
-        // { ...item, tasks: updatedTasks }
-        // );
+    apiService
+    .saveAudioBlobToStorage(selectedTask.uploadUrl,audioBlob)
+    .then((result) => {
+      console.log("Audio saved to the API.");
+        //assignTaskToCompleted(selectedTask.id)
+        //history.push("/dashboard/tasks/completed");
+    })
+    .catch((error) => {
+      console.error("Error fetching task data:", error);
+    });
+    // saveRecordingToIndexedDB(audioBlob, selectedTask.id)
+    //   .then(async (id) => {
+    //     let userTasks = await JSON.parse(localStorage.getItem("tasks"));
+    //     let user = userTasks[0];
+    //     let updatedTasks =
+    //       user &&
+    //       user.tasks.map((item) =>
+    //         item.id === selectedTask.id
+    //           ? { ...item, status: "COMPLETED", audioSavedId: id }
+    //           : item
+    //       );
+    //     userTasks = userTasks.map((item) => {
+    //       return {
+    //         ...item,
+    //         tasks: updatedTasks,
+    //       };
+    //     });
 
-        userTasks = userTasks.map((item) => {
-          return {
-            ...item,
-            tasks: updatedTasks,
-          };
-        });
-
-        await localStorage.setItem("tasks", JSON.stringify(userTasks));
-        console.log("Audio saved to the API.");
-        assignTaskToCompleted(selectedTask.id)
-        history.push("/dashboard/tasks/completed");
-      })
-      .catch((error) => {
-        console.error("Error saving recording:", error);
-      });
+    //     await localStorage.setItem("tasks", JSON.stringify(userTasks));
   };
   return (
     <IonPage>
@@ -242,15 +239,15 @@ const PerformTask2: React.FC = () => {
           </h2>
           <p className="no-padding-margin" style={{ fontSize: "0.9rem" }}>
             <samll>
-              {t(`dcag.tasks.createdAt.label`)}: {selectedTask.startDate}{" "}
-              {t(`dcag.tasks.dueDate.label`)}: {selectedTask.endDate}
+              {t(`dcag.tasks.createdAt.label`)}: {selectedTask.createDateTime}{" "}
+              {t(`dcag.tasks.dueDate.label`)}: {selectedTask.dueDateTime}
             </samll>
           </p>
           <p className="no-padding-margin">
             <span style={{ fontSize: "0.9rem" }}>
               {t(`dcag.tasks.payouts.label`)}:
             </span>{" "}
-            <span style={{ fontWeight: "600" }}>${selectedTask.pay}</span>
+            <span style={{ fontWeight: "600" }}>${selectedTask.price}</span>
           </p>
         </div>
         <div
@@ -263,8 +260,8 @@ const PerformTask2: React.FC = () => {
             marginRight: "20px",
           }}
         >
-          {(selectedTask.type === "Text to audio" ||
-            selectedTask.type === "Text to Audio") && (
+          {(selectedTask.taskType === "TEXT_TO_AUDIO" ||
+            selectedTask.taskType === "TEXT_TO_AUDIO") && (
             <div>
               <IonLabel className="label-with-margin">
                 {t(`dcag.tasks.performTask.input.label`)}
@@ -293,16 +290,16 @@ const PerformTask2: React.FC = () => {
               ></IonTextarea> */}
             </div>
           )}
-          {(selectedTask.type === "Audio to audio" ||
-            selectedTask.type === "Audio to Audio") && (
+          {(selectedTask.taskType === "AUDIO_TO_AUDIO" ||
+            selectedTask.taskType === "AUDIO_TO_AUDIO") && (
             <div>
               <h5>{t(`dcag.tasks.performTask.input.label`)}</h5>
-              <AudioPlayer audioSrc={"assets/" + selectedTask.input} />
+              <AudioPlayer audioSrc={selectedTask.inputUrl} />
             </div>
           )}
 
           {/* Label for Audio Recording */}
-          {selectedTask.status === "new" && (
+          {selectedTask.status === "IN_PROGRESS" && (
             <IonLabel
               className="label-with-margin"
               style={{ marginTop: "20px" }}
@@ -319,7 +316,7 @@ const PerformTask2: React.FC = () => {
                 )}
               />
             )}
-            {selectedTask.status === "Completed" && (
+            {selectedTask.status === "COMPLETED" && (
               <div>
                 <h5>{t(`dcag.tasks.performTask.output.label`)}</h5>
                 <div
@@ -359,7 +356,7 @@ const PerformTask2: React.FC = () => {
           </div>
 
           {/* Centered Audio Recording Component */}
-          {(selectedTask.status === "new" || selectedTask.status === "New") && (
+          {(selectedTask.status === "IN_PROGRESS" || selectedTask.status === "IN_PROGRESS") && (
             <div style={{ width: "100%", marginTop: "10px" }}>
               {isRecording ? (
                 <div
@@ -407,7 +404,7 @@ const PerformTask2: React.FC = () => {
                       <Button
                         shape={SHAPE.pill}
                         size={SIZE.compact}
-                        disabled={selectedTask.status === "Completed"}
+                        disabled={selectedTask.status === "COMPLETED"}
                         onClick={startRecording}
                       >
                         {t(`dcag.home.btn.startRecording.label`)}
@@ -455,7 +452,7 @@ const PerformTask2: React.FC = () => {
               Cancel
             </IonButton>
           </div> */}
-          {(selectedTask.status === "new" || selectedTask.status === "New") && (
+          {(selectedTask.status === "IN_PROGRESS" || selectedTask.status === "IN_PROGRESS") && (
             <ButtonDock
               overrides={{
                 Root: {
@@ -469,7 +466,7 @@ const PerformTask2: React.FC = () => {
                 <Button
                   onClick={(e) => saveAudioToAPI(e)}
                   disabled={
-                    selectedTask.status === "Completed" ||
+                    selectedTask.status === "COMPLETED" ||
                     audioChunks.length === 0 ||
                     submitted === true
                   }
@@ -482,7 +479,7 @@ const PerformTask2: React.FC = () => {
                   kind={KIND.secondary}
                   key="first"
                   onClick={(e) => history.push("/dashboard/help")}
-                  disabled={selectedTask.status === "Completed"}
+                  disabled={selectedTask.status === "COMPLETED"}
                 >
                   {t(`dcag.home.btn.help.label`)}
                 </Button>,
@@ -514,4 +511,4 @@ const audioRecordingStyle = {
   gap: "2px",
 };
 
-export default PerformTask2;
+export default PerformTask;

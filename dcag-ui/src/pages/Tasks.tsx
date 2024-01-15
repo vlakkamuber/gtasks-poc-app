@@ -20,6 +20,7 @@ import { useHistory } from "react-router-dom";
 import MyTasks from "./MyTasks";
 import { useTranslation } from "react-i18next";
 import apiService from "./apiService";
+import { TEXT_TO_AUDIO,AUDIO_TO_AUDIO } from '../constants/contant';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState([]);
   const [completedCount, setCompletedCount] = useState(0);
   const [availableCount, setAvailableCount] = useState(0);
+  const [newTasksCount, setNewTasksCount] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
   const history = useHistory();
   function groupBy(array, key) {
@@ -57,53 +59,67 @@ const Tasks: React.FC = () => {
       .getAvailableTasks()
       .then((result) => {
         console.log(result);
+        setTasks(groupBy(result, "taskType"));
+
+      })
+      .catch((error) => {
+        console.error("Error fetching task data:", error);
+      });
+  };
+  const getTaskSummary = () => {
+    let usserId = "user0"
+    apiService
+      .getTaskSummary(usserId)
+      .then((result) => {
+        console.log(result);
+       setCompletedCount(result.completedTaskCount)
+       setTotalEarned(result.totalEarning)
+
       })
       .catch((error) => {
         console.error("Error fetching task data:", error);
       });
   };
 
+
   useEffect(() => {
     getAvailableTasks();
+    getTaskSummary();
     //getMyTasks();
   }, []);
 
-  useEffect(() => {
-    let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = userTasks && userTasks[0];
-    // let user =
-    //   (userTasks &&
-    //   userTasks.find(function (item) {
-    //     return item.phone === localStorage.getItem("phone");
-    //   }) ) || userTasks[0]
-    if (user) {
-      let newTasks =
-        user.tasks &&
-        user.tasks.filter(function (item) {
-          return item.status === "new" || item.status === "New";
-        });
-      setTasks(groupBy(newTasks, "type"));
-      let completedTasks =
-        user.tasks &&
-        user.tasks.filter(function (item) {
-          return item.status === "Completed";
-        });
-      setAvailableCount(newTasks.length);
-      setCompletedCount(completedTasks.length);
-      setTotalEarned(completedCount * 2);
-    }
-  }, []);
-  useEffect(() => {
-    setTotalEarned(completedCount * 2);
-  }, [completedCount]);
+  // useEffect(() => {
+  //   let userTasks = JSON.parse(localStorage.getItem("tasks"));
+  //   let user = userTasks && userTasks[0];
+  //   if (user) {
+  //     let newTasks =
+  //       user.tasks &&
+  //       user.tasks.filter(function (item) {
+  //         return item.status === "new" || item.status === "New";
+  //       });
+  //     setTasks(groupBy(newTasks, "type"));
+  //     let completedTasks =
+  //       user.tasks &&
+  //       user.tasks.filter(function (item) {
+  //         return item.status === "Completed";
+  //       });
+  //     setAvailableCount(newTasks.length);
+  //     setCompletedCount(completedTasks.length);
+  //     setTotalEarned(completedCount * 2);
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   setTotalEarned(completedCount * 2);
+  // }, [completedCount]);
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
 
-  const assignTask = async () => {
+  const assignTask = async (task) => {
+    let userId = "user0"
     apiService
-      .assignTask()
+      .assignTask(userId,task.id)
       .then((result) => {
         history.push("/dashboard/tasks/perform-task/" + task.id);
         console.log(result);
@@ -114,8 +130,8 @@ const Tasks: React.FC = () => {
   };
 
   const goToPerformTask = (e, task) => {
-    history.push("/dashboard/tasks/perform-task/" + task.id);
-    //assignTask(task);
+    //.push("/dashboard/tasks/perform-task/" + task.id);
+    assignTask(task);
   };
 
   return (
@@ -214,7 +230,7 @@ const Tasks: React.FC = () => {
                         }}
                       >
                         <h1 style={{ margin: "0", marginBottom: "-4px" }}>
-                          {t(`dcag.tasks.${key.replace(/\s+/g, "")}.title`)}
+                          {t(`dcag.tasks.${key}.title`)}
                         </h1>
                         <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
@@ -223,7 +239,7 @@ const Tasks: React.FC = () => {
 
                       <p style={{ margin: "0" }}>
                         <small>
-                          {t(`dcag.tasks.${tasks[key][0].taskDesc}`)}
+                          {t(`dcag.tasks.${key}.taskDesc`)}
                         </small>
                       </p>
                     </div>
@@ -237,7 +253,7 @@ const Tasks: React.FC = () => {
                                   <h2>{task.name} </h2>
                                   <IonBadge
                                     color="primary"
-                                    className={`status-text-${task.status}`}
+                                    className={`status-text-new`}
                                   >
                                     {t(
                                       `dcag.home.taskHub.status.${task.status}`
@@ -245,7 +261,7 @@ const Tasks: React.FC = () => {
                                   </IonBadge>
                                 </span>{" "}
                                 <p>
-                                  {t(`dcag.tasks.payouts.label`)}: ${task.pay}
+                                  {t(`dcag.tasks.payouts.label`)}: ${task.price}
                                 </p>
                                 <p>
                                   <small>

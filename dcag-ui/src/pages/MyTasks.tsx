@@ -16,7 +16,7 @@ const MyTasks: React.FC = () => {
   };
 
   const getMyTasksList = ()=>{
-    let userId = "abcdefg"
+    let userId = "user0"
     apiService
       .getMyTasksList(userId)
       .then((result) => {
@@ -27,27 +27,24 @@ const MyTasks: React.FC = () => {
       });
   }
   useEffect(() => {
-    let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    let user = userTasks && userTasks[0]
-    // let user = (userTasks && userTasks.find(function(item){
-    //   return item.phone===localStorage.getItem("phone")
-    // })) || userTasks[0]
-    if(user){
-      let inProgressTasks = user.tasks && user.tasks.filter(function(item){
-        return item.status==='In Progress'
-      })
-      let completedTasks = user.tasks && user.tasks.filter(function(item){
-        return item.status==='Completed'
-      })
-      let blockedTasks = user.tasks && user.tasks.filter(function(item){
-        return item.status==='Blocked'
-      })
-      setInProgressCount(inProgressTasks.length)
-      setCompletedCount(completedTasks.length)
-      setBlockedCount(blockedTasks.length)
-    }
+    // let userTasks = JSON.parse(localStorage.getItem("tasks"));
+    // let user = userTasks && userTasks[0]
+    // if(user){
+    //   let inProgressTasks = user.tasks && user.tasks.filter(function(item){
+    //     return item.status==='In Progress'
+    //   })
+    //   let completedTasks = user.tasks && user.tasks.filter(function(item){
+    //     return item.status==='Completed'
+    //   })
+    //   let blockedTasks = user.tasks && user.tasks.filter(function(item){
+    //     return item.status==='Blocked'
+    //   })
+    //   setInProgressCount(inProgressTasks.length)
+    //   setCompletedCount(completedTasks.length)
+    //   setBlockedCount(blockedTasks.length)
+    // }
 
-    getMyTasksList();
+    //getMyTasksList();
    
   }, []);
 

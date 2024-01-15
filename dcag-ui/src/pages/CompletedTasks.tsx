@@ -8,29 +8,51 @@ import { useHistory } from "react-router-dom";
 import { chevronForward } from "ionicons/icons";
 import React, { useState,useEffect } from "react";
 import { useTranslation } from 'react-i18next';
+import apiService from "./apiService";
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
 
   const history = useHistory();
+  function groupBy(array, key) {
+    return array.reduce((acc, item) => {
+      const groupKey = item[key];
+      if (!acc[groupKey]) {
+        acc[groupKey] = [];
+      }
+      acc[groupKey].push(item);
+      return acc;
+    }, {});
+  }
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
+  const getMyTasksList = ()=>{
+    let userId = "user0"
+    apiService
+      .getMyTasksList(userId)
+      .then((result) => {
+        setTasks(groupBy(result, "taskType"));
+      })
+      .catch((error) => {
+        console.error("Error fetching task data:", error);
+      });
+  }
+
   useEffect(() => {
-    let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    // let user = (userTasks && userTasks.find(function (item) {
-    //   return item.phone === localStorage.getItem("phone");
-    // })) || userTasks[0]
-    let user = userTasks && userTasks[0]
-    if (user) {
-      let completedTasks =
-        user.tasks &&
-        user.tasks.filter(function (item) {
-          return item.status === "Completed";
-        });
-      setTasks(groupBy(completedTasks, "type"));
-    }
+    getMyTasksList();
+  
+    // let userTasks = JSON.parse(localStorage.getItem("tasks"));
+    // let user = userTasks && userTasks[0]
+    // if (user) {
+    //   let completedTasks =
+    //     user.tasks &&
+    //     user.tasks.filter(function (item) {
+    //       return item.status === "Completed";
+    //     });
+    //   setTasks(groupBy(completedTasks, "type"));
+    // }
   }, []);
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -73,7 +95,7 @@ const CompletedTasks: React.FC = () => {
                     <IonItem>
                       <IonLabel>
                         <span style={{ display: "flex" }}>
-                          <h2>{task.name}</h2>
+                          <h2>{task.taskName}</h2>
                           <IonBadge
                             color="primary"
                             className={`status-text-completed`}
@@ -81,7 +103,7 @@ const CompletedTasks: React.FC = () => {
                              {t(`dcag.home.taskHub.status.${task.status}`)}
                           </IonBadge>
                         </span>{" "}
-                        <p>{t(`dcag.tasks.payouts.label`)}: ${task.pay}</p>
+                        <p>{t(`dcag.tasks.payouts.label`)}: ${task.price}</p>
                         <p>
                           <small>
                           {t(`dcag.tasks.createdAt.label`)}: {task.startDate} {t(`dcag.tasks.dueDate.label`)}:{" "}

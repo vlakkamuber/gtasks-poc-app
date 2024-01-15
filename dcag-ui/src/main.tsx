@@ -11,7 +11,7 @@ const engine = new Styletron();
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <LanguageProvider i18n={i18n}>
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
@@ -22,5 +22,5 @@ root.render(
     </StyletronProvider>
     </LanguageProvider>
     
-  </React.StrictMode>
+  // </React.StrictMode>
 );

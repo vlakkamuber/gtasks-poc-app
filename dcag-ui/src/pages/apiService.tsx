@@ -30,9 +30,9 @@ const apiService = {
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
+      body: JSON.stringify({
         status: "IN_PROGRESS",
-      },
+      }),
     });
     return response.json();
   },
@@ -43,9 +43,9 @@ const apiService = {
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
+      body: JSON.stringify({
         status: "COMPLETED",
-      },
+      }),
     });
     return response.json();
   },
@@ -58,6 +58,25 @@ const apiService = {
     const endpoint = `tasks/${taskId}`;
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
+  },
+  async getTaskSummary(userId) {
+    const endpoint = `users/${userId}/tasks/summary`;
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    return response.json();
+  },
+  async saveAudioBlobToStorage(uploadUrl:string,audioBlob: Blob) {
+    try {
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/octet-stream',
+        },
+        body: audioBlob,
+      });
+      return response.json();
+    } catch (error) {
+      console.error('Error saving audio blob:', error.message);
+    }
   }
  };
 
