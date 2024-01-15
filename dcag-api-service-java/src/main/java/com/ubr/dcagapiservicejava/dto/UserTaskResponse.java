@@ -14,8 +14,10 @@ import lombok.NoArgsConstructor;
 public class UserTaskResponse {
     private Long id;
     private String userId;
+    private Long taskId;
     private String taskName;
     private TaskType taskType;
+    private String input;
     private UserTaskStatus status;
     private String currency;
     private Double price;

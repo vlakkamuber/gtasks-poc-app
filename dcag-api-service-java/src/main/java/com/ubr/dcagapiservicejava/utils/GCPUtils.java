@@ -10,21 +10,23 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class GCPUtils {
-    /**
-     * Signing a URL requires Credentials which implement ServiceAccountSigner. These can be set
-     * explicitly using the Storage.SignUrlOption.signWith(ServiceAccountSigner) option. If you don't,
-     * you could also pass a service account signer to StorageOptions, i.e.
-     * StorageOptions().newBuilder().setCredentials(ServiceAccountSignerCredentials). In this example,
-     * neither of these options are used, which means the following code only works when the
-     * credentials are defined via the environment variable GOOGLE_APPLICATION_CREDENTIALS, and those
-     * credentials are authorized to sign a URL. See the documentation for Storage.signUrl for more
-     * details.
-     */
-    public String generateV4GetObjectSignedUrl(/*
-            String projectId, String bucketName, String objectName*/) throws StorageException {
+
+        /**
+         * Signing a URL requires Credentials which implement ServiceAccountSigner. These can be set
+         * explicitly using the Storage.SignUrlOption.signWith(ServiceAccountSigner) option. If you don't,
+         * you could also pass a service account signer to StorageOptions, i.e.
+         * StorageOptions().newBuilder().setCredentials(ServiceAccountSignerCredentials). In this example,
+         * neither of these options are used, which means the following code only works when the
+         * credentials are defined via the environment variable GOOGLE_APPLICATION_CREDENTIALS, and those
+         * credentials are authorized to sign a URL. See the documentation for Storage.signUrl for more
+         * details.
+         */
+    public String generateV4GetObjectSignedUrl(String bucketName, String objectName) throws StorageException {
+        //TODO: Take these values from properties file
         String projectId = "anz-driver-ops-ritu";
-        String bucketName = "dcag-tasks-input";
-        String objectName = "audio/file_example_MP3_700KB.mp3";
+//        String bucketName = "dcag-tasks-input";
+//        String objectName = "audio/file_example_MP3_700KB.mp3";
+        objectName = "audio/"+ objectName;
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 
@@ -38,10 +40,11 @@ public class GCPUtils {
         return url.toString();
     }
 
-    public String generateV4PutObjectSignedUrl() throws StorageException {
+    public String generateV4PutObjectSignedUrl(String objectName) throws StorageException {
         String projectId = "anz-driver-ops-ritu";
         String bucketName = "dcag-tasks-output";
-        String objectName = "audio/output_file.mp3";
+//        String objectName = "audio/output_file.mp3";
+        objectName = "audio/"+ objectName;
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 

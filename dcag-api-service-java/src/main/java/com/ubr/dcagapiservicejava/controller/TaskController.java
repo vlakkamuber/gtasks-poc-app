@@ -25,8 +25,9 @@ public class TaskController {
 //    }
 
     @GetMapping(produces = "application/json")
-    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false,defaultValue = "true") Boolean available) {
-        return ResponseEntity.ok(taskService.findAvailableTasks(available));
+    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false,defaultValue = "true") Boolean available,
+                                                          @RequestParam(required = false,defaultValue = "test") String userId) {
+        return ResponseEntity.ok(taskService.findAvailableTasks(available, userId));
     }
 
     @GetMapping(value = "/{taskId}", produces = "application/json")

@@ -109,12 +109,17 @@ public class TaskService {
                 .createDateTime(task.createTime())
                 .dueDateTime(task.dueDate());
 
+        String objectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
+
         if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
-            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl();
+            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-input", objectName);
             taskResponseBuilder.inputUrl(inputUrl);
         }
-        String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl();
-        taskResponseBuilder.uploadUrl(uploadUrl);
+        if (task.status().equals(TaskStatus.IN_PROGRESS)) {
+            //TODO: uploadUrl is not needed. Need to revisit this.
+            String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl(objectName);
+            taskResponseBuilder.uploadUrl(uploadUrl);
+        }
 
         return taskResponseBuilder.build();
     }
@@ -125,8 +130,10 @@ public class TaskService {
         UserTaskResponse.UserTaskResponseBuilder taskResponseBuilder = UserTaskResponse.builder()
                 .id(userTask.id())
                 .userId(userTask.user().id())
+                .taskId(task.id())
                 .taskName(task.name())
                 .taskType(task.taskType())
+                .input(task.input())
                 .currency(task.currency())
                 .price(task.price())
                 .status(userTask.status())
@@ -138,19 +145,24 @@ public class TaskService {
                         null
                 );
 
+        String objectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
+
         if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
-            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl();
+            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-input", objectName);
             taskResponseBuilder.inputUrl(inputUrl);
-        }
-        if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
-            String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl();
-            taskResponseBuilder.uploadUrl(uploadUrl);
         }
 
         if (userTask.status().equals(UserTaskStatus.COMPLETED)) {
-            String outputUrl = gcpUtils.generateV4PutObjectSignedUrl();
+            String outputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-output", objectName);
             taskResponseBuilder.outputUrl(outputUrl);
         }
+
+        if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
+            //TODO: uploadUrl is not always needed. Need to revisit this.
+            String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl(objectName);
+            taskResponseBuilder.uploadUrl(uploadUrl);
+        }
+
 
         return taskResponseBuilder.build();
     }
@@ -268,7 +280,7 @@ public class TaskService {
     }
 
     private LocalDateTime covertDateStringToLocalDateTime(String dateTime) {
-        if(StringUtils.isEmpty(dateTime)) {
+        if (StringUtils.isEmpty(dateTime)) {
             return null;
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -298,18 +310,26 @@ public class TaskService {
 
     public UserTaskResponse updateUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
 
-        UserTask userTask = new UserTask()
-                .user(new User().id(userId))
-                .task(new Task().id(taskId))
-                .status(userTaskDTO.status())
-                .startTime(convertEpochToLocalDateTime(userTaskDTO.startTime()))
-                .completionTime(convertEpochToLocalDateTime(userTaskDTO.completionTime()));
+        UserTaskStatus status = userTaskDTO.status();
+        if (!status.equals(UserTaskStatus.COMPLETED)) {
+            throw new TaskException("Task can only be updated to COMPLETED. Task Id: " + taskId + " Status: " + status);
+        }
 
-        return userTasksRepository
-                .findByUserId(userId)
-                .map(existingUser -> userTasksRepository.save(userTask))
+        Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
+        return userTaskOptional
+                .map(userTask -> {
+                    UserTask updatedUserTask = new UserTask().id(userTask.id())
+                            .user(userTask.user())
+                            .task(userTask.task())
+                            .status(status)
+                            .output(userTask.task().input())
+                            .startTime(userTask.startTime())
+                            .completionTime(convertEpochToLocalDateTime(System.currentTimeMillis()));
+                    return userTasksRepository.save(updatedUserTask);
+                })
                 .map(this::userTaskToUserTaskResponse)
                 .orElseThrow(userNotFound(userId));
+
     }
 
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
@@ -329,7 +349,7 @@ public class TaskService {
         }
     }
 
-    public List<TaskResponse> findAvailableTasks(Boolean available) {
+    public List<TaskResponse> findAvailableTasks(Boolean available, String userId) {
 
         return taskRepository.findAvailableTasks(available).stream()
                 .map(task -> TaskResponse.builder()

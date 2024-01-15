@@ -12,6 +12,13 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task,Long> {
 
 
+    //TODO: Update this query; Possible SQL:
+    // SELECT t.taskId, t.taskName
+    //FROM tasks t
+    //LEFT JOIN user_tasks ut ON t.taskId = ut.taskId AND ut.userId = 'abc'
+    //WHERE ut.userId IS NULL AND t.isAvailable = 'true';
+
+
     @Query("SELECT T FROM Task T WHERE T.isAvailable =:available")
     List<Task> findAvailableTasks(boolean available);
 

@@ -145,6 +145,25 @@ paths:
         '404':
           description: "User task summary not found"
   /users/{userId}/tasks/{taskId}:
+    get:
+      summary: "Get assigned task of the user"
+      operationId: "getAssignedUserTask"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskId
+          in: path
+          required: true
+          type: string
+          description: "ID of the task"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
     post:
       summary: "Assign task to the user"
       operationId: "createUserTask"
@@ -212,6 +231,11 @@ paths:
           required: false
           type: string
           description: "set available flag to true to retrieve only available tasks"
+        - name: userId
+          in: query
+          required: false
+          type: string
+          description: "logged in userId(TODO: Remove this param once auth is implemented)"
       responses:
         '200':
           description: A successful response

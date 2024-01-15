@@ -160,3 +160,9 @@ INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency
 INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('ATask8', '2', 3,  'namalagundu.mp3', '0', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-16 00:00:00');
 INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('ATask9', '2', 3,  'padmaraonagar.mp3', '0', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-16 00:00:00');
 INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('ATask10', '2', 3, 'tiruvananthapuram.mp3', '0', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-16 00:00:00');
+
+
+
+---------------------- Users ------------------
+INSERT INTO users (id, email, first_name, last_name, phone_number) VALUES ('n0SAEOWwzVSzeT6v06XdBCaTxUL2', 'sameer@abc.com', "Sameer1", "Mishra", '+919693582143');
+INSERT INTO users (id, email, first_name, last_name, phone_number) VALUES ('soSm43aGWeZAlwv2rP7lpA0DgcB2', 'sameer2@abc.com', "Sameer2", "Mishra", '+918686478524');
