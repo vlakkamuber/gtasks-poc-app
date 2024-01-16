@@ -255,12 +255,12 @@ public class TaskService {
 
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
         TaskStatus status = null;
-        long totalCount = 0;
+        long completedCount = 0;
         if (userTaskList.isPresent()) {
 
-            totalCount = userTaskList.get().size();
+            long totalCount = userTaskList.get().size();
 
-            long completedCount = userTaskList.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
+            completedCount = userTaskList.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
             if (completedCount == 0) {
                 status = TaskStatus.IN_PROGRESS;
@@ -274,7 +274,7 @@ public class TaskService {
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.status(status);
-            if(totalCount >= taskOptional.get().maxNoOfUsers()){
+            if(completedCount >= taskOptional.get().maxNoOfUsers()){
                 task.isAvailable(false);
             }
             taskRepository.save(task);
