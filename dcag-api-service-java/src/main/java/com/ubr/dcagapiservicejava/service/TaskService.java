@@ -218,7 +218,7 @@ public class TaskService {
 
         if (task.isPresent()) {
 
-            if (userTaskList.isEmpty() || (userTaskList.get().size() < task.get().maxNoOfUsers())) {
+            if (userTaskList.isEmpty() || task.get().isAvailable()) {
                 UserTaskStatus status = userTaskDTO.status();
                 UserTask userTask = new UserTask()
                         .user(new User().id(userId))
@@ -247,24 +247,28 @@ public class TaskService {
 
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
         TaskStatus status = null;
+        long totalCount = 0;
         if (userTaskList.isPresent()) {
 
-            long totalCount = userTaskList.get().size();
+            totalCount = userTaskList.get().size();
 
             long completedCount = userTaskList.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
             if (completedCount == 0) {
                 status = TaskStatus.IN_PROGRESS;
             } else if (totalCount == completedCount) {
-                status = TaskStatus.COMPLETED_PARTIALLY;
-            } else {
                 status = TaskStatus.COMPLETED;
+            } else {
+                status = TaskStatus.COMPLETED_PARTIALLY;
             }
         }
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.status(status);
+            if(totalCount >= taskOptional.get().maxNoOfUsers()){
+                task.isAvailable(false);
+            }
             taskRepository.save(task);
         }
 
