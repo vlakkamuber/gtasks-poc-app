@@ -71,7 +71,7 @@ const Home: React.FC = () => {
           </IonCardHeader>
 
           <IonCardContent>
-            {t(`dcag.home.taskHub.textToAudio.subtitle`)}.
+            {t(`dcag.home.taskHub.textToAudio.subtitle`)}
           </IonCardContent>
         </IonCard>
         <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
@@ -86,7 +86,7 @@ const Home: React.FC = () => {
           </IonCardHeader>
 
           <IonCardContent>
-          {t(`dcag.home.taskHub.audioToAudio.subtitle`)}.
+          {t(`dcag.home.taskHub.audioToAudio.subtitle`)}
           </IonCardContent>
         </IonCard>
         <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
           </IonCardHeader>
 
           <IonCardContent>
-          {t(`dcag.home.taskHub.textToImage.subtitle`)}.
+          {t(`dcag.home.taskHub.textToImage.subtitle`)}
           </IonCardContent>
         </IonCard>
       </IonContent>
