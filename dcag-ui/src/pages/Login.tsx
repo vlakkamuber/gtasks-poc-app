@@ -98,6 +98,7 @@ const Login = () => {
       });
     const res = await apiService.verifyPhoneNumber(`+91${phone}`);
     if(res.id){
+      dismiss();
       localStorage.setItem("loggedInUser",JSON.stringify(res.id))
       await sendOtp(phone)
     }else {

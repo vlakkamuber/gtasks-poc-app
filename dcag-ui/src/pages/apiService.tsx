@@ -32,8 +32,8 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async getAvailableTasks() {
-    const endpoint = `tasks?available=true`;
+  async getAvailableTasks(userId) {
+    const endpoint = `tasks?available=true&userId=${userId}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();

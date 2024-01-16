@@ -43,8 +43,9 @@ const Tasks: React.FC = () => {
     }, {});
   }
   const getAvailableTasks = () => {
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
     apiService
-      .getAvailableTasks()
+      .getAvailableTasks(userId)
       .then((result) => {
         console.log(result);
             let newTasks =
