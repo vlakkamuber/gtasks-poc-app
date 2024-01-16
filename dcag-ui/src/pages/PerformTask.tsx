@@ -8,6 +8,7 @@ import {
   IonIcon,
   IonLabel,
   IonRadio,
+  IonToast
 } from "@ionic/react";
 
 import { useHistory, useParams } from "react-router-dom";
@@ -39,6 +40,7 @@ const PerformTask: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedTask, setSelectedTask] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const getTaskDetail = async () => {
     let taskId = params.id;
@@ -104,6 +106,12 @@ const PerformTask: React.FC = () => {
     .assignTaskToCompleted(userId,taskId)
     .then((result) => {
       console.log(result);
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false);
+        history.push("/dashboard/tasks");
+      }, 2000);
+      
     })
     .catch((error) => {
       console.error("Error fetching task data:", error);
@@ -119,7 +127,7 @@ const PerformTask: React.FC = () => {
     .then((result) => {
       console.log("Audio saved to the API.");
         assignTaskToCompleted(selectedTask.taskId)
-        history.push("/dashboard/tasks/completed");
+        //history.push("/dashboard/tasks/completed");
     })
     .catch((error) => {
       console.error("Error fetching task data:", error);
@@ -408,6 +416,14 @@ const PerformTask: React.FC = () => {
             />
           )}
         </div>
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message="Success! Task completed successfully."
+          duration={5000}
+          color="success"
+          position="top"
+        />
       </IonContent>
     </IonPage>
   );
