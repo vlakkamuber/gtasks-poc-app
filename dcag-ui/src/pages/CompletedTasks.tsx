@@ -1,16 +1,11 @@
-import {
-  IonList,
-  IonItem,
-  IonBadge,
-  IonLabel,
-} from "@ionic/react";
-import { useHistory } from "react-router-dom";
-import { chevronForward } from "ionicons/icons";
-import React, { useState,useEffect } from "react";
+import { IonList, IonItem, IonBadge, IonLabel } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
+import { chevronForward } from 'ionicons/icons';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import apiService from "./apiService";
-import {formatDate} from "../utils/mapTeluguDigitsToNumeric"
-import LoadingComponent from "../components/Loader"
+import apiService from './apiService';
+import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
+import LoadingComponent from '../components/Loader';
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
@@ -31,21 +26,21 @@ const CompletedTasks: React.FC = () => {
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
-  const getMyTasksList = ()=>{
-    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
+  const getMyTasksList = () => {
+    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getMyTasksList(userId)
       .then((result) => {
-        setShowLoading(false)
-        setTasks(groupBy(result, "taskType"));
+        setShowLoading(false);
+        setTasks(groupBy(result, 'taskType'));
       })
       .catch((error) => {
-        console.error("Error fetching task data:", error);
+        console.error('Error fetching task data:', error);
       });
-  }
+  };
 
   useEffect(() => {
-    setShowLoading(true)
+    setShowLoading(true);
     getMyTasksList();
   }, []);
   function groupBy(array, key) {
@@ -59,7 +54,7 @@ const CompletedTasks: React.FC = () => {
     }, {});
   }
   const goToPerformTask = (e, task) => {
-    history.push("/dashboard/tasks/perform-task/" + task.taskId);
+    history.push('/dashboard/tasks/perform-task/' + task.taskId);
   };
   return (
     <React.Fragment>
@@ -70,16 +65,17 @@ const CompletedTasks: React.FC = () => {
             <div className="ion-padding">
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <h1 style={{ margin: "0", marginBottom: "-4px" }}>{t(`dcag.tasks.${key.replace(/\s+/g, '')}.title`)}</h1>
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                <h1 style={{ margin: '0', marginBottom: '-4px' }}>
+                  {t(`dcag.tasks.${key.replace(/\s+/g, '')}.title`)}
+                </h1>
                 {/* <span>View all</span> */}
               </div>
 
-              <p style={{ margin: "0" }}>
+              <p style={{ margin: '0' }}>
                 <small>{tasks[key][0].taskDesc}</small>
               </p>
             </div>
@@ -89,24 +85,25 @@ const CompletedTasks: React.FC = () => {
                   <IonList>
                     <IonItem>
                       <IonLabel>
-                        <span style={{ display: "flex" }}>
+                        <span style={{ display: 'flex' }}>
                           <h2>{task.taskName}</h2>
-                          <IonBadge
-                            color="primary"
-                            className={`status-text-completed`}
-                          >
-                             {t(`dcag.home.taskHub.status.${task.status}`)}
+                          <IonBadge color="primary" className={`status-text-completed`}>
+                            {t(`dcag.home.taskHub.status.${task.status}`)}
                           </IonBadge>
-                        </span>{" "}
-                        <p>{t(`dcag.tasks.payouts.label`)}: ${task.price}</p>
+                        </span>{' '}
+                        <p>
+                          {t(`dcag.tasks.payouts.label`)}: ${task.price}
+                        </p>
                         <p>
                           <small>
-                          {t(`dcag.tasks.createdAt.label`)}: {formatDate(task.createDateTime)} {t(`dcag.tasks.dueDate.label`)}:{" "}
-                            {formatDate(task.dueDateTime)}
+                            {t(`dcag.tasks.createdAt.label`)}: {formatDate(task.createDateTime)}{' '}
+                            {t(`dcag.tasks.dueDate.label`)}: {formatDate(task.dueDateTime)}
                           </small>
                         </p>
                       </IonLabel>
-                      <ion-icon icon={chevronForward} onClick={(e)=>goToPerformTask(e,task)}></ion-icon>
+                      <ion-icon
+                        icon={chevronForward}
+                        onClick={(e) => goToPerformTask(e, task)}></ion-icon>
                     </IonItem>
                     {/* Add more IonItem elements as needed */}
                   </IonList>
@@ -120,4 +117,4 @@ const CompletedTasks: React.FC = () => {
   );
 };
 
-export default CompletedTasks
+export default CompletedTasks;
