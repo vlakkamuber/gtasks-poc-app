@@ -33,6 +33,8 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class TaskService {
 
+    public final static Integer MILLISECOND = 1000;
+
     @Autowired
     private TaskRepository taskRepository;
 
@@ -136,12 +138,18 @@ public class TaskService {
                 .input(task.input())
                 .currency(task.currency())
                 .price(task.price())
+                .createDateTime(task.createTime() != null ?
+                        task.createTime().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
+                        null)
+                .dueDateTime(task.dueDate() != null ?
+                        task.dueDate().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
+                        null)
                 .status(userTask.status())
                 .startTime(userTask.startTime() != null ?
-                        userTask.startTime().atZone(ZoneId.systemDefault()).toEpochSecond() * 1000 :
+                        userTask.startTime().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
                         null)
                 .completedTime(userTask.completionTime() != null ?
-                        userTask.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond() * 1000 :
+                        userTask.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
                         null
                 );
 
