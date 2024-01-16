@@ -15,8 +15,6 @@ import {
   arrowBack,
   saveOutline,
   micOutline,
-  pencil,
-  trash,
 } from "ionicons/icons";
 import { useState, useEffect } from "react";
 import AudioPlayer from "./AudioPlayer";
@@ -38,9 +36,6 @@ const PerformTask: React.FC = () => {
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
-
-  const [audioClip, setAudioClip] = useState("");
-  const [savedAudio, setSavedAudio] = useState("");
   const [selectedTask, setSelectedTask] = useState({});
   const [submitted, setSubmitted] = useState(false);
 

@@ -42,17 +42,6 @@ const CompletedTasks: React.FC = () => {
 
   useEffect(() => {
     getMyTasksList();
-  
-    // let userTasks = JSON.parse(localStorage.getItem("tasks"));
-    // let user = userTasks && userTasks[0]
-    // if (user) {
-    //   let completedTasks =
-    //     user.tasks &&
-    //     user.tasks.filter(function (item) {
-    //       return item.status === "Completed";
-    //     });
-    //   setTasks(groupBy(completedTasks, "type"));
-    // }
   }, []);
   function groupBy(array, key) {
     return array.reduce((acc, item) => {

@@ -1,10 +1,8 @@
 import {
     IonContent,
     IonPage,
-    IonButton,
   } from "@ionic/react";
   import { useHistory } from 'react-router-dom';
-  import {Block} from 'baseui/block';
 import {Button, KIND} from 'baseui/button';
 import { useTranslation } from 'react-i18next';
   const LoginSuccess: React.FC = () => {

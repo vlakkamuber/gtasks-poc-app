@@ -8,26 +8,15 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonButtons,
   IonButton,
-  IonIcon,
 } from "@ionic/react";
 
 import { useHistory } from "react-router-dom";
-import { arrowBack } from "ionicons/icons";
-import { useEffect } from "react";
-import {tasks} from "./data"
 import { useTranslation } from 'react-i18next';
 
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  useEffect(()=>{
-    if(!JSON.parse(localStorage.getItem("tasks"))){
-      tasks[0]["phone"]=localStorage.getItem("phone")
-      localStorage.setItem("tasks",JSON.stringify(tasks))
-    }
-  },[])
   
 
   const goBack = () => {

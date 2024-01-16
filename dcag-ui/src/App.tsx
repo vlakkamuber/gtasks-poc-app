@@ -27,7 +27,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import OTP from './pages/OTP';
+
 import Home from './pages/Home';
 import Training from './pages/Training';
 import Account from './pages/Account';
@@ -39,21 +39,15 @@ import LoginSuccess from './pages/LoginSuccess';
 import PerformTask from './pages/PerformTask';
 import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
-import LanguageSwitcher from './pages/LanguageSwitcher';
-import { LanguageProvider } from './context/LanguageContext';
-import i18n from './i18n';
 
 setupIonicReact();
 
 const App: React.FC = () => (
-  // <LanguageProvider i18n={i18n}>
   <UserAuthContextProvider>
-
   <IonReactRouter forceRefresh={true}>
     <IonRouterOutlet>
       <Route path="/home" component={HomeScreen} exact />
       <Route path="/login" component={Login} exact />
-      <Route path="/otp" component={OTP} exact />
       <Route path="/login-success" component={LoginSuccess} exact />
       <Route path="/dashboard" component={Dashboard} exact/>
       <Route path="/dashboard/home" render={() => <Dashboard content={<Home forceRefresh={true}/>} />} exact/>
@@ -67,7 +61,6 @@ const App: React.FC = () => (
     </IonRouterOutlet>
   </IonReactRouter>
   </UserAuthContextProvider>
-  // </LanguageProvider>
 );
 
 export default App;

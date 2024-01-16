@@ -7,7 +7,6 @@ import {
   IonSelectOption,
   useIonLoading
 } from "@ionic/react";
-import { arrowBack, arrowForward } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { Button, KIND, SHAPE } from "baseui/button";
 import {Block} from 'baseui/block';

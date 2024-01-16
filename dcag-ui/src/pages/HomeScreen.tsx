@@ -17,13 +17,6 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { user, loading } = useUserAuth();
   const history = useHistory();
-  useEffect(()=>{
-    fetch("https://dcag-gateway-cpypkzbg.an.gateway.dev/users").then(function(res){
-      return res.json();
-    }).then(function(result){
-      console.log(result)
-    })
-  },[])
 
   useEffect(() => {
     if (user) {

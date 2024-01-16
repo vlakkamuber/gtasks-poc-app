@@ -3,7 +3,6 @@ import {
   IonHeader,
   IonPage,
   IonToolbar,
-  IonButton,
 } from "@ionic/react";
 
 import { useHistory } from "react-router-dom";
