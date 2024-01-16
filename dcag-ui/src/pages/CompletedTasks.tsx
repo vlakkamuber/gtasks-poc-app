@@ -9,6 +9,7 @@ import { chevronForward } from "ionicons/icons";
 import React, { useState,useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import apiService from "./apiService";
+import {formatDate} from "../utils/mapTeluguDigitsToNumeric"
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
@@ -95,8 +96,8 @@ const CompletedTasks: React.FC = () => {
                         <p>{t(`dcag.tasks.payouts.label`)}: ${task.price}</p>
                         <p>
                           <small>
-                          {t(`dcag.tasks.createdAt.label`)}: {task.startDate} {t(`dcag.tasks.dueDate.label`)}:{" "}
-                            {task.endDate}
+                          {t(`dcag.tasks.createdAt.label`)}: {formatDate(task.createDateTime)} {t(`dcag.tasks.dueDate.label`)}:{" "}
+                            {formatDate(task.dueDateTime)}
                           </small>
                         </p>
                       </IonLabel>

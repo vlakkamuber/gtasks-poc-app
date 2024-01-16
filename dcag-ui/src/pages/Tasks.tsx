@@ -20,6 +20,7 @@ import { useHistory } from "react-router-dom";
 import MyTasks from "./MyTasks";
 import { useTranslation } from "react-i18next";
 import apiService from "./apiService";
+import { formatDate } from "../utils/mapTeluguDigitsToNumeric";
 
 
 const Tasks: React.FC = () => {
@@ -236,9 +237,9 @@ const Tasks: React.FC = () => {
                                 <p>
                                   <small>
                                     {t(`dcag.tasks.createdAt.label`)}:{" "}
-                                    {task.startDate}{" "}
+                                    {formatDate(task.createDateTime)}{" "}
                                     {t(`dcag.tasks.dueDate.label`)}:{" "}
-                                    {task.endDate}
+                                    {formatDate(task.dueDateTime)}
                                   </small>
                                 </p>
                               </IonLabel>

@@ -24,6 +24,7 @@ import { Textarea } from "baseui/textarea";
 import { SIZE } from "baseui/input";
 import { useTranslation } from "react-i18next";
 import apiService from './apiService'
+import { formatDate } from "../utils/mapTeluguDigitsToNumeric";
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -151,8 +152,8 @@ const PerformTask: React.FC = () => {
           </h2>
           <p className="no-padding-margin" style={{ fontSize: "0.9rem" }}>
             <samll>
-              {t(`dcag.tasks.createdAt.label`)}: {selectedTask.createDateTime}{" "}
-              {t(`dcag.tasks.dueDate.label`)}: {selectedTask.dueDateTime}
+              {t(`dcag.tasks.createdAt.label`)}: {formatDate(selectedTask.createDateTime)}{" "}
+              {t(`dcag.tasks.dueDate.label`)}: {formatDate(selectedTask.dueDateTime)}
             </samll>
           </p>
           <p className="no-padding-margin">
