@@ -61,12 +61,21 @@ const Login = () => {
     e.preventDefault();
     setError("");
     if (otp === "" || otp === null) return;
+    const otpnumeric = mapTeluguDigitsToNumeric(otp.join(""));
     try {
-      const otpnumeric = mapTeluguDigitsToNumeric(otp.join(""));
       await result.confirm(otpnumeric);
       history.push("/login-success");
     } catch (err) {
-      setError(err.message);
+      if (err.code === 'auth/invalid-verification-code') {
+        // Display a message indicating that the entered OTP is incorrect
+        console.error('Entered OTP is incorrect');
+        setError("Entered OTP is incorrect");
+      } else if(err.code==='auth/code-expired'){
+        setError("opt expired");
+      }else {
+        // Handle other OTP confirmation errors
+        console.error('Error confirming OTP:', err.message);
+      }
     }
   };
 
@@ -211,6 +220,7 @@ const Login = () => {
             />
           ))}
         </div>
+        {error &&  <p style={{ color: 'red' }}>{error}</p> }
         {/* <IonButton color="secondary" style={{marginTop:'20px'}} className="capitalize">
             Resend
           </IonButton> */}
