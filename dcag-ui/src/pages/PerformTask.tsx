@@ -152,7 +152,7 @@ const PerformTask: React.FC = () => {
           }}
         >
           <h2 className="no-padding-margin" style={{ marginBottom: "8px" }}>
-            {selectedTask.name}
+            {selectedTask.taskName}
           </h2>
           <p className="no-padding-margin" style={{ fontSize: "0.9rem" }}>
             <samll>

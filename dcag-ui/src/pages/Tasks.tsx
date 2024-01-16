@@ -53,6 +53,7 @@ const Tasks: React.FC = () => {
         result.filter(function (item) {
           return item.status === "NEW"
         });
+        setAvailableCount(newTasks.length)
         setNewTasksCount(newTasks.length)
         setTasks(groupBy(result, "taskType"));
 
@@ -80,7 +81,6 @@ const Tasks: React.FC = () => {
   useEffect(() => {
     getAvailableTasks();
     getTaskSummary();
-    //getMyTasks();
   }, []);
 
   const goBack = () => {
@@ -101,7 +101,6 @@ const Tasks: React.FC = () => {
   };
 
   const goToPerformTask = (e, task) => {
-    //.push("/dashboard/tasks/perform-task/" + task.id);
     assignTask(task);
   };
 
