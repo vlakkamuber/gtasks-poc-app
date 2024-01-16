@@ -1,3 +1,4 @@
+<<<<<<< HEAD:dcag-ui/dist/assets/swipe-back-legacy-eba8a34c.js
 <<<<<<<< HEAD:dcag-ui/dist/assets/swipe-back-legacy-286803e5.js
 <<<<<<<< HEAD:dcag-ui/dist/assets/swipe-back-legacy-286803e5.js
 System.register(["./index-legacy-8ba8c1c4.js"],(function(t,e){"use strict";var n,r,i;return{setters:[function(t){n=t.i,r=t.c,i=t.a}],execute:function(){
@@ -7,6 +8,9 @@ System.register(["./index-legacy-25d0aeaf.js"],(function(t,e){"use strict";var n
 ========
 System.register(["./index-legacy-8597b37a.js"],(function(t,e){"use strict";var n,r,i;return{setters:[function(t){n=t.i,r=t.c,i=t.a}],execute:function(){
 >>>>>>>> 95fc997 (code cleanup removed indexdb integration localstorage tasks data file):dcag-ui/dist/assets/swipe-back-legacy-eba8a34c.js
+=======
+System.register(["./index-legacy-67eab4a5.js"],(function(t,e){"use strict";var n,r,i;return{setters:[function(t){n=t.i,r=t.c,i=t.a}],execute:function(){
+>>>>>>> 23d795e (otp incorrect validation added):dcag-ui/dist/assets/swipe-back-legacy-80836b5a.js
 /*!
        * (C) Ionic http://ionicframework.com - MIT License
        */
