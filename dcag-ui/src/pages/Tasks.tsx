@@ -52,12 +52,7 @@ const Tasks: React.FC = () => {
       .then((result) => {
         setShowLoading(false)
         console.log(result);
-            let newTasks =
-        result &&
-        result.filter(function (item) {
-          return item.status === "NEW"
-        });
-        setAvailableCount(newTasks.length)
+        setAvailableCount(result.length)
         setTasks(groupBy(result, "taskType"));
 
       })
