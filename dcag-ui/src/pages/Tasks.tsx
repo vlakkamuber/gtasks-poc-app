@@ -30,7 +30,7 @@ const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState([]);
   const [completedCount, setCompletedCount] = useState(0);
   const [availableCount, setAvailableCount] = useState(0);
-  const [newTasksCount, setNewTasksCount] = useState(0);
+  const [myTasksCount,setMyTasksCount] = useState(0)
   const [totalEarned, setTotalEarned] = useState(0);
   const history = useHistory();
   function groupBy(array, key) {
@@ -55,7 +55,6 @@ const Tasks: React.FC = () => {
           return item.status === "NEW"
         });
         setAvailableCount(newTasks.length)
-        setNewTasksCount(newTasks.length)
         setTasks(groupBy(result, "taskType"));
 
       })
@@ -78,10 +77,21 @@ const Tasks: React.FC = () => {
       });
   };
 
-
+  const getMyTasksList = ()=>{
+    let userId = JSON.parse(localStorage.getItem("loggedInUser"))
+    apiService
+      .getMyTasksList(userId)
+      .then((result) => {
+        setMyTasksCount(result.length)
+      })
+      .catch((error) => {
+        console.error("Error fetching task data:", error);
+      });
+  }
   useEffect(() => {
     getAvailableTasks();
     getTaskSummary();
+    getMyTasksList();
   }, []);
 
   const goBack = () => {
@@ -177,9 +187,9 @@ const Tasks: React.FC = () => {
                 {" "}
                 {t(`dcag.tasks.tabs.myTask.label`)}{" "}
               </div>
-              {completedCount > 0 && (
+              {myTasksCount > 0 && (
                 <IonBadge className="mytask-segmnet-badge">
-                  {completedCount}
+                  {myTasksCount}
                 </IonBadge>
               )}
             </div>
