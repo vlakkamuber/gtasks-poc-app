@@ -31,7 +31,7 @@ public class Task implements Serializable {
 //    @JsonIgnore
 //    private Point location;
 
-    @Enumerated
+ //   @Enumerated
     @Column(name = "task_type")
     private TaskType taskType = TaskType.NA;
 
