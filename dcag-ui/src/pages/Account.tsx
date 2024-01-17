@@ -39,14 +39,14 @@ const Account: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent style={{padding:'10px'}}>
-        <div className="ion-padding" style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'20px'}}>
+        {/* <div className="ion-padding" style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'20px'}}>
           <div style={{paddingLeft:'20px'}}>
           <h2>Evan Rob</h2>
           <IonBadge><IonIcon icon={star} style={{ fontSize: '1.2rem', color: 'white' }} /><span style={{fontSize:'1.2rem'}}>4.5</span></IonBadge>
           </div>
 
           <IonIcon icon={person} slot="start" style={{fontSize: '2rem'}}/>
-        </div>
+        </div> */}
 
         <IonList style={{padding:'20px'}}>
           <IonItem button className="no-border">

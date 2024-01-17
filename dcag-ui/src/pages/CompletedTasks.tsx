@@ -10,10 +10,12 @@ import React, { useState,useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import apiService from "./apiService";
 import {formatDate} from "../utils/mapTeluguDigitsToNumeric"
+import LoadingComponent from "../components/Loader"
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
+  const [showLoading, setShowLoading] = useState(false);
 
   const history = useHistory();
   function groupBy(array, key) {
@@ -34,6 +36,7 @@ const CompletedTasks: React.FC = () => {
     apiService
       .getMyTasksList(userId)
       .then((result) => {
+        setShowLoading(false)
         setTasks(groupBy(result, "taskType"));
       })
       .catch((error) => {
@@ -42,6 +45,7 @@ const CompletedTasks: React.FC = () => {
   }
 
   useEffect(() => {
+    setShowLoading(true)
     getMyTasksList();
   }, []);
   function groupBy(array, key) {
@@ -59,6 +63,7 @@ const CompletedTasks: React.FC = () => {
   };
   return (
     <React.Fragment>
+      <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
       {Object.keys(tasks).map((key) => {
         return (
           <>

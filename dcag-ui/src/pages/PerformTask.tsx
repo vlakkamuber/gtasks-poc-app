@@ -26,10 +26,12 @@ import { SIZE } from "baseui/input";
 import { useTranslation } from "react-i18next";
 import apiService from './apiService'
 import { formatDate } from "../utils/mapTeluguDigitsToNumeric";
+import LoadingComponent from "../components/Loader"
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = useParams();
+  
 
   const goBack = () => {
     history.push("/dashboard/tasks"); // This function navigates back to the previous page
@@ -38,9 +40,10 @@ const PerformTask: React.FC = () => {
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
-  const [selectedTask, setSelectedTask] = useState({});
+  const [selectedTask, setSelectedTask] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   const getTaskDetail = async () => {
     let taskId = params.id;
@@ -49,6 +52,7 @@ const PerformTask: React.FC = () => {
       .getTaskDetail(userId,taskId)
       .then((result) => {
         console.log(result);
+        setShowLoading(false)
         setSelectedTask(result)
       })
       .catch((error) => {
@@ -57,6 +61,7 @@ const PerformTask: React.FC = () => {
   };
 
   useEffect(() => {
+    setShowLoading(true)
     getTaskDetail();
   }, []);
 
@@ -146,6 +151,9 @@ const PerformTask: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+      <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
+      {selectedTask ? (
+        <>
         <div
           style={{
             display: "flex",
@@ -423,7 +431,7 @@ const PerformTask: React.FC = () => {
           duration={5000}
           color="success"
           position="top"
-        />
+        /></>) : null}
       </IonContent>
     </IonPage>
   );
