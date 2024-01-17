@@ -35,6 +35,7 @@ public class UserTask implements Serializable {
     @JoinColumn(name = "task_id")
     private Task task;
 
+    @Enumerated(EnumType.STRING)
     private UserTaskStatus status;
 
     private String output;
