@@ -71,33 +71,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @CrossOrigin
-    @PostMapping(value = "/{userId}/tasks/{taskId}", consumes = "application/json")
-    ResponseEntity<UserTaskResponse> createUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
-        return ResponseEntity.ok(taskService.createUserTask(userId, taskId, userTaskDTO));
-    }
-
-    @CrossOrigin
-    @PutMapping(value = "/{userId}/tasks/{taskId}", consumes = "application/json")
-    ResponseEntity<UserTaskResponse> updateUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
-        return ResponseEntity.ok(taskService.updateUserTask(userId, taskId, userTaskDTO));
-    }
-
-    @GetMapping(value = "/{userId}/tasks", produces = "application/json")
-    ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId) {
-        return ResponseEntity.ok(taskService.findUserTasks(userId));
-    }
-
-    @GetMapping(value = "/{userId}/tasks/{taskId}", produces = "application/json")
-    ResponseEntity<UserTaskResponse> findUserTaskById(@PathVariable String userId, @PathVariable Long taskId) {
-        return ResponseEntity.ok(taskService.findUserTaskById(userId,taskId));
-    }
-
-    @GetMapping(value = "/{userId}/tasks/summary", produces = "application/json")
-    ResponseEntity<UserTaskSummaryResponse> getUserTasksSummary(@PathVariable String userId) {
-        return ResponseEntity.ok(taskService.getUserTasksSummary(userId));
-    }
-
 //    @GetMapping("/tasks/nearer")
 //    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
 //        return taskService.findAAllNearerTasks(latitude, longitude, distance);
