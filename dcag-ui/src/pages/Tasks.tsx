@@ -21,6 +21,7 @@ import MyTasks from "./MyTasks";
 import { useTranslation } from "react-i18next";
 import apiService from "./apiService";
 import { formatDate } from "../utils/mapTeluguDigitsToNumeric";
+import LoadingComponent from "../components/Loader"
 
 
 const Tasks: React.FC = () => {
@@ -32,6 +33,7 @@ const Tasks: React.FC = () => {
   const [availableCount, setAvailableCount] = useState(0);
   const [myTasksCount,setMyTasksCount] = useState(0)
   const [totalEarned, setTotalEarned] = useState(0);
+  const [showLoading, setShowLoading] = useState(false);
   const history = useHistory();
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -48,6 +50,7 @@ const Tasks: React.FC = () => {
     apiService
       .getAvailableTasks(userId)
       .then((result) => {
+        setShowLoading(false)
         console.log(result);
             let newTasks =
         result &&
@@ -89,6 +92,7 @@ const Tasks: React.FC = () => {
       });
   }
   useEffect(() => {
+    setShowLoading(true)
     getAvailableTasks();
     getTaskSummary();
     getMyTasksList();
@@ -128,6 +132,7 @@ const Tasks: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start">
+      <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         <div className="tasks-info" style={{ marginTop: "30px" }}>
           <div className="task-detail">
             <div style={{ color: "#5e5e5e" }}>
