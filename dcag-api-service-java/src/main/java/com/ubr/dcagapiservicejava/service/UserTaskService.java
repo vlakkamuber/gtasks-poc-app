@@ -201,24 +201,24 @@ public class UserTaskService {
                         null
                 );
 
-        String objectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
 
         if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
-            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-input", objectName);
+            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-input", task.input());
             taskResponseBuilder.inputUrl(inputUrl);
         }
 
-        if (userTask.status().equals(UserTaskStatus.COMPLETED)) {
-            String outputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-output", objectName);
-            taskResponseBuilder.outputUrl(outputUrl);
-        }
+        String outputObjectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
+        outputObjectName = userTask.user().id() + "_" + userTask.id() + "_" + outputObjectName;
 
         if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
-            //TODO: uploadUrl is not always needed. Need to revisit this.
-            String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl(objectName);
+            String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl(outputObjectName);
             taskResponseBuilder.uploadUrl(uploadUrl);
         }
 
+        if (userTask.status().equals(UserTaskStatus.COMPLETED)) {
+            String outputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-output", outputObjectName);
+            taskResponseBuilder.outputUrl(outputUrl);
+        }
 
         return taskResponseBuilder.build();
     }
