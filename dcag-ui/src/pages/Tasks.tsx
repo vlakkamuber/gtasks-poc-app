@@ -213,9 +213,9 @@ const Tasks: React.FC = () => {
                         <h1 style={{ margin: "0", marginBottom: "-4px" }}>
                           {t(`dcag.tasks.${key}.title`)}
                         </h1>
-                        <span style={{ color: "#467ff4" }}>
+                        {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                        </span>
+                        </span> */}
                       </div>
 
                       <p style={{ margin: "0" }}>
