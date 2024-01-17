@@ -1,13 +1,13 @@
 // apiService.ts
 
-const API_BASE_URL = "https://dcag-gateway-cpypkzbg.an.gateway.dev";
+const API_BASE_URL = 'https://dcag-gateway-cpypkzbg.an.gateway.dev';
 
 const getHeaders = () => {
   const token = 'yourBearerToken'; // we'll add actual token here
 
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
+    Authorization: `Bearer ${token}`
   };
 };
 
@@ -20,13 +20,13 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async getTaskDetail(userId,taskId) {
+  async getTaskDetail(userId, taskId) {
     const endpoint = `users/${userId}/tasks/${taskId}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async getMyTasksList(userId) {
+  async getMyTasksList(userId: string) {
     const endpoint = `users/${userId}/tasks`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
@@ -42,13 +42,13 @@ const apiService = {
     const endpoint = `users/${userId}/tasks/${taskId}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        status: "IN_PROGRESS",
-      }),
+        status: 'IN_PROGRESS'
+      })
     });
     return response.json();
   },
@@ -56,13 +56,13 @@ const apiService = {
     const endpoint = `users/${userId}/tasks/${taskId}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        status: "COMPLETED",
-      }),
+        status: 'COMPLETED'
+      })
     });
     return response.json();
   },
@@ -71,23 +71,23 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async getTaskSummary(userId) {
+  async getTaskSummary(userId: string) {
     const endpoint = `users/${userId}/tasks/summary`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async saveAudioBlobToStorage(uploadUrl:string,audioBlob: Blob) {
+  async saveAudioBlobToStorage(uploadUrl: string, audioBlob: Blob) {
     const headers = getHeaders();
     try {
       const response = await fetch(uploadUrl, {
         method: 'PUT',
-        'processData': false,
+        processData: false,
         headers: {
           'Content-Type': 'application/octet-stream',
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': '*'
         },
-        body: audioBlob,
+        body: audioBlob
       });
       return response;
     } catch (error) {
@@ -96,16 +96,16 @@ const apiService = {
   },
   async createUserInFirebase() {
     const response = await fetch(`http://localhost:3000/createUser`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "phoneNumber":"+917702277716"
-      }),
+        phoneNumber: '+917702277716'
+      })
     });
     return response.json();
-  },
- };
+  }
+};
 
 export default apiService;
