@@ -166,7 +166,7 @@ public class TaskService {
 
     public List<TaskResponse> findAvailableTasks(Boolean available, String userId) {
 
-        return taskRepository.findAvailableTasks(available).stream()
+        return taskRepository.findAvailableTasks(available,userId).stream()
                 .map(task -> TaskResponse.builder()
                         .id(task.id())
                         .name(task.name())

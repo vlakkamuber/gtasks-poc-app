@@ -98,7 +98,9 @@ public class UserTaskService {
                             .output(userTask.task().input())
                             .startTime(userTask.startTime())
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
-                    return userTasksRepository.save(updatedUserTask);
+                    updatedUserTask = userTasksRepository.save(updatedUserTask);
+                    updateTaskStatus(taskId);
+                    return updatedUserTask;
                 })
                 .map(this::userTaskToUserTaskResponse)
                 .orElseThrow(DcagUtils.userNotFound(userId));
@@ -166,7 +168,7 @@ public class UserTaskService {
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.status(status);
-            if(completedCount >= taskOptional.get().maxNoOfUsers()){
+            if(completedCount > taskOptional.get().maxNoOfUsers()){
                 task.isAvailable(false);
             }
             taskRepository.save(task);
