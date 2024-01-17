@@ -93,7 +93,19 @@ const apiService = {
     } catch (error) {
       console.error('Error saving audio blob:', error.message);
     }
-  }
+  },
+  async createUserInFirebase() {
+    const response = await fetch(`http://localhost:3000/createUser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "phoneNumber":"+917702277716"
+      }),
+    });
+    return response.json();
+  },
  };
 
 export default apiService;

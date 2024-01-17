@@ -222,14 +222,14 @@ const Tasks: React.FC = () => {
                               <IonLabel>
                                 <span style={{ display: "flex" }}>
                                   <h2>{task.name} </h2>
-                                  <IonBadge
+                                  {/* <IonBadge
                                     color="primary"
                                     className={`status-text-new`}
                                   >
                                     {t(
                                       `dcag.home.taskHub.status.${task.status}`
                                     )}
-                                  </IonBadge>
+                                  </IonBadge> */}
                                 </span>{" "}
                                 <p>
                                   {t(`dcag.tasks.payouts.label`)}: ${task.price}
