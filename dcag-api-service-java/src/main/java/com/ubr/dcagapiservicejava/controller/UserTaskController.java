@@ -30,16 +30,19 @@ public class UserTaskController {
         return ResponseEntity.ok(userTaskService.updateUserTask(userId, taskId, userTaskDTO));
     }
 
+    @CrossOrigin
     @GetMapping(produces = "application/json")
     ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId) {
         return ResponseEntity.ok(userTaskService.findUserTasks(userId));
     }
 
+    @CrossOrigin
     @GetMapping(value = "/{taskId}", produces = "application/json")
     ResponseEntity<UserTaskResponse> findUserTaskById(@PathVariable String userId, @PathVariable Long taskId) {
         return ResponseEntity.ok(userTaskService.findUserTaskById(userId,taskId));
     }
 
+    @CrossOrigin
     @GetMapping(value = "/summary", produces = "application/json")
     ResponseEntity<UserTaskSummaryResponse> getUserTasksSummary(@PathVariable String userId) {
         return ResponseEntity.ok(userTaskService.getUserTasksSummary(userId));

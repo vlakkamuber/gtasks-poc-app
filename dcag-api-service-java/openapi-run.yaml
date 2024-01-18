@@ -127,6 +127,20 @@ paths:
             type: object
         '404':
           description: "User tasks not found"
+    options:
+      description: "Cors for getUserTasks"
+      operationId: "getUserTasks CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
   /users/{userId}/tasks/summary:
     get:
       summary: "Get task summary of the user"
