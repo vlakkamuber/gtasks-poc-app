@@ -3,7 +3,9 @@
 const API_BASE_URL = 'https://dcag-gateway-cpypkzbg.an.gateway.dev';
 
 const getHeaders = () => {
-  const token = 'yourBearerToken'; // we'll add actual token here
+  const accessToken  = localStorage.getItem("accessToken")
+  const token = accessToken; // we'll add actual token here
+
 
   return {
     'Content-Type': 'application/json',
@@ -15,27 +17,25 @@ const apiService = {
   async getMyTasks(userId: string) {
     const endpoint = `users/${userId}/tasks`;
     const headers = getHeaders();
-    //later we'll add token in each function like this
-    // const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`,{ headers });
     return response.json();
   },
-  async getTaskDetail(userId, taskId) {
+  async getTaskDetail(userId:string, taskId:string) {
     const endpoint = `users/${userId}/tasks/${taskId}`;
     const headers = getHeaders();
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`,{ headers });
     return response.json();
   },
   async getMyTasksList(userId: string) {
     const endpoint = `users/${userId}/tasks`;
     const headers = getHeaders();
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`,{ headers });
     return response.json();
   },
   async getAvailableTasks(userId) {
     const endpoint = `tasks?available=true&userId=${userId}`;
     const headers = getHeaders();
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`,{ headers });
     return response.json();
   },
   async assignTask(userId: string, taskId: any) {
@@ -44,6 +44,7 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'POST',
       headers: {
+        ...headers,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -58,6 +59,7 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'PUT',
       headers: {
+        ...headers,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -74,7 +76,7 @@ const apiService = {
   async getTaskSummary(userId: string) {
     const endpoint = `users/${userId}/tasks/summary`;
     const headers = getHeaders();
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`,{ headers });
     return response.json();
   },
   async saveAudioBlobToStorage(uploadUrl: string, audioBlob: Blob) {
@@ -84,6 +86,7 @@ const apiService = {
         method: 'PUT',
         processData: false,
         headers: {
+          ...headers,
           'Content-Type': 'application/octet-stream',
           'Access-Control-Allow-Origin': '*'
         },
