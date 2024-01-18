@@ -107,7 +107,7 @@ public class UserTaskService {
                             .user(userTask.user())
                             .task(userTask.task())
                             .status(status)
-                            .useInputAsOutput(userTaskDTO.useInput())
+                            .useInputAsOutput(userTaskDTO.useInput() != null && userTaskDTO.useInput())
                             .output(userTaskDTO.output())
                             .outputDesc(userTaskDTO.outputDesc())
                             .startTime(userTask.startTime())
