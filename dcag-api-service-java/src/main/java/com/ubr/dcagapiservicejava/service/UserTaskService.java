@@ -15,12 +15,15 @@ import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Service
 public class UserTaskService {
@@ -66,7 +69,7 @@ public class UserTaskService {
 
                 updateTaskStatus(taskId);
 
-                return userTaskToUserTaskResponse(userTask);
+                return userTaskToBasicUserTaskResponse(userTask, task.get());
             } else {
                 throw new TaskException("Task not available for user " + userId);
             }
@@ -82,10 +85,19 @@ public class UserTaskService {
         if (!status.equals(UserTaskStatus.COMPLETED)) {
             throw new TaskException("Task can only be updated to COMPLETED. Task Id: " + taskId + " Status: " + status);
         }
-        Optional<Task> task = taskRepository.findById(taskId);
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+        if(taskOptional.isEmpty()) {
+            throw new TaskNotFoundException("Task not found: " + taskId);
+        }
 
-        if(task.isPresent() && !task.get().isAvailable()) {
+        Task task = taskOptional.get();
+        if(!task.isAvailable()) {
             throw new TaskException("Task not available for user " + userId);
+        }
+
+        if(task.taskType().equals(TaskType.IMAGE_TO_TEXT) &&
+                isEmpty(userTaskDTO.output())){
+            throw new TaskException("Output cannot be empty for IMAGE_TO_TEXT tasks");
         }
 
         Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
@@ -96,14 +108,15 @@ public class UserTaskService {
                             .task(userTask.task())
                             .status(status)
                             .useInputAsOutput(userTaskDTO.useInput())
-                            .output(userTask.task().input())
+                            .output(userTaskDTO.output())
+                            .outputDesc(userTaskDTO.outputDesc())
                             .startTime(userTask.startTime())
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                     updatedUserTask = userTasksRepository.save(updatedUserTask);
                     updateTaskStatus(taskId);
                     return updatedUserTask;
                 })
-                .map(this::userTaskToUserTaskResponse)
+                .map(userTask -> userTaskToBasicUserTaskResponse(userTask, task))
                 .orElseThrow(DcagUtils.userNotFound(userId));
 
     }
@@ -177,16 +190,29 @@ public class UserTaskService {
 
     }
 
-    private UserTaskResponse userTaskToUserTaskResponse(UserTask userTask) {
-
-        Task task = userTask.task();
-        UserTaskResponse.UserTaskResponseBuilder taskResponseBuilder = UserTaskResponse.builder()
+    private UserTaskResponse userTaskToBasicUserTaskResponse(UserTask userTask, Task task) {
+        return UserTaskResponse.builder()
                 .id(userTask.id())
                 .userId(userTask.user().id())
                 .taskId(task.id())
                 .taskName(task.name())
                 .taskType(task.taskType())
+                .build();
+    }
+
+    private UserTaskResponse userTaskToUserTaskResponse(UserTask userTask) {
+
+        Task task = userTask.task();
+        TaskType taskType = task.taskType();
+        UserTaskResponse.UserTaskResponseBuilder taskResponseBuilder = UserTaskResponse.builder()
+                .id(userTask.id())
+                .userId(userTask.user().id())
+                .taskId(task.id())
+                .taskName(task.name())
+                .taskType(taskType)
                 .input(task.input())
+                .output(userTask.output())
+                .outputDesc(userTask.outputDesc())
                 .currency(task.currency())
                 .price(task.price())
                 .createDateTime(task.createTime() != null ?
@@ -206,24 +232,27 @@ public class UserTaskService {
                 );
 
 
-        if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
-            String inputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-input", task.input());
-            taskResponseBuilder.inputUrl(inputUrl);
+        if (taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
+            taskResponseBuilder.inputUrl(gcpUtils.signTaskInputAudioUrl(task.input()));
+        }
+        if (taskType.equals(TaskType.IMAGE_TO_TEXT)) {
+            taskResponseBuilder.inputUrl(gcpUtils.signTaskInputImageUrl(task.input()));
         }
 
-        String outputObjectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
-        outputObjectName = userTask.user().id() + "_" + userTask.id() + "_" + outputObjectName;
+        if(taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
+            String fileNameSuffix = taskType.equals(TaskType.TEXT_TO_AUDIO) ? ".mp3": "";
+            String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + fileNameSuffix;
 
-        if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
-            String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl(outputObjectName);
-            taskResponseBuilder.uploadUrl(uploadUrl);
+            if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
+                String uploadUrl = gcpUtils.signTaskUploadAudioUrl(outputFilename);
+                taskResponseBuilder.uploadUrl(uploadUrl);
+            }
+
+            if (!userTask.useInputAsOutput() && userTask.status().equals(UserTaskStatus.COMPLETED)) {
+                String outputUrl = gcpUtils.signTaskOutputAudioUrl(outputFilename);
+                taskResponseBuilder.outputUrl(outputUrl);
+            }
         }
-
-        if (!userTask.useInputAsOutput() && userTask.status().equals(UserTaskStatus.COMPLETED)) {
-            String outputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-output", outputObjectName);
-            taskResponseBuilder.outputUrl(outputUrl);
-        }
-
         return taskResponseBuilder.build();
     }
 

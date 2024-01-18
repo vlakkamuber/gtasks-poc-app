@@ -18,6 +18,8 @@ public class UserTaskResponse {
     private String taskName;
     private TaskType taskType;
     private String input;
+    private String output;
+    private String outputDesc;
     private UserTaskStatus status;
     private String currency;
     private Double price;

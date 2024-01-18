@@ -11,6 +11,22 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class GCPUtils {
 
+        public String signTaskInputImageUrl(String fileName) throws StorageException {
+            return generateV4GetObjectSignedUrl("dcag-tasks-input", "image/" + fileName);
+        }
+
+        public String signTaskInputAudioUrl(String fileName) throws StorageException {
+            return generateV4GetObjectSignedUrl("dcag-tasks-input", "audio/" + fileName);
+        }
+
+        public String signTaskOutputAudioUrl(String fileName) throws StorageException {
+            return generateV4GetObjectSignedUrl("dcag-tasks-output", "audio/" + fileName);
+        }
+
+        public String signTaskUploadAudioUrl(String fileName) throws StorageException {
+            return generateV4PutObjectSignedUrl("dcag-tasks-output", "audio/" + fileName);
+        }
+
         /**
          * Signing a URL requires Credentials which implement ServiceAccountSigner. These can be set
          * explicitly using the Storage.SignUrlOption.signWith(ServiceAccountSigner) option. If you don't,
@@ -24,9 +40,7 @@ public class GCPUtils {
     public String generateV4GetObjectSignedUrl(String bucketName, String objectName) throws StorageException {
         //TODO: Take these values from properties file
         String projectId = "anz-driver-ops-ritu";
-//        String bucketName = "dcag-tasks-input";
-//        String objectName = "audio/file_example_MP3_700KB.mp3";
-        objectName = "audio/"+ objectName;
+//        objectName = "audio/"+ objectName;
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 
@@ -40,11 +54,9 @@ public class GCPUtils {
         return url.toString();
     }
 
-    public String generateV4PutObjectSignedUrl(String objectName) throws StorageException {
+    public String generateV4PutObjectSignedUrl(String bucketName, String objectName) throws StorageException {
         String projectId = "anz-driver-ops-ritu";
-        String bucketName = "dcag-tasks-output";
-//        String objectName = "audio/output_file.mp3";
-        objectName = "audio/"+ objectName;
+//        objectName = "audio/"+ objectName;
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 

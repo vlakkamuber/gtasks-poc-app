@@ -113,7 +113,7 @@ public class TaskService {
                 .createDateTime(task.createTime())
                 .dueDateTime(task.dueDate());
 
-        String objectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
+        /*String objectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
 
         if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
             String inputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-input", objectName);
@@ -123,7 +123,7 @@ public class TaskService {
             //TODO: uploadUrl is not needed. Need to revisit this.
             String uploadUrl = gcpUtils.generateV4PutObjectSignedUrl(objectName);
             taskResponseBuilder.uploadUrl(uploadUrl);
-        }
+        }*/
 
         return taskResponseBuilder.build();
     }
