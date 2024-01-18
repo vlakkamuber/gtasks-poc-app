@@ -224,4 +224,15 @@ public class UserTaskService {
 
         return taskResponseBuilder.build();
     }
+
+    public void deleteUserTask(String userId, Long taskId) {
+
+        Optional<UserTask> userTask = userTasksRepository.findByUserIdAndTaskId(userId,taskId);
+
+        if(userTask.isPresent()){
+            userTasksRepository.deleteById(userTask.get().id());
+            updateTaskStatus(taskId);
+        }
+
+    }
 }

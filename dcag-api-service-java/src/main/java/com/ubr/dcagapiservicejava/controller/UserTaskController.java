@@ -47,4 +47,12 @@ public class UserTaskController {
     ResponseEntity<UserTaskSummaryResponse> getUserTasksSummary(@PathVariable String userId) {
         return ResponseEntity.ok(userTaskService.getUserTasksSummary(userId));
     }
+
+    @CrossOrigin
+    @DeleteMapping(value = "/{taskId}", consumes = "application/json")
+    ResponseEntity<?> deleteUserTask(@PathVariable String userId, @PathVariable Long taskId) {
+
+        userTaskService.deleteUserTask(userId, taskId);
+        return ResponseEntity.noContent().build();
+    }
 }
