@@ -43,7 +43,7 @@ export function UserAuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       console.log("Auth", currentuser);
       if(currentuser){
-        localStorage.setItem("accessToekn",currentuser.accessToken)
+        localStorage.setItem("accessToken",currentuser.accessToken)
       }
       setUser(currentuser);
       setLoading(false);
