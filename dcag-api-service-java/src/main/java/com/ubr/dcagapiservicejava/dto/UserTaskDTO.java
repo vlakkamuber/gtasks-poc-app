@@ -10,9 +10,7 @@ public record UserTaskDTO(
 
         String outputDesc,
 
-        Long startTime,
-
-        Long completionTime
+        Boolean useInput
 
 ) {
 }

@@ -95,6 +95,7 @@ public class UserTaskService {
                             .user(userTask.user())
                             .task(userTask.task())
                             .status(status)
+                            .useInputAsOutput(userTaskDTO.useInput())
                             .output(userTask.task().input())
                             .startTime(userTask.startTime())
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
@@ -195,6 +196,7 @@ public class UserTaskService {
                         task.dueDate().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
                         null)
                 .status(userTask.status())
+                .useInput(userTask.useInputAsOutput())
                 .startTime(userTask.startTime() != null ?
                         userTask.startTime().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
                         null)
@@ -217,7 +219,7 @@ public class UserTaskService {
             taskResponseBuilder.uploadUrl(uploadUrl);
         }
 
-        if (userTask.status().equals(UserTaskStatus.COMPLETED)) {
+        if (!userTask.useInputAsOutput() && userTask.status().equals(UserTaskStatus.COMPLETED)) {
             String outputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-output", outputObjectName);
             taskResponseBuilder.outputUrl(outputUrl);
         }

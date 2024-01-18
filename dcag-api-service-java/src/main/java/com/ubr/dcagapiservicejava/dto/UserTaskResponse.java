@@ -28,5 +28,6 @@ public class UserTaskResponse {
     private String uploadUrl;
     private Long createDateTime;
     private Long dueDateTime;
+    private Boolean useInput;
 
 }
