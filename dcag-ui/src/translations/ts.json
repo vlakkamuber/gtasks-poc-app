@@ -68,8 +68,8 @@
     "dcag.home.training.page.title":"లెర్నింగ్ సెంటర్",
     "dcag.home.training.page.subtitle":"మీరు ఆన్‌లైన్‌కి వెళ్లడానికి ముందు మీరు ఈ కోర్సులను పూర్తి చేయాలి.",
     "dcag.home.training.page.required":"అవసరం",
-    "dcag.tasks.textToAudio.taskDesc": "వచనం యొక్క ఆడియోను రికార్డ్ చేసి సమర్పించండి.",
-    "dcag.tasks.audioToAudio.taskDesc": "ఆడియోను వినండి, రికార్డ్ చేయండి మరియు సమర్పించండి.",
+    "dcag.tasks.TEXT_TO_AUDIO.taskDesc": "వచనం యొక్క ఆడియోను రికార్డ్ చేసి సమర్పించండి.",
+    "dcag.tasks.AUDIO_TO_AUDIO.taskDesc": "ఆడియోను వినండి, రికార్డ్ చేయండి మరియు సమర్పించండి.",
     "dcag.home.taskHub.localize": "స్థానికీకరించండి",
     "dcag.home.taskHub.record": "రికార్డ్ చేయండి"
 }
