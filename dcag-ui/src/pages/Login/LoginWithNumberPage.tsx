@@ -22,6 +22,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent }: Props) => {
   const { setUpRecaptha } = useUserAuth();
   const history = useHistory();
   const [error, setError] = useState('');
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
 
   const sendOtp = async (phone: string) => {
     try {
@@ -50,6 +51,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent }: Props) => {
       const res = await apiService.verifyPhoneNumber('+91' + phone);
       dismiss();
       if (res.id) {
+        setIsNextDisabled(true);
         sendOtp(phone);
       } else {
         setError('This phone number does not have access. Please contact administrator');
@@ -90,7 +92,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent }: Props) => {
       <NavigationBar
         onClickPrevious={() => history.push('/home')}
         onClickNext={validatePhoneAndSendOtp}
-        isNextDisabled={phone.length === 0}
+        isNextDisabled={isNextDisabled || phone.length !== 10}
       />
     </IonContent>
   );
