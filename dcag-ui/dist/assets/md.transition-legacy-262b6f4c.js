@@ -1,12 +1,4 @@
-<<<<<<<< HEAD:dcag-ui/dist/assets/md.transition-legacy-995eaab7.js
-<<<<<<<< HEAD:dcag-ui/dist/assets/md.transition-legacy-f869249a.js
-System.register(["./index-legacy-8ba8c1c4.js"],(function(n,e){"use strict";var t,i;return{setters:[function(n){t=n.g,i=n.b}],execute:function(){
-========
-System.register(["./index-legacy-25d0aeaf.js"],(function(n,e){"use strict";var t,i;return{setters:[function(n){t=n.g,i=n.b}],execute:function(){
->>>>>>>> 5e76f97 (hardcoded userid removed):dcag-ui/dist/assets/md.transition-legacy-995eaab7.js
-========
-System.register(["./index-legacy-8597b37a.js"],(function(n,e){"use strict";var t,i;return{setters:[function(n){t=n.g,i=n.b}],execute:function(){
->>>>>>>> 95fc997 (code cleanup removed indexdb integration localstorage tasks data file):dcag-ui/dist/assets/md.transition-legacy-53d7d67c.js
+System.register(["./index-legacy-3c817a3d.js"],(function(n,e){"use strict";var t,i;return{setters:[function(n){t=n.g,i=n.b}],execute:function(){
 /*!
        * (C) Ionic http://ionicframework.com - MIT License
        */
