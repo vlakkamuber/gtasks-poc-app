@@ -39,7 +39,7 @@ public class UserTask implements Serializable {
     private UserTaskStatus status;
 
     @Column(name = "use_input_as_output")
-    private Boolean useInputAsOutput;
+    private Boolean useInputAsOutput = false;
 
     private String output;
 

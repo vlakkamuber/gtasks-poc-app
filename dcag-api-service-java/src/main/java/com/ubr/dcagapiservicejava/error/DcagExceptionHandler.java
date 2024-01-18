@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.error;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@Slf4j
 public class DcagExceptionHandler {
 
     @ExceptionHandler(value = {TaskNotFoundException.class, UserNotFoundException.class})
@@ -34,6 +36,7 @@ public class DcagExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity handleException(Exception exception) {
+        log.error("Exception: ", exception);
         DcagException ex = new DcagException(new Date(), exception.getMessage());
         return new ResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
