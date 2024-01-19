@@ -41,7 +41,7 @@ public class Task implements Serializable {
 //    private Point location;
 
     @Column(name = "max_number_of_users")
-    private long maxNoOfUsers;
+    private long maxNoOfUsers = 1L;
 
     private String input;
 

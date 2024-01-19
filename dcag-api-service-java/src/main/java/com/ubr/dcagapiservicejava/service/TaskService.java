@@ -75,7 +75,6 @@ public class TaskService {
                 .status(TaskStatus.NEW)
                 .currency(taskDTO.currency())
                 .price(taskDTO.price())
-                .maxNoOfUsers(taskDTO.maxNoOfUsers())
                 .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                 .dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
