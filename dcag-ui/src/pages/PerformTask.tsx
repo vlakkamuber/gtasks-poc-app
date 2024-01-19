@@ -213,13 +213,14 @@ const PerformTask: React.FC = () => {
                     <img src={selectedTask.inputUrl} />
                   </div>
                   <IonLabel className="label-with-margin">
-                    {t(`dcag.tasks.performTask.image.description`)}
+                    {t(`dcag.tasks.performTask.image.description.label`)}
                   </IonLabel>
                   <Textarea
                     value={selectedTask.output}
                     style={{ marginTop: '10px' }}
                     onChange={(e) => setSelectedTask({ ...selectedTask, output: e.target.value })}
                     rows="2"
+                    disabled={selectedTask.status==='COMPLETED'}
                     overrides={{
                       Root: {
                         style: () => ({
@@ -266,8 +267,8 @@ const PerformTask: React.FC = () => {
                     name="number"
                     align={ALIGN.horizontal}
                     disabled={selectedTask.status === 'COMPLETED'}>
-                    <Radio value={true}>Yes</Radio>
-                    <Radio value={false}>No</Radio>
+                    <Radio value={true}>{t(`dcag.tasks.performTask.inputAudio.confirm.yes`)}</Radio>
+                    <Radio value={false}>{t(`dcag.tasks.performTask.inputAudio.confirm.no`)}</Radio>
                   </RadioGroup>
                 </div>
               )}
