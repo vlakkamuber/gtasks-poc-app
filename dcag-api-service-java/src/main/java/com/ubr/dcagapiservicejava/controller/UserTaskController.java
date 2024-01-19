@@ -55,4 +55,10 @@ public class UserTaskController {
         userTaskService.deleteUserTask(userId, taskId);
         return ResponseEntity.noContent().build();
     }
+
+    @CrossOrigin
+    @GetMapping(value = "/{taskId}/uploadUrl", produces = "application/json")
+    ResponseEntity<String> getUploadURL(@PathVariable String userId, @PathVariable Long taskId, @RequestParam String fileName) {
+        return ResponseEntity.ok(userTaskService.getUploadURL(userId,taskId, fileName));
+    }
 }

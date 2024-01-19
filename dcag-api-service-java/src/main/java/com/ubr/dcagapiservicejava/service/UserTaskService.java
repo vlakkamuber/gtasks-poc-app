@@ -239,6 +239,11 @@ public class UserTaskService {
             taskResponseBuilder.inputUrl(gcpUtils.signTaskInputImageUrl(task.input()));
         }
 
+        if (taskType.equals(TaskType.UPLOAD_IMAGE)) {
+            String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + userTask.output();
+            taskResponseBuilder.outputUrl(gcpUtils.signTaskOutputImageUrl(outputFilename));
+        }
+
         if(taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
             String fileNameSuffix = taskType.equals(TaskType.TEXT_TO_AUDIO) ? ".mp3": "";
             String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + fileNameSuffix;
@@ -263,6 +268,30 @@ public class UserTaskService {
         if(userTask.isPresent()){
             userTasksRepository.deleteById(userTask.get().id());
             updateTaskStatus(taskId);
+        }
+
+    }
+
+    public String getUploadURL(String userId, Long taskId, String fileName) {
+
+        Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId,taskId);
+
+        if(userTaskOptional.isPresent()){
+
+            UserTask userTask = userTaskOptional.get();
+
+            userTask.output(fileName);
+
+            userTasksRepository.save(userTask);
+
+            if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
+                String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + fileName;
+                return gcpUtils.signTaskUploadImageUrl(outputFilename);
+            }else{
+                throw new TaskException("Task status is invalid for user: " + userId);
+            }
+        }else {
+            throw new TaskNotFoundException("Task not found for user: " + userId);
         }
 
     }
