@@ -297,6 +297,10 @@ label {
   gap: 4px;
 }
 
+.clickable-cursor {
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 992px) {
   html {
     width: 100%;

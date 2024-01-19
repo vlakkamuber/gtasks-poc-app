@@ -60,9 +60,6 @@ const CompletedTasks: React.FC = () => {
       return acc;
     }, {});
   }
-  const goToPerformTask = (e, task) => {
-    history.push('/dashboard/tasks/perform-task/' + task.taskId);
-  };
   return (
     <React.Fragment>
       <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
@@ -87,11 +84,6 @@ const CompletedTasks: React.FC = () => {
               </p>
             </div>
             <MyTaskCardList taskList={tasks[key]} />
-            {/* <IonList>
-              {tasks[key].map((task) => (
-                <MyTaskCard task={task} />
-              ))}
-            </IonList> */}
           </>
         );
       })}

@@ -1,13 +1,18 @@
-import { IonBadge, IonItem, IonLabel } from '@ionic/react';
+import { IonIcon, IonItem, IonLabel } from '@ionic/react';
 import react from 'React';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import { chevronForward } from 'ionicons/icons';
 import { Badge, COLOR } from 'baseui/badge';
+import { useHistory } from 'react-router';
 
 const MyTaskCard = ({ task }) => {
   const { t } = useTranslation();
+  const history = useHistory();
   const statusBadgeColor = task.status === 'COMPLETED' ? COLOR.positive : COLOR.accent;
+  const goToPerformTask = (e, task) => {
+    history.push('/dashboard/tasks/perform-task/' + task.taskId);
+  };
   return (
     <>
       <IonItem>
@@ -18,9 +23,6 @@ const MyTaskCard = ({ task }) => {
               content={t(`dcag.home.taskHub.status.${task.status}`)}
               color={statusBadgeColor}
             />
-            {/* <IonBadge color="primary" className={`status-text-completed`}>
-              {t(`dcag.home.taskHub.status.${task.status}`)}
-            </IonBadge> */}
           </span>{' '}
           <p>
             {t(`dcag.tasks.payouts.label`)}: ${task.price}
@@ -32,9 +34,12 @@ const MyTaskCard = ({ task }) => {
             </small>
           </p>
         </IonLabel>
-        <ion-icon icon={chevronForward} onClick={(e) => goToPerformTask(e, task)}></ion-icon>
+        <IonIcon
+          icon={chevronForward}
+          onClick={(e) => goToPerformTask(e, task)}
+          className="clickable-cursor"
+          color="primary"></IonIcon>
       </IonItem>
-      {/* Add more IonItem elements as needed */}
     </>
   );
 };
