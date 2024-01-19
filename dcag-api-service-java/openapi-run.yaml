@@ -327,3 +327,27 @@ paths:
           description: "A successful response"
           schema:
             type: object
+    options:
+      description: "Cors for Get upload url for upload image task type"
+      operationId: "getUploadURL CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskId
+          in: path
+          required: true
+          type: string
+          description: "ID of the task"
+        - name: fileName
+          in: query
+          required: true
+          type: string
+          description: "Image File Name"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
