@@ -100,6 +100,11 @@ public class UserTaskService {
             throw new TaskException("Output cannot be empty for IMAGE_TO_TEXT tasks");
         }
 
+        if(task.taskType().equals(TaskType.UPLOAD_IMAGE) && userTaskDTO.taskName() != null){
+            task.name(userTaskDTO.taskName());
+            taskRepository.save(task);
+        }
+
         Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
         return userTaskOptional
                 .map(userTask -> {
@@ -239,7 +244,7 @@ public class UserTaskService {
             taskResponseBuilder.inputUrl(gcpUtils.signTaskInputImageUrl(task.input()));
         }
 
-        if (taskType.equals(TaskType.UPLOAD_IMAGE)) {
+        if (userTask.output()!=null && taskType.equals(TaskType.UPLOAD_IMAGE)) {
             String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + userTask.output();
             taskResponseBuilder.outputUrl(gcpUtils.signTaskOutputImageUrl(outputFilename));
         }

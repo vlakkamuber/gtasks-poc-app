@@ -6,6 +6,8 @@ public record UserTaskDTO(
 
         UserTaskStatus status,
 
+        String taskName,
+
         String output,
 
         String outputDesc,
