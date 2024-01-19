@@ -61,7 +61,8 @@
     "dcag.home.taskHub.btn.viewAllTasks": "View All Tasks",
     "dcag.home.welcome": "Welcome",
     "dcag.tasks.TEXT_TO_AUDIO.title": "Text to Audio",
-    "dcag.tasks.AUDIO_TO_AUDIO.title": "Audio to Audio",
+    "dcag.tasks.AUDIO_TO_AUDIO.title": "Record Audio",
+    "dcag.tasks.IMAGE_TO_TEXT.title": "Image to Text",
     "dcag.tasks.TextToAudio.subtitle": "Record audio of the text and submit.",
     "dcag.home.taskHub.status.NEW":"new",
     "dcag.home.taskHub.status.COMPLETED":"Completed",
@@ -71,7 +72,9 @@
     "dcag.home.training.page.required":"Required",
     "dcag.tasks.TEXT_TO_AUDIO.taskDesc": "Record audio of the text and submit.",
     "dcag.tasks.AUDIO_TO_AUDIO.taskDesc": "Listen to the audio, record and submit.",
+    "dcag.tasks.IMAGE_TO_TEXT.taskDesc": "View image, describe and submit.",
     "dcag.home.taskHub.localize": "Localise",
     "dcag.home.taskHub.record": "Record",
-    "dcag.tasks.performTask.inputAudio.confirm": "Is this input audio accurate?"
+    "dcag.tasks.performTask.inputAudio.confirm": "Is this input audio accurate?",
+    "dcag.tasks.performTask.image.description":"Describe Image"
 }

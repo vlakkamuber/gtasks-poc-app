@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 
 import { useHistory, useParams } from 'react-router-dom';
-import { arrowBack, saveOutline, micOutline } from 'ionicons/icons';
+import { arrowBack, saveOutline, micOutline, image } from 'ionicons/icons';
 import { useState, useEffect } from 'react';
 import AudioPlayer from './AudioPlayer';
 import { ButtonDock } from 'baseui/button-dock';
@@ -41,6 +41,8 @@ const PerformTask: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [useInput, setUseInput] = useState(false);
+  //const [imageOutput,setImageOutput] = useState("")
+  const [isSubmitDisabled,setIsSubmitDisabled] = useState(false)
 
   const getTaskDetail = async () => {
     let taskId = params.id;
@@ -57,10 +59,30 @@ const PerformTask: React.FC = () => {
       });
   };
 
+  
   useEffect(() => {
     setShowLoading(true);
     getTaskDetail();
   }, []);
+  
+  useEffect(()=>{
+    if(selectedTask){
+      let isDisabled = false;
+      if(selectedTask.taskType==="IMAGE_TO_TEXT"){
+        isDisabled = selectedTask.status==="COMPLETED" || selectedTask.output===null || submitted
+      }else if(selectedTask.taskType==="AUDIO_TO_AUDIO"){
+        if(useInput===true){
+          isDisabled =  selectedTask.status==="COMPLETED"
+        }else{
+          isDisabled = audioChunks.length===0 || submitted || audioChunks.length===0
+        }
+        
+      }
+      setIsSubmitDisabled(isDisabled)
+    }
+    
+  },[submitted,audioChunks,useInput,selectedTask])
+
 
   const startRecording = async () => {
     setIsRecording(true);
@@ -121,10 +143,13 @@ const PerformTask: React.FC = () => {
 
   const saveAudioToAPI = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    if(useInput===true){
+    setSubmitted(true)
+    if(useInput===true && selectedTask.taskType==="AUDIO_TO_AUDIO" ){
       assignTaskToCompleted(selectedTask.taskId,{useInput:true,status:"COMPLETED"});
-    }else{
+    }else if(selectedTask.taskType==="IMAGE_TO_TEXT"){
+      assignTaskToCompleted(selectedTask.taskId,{output:selectedTask.output,status:"COMPLETED"});
+    }
+    else{
       const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
       apiService
         .saveAudioBlobToStorage(selectedTask.uploadUrl, audioBlob)
@@ -184,6 +209,27 @@ const PerformTask: React.FC = () => {
                 marginLeft: '20px',
                 marginRight: '20px'
               }}>
+              {(selectedTask.taskType === 'IMAGE_TO_TEXT') && <div>
+               <div className='image-container'>
+                <img src={selectedTask.inputUrl}/>
+              </div>
+              <IonLabel className="label-with-margin">
+                    {t(`dcag.tasks.performTask.image.description`)}
+                  </IonLabel>
+              <Textarea
+                    value={selectedTask.output}
+                    style={{ marginTop: '10px' }}
+                    onChange={(e)=>setSelectedTask({...selectedTask,output:e.target.value})}
+                    rows="2"
+                    overrides={{
+                      Root: {
+                        style: () => ({
+                          marginTop: '10px'
+                        })
+                      }
+                    }}
+                  />
+              </div> }
               {(selectedTask.taskType === 'TEXT_TO_AUDIO' ||
                 selectedTask.taskType === 'TEXT_TO_AUDIO') && (
                 <div>
@@ -215,7 +261,7 @@ const PerformTask: React.FC = () => {
                 <div>
                   <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
                   <RadioGroup
-                    value={selectedTask.useInput}
+                    value={selectedTask.useInput || useInput}
                     onChange={e => setUseInput(e.currentTarget.value==="true")}
                     name="number"
                     align={ALIGN.horizontal}
@@ -231,12 +277,12 @@ const PerformTask: React.FC = () => {
                 </div>
               )}
 
-              {(selectedTask.status === 'IN_PROGRESS' && useInput===false) && (
+              {(selectedTask.status === 'IN_PROGRESS' && useInput===false && selectedTask.taskType!=='IMAGE_TO_TEXT') && (
                 <IonLabel className="label-with-margin" style={{ marginTop: '20px' }}>
                   {t(`dcag.tasks.performTask.recordAudio.label`)}
                 </IonLabel>
               )}
-              {useInput===false && <div style={{ marginTop: '10px' }}>
+              {(useInput===false && selectedTask.taskType!=='IMAGE_TO_TEXT') && <div style={{ marginTop: '10px' }}>
                 {audioChunks.length > 0 && (
                   <AudioPlayer
                     audioSrc={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/mpeg' }))}
@@ -269,7 +315,7 @@ const PerformTask: React.FC = () => {
                   </div>
                 )}
               </div>}
-              {(selectedTask.status === 'IN_PROGRESS' && useInput===false) && (
+              {(selectedTask.status === 'IN_PROGRESS' && useInput===false && selectedTask.taskType!=='IMAGE_TO_TEXT') && (
                 <div style={{ width: '100%', marginTop: '10px' }}>
                   {isRecording ? (
                     <div
@@ -334,7 +380,7 @@ const PerformTask: React.FC = () => {
                   primaryAction={
                     <Button
                       onClick={(e) => saveAudioToAPI(e)}
-                      disabled={!useInput && (selectedTask.status === 'COMPLETED' || audioChunks.length === 0 || submitted)}>
+                      disabled={isSubmitDisabled}>
                       {t(`dcag.home.btn.submit.label`)}
                     </Button>
                   }
