@@ -8,6 +8,7 @@ import { filterTaskWithType, formatDate } from '../utils/mapTeluguDigitsToNumeri
 import LoadingComponent from '../components/Loader';
 import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
 import MyTaskCard from './MyTaskCard';
+import MyTaskCardList from './MyTaskCardList';
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
@@ -85,11 +86,12 @@ const CompletedTasks: React.FC = () => {
                 <small>{tasks[key][0].taskDesc}</small>
               </p>
             </div>
-            <IonList>
+            <MyTaskCardList taskList={tasks[key]} />
+            {/* <IonList>
               {tasks[key].map((task) => (
                 <MyTaskCard task={task} />
               ))}
-            </IonList>
+            </IonList> */}
           </>
         );
       })}

@@ -3,18 +3,24 @@ import react from 'React';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import { chevronForward } from 'ionicons/icons';
+import { Badge, COLOR } from 'baseui/badge';
 
 const MyTaskCard = ({ task }) => {
   const { t } = useTranslation();
+  const statusBadgeColor = task.status === 'COMPLETED' ? COLOR.positive : COLOR.accent;
   return (
     <>
       <IonItem>
         <IonLabel>
-          <span style={{ display: 'flex' }}>
+          <span style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <h2>{task.taskName}</h2>
-            <IonBadge color="primary" className={`status-text-completed`}>
+            <Badge
+              content={t(`dcag.home.taskHub.status.${task.status}`)}
+              color={statusBadgeColor}
+            />
+            {/* <IonBadge color="primary" className={`status-text-completed`}>
               {t(`dcag.home.taskHub.status.${task.status}`)}
-            </IonBadge>
+            </IonBadge> */}
           </span>{' '}
           <p>
             {t(`dcag.tasks.payouts.label`)}: ${task.price}
