@@ -20,8 +20,9 @@ import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
-import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
+import { filterTaskWithType, formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
+import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -48,8 +49,12 @@ const Tasks: React.FC = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getAvailableTasks(userId)
-      .then((result) => {
+      .then((res) => {
         setShowLoading(false);
+        // temporary - this filter should be removed in future;
+        const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
+          ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
+          : res;
         console.log(result);
         setAvailableCount(result.length);
         setTasks(groupBy(result, 'taskType'));
@@ -76,7 +81,11 @@ const Tasks: React.FC = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getMyTasksList(userId)
-      .then((result) => {
+      .then((res) => {
+        // temporary - this filter should be removed in future;
+        const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
+          ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
+          : res;
         setMyTasksCount(result.length);
       })
       .catch((error) => {

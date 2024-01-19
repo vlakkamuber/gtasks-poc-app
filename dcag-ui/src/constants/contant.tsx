@@ -11,3 +11,10 @@ export const COUNTRY_OPTIONS = [
   { value: 'ca', label: 'Canada', flag: '🇨🇦' }
   // Add more countries as needed
 ];
+
+export const TEXT_TO_AUDIO_TASK_TYPE = 'TEXT_TO_AUDIO';
+
+export const FILTER_OUT_TEXT_TO_AUDIO_TASK = true;
+
+export const COMPLETED_TASK_STATUS = 'COMPLETED';
+export const IN_PROGRESS_TASK_STATUS = 'IN_PROGRESS';

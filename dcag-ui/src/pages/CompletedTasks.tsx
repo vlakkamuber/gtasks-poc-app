@@ -4,8 +4,11 @@ import { chevronForward } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
-import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
+import { filterTaskWithType, formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
+import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
+import MyTaskCard from './MyTaskCard';
+import MyTaskCardList from './MyTaskCardList';
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
@@ -30,8 +33,12 @@ const CompletedTasks: React.FC = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getMyTasksList(userId)
-      .then((result) => {
+      .then((res) => {
         setShowLoading(false);
+        // temporary - this filter should be removed in future;
+        const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
+          ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
+          : res;
         setTasks(groupBy(result, 'taskType'));
       })
       .catch((error) => {
@@ -53,9 +60,6 @@ const CompletedTasks: React.FC = () => {
       return acc;
     }, {});
   }
-  const goToPerformTask = (e, task) => {
-    history.push('/dashboard/tasks/perform-task/' + task.taskId);
-  };
   return (
     <React.Fragment>
       <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
@@ -79,37 +83,7 @@ const CompletedTasks: React.FC = () => {
                 <small>{tasks[key][0].taskDesc}</small>
               </p>
             </div>
-            {tasks[key].map((task, index) => {
-              return (
-                <>
-                  <IonList>
-                    <IonItem>
-                      <IonLabel>
-                        <span style={{ display: 'flex' }}>
-                          <h2>{task.taskName}</h2>
-                          <IonBadge color="primary" className={`status-text-completed`}>
-                            {t(`dcag.home.taskHub.status.${task.status}`)}
-                          </IonBadge>
-                        </span>{' '}
-                        <p>
-                          {t(`dcag.tasks.payouts.label`)}: ${task.price}
-                        </p>
-                        <p>
-                          <small>
-                            {t(`dcag.tasks.createdAt.label`)}: {formatDate(task.createDateTime)}{' '}
-                            {t(`dcag.tasks.dueDate.label`)}: {formatDate(task.dueDateTime)}
-                          </small>
-                        </p>
-                      </IonLabel>
-                      <ion-icon
-                        icon={chevronForward}
-                        onClick={(e) => goToPerformTask(e, task)}></ion-icon>
-                    </IonItem>
-                    {/* Add more IonItem elements as needed */}
-                  </IonList>
-                </>
-              );
-            })}
+            <MyTaskCardList taskList={tasks[key]} />
           </>
         );
       })}

@@ -1,3 +1,5 @@
+import { COMPLETED_TASK_STATUS, IN_PROGRESS_TASK_STATUS } from '../constants/contant';
+
 export function mapTeluguDigitsToNumeric(inputText) {
   const teluguDigitsMap = {
     '౦': '0',
@@ -26,3 +28,19 @@ export function formatDate(timestamp) {
   const formattedDate = `${day}/${month}/${year}`;
   return formattedDate;
 }
+
+export const filterTaskWithType = (tasks: { taskType: string }[], taskType: string) => {
+  return tasks.filter((task) => task.taskType !== taskType);
+};
+
+export const getSortedInProgressTaskList = (taskList) => {
+  return taskList
+    .filter((task) => task.status === IN_PROGRESS_TASK_STATUS)
+    .sort((a, b) => b.startTime - a.startTime);
+};
+
+export const getSortedCompletedTaskList = (taskList) => {
+  return taskList
+    .filter((task) => task.status === COMPLETED_TASK_STATUS)
+    .sort((a, b) => b.completedTime - a.completedTime);
+};
