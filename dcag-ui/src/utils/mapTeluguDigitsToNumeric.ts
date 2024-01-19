@@ -26,3 +26,7 @@ export function formatDate(timestamp) {
   const formattedDate = `${day}/${month}/${year}`;
   return formattedDate;
 }
+
+export const filterTaskWithType = (tasks: { taskType: string }[], taskType: string) => {
+  return tasks.filter((task) => task.taskType !== taskType);
+};
