@@ -304,7 +304,7 @@ paths:
             type: object
   /users/{userId}/tasks/{taskId}/uploadUrl:
     get:
-      summary: "Get upload url foe upload image task type"
+      summary: "Get upload url for upload image task type"
       operationId: "getUploadURL"
       parameters:
         - name: userId
