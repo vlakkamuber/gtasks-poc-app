@@ -49,7 +49,7 @@ const Account: React.FC = () => {
         </div> */}
 
         <IonList style={{padding:'20px'}}>
-          <IonItem button className="no-border">
+          {/* <IonItem button className="no-border">
             <IonIcon icon={informationCircle} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.myaccount`)}</IonLabel>
           </IonItem>
@@ -74,7 +74,7 @@ const Account: React.FC = () => {
           <IonItem button className="no-border">
           <IonIcon icon={settings} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.appSettings`)}</IonLabel>
-          </IonItem>
+          </IonItem> */}
           <IonItem button className="no-border">
           <IonIcon icon={school} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.trainingmodule`)}</IonLabel>

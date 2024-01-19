@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
 import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
+import { RadioGroup, Radio, ALIGN } from "baseui/radio";
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -39,6 +40,7 @@ const PerformTask: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [useInput, setUseInput] = useState(false);
 
   const getTaskDetail = async () => {
     let taskId = params.id;
@@ -100,10 +102,10 @@ const PerformTask: React.FC = () => {
     }
   }, [audioChunks]);
 
-  const assignTaskToCompleted = (taskId) => {
+  const assignTaskToCompleted = (taskId,body) => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .assignTaskToCompleted(userId, taskId)
+      .assignTaskToCompleted(userId, taskId,body)
       .then((result) => {
         console.log(result);
         setShowToast(true);
@@ -120,17 +122,22 @@ const PerformTask: React.FC = () => {
   const saveAudioToAPI = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-    const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
-    apiService
-      .saveAudioBlobToStorage(selectedTask.uploadUrl, audioBlob)
-      .then((result) => {
-        console.log('Audio saved to the API.');
-        assignTaskToCompleted(selectedTask.taskId);
-        //history.push("/dashboard/tasks/completed");
-      })
-      .catch((error) => {
-        console.error('Error fetching task data:', error);
-      });
+    if(useInput===true){
+      assignTaskToCompleted(selectedTask.taskId,{useInput:true,status:"COMPLETED"});
+    }else{
+      const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+      apiService
+        .saveAudioBlobToStorage(selectedTask.uploadUrl, audioBlob)
+        .then((result) => {
+          console.log('Audio saved to the API.');
+          assignTaskToCompleted(selectedTask.taskId,{useInput:false,status:"COMPLETED"});
+          //history.push("/dashboard/tasks/completed");
+        })
+        .catch((error) => {
+          console.error('Error fetching task data:', error);
+        });
+    }
+    
   };
   return (
     <IonPage>
@@ -195,16 +202,6 @@ const PerformTask: React.FC = () => {
                       }
                     }}
                   />
-                  {/* <IonTextarea
-                style={{
-                  background: "#f3f3f3", // Set the grey background color
-                  height: "200px", // Set the desired height// Set the desired width
-                  padding: "10px",
-                  marginBottom: "11px", // Optional padding
-                  borderRadius: "10px",
-                }}
-                value={selectedTask.input}
-              ></IonTextarea> */}
                 </div>
               )}
               {(selectedTask.taskType === 'AUDIO_TO_AUDIO' ||
@@ -214,21 +211,38 @@ const PerformTask: React.FC = () => {
                   <AudioPlayer audioSrc={selectedTask.inputUrl} />
                 </div>
               )}
+              {(selectedTask.taskType === 'AUDIO_TO_AUDIO') && (
+                <div>
+                  <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
+                  <RadioGroup
+                    value={selectedTask.useInput}
+                    onChange={e => setUseInput(e.currentTarget.value==="true")}
+                    name="number"
+                    align={ALIGN.horizontal}
+                    disabled={selectedTask.status==="COMPLETED"}
+                  >
+                    <Radio value={true}>Yes</Radio>
+                    <Radio
+                      value={false}
+                    >
+                      No
+                    </Radio>
+                  </RadioGroup>
+                </div>
+              )}
 
-              {/* Label for Audio Recording */}
-              {selectedTask.status === 'IN_PROGRESS' && (
+              {(selectedTask.status === 'IN_PROGRESS' && useInput===false) && (
                 <IonLabel className="label-with-margin" style={{ marginTop: '20px' }}>
                   {t(`dcag.tasks.performTask.recordAudio.label`)}
                 </IonLabel>
               )}
-              <div style={{ marginTop: '10px' }}>
-                {/* Display the recorded audio for playback (Step 4) */}
+              {useInput===false && <div style={{ marginTop: '10px' }}>
                 {audioChunks.length > 0 && (
                   <AudioPlayer
                     audioSrc={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/mpeg' }))}
                   />
                 )}
-                {selectedTask.status === 'COMPLETED' && (
+                {(selectedTask.status === 'COMPLETED' && selectedTask.useInput===false) && (
                   <div>
                     <h5>{t(`dcag.tasks.performTask.output.label`)}</h5>
                     <div
@@ -251,21 +265,11 @@ const PerformTask: React.FC = () => {
                         }}>
                         <AudioPlayer audioSrc={selectedTask.outputUrl} />
                       </div>
-                      {/* <div className="icon-container">
-                    <div className="icon">
-                      <IonIcon icon={pencil}></IonIcon>
-                    </div>
-                    <div className="icon">
-                      <IonIcon icon={trash}></IonIcon>
-                    </div>
-                  </div> */}
                     </div>
                   </div>
                 )}
-              </div>
-
-              {/* Centered Audio Recording Component */}
-              {(selectedTask.status === 'IN_PROGRESS' || selectedTask.status === 'IN_PROGRESS') && (
+              </div>}
+              {(selectedTask.status === 'IN_PROGRESS' && useInput===false) && (
                 <div style={{ width: '100%', marginTop: '10px' }}>
                   {isRecording ? (
                     <div
@@ -311,50 +315,13 @@ const PerformTask: React.FC = () => {
                             onClick={startRecording}>
                             {t(`dcag.home.btn.startRecording.label`)}
                           </Button>
-                          {/* <IonButton
-                      expand="block"
-                      color="primary"
-                      className="ion-small"
-                      disabled={selectedTask.status === "Completed"}
-                    >
-                      Start Recording
-                    </IonButton> */}
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
               )}
-              {/* <div className="button-container">
-            <IonButton
-              expand="block"
-              color="primary"
-              className="signup-login-button"
-              onClick={(e) => saveAudioToAPI(e)}
-              disabled={selectedTask.status === "Completed"}
-            >
-              Submit
-            </IonButton>
-            {isRecording && (
-              <IonButton
-                expand="block"
-                color="secondary"
-                className="signup-login-button"
-                disabled={selectedTask.status === "Completed"}
-              >
-                Help
-              </IonButton>
-            )}
-            <IonButton
-              expand="block"
-              color="secondary"
-              className="signup-login-button"
-              routerLink="/dashboard/tasks/"
-            >
-              Cancel
-            </IonButton>
-          </div> */}
-              {(selectedTask.status === 'IN_PROGRESS' || selectedTask.status === 'IN_PROGRESS') && (
+              {(selectedTask.status === 'IN_PROGRESS') && (
                 <ButtonDock
                   overrides={{
                     Root: {
@@ -367,11 +334,7 @@ const PerformTask: React.FC = () => {
                   primaryAction={
                     <Button
                       onClick={(e) => saveAudioToAPI(e)}
-                      disabled={
-                        selectedTask.status === 'COMPLETED' ||
-                        audioChunks.length === 0 ||
-                        submitted === true
-                      }>
+                      disabled={!useInput && (selectedTask.status === 'COMPLETED' || audioChunks.length === 0 || submitted)}>
                       {t(`dcag.home.btn.submit.label`)}
                     </Button>
                   }

@@ -72,5 +72,6 @@
     "dcag.tasks.TEXT_TO_AUDIO.taskDesc": "Record audio of the text and submit.",
     "dcag.tasks.AUDIO_TO_AUDIO.taskDesc": "Listen to the audio, record and submit.",
     "dcag.home.taskHub.localize": "Localise",
-    "dcag.home.taskHub.record": "Record"
+    "dcag.home.taskHub.record": "Record",
+    "dcag.tasks.performTask.inputAudio.confirm": "Is this input audio accurate?"
 }

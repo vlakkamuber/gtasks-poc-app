@@ -71,5 +71,6 @@
     "dcag.tasks.TEXT_TO_AUDIO.taskDesc": "వచనం యొక్క ఆడియోను రికార్డ్ చేసి సమర్పించండి.",
     "dcag.tasks.AUDIO_TO_AUDIO.taskDesc": "ఆడియోను వినండి, రికార్డ్ చేయండి మరియు సమర్పించండి.",
     "dcag.home.taskHub.localize": "స్థానికీకరించండి",
-    "dcag.home.taskHub.record": "రికార్డ్ చేయండి"
+    "dcag.home.taskHub.record": "రికార్డ్ చేయండి",
+    "dcag.tasks.performTask.inputAudio.confirm": "Are you ok with input audio?"
 }

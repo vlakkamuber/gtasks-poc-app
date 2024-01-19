@@ -53,7 +53,7 @@ const apiService = {
     });
     return response.json();
   },
-  async assignTaskToCompleted(userId: string, taskId: any) {
+  async assignTaskToCompleted(userId: string, taskId: any,body:any) {
     const endpoint = `users/${userId}/tasks/${taskId}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
@@ -62,9 +62,7 @@ const apiService = {
         ...headers,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        status: 'COMPLETED'
-      })
+      body: JSON.stringify(body)
     });
     return response.json();
   },
