@@ -19,9 +19,10 @@ import { useUserAuth } from "../context/UserAuthContext";
 const Account: React.FC = () => {
   const { t } = useTranslation();
   const {logOut: firebaseLogOut} = useUserAuth();
-  const logOut = () => {
-    firebaseLogOut();
+  const logOut = async () => {
+    await firebaseLogOut();
     history.push("/home");
+    window.location.reload(true);
   }
   const history = useHistory();
   const goBack = () => {

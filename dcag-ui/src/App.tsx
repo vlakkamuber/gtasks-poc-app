@@ -1,3 +1,4 @@
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -34,44 +35,89 @@ import LoginSuccess from './pages/LoginSuccess';
 import PerformTask from './pages/PerformTask';
 import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
+import RequireAuth from './components/RequireAuth';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <UserAuthContextProvider>
-    <IonReactRouter forceRefresh={true}>
+    <IonReactRouter>
       <IonRouterOutlet>
         <Route path="/home" component={HomeScreen} exact />
         <Route path="/login" component={Login} exact />
         <Route path="/login-success" component={LoginSuccess} exact />
-        <Route path="/dashboard" component={Dashboard} exact />
+        <Route
+          path="/dashboard"
+          render={() => (
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          )}
+          exact
+        />
         <Route
           path="/dashboard/home"
-          render={() => <Dashboard content={<Home forceRefresh={true} />} />}
+          render={() => (
+            <RequireAuth>
+              <Dashboard content={<Home />} />
+            </RequireAuth>
+          )}
           exact
         />
         <Route
           path="/dashboard/training"
-          render={() => <Dashboard content={<Training forceRefresh={true} />} />}
+          render={() => (
+            <RequireAuth>
+              <Dashboard content={<Training />} />
+            </RequireAuth>
+          )}
           exact
         />
         <Route
           path="/dashboard/tasks"
-          render={() => <Dashboard content={<Tasks forceRefresh={true} />} />}
+          render={() => (
+            <RequireAuth>
+              <Dashboard content={<Tasks />} />
+            </RequireAuth>
+          )}
           exact
         />
         <Route
           path="/dashboard/account"
-          render={() => <Dashboard content={<Account forceRefresh={true} />} />}
+          render={() => (
+            <RequireAuth>
+              <Dashboard content={<Account />} />
+            </RequireAuth>
+          )}
           exact
         />
         <Route
           path="/dashboard/help"
-          render={() => <Dashboard content={<Help forceRefresh={true} />} />}
+          render={() => (
+            <RequireAuth>
+              <Dashboard content={<Help />} />
+            </RequireAuth>
+          )}
           exact
         />
-        <Route path="/dashboard/tasks/perform-task/:id" component={PerformTask} exact />
-        <Route path="/dashboard/tasks/completed" component={Completed} exact />
+        <Route
+          path="/dashboard/tasks/perform-task/:id"
+          render={() => (
+            <RequireAuth>
+              <PerformTask />
+            </RequireAuth>
+          )}
+          exact
+        />
+        <Route
+          path="/dashboard/tasks/completed"
+          render={() => (
+            <RequireAuth>
+              <Completed />
+            </RequireAuth>
+          )}
+          exact
+        />
         <Redirect exact from="/" to="/home" />
       </IonRouterOutlet>
     </IonReactRouter>

@@ -72,7 +72,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent }: Props) => {
           value={selectedCountry.flag}
           style={{ height: '5vh', minHeight: 'unset', paddingeft: '9px' }}>
           {COUNTRY_OPTIONS.map(function (country) {
-            return <IonSelectOption value={country.value}>{country.flag}</IonSelectOption>;
+            return <IonSelectOption key={country.value} value={country.value}>{country.flag}</IonSelectOption>;
           })}
         </IonSelect>
         <input
