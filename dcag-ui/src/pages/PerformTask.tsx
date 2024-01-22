@@ -40,7 +40,7 @@ const PerformTask: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [useInput, setUseInput] = useState(false);
+  const [useInput, setUseInput] = useState(null);
   //const [imageOutput,setImageOutput] = useState("")
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
@@ -262,7 +262,7 @@ const PerformTask: React.FC = () => {
                 <div>
                   <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
                   <RadioGroup
-                    value={selectedTask.useInput || useInput}
+                    value={selectedTask.status==='COMPLETED' ? selectedTask.useInput:useInput}
                     onChange={(e) => setUseInput(e.currentTarget.value === 'true')}
                     name="number"
                     align={ALIGN.horizontal}

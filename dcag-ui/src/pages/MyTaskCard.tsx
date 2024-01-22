@@ -11,7 +11,12 @@ const MyTaskCard = ({ task }) => {
   const history = useHistory();
   const statusBadgeColor = task.status === 'COMPLETED' ? COLOR.positive : COLOR.accent;
   const goToPerformTask = (e, task) => {
-    history.push('/dashboard/tasks/perform-task/' + task.taskId);
+    if(task.taskType==='UPLOAD_IMAGE'){
+      history.push('/dashboard/tasks/image-upload-task/' + task.taskId);
+    }else{
+      history.push('/dashboard/tasks/perform-task/' + task.taskId);
+    }
+    
   };
   return (
     <>

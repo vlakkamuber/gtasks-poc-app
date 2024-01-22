@@ -120,6 +120,18 @@ const Tasks: React.FC = () => {
     assignTask(task);
   };
 
+  const goToUploadImageTask = async ()=>{
+    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+    try{
+      let result = await apiService.createImageUploadTask();
+      console.log(result)
+      let res = await apiService.assignTask(userId,result.id);
+      console.log(res)
+      //history.push('/dashboard/tasks/perform-task/' + res.taskId);
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
     <IonPage>
       <IonHeader>
@@ -254,6 +266,27 @@ const Tasks: React.FC = () => {
                 );
               })}
             </React.Fragment>
+            <IonList>
+              <IonItem>
+                <IonLabel>
+                  <span style={{ display: 'flex' }}>
+                    <h1>Upload Image</h1>
+                    </span>
+                    <p style={{ margin: '0' }}>
+                        <small>Upload image describe and submit.</small>
+                    </p>
+                    <IonButton
+                                slot="start"
+                                style={{
+                                  '--background': 'black',
+                                  '--border-radius': '10px'
+                                }}
+                                onClick={()=>goToUploadImageTask()}>
+                                {'Upload'}
+                    </IonButton>
+                </IonLabel>
+              </IonItem>
+            </IonList>
           </React.Fragment>
         )}
 

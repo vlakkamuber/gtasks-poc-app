@@ -105,7 +105,21 @@ const apiService = {
       })
     });
     return response.json();
-  }
+  },
+  async createImageUploadTask(){
+    const endpoint = `tasks`;
+    const headers = getHeaders();
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name:"Default Task",
+      taskType:"UPLOAD_IMAGE"})
+    });
+    return response.json();
+  },
 };
 
 export default apiService;

@@ -55,12 +55,12 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.textToAudio.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
+            <IonCardTitle>{t(`dcag.home.taskHub.RECORD_AUDIO.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
-            {t(`dcag.home.taskHub.textToAudio.subtitle`)}
+            {t(`dcag.home.taskHub.RECORD_AUDIO.subtitle`)}
           </IonCardContent>
         </IonCard>
         <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
@@ -70,12 +70,12 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.audioToAudio.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
+            <IonCardTitle>{t(`dcag.home.taskHub.DESCRIBE_IMAGE.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
-          {t(`dcag.home.taskHub.audioToAudio.subtitle`)}
+          {t(`dcag.home.taskHub.DESCRIBE_IMAGE.subtitle`)}
           </IonCardContent>
         </IonCard>
         <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>history.push("/dashboard/tasks")}>
@@ -85,12 +85,12 @@ const Home: React.FC = () => {
             style={{objectFit:'cover'}}
           />
           <IonCardHeader>
-            <IonCardTitle> {t(`dcag.home.taskHub.textToImage.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
+            <IonCardTitle> {t(`dcag.home.taskHub.UPLOAD_IMAGE.title`)} <span className="record-text">{t(`dcag.home.taskHub.localize`)},{t(`dcag.home.taskHub.record`)} </span></IonCardTitle>
             {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
-          {t(`dcag.home.taskHub.textToImage.subtitle`)}
+          {t(`dcag.home.taskHub.UPLOAD_IMAGE.subtitle`)}
           </IonCardContent>
         </IonCard>
       </IonContent>

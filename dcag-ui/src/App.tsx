@@ -33,6 +33,7 @@ import HomeScreen from './pages/HomeScreen';
 import Completed from './pages/Completed';
 import LoginSuccess from './pages/LoginSuccess';
 import PerformTask from './pages/PerformTask';
+import ImageUploadTask from './pages/ImageUploadTask'
 import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import RequireAuth from './components/RequireAuth';
@@ -105,6 +106,15 @@ const App: React.FC = () => (
           render={() => (
             <RequireAuth>
               <PerformTask />
+            </RequireAuth>
+          )}
+          exact
+        />
+        <Route
+          path="/dashboard/tasks/image-upload-task/:id"
+          render={() => (
+            <RequireAuth>
+              <ImageUploadTask />
             </RequireAuth>
           )}
           exact
