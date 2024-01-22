@@ -120,6 +120,18 @@ const apiService = {
     });
     return response.json();
   },
+  async uplaodFileAndGetUploadUrl(userId:any,taskId:any,filename:any){
+    const endpoint = `users/${userId}/tasks/${taskId}uploadUrl?${filename}`;
+    const headers = getHeaders();
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method: 'GET',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+    });
+    return response.json();
+  },
 };
 
 export default apiService;

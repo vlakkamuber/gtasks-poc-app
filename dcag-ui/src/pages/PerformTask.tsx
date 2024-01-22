@@ -280,7 +280,7 @@ const PerformTask: React.FC = () => {
                     {t(`dcag.tasks.performTask.recordAudio.label`)}
                   </IonLabel>
                 )}
-              {useInput === false && selectedTask.taskType !== 'IMAGE_TO_TEXT' && (
+              {selectedTask.useInput === false && selectedTask.taskType !== 'IMAGE_TO_TEXT' && (
                 <div style={{ marginTop: '10px' }}>
                   {audioChunks.length > 0 && (
                     <AudioPlayer

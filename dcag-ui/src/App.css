@@ -313,6 +313,15 @@ label {
   object-fit: cover;
 }
 
+.image-upload-container{
+  justify-content: center;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #eeeeee;
+}
+
 @media only screen and (min-width: 992px) {
   html {
     width: 100%;

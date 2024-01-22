@@ -42,7 +42,7 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <UserAuthContextProvider>
-    <IonReactRouter>
+    <IonReactRouter forceRefresh={true}>
       <IonRouterOutlet>
         <Route path="/home" component={HomeScreen} exact />
         <Route path="/login" component={Login} exact />

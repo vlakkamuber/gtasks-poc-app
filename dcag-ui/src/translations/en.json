@@ -86,5 +86,8 @@
   "dcag.tasks.performTask.inputAudio.confirm": "Is this input audio accurate?",
   "dcag.tasks.performTask.inputAudio.confirm.yes": "yes",
   "dcag.tasks.performTask.inputAudio.confirm.no": "No",
-  "dcag.tasks.performTask.image.description.label": "Describe Image"
+  "dcag.tasks.performTask.image.description.label": "Describe Image",
+  "dcag.tasks.performTask.uploadImage.taskInput.label":"Task Name",
+  "dcag.tasks.performTask.uploadImage.image.decription":"Describe Image",
+  "dcag.tasks.performTask.uploadImage.label": ""
 }
