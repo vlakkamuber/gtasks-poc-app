@@ -266,7 +266,7 @@ const Tasks: React.FC = () => {
                 );
               })}
             </React.Fragment>
-            <IonList>
+            {/* <IonList>
               <IonItem>
                 <IonLabel>
                   <span style={{ display: 'flex' }}>
@@ -286,7 +286,7 @@ const Tasks: React.FC = () => {
                     </IonButton>
                 </IonLabel>
               </IonItem>
-            </IonList>
+            </IonList> */}
           </React.Fragment>
         )}
 

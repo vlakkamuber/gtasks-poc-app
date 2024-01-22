@@ -44,6 +44,7 @@ import {
     const [file, setFile] = useState<File | null>(null);
     const [taskName,setTaskName] = useState("");
     const [imageDesc,setImageDesc] = useState("")
+    const [storageURL,setSelectedStorageURL] = useState("")
 
     const uplaodFileAndGetUploadUrl = (selectedFile)=>{
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -51,6 +52,7 @@ import {
         .uplaodFileAndGetUploadUrl(userId, selectedTask.taskId,selectedFile.name)
         .then((result) => {
          console.log(result)
+         setSelectedStorageURL(result)
         })
         .catch((error) => {
           console.error('Error fetching task data:', error);
@@ -101,10 +103,40 @@ import {
       }
     },[taskName,file,imageDesc,selectedTask])
 
+    const uploadImageToStorageUrl = ()=>{
+      apiService
+        .uploadImageToStorageUrl(storageURL,file)
+        .then((result) => {
+          console.log(result);
+          assignTaskToCompleted();
+        })
+        .catch((error) => {
+          console.error('Error fetching task data:', error);
+        });
+    }
+
+    const assignTaskToCompleted = ()=>{
+      let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+      let body = {
+        status: "COMPLETED",
+        outputDesc:imageDesc,
+        taskName:taskName,
+      }
+      apiService
+        .assignTaskToCompleted(userId, selectedTask.taskId,body)
+        .then((result) => {
+          console.log(result);
+          setShowLoading(false);
+          setSelectedTask(result);
+        })
+        .catch((error) => {
+          console.error('Error fetching task data:', error);
+        });
+    }
 
     const saveImageAndCompleteTask = async (e)=>{
       e.preventDefault();
-
+      uploadImageToStorageUrl();
     }
 
     return (

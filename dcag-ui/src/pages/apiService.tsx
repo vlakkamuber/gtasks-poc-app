@@ -121,7 +121,7 @@ const apiService = {
     return response.json();
   },
   async uplaodFileAndGetUploadUrl(userId:any,taskId:any,filename:any){
-    const endpoint = `users/${userId}/tasks/${taskId}uploadUrl?${filename}`;
+    const endpoint = `users/${userId}/tasks/${taskId}/uploadUrl?fileName=${filename}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'GET',
@@ -132,6 +132,24 @@ const apiService = {
     });
     return response.json();
   },
+  async uploadImageToStorageUrl(uploadUrl,file){
+    const headers = getHeaders();
+    try {
+      const response = await fetch(uploadUrl, {
+        method: 'PUT',
+        processData: false,
+        headers: {
+          ...headers,
+          'Content-Type': file.type,
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: file
+      });
+      return response;
+    } catch (error) {
+      console.error('Error saving audio blob:', error.message);
+    }
+  }
 };
 
 export default apiService;
