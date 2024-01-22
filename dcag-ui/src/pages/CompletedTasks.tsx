@@ -36,9 +36,12 @@ const CompletedTasks: React.FC = () => {
       .then((res) => {
         setShowLoading(false);
         // temporary - this filter should be removed in future;
+        let completedTasks = res.filter((task)=>{
+          return task.status==='COMPLETED'
+        })
         const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-          ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
-          : res;
+          ? filterTaskWithType(completedTasks, TEXT_TO_AUDIO_TASK_TYPE)
+          : completedTasks;
         setTasks(groupBy(result, 'taskType'));
       })
       .catch((error) => {

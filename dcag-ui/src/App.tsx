@@ -102,7 +102,7 @@ const App: React.FC = () => (
           exact
         />
         <Route
-          path="/dashboard/tasks/perform-task/:id"
+          path="/dashboard/tasks/perform-task/:id/:userId"
           render={() => (
             <RequireAuth>
               <PerformTask />
@@ -111,7 +111,7 @@ const App: React.FC = () => (
           exact
         />
         <Route
-          path="/dashboard/tasks/image-upload-task/:id"
+          path="/dashboard/tasks/image-upload-task/:id/:userId"
           render={() => (
             <RequireAuth>
               <ImageUploadTask />

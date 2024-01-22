@@ -34,7 +34,7 @@ const BlockedTasks: React.FC = () => {
     }, {});
   }
   const goToPerformTask = (e, task) => {
-    history.push("/dashboard/tasks/perform-task/" + task.id);
+    history.push(`/dashboard/tasks/perform-task/${task.id}/${task.userId}`);
   };
   return (
     <React.Fragment>

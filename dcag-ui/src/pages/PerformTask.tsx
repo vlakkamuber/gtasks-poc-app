@@ -46,7 +46,7 @@ const PerformTask: React.FC = () => {
 
   const getTaskDetail = async () => {
     let taskId = params.id;
-    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+    let userId = params.userId==="undefined" ? JSON.parse(localStorage.getItem('loggedInUser')) : params.userId
     apiService
       .getTaskDetail(userId, taskId)
       .then((result) => {
