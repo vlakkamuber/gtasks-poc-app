@@ -12,7 +12,7 @@ import {
   } from '@ionic/react';
 
 
-  import { useHistory, useParams } from 'react-router-dom';
+  import React, { useHistory, useParams } from 'react-router-dom';
   import { arrowBack } from 'ionicons/icons';
   import { useState, useEffect } from 'react';
 
@@ -24,6 +24,7 @@ import {
   import apiService from './apiService';
   import LoadingComponent from '../components/Loader';
   import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
+import { useUserAuth } from '../context/UserAuthContext';
 
 
   const ImageUploadTask: React.FC = () => {
@@ -31,6 +32,7 @@ import {
     const { t } = useTranslation();
     const history = useHistory();
     const params = useParams();
+    const { user } = useUserAuth();
 
     const goBack = () => {
       history.push('/dashboard/tasks'); // This function navigates back to the previous page
@@ -49,7 +51,7 @@ import {
     const uplaodFileAndGetUploadUrl = (selectedFile)=>{
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
       apiService
-        .uplaodFileAndGetUploadUrl(userId, selectedTask.taskId,selectedFile.name)
+        .uplaodFileAndGetUploadUrl({ userId, taskId: selectedTask.taskId, filename: selectedFile.name, user })
         .then((result) => {
          console.log(result)
          setSelectedStorageURL(result)
@@ -106,7 +108,7 @@ import {
 
     const uploadImageToStorageUrl = ()=>{
       apiService
-        .uploadImageToStorageUrl(storageURL,file)
+        .uploadImageToStorageUrl({ uploadUrl: storageURL, file, user })
         .then((result) => {
           console.log(result);
           assignTaskToCompleted();

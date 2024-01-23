@@ -153,7 +153,7 @@ const PerformTask: React.FC = () => {
     } else {
       const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
       apiService
-        .saveAudioBlobToStorage(selectedTask.uploadUrl, audioBlob)
+        .saveAudioBlobToStorage({ uploadUrl: selectedTask.uploadUrl, audioBlob, user })
         .then((result) => {
           console.log('Audio saved to the API.');
           assignTaskToCompleted(selectedTask.taskId, { useInput: false, status: 'COMPLETED' });

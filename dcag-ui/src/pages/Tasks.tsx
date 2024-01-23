@@ -68,7 +68,7 @@ const Tasks: React.FC = () => {
   const getTaskSummary = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getTaskSummary(userId)
+      .getTaskSummary({userId, user})
       .then((result) => {
         console.log(result);
         setCompletedCount(result.completedTaskCount);
@@ -125,7 +125,7 @@ const Tasks: React.FC = () => {
   const goToUploadImageTask = async ()=>{
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     try{
-      let result = await apiService.createImageUploadTask();
+      let result = await apiService.createImageUploadTask({ user });
       console.log(result)
       let res = await apiService.assignTask({userId, taskId: result.id, user});
       console.log(res)

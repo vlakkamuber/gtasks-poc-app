@@ -19,7 +19,7 @@ const getHeaders: (options?: OptionsType) => Record<string, string> = ({ user } 
 const apiService = {
   async getMyTasks(userId: string) {
     const endpoint = `users/${userId}/tasks`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
@@ -84,14 +84,22 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`);
     return response.json();
   },
-  async getTaskSummary(userId: string) {
+  async getTaskSummary({ userId, user }: { userId: string; user: any }) {
     const endpoint = `users/${userId}/tasks/summary`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async saveAudioBlobToStorage(uploadUrl: string, audioBlob: Blob) {
-    const headers = getHeaders();
+  async saveAudioBlobToStorage({
+    uploadUrl,
+    audioBlob,
+    user
+  }: {
+    uploadUrl: string;
+    audioBlob: Blob;
+    user: any;
+  }) {
+    const headers = getHeaders({ user });
     try {
       const response = await fetch(uploadUrl, {
         method: 'PUT',
@@ -120,9 +128,9 @@ const apiService = {
     });
     return response.json();
   },
-  async createImageUploadTask() {
+  async createImageUploadTask({ user }: { user: any }) {
     const endpoint = `tasks`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'POST',
       headers: {
@@ -133,16 +141,26 @@ const apiService = {
     });
     return response.json();
   },
-  async uplaodFileAndGetUploadUrl(userId: any, taskId: any, filename: any) {
+  async uplaodFileAndGetUploadUrl({
+    userId,
+    taskId,
+    filename,
+    user
+  }: {
+    userId: any;
+    taskId: any;
+    filename: any;
+    user: any
+  }) {
     const endpoint = `users/${userId}/tasks/${taskId}/uploadUrl?fileName=${filename}`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'GET'
     });
     return response.text();
   },
-  async uploadImageToStorageUrl(uploadUrl, file) {
-    const headers = getHeaders();
+  async uploadImageToStorageUrl({ uploadUrl, file, user }) {
+    const headers = getHeaders({ user });
     try {
       const response = await fetch(uploadUrl, {
         method: 'PUT',
