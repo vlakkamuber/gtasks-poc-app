@@ -89,5 +89,5 @@
   "dcag.tasks.performTask.image.description.label": "Describe Image",
   "dcag.tasks.performTask.uploadImage.taskInput.label":"Task Name",
   "dcag.tasks.performTask.uploadImage.image.decription":"Describe Image",
-  "dcag.tasks.performTask.uploadImage.label": "Upload location image"
+  "dcag.tasks.performTask.uploadImage.label": "Upload image"
 }

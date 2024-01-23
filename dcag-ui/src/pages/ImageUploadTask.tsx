@@ -171,28 +171,28 @@ import {
               <h2 className="no-padding-margin" style={{ marginBottom: '8px' }}>
                 {selectedTask.taskName}
               </h2>
-              <p className="no-padding-margin" style={{ fontSize: '0.9rem' }}>
+              {/* <p className="no-padding-margin" style={{ fontSize: '0.9rem' }}>
                 <samll>
                   {t(`dcag.tasks.createdAt.label`)}: {formatDate(selectedTask.createDateTime)}{' '}
                   {t(`dcag.tasks.dueDate.label`)}: {formatDate(selectedTask.dueDateTime)}
                 </samll>
-              </p>
+              </p> */}
               <p className="no-padding-margin">
                 <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
                 <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
               </p>
               {selectedTask.taskType === 'UPLOAD_IMAGE' && (
-                <div>
-                  <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
+                <div style={{marginTop:'10px'}}>
+                  <IonLabel className="label-with-margin" style={{ marginTop: '10px', marginBottom: '10px' }}>
                     {t(`dcag.tasks.performTask.uploadImage.label`)}
                   </IonLabel>
-                  {selectedTask.status!="COMPLETED" && <div className='image-upload-container'>
-                    <input type="file" onChange={handleFileChange} disabled={selectedTask.status==='COMPLETED'}/>
-                  </div>}
-                    {file && <div className="image-container" style={{ marginTop: '10px' }}>
+                  {file && <div className="image-container" style={{ marginTop: '10px',marginBottom:'10px' }}>
                       <img src={URL.createObjectURL(file)} />
                     </div>}
-                    {(selectedTask.status==="COMPLETED" && selectedTask.outputUrl) && <div className="image-container" style={{ marginTop: '10px' }}>
+                  {selectedTask.status!="COMPLETED" && <div className='image-upload-container' style={{height:'100px',marginTop: '10px',marginBottom:'10px'}}>
+                    <input type="file" onChange={handleFileChange} disabled={selectedTask.status==='COMPLETED'}/>
+                  </div>}
+                    {(selectedTask.status==="COMPLETED" && selectedTask.outputUrl) && <div className="image-container" style={{ marginTop: '10px',marginBottom:'10px' }}>
                       <img src={selectedTask.outputUrl} />
                     </div>}
                   <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
@@ -200,6 +200,14 @@ import {
                   </IonLabel>
                   <Input
                     value={taskName}
+                    overrides={{
+                      Root: {
+                        style: () => ({
+                          marginTop: '10px',
+                          marginBottom:'10px'
+                        })
+                      }
+                    }}
                     onChange={e => setTaskName(e.target.value)}
                     disabled={selectedTask.status==='COMPLETED'}
                   />
@@ -215,7 +223,8 @@ import {
                     overrides={{
                       Root: {
                         style: () => ({
-                          marginTop: '10px'
+                          marginTop: '10px',
+                          marginBottom:'10px'
                         })
                       }
                     }}

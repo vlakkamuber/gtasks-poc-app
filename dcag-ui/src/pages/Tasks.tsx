@@ -275,7 +275,7 @@ const Tasks: React.FC = () => {
                           alignItems: 'center'
                         }}>
                         <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                          Upload Image
+                         {t(`dcag.tasks.performTask.uploadImage.label`)}
                         </h1>
                         {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
@@ -283,7 +283,7 @@ const Tasks: React.FC = () => {
                       </div>
 
                       <p style={{ margin: '0' }}>
-                        <small>Upload image describe and submit.</small>
+                        <small>{t(`dcag.tasks.UPLOAD_IMAGE.taskDesc`)}.</small>
                       </p>
             </div>
             <IonList>
