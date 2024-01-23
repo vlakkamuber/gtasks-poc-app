@@ -127,7 +127,7 @@ const Tasks: React.FC = () => {
       console.log(result)
       let res = await apiService.assignTask(userId,result.id);
       console.log(res)
-      //history.push('/dashboard/tasks/perform-task/' + res.taskId);
+      history.push('/dashboard/tasks/image-upload-task/' + res.taskId);
     }catch(err){
       console.log(err)
     }
@@ -266,27 +266,50 @@ const Tasks: React.FC = () => {
                 );
               })}
             </React.Fragment>
-            {/* <IonList>
+            <>
+            <div className="ion-padding">
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center'
+                        }}>
+                        <h1 style={{ margin: '0', marginBottom: '-4px' }}>
+                          Upload Image
+                        </h1>
+                        {/* <span style={{ color: "#467ff4" }}>
+                          {tasks[key].length} {t(`dcag.home.btn.new.label`)}
+                        </span> */}
+                      </div>
+
+                      <p style={{ margin: '0' }}>
+                        <small>Upload image describe and submit.</small>
+                      </p>
+            </div>
+            <IonList>
               <IonItem>
                 <IonLabel>
                   <span style={{ display: 'flex' }}>
-                    <h1>Upload Image</h1>
+                    <h2>Default Task</h2>
                     </span>
-                    <p style={{ margin: '0' }}>
-                        <small>Upload image describe and submit.</small>
-                    </p>
+                    <p>
+                                  {t(`dcag.tasks.payouts.label`)}: $2
+                                </p>
+               </IonLabel>
                     <IonButton
-                                slot="start"
+                                slot="end"
                                 style={{
                                   '--background': 'black',
                                   '--border-radius': '10px'
                                 }}
                                 onClick={()=>goToUploadImageTask()}>
-                                {'Upload'}
+                                {t(`dcag.home.btn.startWork.label`)}
                     </IonButton>
-                </IonLabel>
+                
               </IonItem>
-            </IonList> */}
+            </IonList>
+            </>
+            
           </React.Fragment>
         )}
 

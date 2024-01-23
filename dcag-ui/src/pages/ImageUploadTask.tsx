@@ -6,9 +6,9 @@ import {
     IonToolbar,
     IonButtons,
     IonIcon,
-    IonToast,
     IonLabel,
-    IonButton, IonInput, IonImg
+    IonButton, IonInput, IonImg,
+    IonToast
   } from '@ionic/react';
 
   
@@ -78,6 +78,8 @@ import {
           console.log(result);
           setShowLoading(false);
           setSelectedTask(result);
+          setImageDesc(result.outputDesc)
+          setTaskName(result.taskName)
         })
         .catch((error) => {
           console.error('Error fetching task data:', error);
@@ -93,15 +95,14 @@ import {
         let isDisabled = false;
         if (selectedTask.taskType === 'UPLOAD_IMAGE') {
             if(selectedTask.status==="IN_PROGRESS"){
-              isDisabled = taskName===null || file ===null || imageDesc===null || imageDesc===""
+              isDisabled = taskName===null || file ===null || imageDesc===null || imageDesc==="" || submitted===true
             }else{
               isDisabled = selectedTask.status === 'COMPLETED';
-            }
-            
+            } 
         }
         setIsSubmitDisabled(isDisabled);
       }
-    },[taskName,file,imageDesc,selectedTask])
+    },[file,imageDesc,selectedTask,submitted])
 
     const uploadImageToStorageUrl = ()=>{
       apiService
@@ -121,13 +122,18 @@ import {
         status: "COMPLETED",
         outputDesc:imageDesc,
         taskName:taskName,
+        output:file.name
       }
       apiService
         .assignTaskToCompleted(userId, selectedTask.taskId,body)
         .then((result) => {
           console.log(result);
           setShowLoading(false);
-          setSelectedTask(result);
+          setShowToast(true);
+          setTimeout(() => {
+            setShowToast(false);
+            history.push('/dashboard/tasks');
+          }, 2000);
         })
         .catch((error) => {
           console.error('Error fetching task data:', error);
@@ -136,6 +142,7 @@ import {
 
     const saveImageAndCompleteTask = async (e)=>{
       e.preventDefault();
+      setSubmitted(true)
       uploadImageToStorageUrl();
     }
 
@@ -179,11 +186,14 @@ import {
                   <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
                     {t(`dcag.tasks.performTask.uploadImage.label`)}
                   </IonLabel>
-                  <div className='image-upload-container'>
-                    <input type="file" onChange={handleFileChange} />
-                  </div>
+                  {selectedTask.status!="COMPLETED" && <div className='image-upload-container'>
+                    <input type="file" onChange={handleFileChange} disabled={selectedTask.status==='COMPLETED'}/>
+                  </div>}
                     {file && <div className="image-container" style={{ marginTop: '10px' }}>
                       <img src={URL.createObjectURL(file)} />
+                    </div>}
+                    {(selectedTask.status==="COMPLETED" && selectedTask.outputUrl) && <div className="image-container" style={{ marginTop: '10px' }}>
+                      <img src={selectedTask.outputUrl} />
                     </div>}
                   <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
                     {t(`dcag.tasks.performTask.uploadImage.taskInput.label`)}
@@ -191,7 +201,7 @@ import {
                   <Input
                     value={taskName}
                     onChange={e => setTaskName(e.target.value)}
-                    clearOnEscape
+                    disabled={selectedTask.status==='COMPLETED'}
                   />
                   <IonLabel className="label-with-margin">
                     {t(`dcag.tasks.performTask.uploadImage.image.decription`)}
@@ -244,6 +254,14 @@ import {
                 />
               )}
             </div>
+            <IonToast
+              isOpen={showToast}
+              onDidDismiss={() => setShowToast(false)}
+              message="Success! Task completed successfully."
+              duration={5000}
+              color="success"
+              position="top"
+            />
             </>) : null}
         </IonContent>
       </IonPage>

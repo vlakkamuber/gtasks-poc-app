@@ -116,7 +116,7 @@ const apiService = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({name:"Default Task",
-      taskType:"UPLOAD_IMAGE"})
+      taskType:"UPLOAD_IMAGE",price:2})
     });
     return response.json();
   },
@@ -125,12 +125,8 @@ const apiService = {
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'GET',
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json'
-      },
     });
-    return response.json();
+    return response.text();
   },
   async uploadImageToStorageUrl(uploadUrl,file){
     const headers = getHeaders();
@@ -140,7 +136,7 @@ const apiService = {
         processData: false,
         headers: {
           ...headers,
-          'Content-Type': file.type,
+          'Content-Type': 'application/octet-stream',
           'Access-Control-Allow-Origin': '*'
         },
         body: file
