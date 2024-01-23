@@ -13,7 +13,7 @@ const MyTaskCardList = ({ taskList }) => {
   return (
     <IonList>
       {sortedTaskList.map((task) => (
-        <MyTaskCard task={task} />
+        <MyTaskCard key={task.id} task={task} />
       ))}
     </IonList>
   );

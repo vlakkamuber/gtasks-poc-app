@@ -82,7 +82,7 @@ const Tasks: React.FC = () => {
   const getMyTasksList = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getMyTasksList(userId)
+      .getMyTasksList({ userId, user })
       .then((res) => {
         // temporary - this filter should be removed in future;
         const result = FILTER_OUT_TEXT_TO_AUDIO_TASK

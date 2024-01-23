@@ -7,8 +7,7 @@ interface OptionsType {
 }
 
 const getHeaders: (options?: OptionsType) => Record<string, string> = ({ user } = {}) => {
-  const accessToken = localStorage.getItem('accessToken');
-  const token = user != null ? user.accessToken : accessToken;
+  const token = user.accessToken;
 
   return {
     'Content-Type': 'application/json',

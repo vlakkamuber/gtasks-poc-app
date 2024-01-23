@@ -9,11 +9,13 @@ import LoadingComponent from '../components/Loader';
 import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
 import MyTaskCard from './MyTaskCard';
 import MyTaskCardList from './MyTaskCardList';
+import { useUserAuth } from '../context/UserAuthContext';
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
+  const { user } = useUserAuth();
 
   const history = useHistory();
   function groupBy(array, key) {
@@ -32,7 +34,7 @@ const CompletedTasks: React.FC = () => {
   const getMyTasksList = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getMyTasksList(userId)
+      .getMyTasksList({ userId, user })
       .then((res) => {
         setShowLoading(false);
         // temporary - this filter should be removed in future;
@@ -65,7 +67,7 @@ const CompletedTasks: React.FC = () => {
       <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
       {Object.keys(tasks).map((key) => {
         return (
-          <>
+          <React.Fragment key={key}>
             <div className="ion-padding">
               <div
                 style={{
@@ -84,7 +86,7 @@ const CompletedTasks: React.FC = () => {
               </p>
             </div>
             <MyTaskCardList taskList={tasks[key]} />
-          </>
+          </React.Fragment>
         );
       })}
     </React.Fragment>
