@@ -35,7 +35,7 @@ const MyTaskCard = ({ task }) => {
           <p>
             <small>
               {t(`dcag.tasks.createdAt.label`)}: {formatDate(task.createDateTime)}{' '}
-              {t(`dcag.tasks.dueDate.label`)}: {formatDate(task.dueDateTime)}
+              {t(`dcag.tasks.dueDate.label`)}: {task.dueDateTime ? formatDate(task.dueDateTime) : '-'}
             </small>
           </p>
         </IonLabel>
