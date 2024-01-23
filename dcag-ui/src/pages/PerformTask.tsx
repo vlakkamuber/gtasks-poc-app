@@ -13,7 +13,7 @@ import {
 
 import { useHistory, useParams } from 'react-router-dom';
 import { arrowBack, saveOutline, micOutline, image } from 'ionicons/icons';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AudioPlayer from './AudioPlayer';
 import { ButtonDock } from 'baseui/button-dock';
 import { Button, KIND, SHAPE } from 'baseui/button';
@@ -24,10 +24,12 @@ import apiService from './apiService';
 import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
+import { useUserAuth } from '../context/UserAuthContext';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = useParams();
+  const { user }= useUserAuth();
 
   const goBack = () => {
     history.push('/dashboard/tasks'); // This function navigates back to the previous page
@@ -48,7 +50,7 @@ const PerformTask: React.FC = () => {
     let taskId = params.id;
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getTaskDetail(userId, taskId)
+      .getTaskDetail({userId, taskId, user})
       .then((result) => {
         console.log(result);
         setShowLoading(false);
@@ -124,7 +126,7 @@ const PerformTask: React.FC = () => {
   const assignTaskToCompleted = (taskId, body) => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .assignTaskToCompleted(userId, taskId, body)
+      .assignTaskToCompleted({ userId, taskId, body, user })
       .then((result) => {
         console.log(result);
         setShowToast(true);

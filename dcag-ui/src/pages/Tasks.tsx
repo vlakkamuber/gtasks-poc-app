@@ -23,11 +23,11 @@ import apiService from './apiService';
 import { filterTaskWithType, formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
+import { useUserAuth } from '../context/UserAuthContext';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
-  const [user, setUser] = useState({});
   const [tasks, setTasks] = useState([]);
   const [completedCount, setCompletedCount] = useState(0);
   const [availableCount, setAvailableCount] = useState(0);
@@ -35,6 +35,8 @@ const Tasks: React.FC = () => {
   const [totalEarned, setTotalEarned] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
   const history = useHistory();
+  const { user } = useUserAuth();
+
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
       const groupKey = item[key];
@@ -48,7 +50,7 @@ const Tasks: React.FC = () => {
   const getAvailableTasks = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getAvailableTasks(userId)
+      .getAvailableTasks({ userId, user })
       .then((res) => {
         setShowLoading(false);
         // temporary - this filter should be removed in future;
@@ -106,7 +108,7 @@ const Tasks: React.FC = () => {
   const assignTask = async (task) => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .assignTask(userId, task.id)
+      .assignTask({ userId, taskId: task.id, user })
       .then((result) => {
         history.push('/dashboard/tasks/perform-task/' + task.id);
         console.log(result);
@@ -125,7 +127,7 @@ const Tasks: React.FC = () => {
     try{
       let result = await apiService.createImageUploadTask();
       console.log(result)
-      let res = await apiService.assignTask(userId,result.id);
+      let res = await apiService.assignTask({userId, taskId: result.id, user});
       console.log(res)
       history.push('/dashboard/tasks/image-upload-task/' + res.taskId);
     }catch(err){
@@ -221,8 +223,8 @@ const Tasks: React.FC = () => {
                     </div>
                     {tasks[key].map((task, index) => {
                       return (
-                        <React.Fragment>
-                          <IonList key={task.id}>
+                        <React.Fragment key={task.id}>
+                          <IonList>
                             <IonItem>
                               <IonLabel>
                                 <span style={{ display: 'flex' }}>
@@ -305,11 +307,11 @@ const Tasks: React.FC = () => {
                                 onClick={()=>goToUploadImageTask()}>
                                 {t(`dcag.home.btn.startWork.label`)}
                     </IonButton>
-                
+
               </IonItem>
             </IonList>
             </>
-            
+
           </React.Fragment>
         )}
 

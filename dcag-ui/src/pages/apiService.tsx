@@ -2,9 +2,13 @@
 
 const API_BASE_URL = 'https://dcag-gateway-cpypkzbg.an.gateway.dev';
 
-const getHeaders = () => {
+interface OptionsType {
+  user?: any;
+}
+
+const getHeaders: (options?: OptionsType) => Record<string, string> = ({ user } = {}) => {
   const accessToken = localStorage.getItem('accessToken');
-  const token = accessToken; // we'll add actual token here
+  const token = user != null ? user.accessToken : accessToken;
 
   return {
     'Content-Type': 'application/json',
@@ -19,27 +23,27 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getTaskDetail(userId: string, taskId: string) {
+  async getTaskDetail({ userId, taskId, user }: { userId: string; taskId: string; user: any }) {
     const endpoint = `users/${userId}/tasks/${taskId}`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getMyTasksList(userId: string) {
+  async getMyTasksList({ userId, user }: { userId: string; user: any }) {
     const endpoint = `users/${userId}/tasks`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getAvailableTasks(userId) {
+  async getAvailableTasks({ userId, user }: { userId: string; user: any }) {
     const endpoint = `tasks?available=true&userId=${userId}`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async assignTask(userId: string, taskId: any) {
+  async assignTask({ userId, taskId, user }: { userId: string; taskId: string; user: any }) {
     const endpoint = `users/${userId}/tasks/${taskId}`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'POST',
       headers: {
@@ -52,9 +56,19 @@ const apiService = {
     });
     return response.json();
   },
-  async assignTaskToCompleted(userId: string, taskId: any, body: any) {
+  async assignTaskToCompleted({
+    userId,
+    taskId,
+    body,
+    user
+  }: {
+    userId: string;
+    taskId: any;
+    body: any;
+    user: any;
+  }) {
     const endpoint = `users/${userId}/tasks/${taskId}`;
-    const headers = getHeaders();
+    const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'PUT',
       headers: {
@@ -106,7 +120,7 @@ const apiService = {
     });
     return response.json();
   },
-  async createImageUploadTask(){
+  async createImageUploadTask() {
     const endpoint = `tasks`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
@@ -115,20 +129,19 @@ const apiService = {
         ...headers,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({name:"Default Task",
-      taskType:"UPLOAD_IMAGE",price:2})
+      body: JSON.stringify({ name: 'Default Task', taskType: 'UPLOAD_IMAGE', price: 2 })
     });
     return response.json();
   },
-  async uplaodFileAndGetUploadUrl(userId:any,taskId:any,filename:any){
+  async uplaodFileAndGetUploadUrl(userId: any, taskId: any, filename: any) {
     const endpoint = `users/${userId}/tasks/${taskId}/uploadUrl?fileName=${filename}`;
     const headers = getHeaders();
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-      method: 'GET',
+      method: 'GET'
     });
     return response.text();
   },
-  async uploadImageToStorageUrl(uploadUrl,file){
+  async uploadImageToStorageUrl(uploadUrl, file) {
     const headers = getHeaders();
     try {
       const response = await fetch(uploadUrl, {

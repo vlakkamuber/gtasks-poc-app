@@ -11,7 +11,7 @@ import {
     IonToast
   } from '@ionic/react';
 
-  
+
   import { useHistory, useParams } from 'react-router-dom';
   import { arrowBack } from 'ionicons/icons';
   import { useState, useEffect } from 'react';
@@ -24,14 +24,14 @@ import {
   import apiService from './apiService';
   import LoadingComponent from '../components/Loader';
   import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
- 
+
 
   const ImageUploadTask: React.FC = () => {
     const [value,setValue] = useState("")
     const { t } = useTranslation();
     const history = useHistory();
     const params = useParams();
-  
+
     const goBack = () => {
       history.push('/dashboard/tasks'); // This function navigates back to the previous page
     };
@@ -58,7 +58,7 @@ import {
           console.error('Error fetching task data:', error);
         });
     }
-  
+
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFile = event.target.files?.[0];
       // Check if selectedFile is not undefined before setting it
@@ -73,7 +73,7 @@ import {
       let taskId = params.id;
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
       apiService
-        .getTaskDetail(userId, taskId)
+        .getTaskDetail({ userId, taskId, user })
         .then((result) => {
           console.log(result);
           setShowLoading(false);
@@ -98,7 +98,7 @@ import {
               isDisabled = taskName===null || file ===null || imageDesc===null || imageDesc==="" || submitted===true
             }else{
               isDisabled = selectedTask.status === 'COMPLETED';
-            } 
+            }
         }
         setIsSubmitDisabled(isDisabled);
       }
@@ -287,6 +287,5 @@ import {
     borderRadius: '50%',
     gap: '2px'
   };
-  
+
   export default ImageUploadTask;
-  
