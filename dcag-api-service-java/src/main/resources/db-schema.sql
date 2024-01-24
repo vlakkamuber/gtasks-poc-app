@@ -164,6 +164,9 @@ INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency
 
 -- IMAGE_TO_TEXT
 INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Charminar', 'IMAGE_TO_TEXT', 3,  'Charminar.jpeg', 'NEW', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-16 00:00:00');
+INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Street image 1', 'IMAGE_TO_TEXT', 3,  'Street_1.jpg', 'NEW', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-25 00:00:00');
+INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Street image 2', 'IMAGE_TO_TEXT', 3,  'Street_2.png', 'NEW', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-25 00:00:00');
+INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Street image 3', 'IMAGE_TO_TEXT', 3,  'Street_3.png', 'NEW', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-25 00:00:00');
 
 
 
