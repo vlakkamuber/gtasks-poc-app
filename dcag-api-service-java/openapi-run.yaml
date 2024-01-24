@@ -250,6 +250,11 @@ paths:
           required: false
           type: string
           description: "logged in userId(TODO: Remove this param once auth is implemented)"
+        - name: taskType
+          in: query
+          required: false
+          type: string
+          description: "taskType such as TEXT_TO_AUDIO"
       responses:
         '200':
           description: A successful response

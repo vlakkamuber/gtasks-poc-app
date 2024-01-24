@@ -15,7 +15,6 @@ import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,14 +47,14 @@ public class UserTaskService {
 
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
 
-        Optional<UserTask> userIdAndTaskId = userTasksRepository.findByUserIdAndTaskId(userId,taskId);
+        Optional<UserTask> userIdAndTaskId = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
 
         Optional<Task> task = taskRepository.findById(taskId);
 
         if (task.isPresent()) {
 
-            if(userIdAndTaskId.isPresent()){
-                throw new TaskNotFoundException(String.format("User - %s for task - %s already exist: ",userId, task.get().name()));
+            if (userIdAndTaskId.isPresent()) {
+                throw new TaskNotFoundException(String.format("User - %s for task - %s already exist: ", userId, task.get().name()));
             }
 
             if (userTaskList.isEmpty() || task.get().isAvailable()) {
@@ -86,21 +85,21 @@ public class UserTaskService {
             throw new TaskException("Task can only be updated to COMPLETED. Task Id: " + taskId + " Status: " + status);
         }
         Optional<Task> taskOptional = taskRepository.findById(taskId);
-        if(taskOptional.isEmpty()) {
+        if (taskOptional.isEmpty()) {
             throw new TaskNotFoundException("Task not found: " + taskId);
         }
 
         Task task = taskOptional.get();
-        if(!task.isAvailable()) {
+        if (!task.isAvailable()) {
             throw new TaskException("Task not available for user " + userId);
         }
 
-        if(task.taskType().equals(TaskType.IMAGE_TO_TEXT) &&
-                isEmpty(userTaskDTO.output())){
+        if (task.taskType().equals(TaskType.IMAGE_TO_TEXT) &&
+                isEmpty(userTaskDTO.output())) {
             throw new TaskException("Output cannot be empty for IMAGE_TO_TEXT tasks");
         }
 
-        if(task.taskType().equals(TaskType.UPLOAD_IMAGE) && userTaskDTO.taskName() != null){
+        if (task.taskType().equals(TaskType.UPLOAD_IMAGE) && userTaskDTO.taskName() != null) {
             task.name(userTaskDTO.taskName());
             taskRepository.save(task);
         }
@@ -139,12 +138,15 @@ public class UserTaskService {
 
     public UserTaskResponse findUserTaskById(String userId, Long taskId) {
 
-        Optional<UserTask> userTask = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
-        if (userTask.isPresent()) {
-            return userTaskToUserTaskResponse(userTask.get());
-        } else {
+        Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
+        if (userTaskOptional.isEmpty()) {
             throw new TaskNotFoundException("User not found: " + userId);
         }
+
+        UserTask userTask = userTaskOptional.get();
+        UserTaskResponse userTaskResponse = userTaskToUserTaskResponse(userTask);
+        addUrlsToTaskResponse(userTaskResponse, userTask, userTask.task());
+        return userTaskResponse;
     }
 
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
@@ -187,7 +189,7 @@ public class UserTaskService {
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.status(status);
-            if(completedCount > taskOptional.get().maxNoOfUsers()){
+            if (completedCount > taskOptional.get().maxNoOfUsers()) {
                 task.isAvailable(false);
             }
             taskRepository.save(task);
@@ -209,7 +211,7 @@ public class UserTaskService {
 
         Task task = userTask.task();
         TaskType taskType = task.taskType();
-        UserTaskResponse.UserTaskResponseBuilder taskResponseBuilder = UserTaskResponse.builder()
+        return UserTaskResponse.builder()
                 .id(userTask.id())
                 .userId(userTask.user().id())
                 .taskId(task.id())
@@ -234,43 +236,44 @@ public class UserTaskService {
                 .completedTime(userTask.completionTime() != null ?
                         userTask.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
                         null
-                );
+                ).build();
+    }
 
-
+    private void addUrlsToTaskResponse(UserTaskResponse userTaskResponse, UserTask userTask, Task task) {
+        TaskType taskType = task.taskType();
         if (taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
-            taskResponseBuilder.inputUrl(gcpUtils.signTaskInputAudioUrl(task.input()));
+            userTaskResponse.setInputUrl(gcpUtils.signTaskInputAudioUrl(task.input()));
         }
         if (taskType.equals(TaskType.IMAGE_TO_TEXT)) {
-            taskResponseBuilder.inputUrl(gcpUtils.signTaskInputImageUrl(task.input()));
+            userTaskResponse.setInputUrl(gcpUtils.signTaskInputImageUrl(task.input()));
         }
 
-        if (userTask.output()!=null && taskType.equals(TaskType.UPLOAD_IMAGE)) {
+        if (userTask.output() != null && taskType.equals(TaskType.UPLOAD_IMAGE)) {
             String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + userTask.output();
-            taskResponseBuilder.outputUrl(gcpUtils.signTaskOutputImageUrl(outputFilename));
+            userTaskResponse.setOutputUrl(gcpUtils.signTaskOutputImageUrl(outputFilename));
         }
 
-        if(taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
-            String fileNameSuffix = taskType.equals(TaskType.TEXT_TO_AUDIO) ? ".mp3": "";
+        if (taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
+            String fileNameSuffix = taskType.equals(TaskType.TEXT_TO_AUDIO) ? ".mp3" : "";
             String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + fileNameSuffix;
 
             if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
                 String uploadUrl = gcpUtils.signTaskUploadAudioUrl(outputFilename);
-                taskResponseBuilder.uploadUrl(uploadUrl);
+                userTaskResponse.setUploadUrl(uploadUrl);
             }
 
             if (!userTask.useInputAsOutput() && userTask.status().equals(UserTaskStatus.COMPLETED)) {
                 String outputUrl = gcpUtils.signTaskOutputAudioUrl(outputFilename);
-                taskResponseBuilder.outputUrl(outputUrl);
+                userTaskResponse.setOutputUrl(outputUrl);
             }
         }
-        return taskResponseBuilder.build();
     }
 
     public void deleteUserTask(String userId, Long taskId) {
 
-        Optional<UserTask> userTask = userTasksRepository.findByUserIdAndTaskId(userId,taskId);
+        Optional<UserTask> userTask = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
 
-        if(userTask.isPresent()){
+        if (userTask.isPresent()) {
             userTasksRepository.deleteById(userTask.get().id());
             updateTaskStatus(taskId);
         }
@@ -279,9 +282,9 @@ public class UserTaskService {
 
     public String getUploadURL(String userId, Long taskId, String fileName) {
 
-        Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId,taskId);
+        Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
 
-        if(userTaskOptional.isPresent()){
+        if (userTaskOptional.isPresent()) {
 
             UserTask userTask = userTaskOptional.get();
 
@@ -292,10 +295,10 @@ public class UserTaskService {
             if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
                 String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + fileName;
                 return gcpUtils.signTaskUploadImageUrl(outputFilename);
-            }else{
+            } else {
                 throw new TaskException("Task status is invalid for user: " + userId);
             }
-        }else {
+        } else {
             throw new TaskNotFoundException("Task not found for user: " + userId);
         }
 
