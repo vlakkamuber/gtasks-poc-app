@@ -22,6 +22,7 @@ const Account: React.FC = () => {
   const logOut = async () => {
     await firebaseLogOut();
     history.push("/home");
+    localStorage.clear();
     window.location.reload(true);
   }
   const history = useHistory();

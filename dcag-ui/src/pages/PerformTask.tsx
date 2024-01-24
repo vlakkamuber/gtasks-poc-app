@@ -74,7 +74,7 @@ const PerformTask: React.FC = () => {
           selectedTask.status === 'COMPLETED' || selectedTask.output === null || submitted;
       } else if (selectedTask.taskType === 'AUDIO_TO_AUDIO') {
         if (useInput === true) {
-          isDisabled = selectedTask.status === 'COMPLETED';
+          isDisabled = selectedTask.status === 'COMPLETED' || submitted;
         } else {
           isDisabled = audioChunks.length === 0 || submitted || audioChunks.length === 0;
         }

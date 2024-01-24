@@ -1,5 +1,5 @@
 // src/pages/Dashboard.tsx
-import React from "react";
+import React, {useEffect} from "react";
 import { Redirect, Route } from "react-router-dom";
 import {
   IonTabs,
@@ -11,9 +11,16 @@ import {
 } from "@ionic/react";
 import { home, schoolOutline, person, list } from "ionicons/icons";
 import { useTranslation } from 'react-i18next';
+import { useUserAuth } from "../context/UserAuthContext";
 
 const Dashboard: React.FC = ({content}) => {
   const { t } = useTranslation();
+  const { user, loading } = useUserAuth();
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("loggedInUser",JSON.stringify(user.uid))
+    }
+  }, [user])
   return (
     <IonTabs>
       <IonRouterOutlet>

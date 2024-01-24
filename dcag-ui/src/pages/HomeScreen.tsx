@@ -20,7 +20,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem("loggedInUser",JSON.stringify(user.uid))
       history.push("/dashboard/home");
     }
   }, [user])

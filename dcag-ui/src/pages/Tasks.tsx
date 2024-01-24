@@ -20,7 +20,7 @@ import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
-import { filterTaskWithType, formatDate } from '../utils/mapTeluguDigitsToNumeric';
+import { filterTaskWithType, formatDate,filterTaskWithStatus } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
 import { useUserAuth } from '../context/UserAuthContext';
@@ -51,12 +51,15 @@ const Tasks: React.FC = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getAvailableTasks({ userId, user })
-      .then((res) => {
+      .then(async (res) => {
         setShowLoading(false);
+        let myTasks = await apiService.getMyTasksList({userId,user});
+        let inprogressTasks = filterTaskWithStatus(myTasks, "IN_PROGRESS")
+        let finalTaskList = [...res,...inprogressTasks]
         // temporary - this filter should be removed in future;
         const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-          ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
-          : res;
+          ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
+          : finalTaskList;
         console.log(result);
         setAvailableCount(result.length);
         setTasks(groupBy(result, 'taskType'));
@@ -84,10 +87,11 @@ const Tasks: React.FC = () => {
     apiService
       .getMyTasksList({ userId, user })
       .then((res) => {
+        let myComopletedTasks = filterTaskWithStatus(res, "COMPLETED")
         // temporary - this filter should be removed in future;
         const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-          ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
-          : res;
+          ? filterTaskWithType(myComopletedTasks, TEXT_TO_AUDIO_TASK_TYPE)
+          : myComopletedTasks;
         setMyTasksCount(result.length);
       })
       .catch((error) => {
@@ -121,6 +125,10 @@ const Tasks: React.FC = () => {
   const goToPerformTask = (e, task) => {
     assignTask(task);
   };
+
+  const goToPerformResumeWork = (e,task)=>{
+    history.push('/dashboard/tasks/perform-task/' + task.taskId);
+  }
 
   const goToUploadImageTask = async ()=>{
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -228,7 +236,7 @@ const Tasks: React.FC = () => {
                             <IonItem>
                               <IonLabel>
                                 <span style={{ display: 'flex' }}>
-                                  <h2>{task.name} </h2>
+                                  <h2>{task.name || task.taskName} </h2>
                                   {/* <IonBadge
                                     color="primary"
                                     className={`status-text-new`}
@@ -249,7 +257,7 @@ const Tasks: React.FC = () => {
                                   </small>
                                 </p>
                               </IonLabel>
-                              <IonButton
+                              {!task.userId && <IonButton
                                 slot="end"
                                 style={{
                                   '--background': 'black',
@@ -257,7 +265,16 @@ const Tasks: React.FC = () => {
                                 }}
                                 onClick={(e) => goToPerformTask(e, task)}>
                                 {t(`dcag.home.btn.startWork.label`)}
-                              </IonButton>
+                              </IonButton>}
+                             {task.userId && task.status==='IN_PROGRESS' && <IonButton
+                                slot="end"
+                                style={{
+                                  '--background': 'black',
+                                  '--border-radius': '10px'
+                                }}
+                                onClick={(e) => goToPerformResumeWork(e, task)}>
+                                {t(`dcag.home.btn.resumeWork.label`)}
+                              </IonButton>}
                             </IonItem>
                             {/* Add more IonItem elements as needed */}
                           </IonList>
