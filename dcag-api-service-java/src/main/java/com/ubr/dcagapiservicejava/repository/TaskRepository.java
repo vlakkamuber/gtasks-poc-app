@@ -1,7 +1,7 @@
 package com.ubr.dcagapiservicejava.repository;
 
 import com.ubr.dcagapiservicejava.domain.Task;
-import org.locationtech.jts.geom.Point;
+import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task,Long> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
 
 
     //TODO: Update this query; Possible SQL:
@@ -19,8 +19,10 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     //WHERE ut.userId IS NULL AND t.isAvailable = 'true';
 
 
-    @Query("SELECT T FROM Task T WHERE T.isAvailable =:available and T.id not in (select UT.task.id from UserTask UT where UT.task.id = T.id and UT.user.id =:userId)")
-    List<Task> findAvailableTasks(boolean available, String userId);
+    @Query("SELECT T FROM Task T WHERE T.isAvailable =:available and T.taskType =:type and " +
+            " T.id not in (select UT.task.id from UserTask UT where UT.task.id = T.id and UT.user.id =:userId) " +
+            " order by RAND() limit :limit")
+    List<Task> findAvailableTasks(boolean available, String userId, TaskType type, int limit);
 
 
 //    @Query("SELECT T FROM Task T, User U WHERE ST_Distance_Sphere(T.location, :location) <= :distance")

@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.controller;
 
+import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.dto.TaskDTO;
 import com.ubr.dcagapiservicejava.dto.TaskResponse;
 import com.ubr.dcagapiservicejava.service.TaskService;
@@ -25,9 +26,10 @@ public class TaskController {
 //    }
 
     @GetMapping(produces = "application/json")
-    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false,defaultValue = "true") Boolean available,
-                                                          @RequestParam(required = false,defaultValue = "test") String userId) {
-        return ResponseEntity.ok(taskService.findAvailableTasks(available, userId));
+    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false, defaultValue = "true") Boolean available,
+                                                          @RequestParam(required = false, defaultValue = "TEXT_TO_AUDIO") TaskType taskType,
+                                                          @RequestParam(required = false, defaultValue = "test") String userId) {
+        return ResponseEntity.ok(taskService.findAvailableTasks(available, userId, taskType));
     }
 
     @GetMapping(value = "/{taskId}", produces = "application/json")

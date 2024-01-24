@@ -176,3 +176,4 @@ INSERT INTO users (id, email, first_name, last_name, phone_number) VALUES ('soSm
 INSERT INTO users (id, email, first_name, last_name, phone_number) VALUES ('ea2zfNjMEqWqwKctfF5aPcNMnfA2', 'jaswant@abc.com', "Jaswant", "Vemulapalli", '+917675957989');
 INSERT INTO users (id, email, first_name, last_name, phone_number) VALUES ('3kllbPzzBHSZW3uKp8Jk9xXJNVY2', 'vinay@abc.com', "Vinay", "Lakkam", '+917702277716');
 INSERT INTO users (id, email, first_name, last_name, phone_number) VALUES ('tFOOrAUHbbQriw5ADwlbM3QIqo92', 'ankush@abc.com', "Ankush", "Kalra", '+918708508949');
+INSERT INTO users (id, email, first_name, last_name, phone_number) VALUES ('iRazlValeQam87NDtUHJfMj6DWm1', 'mala@abc.com', "Mala Reddy", "Tonangi", '+918897745775');

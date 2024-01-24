@@ -49,20 +49,8 @@ public class TaskService {
     GeometryFactory factory = new GeometryFactory();
 
     public List<TaskResponse> findAll() {
-
         return taskRepository.findAll().stream()
-                .map(task -> TaskResponse.builder()
-                        .id(task.id())
-                        .name(task.name())
-                        .taskType(task.taskType())
-                        .input(task.input())
-                        .status(task.status())
-                        .maxNoOfUsers(task.maxNoOfUsers())
-                        .currency(task.currency())
-                        .price(task.price())
-                        .createDateTime(task.createTime())
-                        .dueDateTime(task.dueDate())
-                        .build())
+                .map(this::taskToTaskResponse)
                 .collect(toList());
     }
 
@@ -79,18 +67,7 @@ public class TaskService {
                 .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                 .dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
-        return TaskResponse.builder()
-                .id(savedTask.id())
-                .name(savedTask.name())
-                .taskType(savedTask.taskType())
-                .input(savedTask.input())
-                .status(savedTask.status())
-                .maxNoOfUsers(savedTask.maxNoOfUsers())
-                .currency(savedTask.currency())
-                .price(savedTask.price())
-                .createDateTime(savedTask.createTime())
-                .dueDateTime(savedTask.dueDate())
-                .build();
+        return taskToTaskResponse(savedTask);
     }
 
     public TaskResponse findById(Long taskId) {
@@ -164,22 +141,10 @@ public class TaskService {
                         });
     }
 
-    public List<TaskResponse> findAvailableTasks(Boolean available, String userId) {
-
-        return taskRepository.findAvailableTasks(available,userId).stream()
+    public List<TaskResponse> findAvailableTasks(Boolean available, String userId, TaskType type) {
+        return taskRepository.findAvailableTasks(available,userId, type, 10).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
-                .map(task -> TaskResponse.builder()
-                        .id(task.id())
-                        .name(task.name())
-                        .taskType(task.taskType())
-                        .input(task.input())
-                        .status(task.status())
-                        .maxNoOfUsers(task.maxNoOfUsers())
-                        .currency(task.currency())
-                        .price(task.price())
-                        .createDateTime(task.createTime())
-                        .dueDateTime(task.dueDate())
-                        .build())
+                .map(this::taskToTaskResponse)
                 .collect(toList());
     }
 
