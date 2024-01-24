@@ -1,5 +1,8 @@
 package com.ubr.dcagapiservicejava.controller;
 
+import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
+import com.ubr.dcagapiservicejava.domain.enums.TaskType;
+import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
 import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
 import com.ubr.dcagapiservicejava.dto.UserTaskSummaryResponse;
@@ -32,8 +35,9 @@ public class UserTaskController {
 
     @CrossOrigin
     @GetMapping(produces = "application/json")
-    ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId) {
-        return ResponseEntity.ok(userTaskService.findUserTasks(userId));
+    ResponseEntity<List<UserTaskResponse>> getUserTasks(@PathVariable String userId,
+                                                        @RequestParam(required = false) UserTaskStatus status) {
+        return ResponseEntity.ok(userTaskService.findUserTasks(userId, status));
     }
 
     @CrossOrigin

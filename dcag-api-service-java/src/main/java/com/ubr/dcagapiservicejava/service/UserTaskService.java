@@ -15,10 +15,12 @@ import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -125,15 +127,16 @@ public class UserTaskService {
 
     }
 
-    public List<UserTaskResponse> findUserTasks(String userId) {
+    public List<UserTaskResponse> findUserTasks(String userId, UserTaskStatus status) {
 
-        Optional<List<UserTask>> userTasks = userTasksRepository.findByUserId(userId);
-
-        if (userTasks.isPresent()) {
-            return userTasks.get().stream().map(this::userTaskToUserTaskResponse).toList();
+        List<UserTask> userTasks = new ArrayList<>();
+        if(status == null) {
+            userTasks = userTasksRepository.findByUserId(userId);
         } else {
-            throw new TaskNotFoundException("Task not found for user: " + userId);
+            userTasks = userTasksRepository.findByUserIdAndStatus(userId, status);
         }
+
+        return userTasks.stream().map(this::userTaskToUserTaskResponse).toList();
     }
 
     public UserTaskResponse findUserTaskById(String userId, Long taskId) {
@@ -151,10 +154,10 @@ public class UserTaskService {
 
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
 
-        Optional<List<UserTask>> userTasks = userTasksRepository.findByUserId(userId);
+        List<UserTask> userTasks = userTasksRepository.findByUserId(userId); // TODO: Get only completed tasks
 
-        if (userTasks.isPresent()) {
-            List<UserTask> userTasksList = userTasks.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).toList();
+        if (!userTasks.isEmpty()) {
+            List<UserTask> userTasksList = userTasks.stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).toList();
             UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount((long) userTasksList.size()).totalEarning(userTasksList.stream().mapToDouble(e -> e.task().price()).sum());
 

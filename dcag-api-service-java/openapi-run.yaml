@@ -120,6 +120,11 @@ paths:
           required: true
           type: string
           description: "ID of the user"
+        - name: status
+          in: path
+          required: true
+          type: string
+          description: "task status such as COMPLETED, IN_PROGRESS"
       responses:
         '200':
           description: "A successful response"
