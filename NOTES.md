@@ -27,3 +27,5 @@
 - verify 
 `gcloud storage buckets  describe gs://dcag-tasks-output/`
 `gcloud storage buckets  describe gs://dcag-tasks-input/`
+
+
