@@ -127,7 +127,7 @@ import { useUserAuth } from '../context/UserAuthContext';
         output:file.name
       }
       apiService
-        .assignTaskToCompleted(userId, selectedTask.taskId,body)
+        .assignTaskToCompleted({ userId, taskId:selectedTask?.taskId, body, user })
         .then((result) => {
           console.log(result);
           setShowLoading(false);

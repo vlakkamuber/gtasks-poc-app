@@ -50,9 +50,29 @@ const Tasks: React.FC = () => {
       return acc;
     }, {});
   }
-  const getAvailableTasks = () => {
+  const getAvailableTasks = async () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
-    apiService
+    if(selectedCategory==="ALL"){
+      let audioToAudioTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"AUDIO_TO_AUDIO" })
+      let ImageToTextTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"IMAGE_TO_TEXT" })
+      let uploadImageTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"UPLOAD_IMAGE" })
+      let textToAudioTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"TEXT_TO_AUDIO" })
+      setShowLoading(false);
+        let myTasks = await apiService.getMyTasksList({userId,user,status:"IN_PROGRESS"});
+        let myCompletedTasks = await apiService.getMyTasksList({userId,user,status:"COMPLETED"});
+        setMyTasksCount(myCompletedTasks.length);
+        let filteredMyTask = filterTaskWithSelectedCategory(myTasks, selectedCategory)
+        // let inprogressTasks = filterTaskWithStatus(myTasks, "IN_PROGRESS")
+        let finalTaskList = [...filteredMyTask,...audioToAudioTasks,...ImageToTextTasks,...uploadImageTasks,...textToAudioTasks]
+        // temporary - this filter should be removed in future;
+        const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
+          ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
+          : finalTaskList;
+        console.log(result);
+        setAvailableCount(result.length);
+        setTasks(groupBy(result, 'taskType'));
+    }else{
+      apiService
       .getAvailableTasks({ userId, user,selectedCategory })
       .then(async (res) => {
         setShowLoading(false);
@@ -73,6 +93,8 @@ const Tasks: React.FC = () => {
       .catch((error) => {
         console.error('Error fetching task data:', error);
       });
+    }
+    
   };
   const getTaskSummary = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -287,49 +309,49 @@ const Tasks: React.FC = () => {
                 );
               })}
             </React.Fragment>
-            <>
-            <div className="ion-padding">
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center'
-                        }}>
-                        <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                         {t(`dcag.tasks.performTask.uploadImage.label`)}
-                        </h1>
-                        {/* <span style={{ color: "#467ff4" }}>
-                          {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                        </span> */}
-                      </div>
+            {(selectedCategory==="UPLOAD_IMAGE"  || selectedCategory==="ALL")&&<>
+              <div className="ion-padding">
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                          }}>
+                          <h1 style={{ margin: '0', marginBottom: '-4px' }}>
+                          {t(`dcag.tasks.performTask.uploadImage.label`)}
+                          </h1>
+                          {/* <span style={{ color: "#467ff4" }}>
+                            {tasks[key].length} {t(`dcag.home.btn.new.label`)}
+                          </span> */}
+                        </div>
 
-                      <p style={{ margin: '0' }}>
-                        <small>{t(`dcag.tasks.UPLOAD_IMAGE.taskDesc`)}.</small>
-                      </p>
-            </div>
-            <IonList>
-              <IonItem>
-                <IonLabel>
-                  <span style={{ display: 'flex' }}>
-                    <h2>Default Task</h2>
-                    </span>
-                    <p>
-                                  {t(`dcag.tasks.payouts.label`)}: $2
-                                </p>
-               </IonLabel>
-                    <IonButton
-                                slot="end"
-                                style={{
-                                  '--background': 'black',
-                                  '--border-radius': '10px'
-                                }}
-                                onClick={()=>goToUploadImageTask()}>
-                                {t(`dcag.home.btn.startWork.label`)}
-                    </IonButton>
+                        <p style={{ margin: '0' }}>
+                          <small>{t(`dcag.tasks.UPLOAD_IMAGE.taskDesc`)}.</small>
+                        </p>
+              </div>
+                <IonList>
+                  <IonItem>
+                    <IonLabel>
+                      <span style={{ display: 'flex' }}>
+                        <h2>Default Task</h2>
+                        </span>
+                        <p>
+                                      {t(`dcag.tasks.payouts.label`)}: $2
+                                    </p>
+                  </IonLabel>
+                        <IonButton
+                                    slot="end"
+                                    style={{
+                                      '--background': 'black',
+                                      '--border-radius': '10px'
+                                    }}
+                                    onClick={()=>goToUploadImageTask()}>
+                                    {t(`dcag.home.btn.startWork.label`)}
+                        </IonButton>
 
-              </IonItem>
-            </IonList>
-            </>
+                  </IonItem>
+                </IonList>
+            </>}
 
           </React.Fragment>
         )}
