@@ -251,13 +251,13 @@ const Tasks: React.FC = () => {
                                 <p>
                                   {t(`dcag.tasks.payouts.label`)}: ${task.price}
                                 </p>
-                                <p>
+                                {/* <p>
                                   <small>
                                     {t(`dcag.tasks.createdAt.label`)}:{' '}
                                     {formatDate(task.createDateTime)}{' '}
                                     {t(`dcag.tasks.dueDate.label`)}: {formatDate(task.dueDateTime)}
                                   </small>
-                                </p>
+                                </p> */}
                               </IonLabel>
                               {!task.userId && <IonButton
                                 slot="end"

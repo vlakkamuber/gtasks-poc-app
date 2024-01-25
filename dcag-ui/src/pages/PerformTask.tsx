@@ -189,12 +189,12 @@ const PerformTask: React.FC = () => {
               <h2 className="no-padding-margin" style={{ marginBottom: '8px' }}>
                 {selectedTask.taskName}
               </h2>
-              <p className="no-padding-margin" style={{ fontSize: '0.9rem' }}>
+              {/* <p className="no-padding-margin" style={{ fontSize: '0.9rem' }}>
                 <samll>
                   {t(`dcag.tasks.createdAt.label`)}: {formatDate(selectedTask.createDateTime)}{' '}
                   {t(`dcag.tasks.dueDate.label`)}: {formatDate(selectedTask.dueDateTime)}
                 </samll>
-              </p>
+              </p> */}
               <p className="no-padding-margin">
                 <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
                 <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
