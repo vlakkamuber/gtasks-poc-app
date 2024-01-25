@@ -59,7 +59,7 @@ const Home: React.FC = () => {
             {t(`dcag.home.taskHub.btn.viewAllTasks`)}
           </IonButton>
         </div>
-        <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>handleTaskCategory("AUDIO_TO_AUDIO")}>
+        <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("AUDIO_TO_AUDIO")}>
           <img
             alt="Silhouette of mountains"
             src="assets/text_to_audio.png"
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
             {t(`dcag.home.taskHub.RECORD_AUDIO.subtitle`)}
           </IonCardContent>
         </IonCard>
-        <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>handleTaskCategory("IMAGE_TO_TEXT")}>
+        <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("IMAGE_TO_TEXT")}>
           <img
             alt="Silhouette of mountains"
             src="assets/audio_to_audio.png"
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
           {t(`dcag.home.taskHub.DESCRIBE_IMAGE.subtitle`)}
           </IonCardContent>
         </IonCard>
-        <IonCard style={{borderRadius:'10px',marginBottom: '3rem'}} onClick={()=>handleTaskCategory("UPLOAD_IMAGE")}>
+        <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("UPLOAD_IMAGE")}>
           <img
             alt="Silhouette of mountains"
             src="assets/text_to_image.png"
