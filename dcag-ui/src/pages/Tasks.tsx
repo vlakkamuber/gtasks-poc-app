@@ -51,51 +51,48 @@ const Tasks: React.FC = () => {
     }, {});
   }
   const getAvailableTasks = async () => {
-    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
-    if(selectedCategory==="ALL"){
-      let audioToAudioTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"AUDIO_TO_AUDIO" })
-      let ImageToTextTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"IMAGE_TO_TEXT" })
-      let uploadImageTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"UPLOAD_IMAGE" })
-      let textToAudioTasks = await apiService.getAvailableTasks({ userId, user,selectedCategory:"TEXT_TO_AUDIO" })
+    try {
+      setShowLoading(true);
+  
+      const userId = JSON.parse(localStorage.getItem('loggedInUser'));
+      const myTasks = await apiService.getMyTasksList({ userId, user, status: "IN_PROGRESS" });
+      const myCompletedTasks = await apiService.getMyTasksList({ userId, user, status: "COMPLETED" });
+      setMyTasksCount(myCompletedTasks.length);
+  
+      let availableTasks = [];
+  
+      if (selectedCategory === "ALL") {
+        const categories = ["AUDIO_TO_AUDIO", "IMAGE_TO_TEXT", "UPLOAD_IMAGE", "TEXT_TO_AUDIO"];
+  
+        // Fetch tasks for each category concurrently
+        const tasksPromises = categories.map(category =>
+          apiService.getAvailableTasks({ userId, user, selectedCategory: category })
+        );
+  
+        const categoryTasks = await Promise.all(tasksPromises);
+        availableTasks = [...myTasks, ...categoryTasks.flat()];
+      } else {
+        availableTasks = await apiService.getAvailableTasks({ userId, user, selectedCategory });
+      }
+  
       setShowLoading(false);
-        let myTasks = await apiService.getMyTasksList({userId,user,status:"IN_PROGRESS"});
-        let myCompletedTasks = await apiService.getMyTasksList({userId,user,status:"COMPLETED"});
-        setMyTasksCount(myCompletedTasks.length);
-        let filteredMyTask = filterTaskWithSelectedCategory(myTasks, selectedCategory)
-        // let inprogressTasks = filterTaskWithStatus(myTasks, "IN_PROGRESS")
-        let finalTaskList = [...filteredMyTask,...audioToAudioTasks,...ImageToTextTasks,...uploadImageTasks,...textToAudioTasks]
-        // temporary - this filter should be removed in future;
-        const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-          ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
-          : finalTaskList;
-        console.log(result);
-        setAvailableCount(result.length);
-        setTasks(groupBy(result, 'taskType'));
-    }else{
-      apiService
-      .getAvailableTasks({ userId, user,selectedCategory })
-      .then(async (res) => {
-        setShowLoading(false);
-        let myTasks = await apiService.getMyTasksList({userId,user,status:"IN_PROGRESS"});
-        let myCompletedTasks = await apiService.getMyTasksList({userId,user,status:"COMPLETED"});
-        setMyTasksCount(myCompletedTasks.length);
-        let filteredMyTask = filterTaskWithSelectedCategory(myTasks, selectedCategory)
-        // let inprogressTasks = filterTaskWithStatus(myTasks, "IN_PROGRESS")
-        let finalTaskList = [...filteredMyTask,...res,]
-        // temporary - this filter should be removed in future;
-        const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-          ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
-          : finalTaskList;
-        console.log(result);
-        setAvailableCount(result.length);
-        setTasks(groupBy(result, 'taskType'));
-      })
-      .catch((error) => {
-        console.error('Error fetching task data:', error);
-      });
+  
+      const filteredMyTasks = filterTaskWithSelectedCategory(myTasks, selectedCategory);
+      const finalTaskList = [...filteredMyTasks, ...availableTasks];
+  
+      // Temporary - this filter should be removed in the future;
+      const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
+        ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
+        : finalTaskList;
+  
+      setAvailableCount(result.length);
+      setTasks(groupBy(result, 'taskType'));
+    } catch (error) {
+      console.error('Error fetching task data:', error);
+      // Handle the error accordingly
     }
-    
   };
+  
   const getTaskSummary = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
