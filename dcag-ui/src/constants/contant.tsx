@@ -13,6 +13,9 @@ export const COUNTRY_OPTIONS = [
 ];
 
 export const TEXT_TO_AUDIO_TASK_TYPE = 'TEXT_TO_AUDIO';
+export const AUDIO_TO_AUDIO_TASK_TYPE = 'AUDIO_TO_AUDIO';
+export const IMAGE_TO_TEXT_TASK_TYPE = 'IMAGE_TO_TEXT';
+export const UPLOAD_IMAGE_TASK_TYPE = 'UPLOAD_IMAGE';
 
 export const FILTER_OUT_TEXT_TO_AUDIO_TASK = true;
 

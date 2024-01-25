@@ -32,6 +32,11 @@ export function formatDate(timestamp) {
 export const filterTaskWithType = (tasks: { taskType: string }[], taskType: string) => {
   return tasks.filter((task) => task.taskType !== taskType);
 };
+
+export const filterTaskWithSelectedCategory = (tasks: { taskType: string }[], taskType: string) => {
+  return tasks.filter((task) => task.taskType === taskType);
+};
+
 export const filterTaskWithStatus = (tasks: { status: string }[], status: string) => {
   return tasks.filter((task) => task.status === status);
 };

@@ -20,10 +20,12 @@ import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
-import { filterTaskWithType, formatDate,filterTaskWithStatus } from '../utils/mapTeluguDigitsToNumeric';
+import { filterTaskWithType, formatDate,filterTaskWithStatus,filterTaskWithSelectedCategory } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
 import { useUserAuth } from '../context/UserAuthContext';
+import { useCategory } from '../context/TaskCategoryContext';
+import { Badge, COLOR } from 'baseui/badge';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -36,6 +38,7 @@ const Tasks: React.FC = () => {
   const [showLoading, setShowLoading] = useState(false);
   const history = useHistory();
   const { user } = useUserAuth();
+  const { selectedCategory } = useCategory();
 
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -50,12 +53,15 @@ const Tasks: React.FC = () => {
   const getAvailableTasks = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getAvailableTasks({ userId, user })
+      .getAvailableTasks({ userId, user,selectedCategory })
       .then(async (res) => {
         setShowLoading(false);
-        let myTasks = await apiService.getMyTasksList({userId,user});
-        let inprogressTasks = filterTaskWithStatus(myTasks, "IN_PROGRESS")
-        let finalTaskList = [...res,...inprogressTasks]
+        let myTasks = await apiService.getMyTasksList({userId,user,status:"IN_PROGRESS"});
+        let myCompletedTasks = await apiService.getMyTasksList({userId,user,status:"COMPLETED"});
+        setMyTasksCount(myCompletedTasks.length);
+        let filteredMyTask = filterTaskWithSelectedCategory(myTasks, selectedCategory)
+        // let inprogressTasks = filterTaskWithStatus(myTasks, "IN_PROGRESS")
+        let finalTaskList = [...filteredMyTask,...res,]
         // temporary - this filter should be removed in future;
         const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
           ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
@@ -82,27 +88,27 @@ const Tasks: React.FC = () => {
       });
   };
 
-  const getMyTasksList = () => {
-    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
-    apiService
-      .getMyTasksList({ userId, user })
-      .then((res) => {
-        let myComopletedTasks = filterTaskWithStatus(res, "COMPLETED")
-        // temporary - this filter should be removed in future;
-        const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-          ? filterTaskWithType(myComopletedTasks, TEXT_TO_AUDIO_TASK_TYPE)
-          : myComopletedTasks;
-        setMyTasksCount(result.length);
-      })
-      .catch((error) => {
-        console.error('Error fetching task data:', error);
-      });
-  };
+  // const getMyTasksList = () => {
+  //   let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+  //   apiService
+  //     .getMyTasksList({ userId, user })
+  //     .then((res) => {
+  //       let myComopletedTasks = filterTaskWithStatus(res, "COMPLETED")
+  //       // temporary - this filter should be removed in future;
+  //       const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
+  //         ? filterTaskWithType(myComopletedTasks, TEXT_TO_AUDIO_TASK_TYPE)
+  //         : myComopletedTasks;
+  //       setMyTasksCount(result.length);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching task data:', error);
+  //     });
+  // };
   useEffect(() => {
     setShowLoading(true);
     getAvailableTasks();
     getTaskSummary();
-    getMyTasksList();
+    //getMyTasksList();
   }, []);
 
   const goBack = () => {
@@ -235,16 +241,12 @@ const Tasks: React.FC = () => {
                           <IonList>
                             <IonItem>
                               <IonLabel>
-                                <span style={{ display: 'flex' }}>
+                                <span style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                                   <h2>{task.name || task.taskName} </h2>
-                                  {/* <IonBadge
-                                    color="primary"
-                                    className={`status-text-new`}
-                                  >
-                                    {t(
-                                      `dcag.home.taskHub.status.${task.status}`
-                                    )}
-                                  </IonBadge> */}
+                                  {(task.userId && task.status==='IN_PROGRESS') &&<Badge
+                                  content={t(`dcag.home.taskHub.status.${task.status}`)}
+                                  color={COLOR.accent}
+                                  />}
                                 </span>{' '}
                                 <p>
                                   {t(`dcag.tasks.payouts.label`)}: ${task.price}

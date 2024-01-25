@@ -34,14 +34,14 @@ const CompletedTasks: React.FC = () => {
   const getMyTasksList = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getMyTasksList({ userId, user })
+      .getMyTasksList({ userId, user,status:'COMPLETED' })
       .then((res) => {
         setShowLoading(false);
-      let myCompletedTasks = filterTaskWithStatus(res, "COMPLETED")
+
         // temporary - this filter should be removed in future;
         const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-          ? filterTaskWithType(myCompletedTasks, TEXT_TO_AUDIO_TASK_TYPE)
-          : myCompletedTasks;
+          ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
+          : res;
         setTasks(groupBy(result, 'taskType'));
       })
       .catch((error) => {

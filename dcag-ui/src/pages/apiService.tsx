@@ -28,14 +28,14 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getMyTasksList({ userId, user }: { userId: string; user: any }) {
-    const endpoint = `users/${userId}/tasks`;
+  async getMyTasksList({ userId, user,status }: { userId: string; user: any,status:any }) {
+    const endpoint = `users/${userId}/tasks?status=${status}`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getAvailableTasks({ userId, user }: { userId: string; user: any }) {
-    const endpoint = `tasks?available=true&userId=${userId}`;
+  async getAvailableTasks({ userId, user,selectedCategory }: { userId: string; user: any,selectedCategory:any }) {
+    const endpoint = selectedCategory==="ALL" ? `tasks?available=true&userId=${userId}` : `tasks?available=true&userId=${userId}&taskType=${selectedCategory}`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
