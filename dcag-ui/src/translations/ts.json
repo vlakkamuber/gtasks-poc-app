@@ -86,7 +86,7 @@
     "dcag.home.taskHub.record": "రికార్డ్ చేయండి",
     "dcag.tasks.performTask.inputAudio.confirm": "మీరు ఇన్‌పుట్ ఆడియోతో బాగున్నారా?",
     "dcag.tasks.performTask.inputAudio.confirm.yes": "అవును",
-    "dcag.tasks.performTask.inputAudio.confirm.no": "సంఖ్య",
+    "dcag.tasks.performTask.inputAudio.confirm.no": "కాదు",
     "dcag.tasks.performTask.image.description.label": "చిత్రాన్ని వివరించండి",
     "dcag.tasks.performTask.uploadImage.label": "చిత్రాన్ని అప్‌లోడ్ చేయండి",
     "dcag.tasks.performTask.uploadImage.taskInput.label":"టాస్క్ పేరు",
