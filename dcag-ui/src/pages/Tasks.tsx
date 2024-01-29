@@ -190,6 +190,7 @@ const Tasks: React.FC = () => {
   }
 
   const loadMore = async (key)=>{
+    setShowLoading(true);
     const userId = JSON.parse(localStorage.getItem('loggedInUser'));
     let tasks = await apiService.getAvailableTasks({ userId, user, selectedCategory:key });
     const finalTaskList = findUniqueTasks(finalTasks,tasks)
@@ -199,9 +200,10 @@ const Tasks: React.FC = () => {
         ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
         : finalTaskList;
       const orderedTasks = orderTasksByType(result, ["AUDIO_TO_AUDIO", "IMAGE_TO_TEXT", "UPLOAD_IMAGE", "TEXT_TO_AUDIO"]);
-  
+      
       setAvailableCount(orderedTasks.length);
       setTasks(groupBy(orderedTasks, 'taskType'));
+      setShowLoading(false);
   }
   return (
     <IonPage>
