@@ -52,3 +52,30 @@ export const getSortedCompletedTaskList = (taskList) => {
     .filter((task) => task.status === COMPLETED_TASK_STATUS)
     .sort((a, b) => b.completedTime - a.completedTime);
 };
+
+export function orderTasksByType(tasks, taskTypeOrder) {
+  // Create a map to store tasks based on their type
+  const tasksByType = {};
+
+  // Initialize the map with empty arrays for each task type
+  taskTypeOrder.forEach(type => {
+    tasksByType[type] = [];
+  });
+
+  // Group tasks by their type
+  tasks.forEach(task => {
+    if (tasksByType.hasOwnProperty(task.taskType)) {
+      tasksByType[task.taskType].push(task);
+    } else {
+      // Handle unknown task types (if necessary)
+      console.warn(`Unknown task type: ${task.taskType}`);
+    }
+  });
+
+  // Flatten the grouped tasks back into a single array following the specified order
+  const orderedTasks = taskTypeOrder.reduce((accumulator, type) => {
+    return accumulator.concat(tasksByType[type]);
+  }, []);
+
+  return orderedTasks;
+}

@@ -20,7 +20,7 @@ import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
-import { filterTaskWithType, formatDate,filterTaskWithStatus,filterTaskWithSelectedCategory } from '../utils/mapTeluguDigitsToNumeric';
+import { filterTaskWithType, formatDate,filterTaskWithStatus,filterTaskWithSelectedCategory,orderTasksByType } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
 import { useUserAuth } from '../context/UserAuthContext';
@@ -39,6 +39,8 @@ const Tasks: React.FC = () => {
   const history = useHistory();
   const { user } = useUserAuth();
   const { selectedCategory } = useCategory();
+  const [isImageUploadAvailable,setIsImageUploadAvailable] = useState(false)
+  const [finalTasks,setFinalTasks] = useState([])
 
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -78,15 +80,19 @@ const Tasks: React.FC = () => {
       setShowLoading(false);
   
       const filteredMyTasks = filterTaskWithSelectedCategory(myTasks, selectedCategory);
+      const isImageUploadAvailable = myTasks.some(task => task.taskType === "UPLOAD_IMAGE");
+      setIsImageUploadAvailable(isImageUploadAvailable)
+
       const finalTaskList = [...filteredMyTasks, ...availableTasks];
-  
+
+      setFinalTasks(finalTaskList);
       // Temporary - this filter should be removed in the future;
       const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
         ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
         : finalTaskList;
-  
-      setAvailableCount(result.length);
-      setTasks(groupBy(result, 'taskType'));
+     const orderedTasks = orderTasksByType(result, ["AUDIO_TO_AUDIO", "IMAGE_TO_TEXT", "UPLOAD_IMAGE", "TEXT_TO_AUDIO"]);
+      setAvailableCount(orderedTasks.length);
+      setTasks(groupBy(orderedTasks, 'taskType'));
     } catch (error) {
       console.error('Error fetching task data:', error);
       // Handle the error accordingly
@@ -167,6 +173,36 @@ const Tasks: React.FC = () => {
       console.log(err)
     }
   }
+
+  const findUniqueTasks = (finalTasks:any,tasks:any)=>{
+    // Use an object to keep track of seen IDs
+    const uniqueTaskIds = {};
+
+    // Combine the arrays while ensuring unique tasks based on ID
+    const finalTaskList = [...finalTasks, ...tasks].reduce((accumulator, task) => {
+      if (!uniqueTaskIds[task.id]) {
+        uniqueTaskIds[task.id] = true;
+        accumulator.push(task);
+      }
+      return accumulator;
+    }, []);
+    return finalTaskList
+  }
+
+  const loadMore = async (key)=>{
+    const userId = JSON.parse(localStorage.getItem('loggedInUser'));
+    let tasks = await apiService.getAvailableTasks({ userId, user, selectedCategory:key });
+    const finalTaskList = findUniqueTasks(finalTasks,tasks)
+    setFinalTasks(finalTaskList);
+      // Temporary - this filter should be removed in the future;
+      const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
+        ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
+        : finalTaskList;
+      const orderedTasks = orderTasksByType(result, ["AUDIO_TO_AUDIO", "IMAGE_TO_TEXT", "UPLOAD_IMAGE", "TEXT_TO_AUDIO"]);
+  
+      setAvailableCount(orderedTasks.length);
+      setTasks(groupBy(orderedTasks, 'taskType'));
+  }
   return (
     <IonPage>
       <IonHeader>
@@ -245,6 +281,16 @@ const Tasks: React.FC = () => {
                         <h1 style={{ margin: '0', marginBottom: '-4px' }}>
                           {t(`dcag.tasks.${key}.title`)}
                         </h1>
+                        <span><IonButton
+                                    slot="end"
+                                    style={{
+                                      '--background': '#2dd36f',
+                                      '--border-radius': '10px',
+                                      '--font-size':'0.7rem',
+                                    }}
+                                    onClick={()=>loadMore(key)}>
+                                    {t(`dcag.home.btn.loadMore.label`)}
+                        </IonButton></span>
                         {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
                         </span> */}
@@ -299,14 +345,16 @@ const Tasks: React.FC = () => {
                             </IonItem>
                             {/* Add more IonItem elements as needed */}
                           </IonList>
+                          
                         </React.Fragment>
+                        
                       );
                     })}
                   </React.Fragment>
                 );
               })}
             </React.Fragment>
-            {(selectedCategory==="UPLOAD_IMAGE"  || selectedCategory==="ALL")&&<>
+            {((selectedCategory==="UPLOAD_IMAGE"  || selectedCategory==="ALL") && isImageUploadAvailable===false) &&<>
               <div className="ion-padding">
                         <div
                           style={{
@@ -344,7 +392,7 @@ const Tasks: React.FC = () => {
                                     }}
                                     onClick={()=>goToUploadImageTask()}>
                                     {t(`dcag.home.btn.startWork.label`)}
-                        </IonButton>
+                    </IonButton>
 
                   </IonItem>
                 </IonList>
