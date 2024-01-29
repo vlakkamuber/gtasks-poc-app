@@ -283,16 +283,6 @@ const Tasks: React.FC = () => {
                         <h1 style={{ margin: '0', marginBottom: '-4px' }}>
                           {t(`dcag.tasks.${key}.title`)}
                         </h1>
-                        <span><IonButton
-                                    slot="end"
-                                    style={{
-                                      '--background': '#2dd36f',
-                                      '--border-radius': '10px',
-                                      '--font-size':'0.7rem',
-                                    }}
-                                    onClick={()=>loadMore(key)}>
-                                    {t(`dcag.home.btn.loadMore.label`)}
-                        </IonButton></span>
                         {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
                         </span> */}
@@ -352,8 +342,14 @@ const Tasks: React.FC = () => {
                         
                       );
                     })}
+                  <div style={{ display: 'flex', justifyContent: 'right',cursor:'pointer' }}>
+                    <span style={{fontSize:'1.2rem',fontWeight:'500',marginRight:'12px'}} onClick={() => loadMore(key)}>{t(`dcag.home.btn.loadMore.label`)}
+                    </span>
+                  </div>
+
                   </React.Fragment>
                 );
+                
               })}
             </React.Fragment>
             {((selectedCategory==="UPLOAD_IMAGE"  || selectedCategory==="ALL") && isImageUploadAvailable===false) &&<>
