@@ -272,6 +272,7 @@ import { useUserAuth } from '../context/UserAuthContext';
               duration={5000}
               color="success"
               position="top"
+              className="success-toast"
             />
             </>) : null}
         </IonContent>

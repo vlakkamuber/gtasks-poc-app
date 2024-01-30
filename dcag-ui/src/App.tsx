@@ -31,9 +31,8 @@ import Tasks from './pages/Tasks';
 import './App.css';
 import HomeScreen from './pages/HomeScreen';
 import Completed from './pages/Completed';
-import LoginSuccess from './pages/LoginSuccess';
 import PerformTask from './pages/PerformTask';
-import ImageUploadTask from './pages/ImageUploadTask'
+import ImageUploadTask from './pages/ImageUploadTask';
 import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import RequireAuth from './components/RequireAuth';
@@ -46,7 +45,6 @@ const App: React.FC = () => (
       <IonRouterOutlet>
         <Route path="/home" component={HomeScreen} exact />
         <Route path="/login" component={Login} exact />
-        <Route path="/login-success" component={LoginSuccess} exact />
         <Route
           path="/dashboard"
           render={() => (

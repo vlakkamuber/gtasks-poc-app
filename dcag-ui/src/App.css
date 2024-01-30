@@ -321,6 +321,12 @@ label {
     align-items: center;
     background: #eeeeee;
 }
+.success-toast{
+  position: absolute;
+  top: 50px; /* Adjust the top position according to your needs */
+  left: 50%; /* Adjust the left position if needed */
+  transform: translateX(-50%); /* Center horizontally */
+}
 
 @media only screen and (min-width: 992px) {
   html {

@@ -29,7 +29,7 @@ const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = useParams();
-  const { user }= useUserAuth();
+  const { user } = useUserAuth();
 
   const goBack = () => {
     history.push('/dashboard/tasks'); // This function navigates back to the previous page
@@ -50,7 +50,7 @@ const PerformTask: React.FC = () => {
     let taskId = params.id;
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getTaskDetail({userId, taskId, user})
+      .getTaskDetail({ userId, taskId, user })
       .then((result) => {
         console.log(result);
         setShowLoading(false);
@@ -164,6 +164,12 @@ const PerformTask: React.FC = () => {
         });
     }
   };
+
+  const stopWork = () => {
+    // apiService.releaseTask(userId, taskId, user);
+    history.push('/dashboard/tasks');
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -222,7 +228,7 @@ const PerformTask: React.FC = () => {
                     style={{ marginTop: '10px' }}
                     onChange={(e) => setSelectedTask({ ...selectedTask, output: e.target.value })}
                     rows="2"
-                    disabled={selectedTask.status==='COMPLETED'}
+                    disabled={selectedTask.status === 'COMPLETED'}
                     overrides={{
                       Root: {
                         style: () => ({
@@ -264,7 +270,7 @@ const PerformTask: React.FC = () => {
                 <div>
                   <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
                   <RadioGroup
-                    value={selectedTask.status==='COMPLETED' ? selectedTask.useInput:useInput}
+                    value={selectedTask.status === 'COMPLETED' ? selectedTask.useInput : useInput}
                     onChange={(e) => setUseInput(e.currentTarget.value === 'true')}
                     name="number"
                     align={ALIGN.horizontal}
@@ -396,7 +402,7 @@ const PerformTask: React.FC = () => {
                     </Button>
                   ]}
                   dismissiveAction={
-                    <Button kind={KIND.tertiary} onClick={(e) => history.push('/dashboard/tasks')}>
+                    <Button kind={KIND.tertiary} onClick={stopWork}>
                       {t(`dcag.home.btn.cancel.label`)}
                     </Button>
                   }
@@ -410,6 +416,7 @@ const PerformTask: React.FC = () => {
               duration={5000}
               color="success"
               position="top"
+              className="success-toast"
             />
           </>
         ) : null}

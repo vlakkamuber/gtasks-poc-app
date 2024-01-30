@@ -20,7 +20,7 @@ const MyTaskCard = ({ task }) => {
   };
   return (
     <>
-      <IonItem>
+      <IonItem onClick={(e) => goToPerformTask(e, task)} className="clickable-cursor">
         <IonLabel>
           <span style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <h2>{task.taskName}</h2>
@@ -41,7 +41,6 @@ const MyTaskCard = ({ task }) => {
         </IonLabel>
         <IonIcon
           icon={chevronForward}
-          onClick={(e) => goToPerformTask(e, task)}
           className="clickable-cursor"
           color="primary"></IonIcon>
       </IonItem>

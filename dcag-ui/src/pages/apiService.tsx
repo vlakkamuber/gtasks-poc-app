@@ -28,14 +28,25 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getMyTasksList({ userId, user,status }: { userId: string; user: any,status:any }) {
+  async getMyTasksList({ userId, user, status }: { userId: string; user: any; status: any }) {
     const endpoint = `users/${userId}/tasks?status=${status}`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getAvailableTasks({ userId, user,selectedCategory }: { userId: string; user: any,selectedCategory:any }) {
-    const endpoint = selectedCategory==="ALL" ? `tasks?available=true&userId=${userId}` : `tasks?available=true&userId=${userId}&taskType=${selectedCategory}`;
+  async getAvailableTasks({
+    userId,
+    user,
+    selectedCategory
+  }: {
+    userId: string;
+    user: any;
+    selectedCategory: any;
+  }) {
+    const endpoint =
+      selectedCategory === 'ALL'
+        ? `tasks?available=true&userId=${userId}`
+        : `tasks?available=true&userId=${userId}&taskType=${selectedCategory}`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
@@ -149,7 +160,7 @@ const apiService = {
     userId: any;
     taskId: any;
     filename: any;
-    user: any
+    user: any;
   }) {
     const endpoint = `users/${userId}/tasks/${taskId}/uploadUrl?fileName=${filename}`;
     const headers = getHeaders({ user });
@@ -175,6 +186,15 @@ const apiService = {
     } catch (error) {
       console.error('Error saving audio blob:', error.message);
     }
+  },
+  async releaseTask({ userId, taskId, user }) {
+    const headers = getHeaders({ user });
+    const endPoint = `users/${userId}/tasks/${taskId}`;
+    const response = await fetch(endPoint, {
+      method: 'DELETE',
+      headers
+    });
+    return response.json();
   }
 };
 

@@ -46,7 +46,7 @@ const OtpVerificationPage = ({ sendOtpResponse }: Props) => {
         present(LOADER_MESSAGE);
         await sendOtpResponse.confirm(otpnumeric);
         dismiss();
-        history.push('/login-success');
+        history.push('/dashboard/home');
       } catch (err) {
         setError(err.message);
       }
