@@ -1,6 +1,7 @@
 package com.ubr.dcagapiservicejava.utils;
 
 import com.google.cloud.storage.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -10,6 +11,9 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class GCPUtils {
+
+        @Value("${spring.cloud.gcp.project-id}")
+        String projectId;
 
         public String signTaskInputImageUrl(String fileName) throws StorageException {
             return generateV4GetObjectSignedUrl("dcag-tasks-input", "image/" + fileName);
@@ -46,8 +50,6 @@ public class GCPUtils {
          * details.
          */
     public String generateV4GetObjectSignedUrl(String bucketName, String objectName) throws StorageException {
-        //TODO: Take these values from properties file
-        String projectId = "anz-driver-ops-ritu";
 //        objectName = "audio/"+ objectName;
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
@@ -63,7 +65,6 @@ public class GCPUtils {
     }
 
     public String generateV4PutObjectSignedUrl(String bucketName, String objectName) throws StorageException {
-        String projectId = "anz-driver-ops-ritu";
 //        objectName = "audio/"+ objectName;
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();

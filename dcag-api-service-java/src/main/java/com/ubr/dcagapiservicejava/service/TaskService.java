@@ -15,9 +15,11 @@ import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,9 @@ public class TaskService {
 
     @Autowired
     private GCPUtils gcpUtils;
+
+    @Value("${task-available-limit}")
+    Integer limit;
 
     GeometryFactory factory = new GeometryFactory();
 
@@ -142,7 +147,8 @@ public class TaskService {
     }
 
     public List<TaskResponse> findAvailableTasks(Boolean available, String userId, TaskType type) {
-        return taskRepository.findAvailableTasks(available,userId, type, 10).stream()
+
+        return taskRepository.findAvailableTasks(available,userId, type, limit).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
                 .collect(toList());

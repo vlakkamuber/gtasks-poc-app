@@ -154,12 +154,11 @@ public class UserTaskService {
 
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
 
-        List<UserTask> userTasks = userTasksRepository.findByUserId(userId); // TODO: Get only completed tasks
+        List<UserTask> userTasks = userTasksRepository.findByUserIdAndStatus(userId, UserTaskStatus.COMPLETED); // TODO: Get only completed tasks
 
         if (!userTasks.isEmpty()) {
-            List<UserTask> userTasksList = userTasks.stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).toList();
             UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
-                    .completedTaskCount((long) userTasksList.size()).totalEarning(userTasksList.stream().mapToDouble(e -> e.task().price()).sum());
+                    .completedTaskCount((long) userTasks.size()).totalEarning(userTasks.stream().mapToDouble(e -> e.task().price()).sum());
 
             return summaryResponseBuilder.build();
         } else {
