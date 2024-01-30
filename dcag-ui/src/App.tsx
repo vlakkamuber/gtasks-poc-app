@@ -36,6 +36,7 @@ import ImageUploadTask from './pages/ImageUploadTask';
 import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import RequireAuth from './components/RequireAuth';
+import ReportBug from './pages/ReportBug';
 
 setupIonicReact();
 
@@ -86,6 +87,15 @@ const App: React.FC = () => (
           render={() => (
             <RequireAuth>
               <Dashboard content={<Account />} />
+            </RequireAuth>
+          )}
+          exact
+        />
+        <Route
+          path="/dashboard/issue"
+          render={() => (
+            <RequireAuth>
+              <Dashboard content={<ReportBug />} />
             </RequireAuth>
           )}
           exact

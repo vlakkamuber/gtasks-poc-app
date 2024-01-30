@@ -29,6 +29,9 @@ const Account: React.FC = () => {
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
+  const goToReportBug = ()=>{
+    history.push("/dashboard/issue");
+  }
   return (
     <IonPage>
       <IonHeader>
@@ -84,6 +87,10 @@ const Account: React.FC = () => {
           <IonItem button className="no-border">
           <IonIcon icon={help} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.help`)}</IonLabel>
+          </IonItem>
+          <IonItem onClick={()=>goToReportBug()}>
+          <IonIcon icon={help} slot="start" />
+            <IonLabel>{t(`dcag.account.page.link.reportBug`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border" onClick={logOut}>
           <IonIcon icon={logOutIcon} slot="start" />
