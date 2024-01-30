@@ -226,6 +226,23 @@ paths:
           description: "A successful response"
           schema:
             type: object
+    delete:
+      summary: "Delete assigned task of the user"
+      operationId: "deleteUserTask"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskId
+          in: path
+          required: true
+          type: string
+          description: "ID of the task"
+      responses:
+        '200':
+          description: "A successful response"
     options:
       description: "Cors for createUserTask"
       operationId: "createUserTask CORS"
