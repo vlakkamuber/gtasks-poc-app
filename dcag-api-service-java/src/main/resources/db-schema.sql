@@ -46,6 +46,16 @@ CREATE TABLE user_tasks
     FOREIGN KEY (task_id) REFERENCES tasks (id)
 );
 
+CREATE TABLE user_issues
+(
+    id              BIGINT       NOT NULL AUTO_INCREMENT,
+    user_id         VARCHAR(255) NOT NULL,
+    description     TEXT,
+    create_time     TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 ------------------ DATA ------------------
 ------------------ Tasks ------------------
 -- TEXT_TO_AUDIO
