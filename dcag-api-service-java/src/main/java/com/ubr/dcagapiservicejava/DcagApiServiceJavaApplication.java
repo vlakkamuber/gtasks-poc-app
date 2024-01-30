@@ -40,7 +40,7 @@ class RootController {
     }
 
     @RequestMapping("/health")
-    String root() {
+    String health() {
         return "OK";
     }
 }
