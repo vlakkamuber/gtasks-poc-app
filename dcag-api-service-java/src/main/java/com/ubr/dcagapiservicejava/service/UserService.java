@@ -1,10 +1,14 @@
 package com.ubr.dcagapiservicejava.service;
 
  
+import com.ubr.dcagapiservicejava.domain.UserIssue;
 import com.ubr.dcagapiservicejava.dto.UserDTO;
+import com.ubr.dcagapiservicejava.dto.UserIssueDTO;
 import com.ubr.dcagapiservicejava.dto.UserResponse;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
+import com.ubr.dcagapiservicejava.repository.UserIssueRepository;
 import com.ubr.dcagapiservicejava.repository.UserRepository;
+import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ubr.dcagapiservicejava.domain.User;
@@ -19,6 +23,9 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserIssueRepository userIssueRepository;
 
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
@@ -76,5 +83,13 @@ public class UserService {
                 .findByPhoneNumber(phoneNumber)
                 .map(UserResponse::new)
                 .orElseThrow(userNotFound(phoneNumber));
+    }
+
+    public Long saveUserIssue(String userId, UserIssueDTO userIssueDTO) {
+
+        UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId)).
+                description(userIssueDTO.issueDesc()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+
+        return issue.id();
     }
 }

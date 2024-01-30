@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 //@Document(collectionName = "users")
@@ -38,5 +39,8 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private Set<UserTask> userTasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserIssue> userIssues;
 
 }

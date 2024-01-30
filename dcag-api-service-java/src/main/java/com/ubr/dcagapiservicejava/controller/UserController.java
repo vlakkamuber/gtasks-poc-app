@@ -71,6 +71,18 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/{userId}/issue")
+    ResponseEntity<?> saveUserIssue(@PathVariable String userId, @RequestBody UserIssueDTO userIssueDTO) {
+       Long savedId =  userService.saveUserIssue(userId,userIssueDTO);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}") //UriComponentsBuilder.fromPath("/{id}")
+                .buildAndExpand(savedId)
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
 //    @GetMapping("/tasks/nearer")
 //    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
 //        return taskService.findAAllNearerTasks(latitude, longitude, distance);
