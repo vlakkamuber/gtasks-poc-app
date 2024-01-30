@@ -410,6 +410,7 @@ const PerformTask: React.FC = () => {
               duration={5000}
               color="success"
               position="top"
+              className="success-toast"
             />
           </>
         ) : null}

@@ -343,7 +343,7 @@ const Tasks: React.FC = () => {
                       );
                     })}
                   <div style={{ display: 'flex', justifyContent: 'right',cursor:'pointer' }}>
-                    <span style={{fontSize:'1.2rem',fontWeight:'500',marginRight:'12px'}} onClick={() => loadMore(key)}>{t(`dcag.home.btn.loadMore.label`)}
+                    <span style={{fontSize:'1rem',fontWeight:'normal',marginRight:'12px'}} onClick={() => loadMore(key)}>{t(`dcag.home.btn.loadMore.label`)}
                     </span>
                   </div>
 
