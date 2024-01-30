@@ -262,6 +262,35 @@ paths:
           description: "Allow"
         401:
           description: "Cors not allowed"
+  /users/{userId}/issues:
+    post:
+      summary: "Create reported issue of the user"
+      operationId: "createReportedIssue"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+    options:
+      description: "Cors for createReportedIssue"
+      operationId: "createReportedIssue CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
   /tasks:
     get:
       summary: "Get all tasks"
