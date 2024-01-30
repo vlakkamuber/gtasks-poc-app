@@ -71,7 +71,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{userId}/issue")
+    @PostMapping("/{userId}/issues")
     ResponseEntity<?> saveUserIssue(@PathVariable String userId, @RequestBody UserIssueDTO userIssueDTO) {
        Long savedId =  userService.saveUserIssue(userId,userIssueDTO);
 
