@@ -38,4 +38,9 @@ class RootController {
     String root() {
         return "Running...Dcag api service java";
     }
+
+    @RequestMapping("/health")
+    String root() {
+        return "OK";
+    }
 }
