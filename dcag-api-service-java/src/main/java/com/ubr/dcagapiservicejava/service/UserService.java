@@ -88,7 +88,7 @@ public class UserService {
     public Long saveUserIssue(String userId, UserIssueDTO userIssueDTO) {
 
         UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId)).
-                description(userIssueDTO.issueDesc()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+                description(userIssueDTO.description()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
 
         return issue.id();
     }
