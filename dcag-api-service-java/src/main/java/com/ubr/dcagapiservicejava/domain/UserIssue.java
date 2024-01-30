@@ -25,6 +25,8 @@ public class UserIssue implements Serializable {
     @JoinColumn(name="user_id", nullable=false)
     private User user;
 
+    private String summary;
+
     private String description;
 
     @Column(name = "create_time")

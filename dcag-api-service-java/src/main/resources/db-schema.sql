@@ -50,6 +50,7 @@ CREATE TABLE user_issues
 (
     id              BIGINT       NOT NULL AUTO_INCREMENT,
     user_id         VARCHAR(255) NOT NULL,
+    summary         VARCHAR(255) NOT NULL,
     description     TEXT,
     create_time     TIMESTAMP,
     PRIMARY KEY (id),

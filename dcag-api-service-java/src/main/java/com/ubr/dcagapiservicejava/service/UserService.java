@@ -90,7 +90,7 @@ public class UserService {
         if(userRepository.findById(userId).isPresent()) {
 
             UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId)).
-                    description(userIssueDTO.description()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+                    description(userIssueDTO.description()).summary(userIssueDTO.summary()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
 
             return issue.id();
         }else {
