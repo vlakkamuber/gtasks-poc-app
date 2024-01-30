@@ -195,7 +195,28 @@ const apiService = {
       headers
     });
     return response.json();
-  }
+  },
+  async saveIssue({
+    userId,
+    body,
+    user
+  }: {
+    userId: string;
+    body: any;
+    user: any;
+  }) {
+    const endpoint = `users/${userId}/issues`;
+    const headers = getHeaders({ user });
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    return response
+  },
 };
 
 export default apiService;
