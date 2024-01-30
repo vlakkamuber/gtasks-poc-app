@@ -87,9 +87,14 @@ public class UserService {
 
     public Long saveUserIssue(String userId, UserIssueDTO userIssueDTO) {
 
-        UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId)).
-                description(userIssueDTO.description()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+        if(userRepository.findById(userId).isPresent()) {
 
-        return issue.id();
+            UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId)).
+                    description(userIssueDTO.description()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+
+            return issue.id();
+        }else {
+            throw new UserNotFoundException("User not found: " + userId);
+        }
     }
 }
