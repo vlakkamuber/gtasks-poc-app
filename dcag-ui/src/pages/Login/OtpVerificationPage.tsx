@@ -39,6 +39,24 @@ const OtpVerificationPage = ({ sendOtpResponse,isUserExist }: Props) => {
     setOtp(updatedOtp);
   };
 
+  const handleKeyDown: (event: any, index: number) => void = (event, index) => {
+    const KeyID = event.keyCode;
+    switch (KeyID) {
+      case 8:
+      case 46:
+        if (index > 0) {
+          inputRefs[index - 1].current.focus();
+        }
+        // eslint-disable-next-line no-case-declarations
+        const updatedOtp = [...otp];
+        updatedOtp[index] = '';
+        setOtp(updatedOtp);
+        break;
+      default:
+        break;
+    }
+  };
+
   const createUserInDB = async (uid,phoneNumber)=>{
     await apiService.createUserInDB(uid,phoneNumber)
     dismiss();
@@ -59,8 +77,9 @@ const OtpVerificationPage = ({ sendOtpResponse,isUserExist }: Props) => {
           dismiss();
           history.push('/dashboard/home');
         }
-       
+
       } catch (err) {
+        dismiss();
         setError(err.message);
       }
     }
@@ -77,7 +96,9 @@ const OtpVerificationPage = ({ sendOtpResponse,isUserExist }: Props) => {
             key={index}
             ref={inputRefs[index]}
             type="text"
+            inputMode="numeric"
             value={value}
+            onKeyDown={(e) => handleKeyDown(e, index)}
             onChange={(e) => handleInputChange(e, index)}
             maxLength={1}
           />
