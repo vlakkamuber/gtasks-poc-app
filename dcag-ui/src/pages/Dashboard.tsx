@@ -8,20 +8,34 @@ import {
   IonIcon,
   IonLabel,
   IonRouterOutlet,
+  IonFab,
+  IonFabButton,
 } from "@ionic/react";
-import { home, schoolOutline, person, list } from "ionicons/icons";
+import { home, schoolOutline, person, list,warningSharp } from "ionicons/icons";
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from "../context/UserAuthContext";
+import { useHistory } from "react-router-dom";
 
 const Dashboard: React.FC = ({content}) => {
   const { t } = useTranslation();
   const { user, loading } = useUserAuth();
+  const history = useHistory()
   useEffect(() => {
     if (user) {
       localStorage.setItem("loggedInUser",JSON.stringify(user.uid))
     }
   }, [user])
+  const goToReportBug = ()=>{
+    history.push("/dashboard/issue");
+  }
   return (
+    <>
+    <IonFab className="report-issue-fab" onClick={()=>goToReportBug()}>
+        <IonFabButton>
+          <IonIcon icon={warningSharp} />
+        </IonFabButton>
+      </IonFab>
+   
     <IonTabs>
       <IonRouterOutlet>
       <Redirect exact from="/dashboard" to="/dashboard/home" />
@@ -32,6 +46,7 @@ const Dashboard: React.FC = ({content}) => {
         <Route path="/dashboard/issue" render={() => <>{content}</>}/>
         <Route path="/dashboard/help" render={() => <>{content}</>}/>
       </IonRouterOutlet>
+
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/dashboard/home">
           <IonIcon icon={home} />
@@ -54,6 +69,7 @@ const Dashboard: React.FC = ({content}) => {
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
+    </>
   );
 };
 

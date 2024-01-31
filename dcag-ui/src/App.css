@@ -327,6 +327,11 @@ label {
   left: 50%; /* Adjust the left position if needed */
   transform: translateX(-50%); /* Center horizontally */
 }
+.report-issue-fab{
+  position: absolute;
+  bottom: 60px;
+  right: 10px;
+}
 
 @media only screen and (min-width: 992px) {
   html {
