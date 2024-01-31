@@ -1,5 +1,5 @@
 // src/pages/Dashboard.tsx
-import React, {useEffect} from "react";
+import React, {useState,useEffect} from "react";
 import { Redirect, Route } from "react-router-dom";
 import {
   IonTabs,
@@ -14,27 +14,34 @@ import {
 import { home, schoolOutline, person, list,warningSharp } from "ionicons/icons";
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from "../context/UserAuthContext";
-import { useHistory } from "react-router-dom";
+import { useHistory,useLocation } from "react-router-dom";
 
 const Dashboard: React.FC = ({content}) => {
   const { t } = useTranslation();
   const { user, loading } = useUserAuth();
   const history = useHistory()
+  const location = useLocation();
+  const [showFab, setShowFab] = useState(true);
   useEffect(() => {
     if (user) {
       localStorage.setItem("loggedInUser",JSON.stringify(user.uid))
     }
   }, [user])
+  useEffect(() => {
+    const isDashboardOrReport = location.pathname.includes("/dashboard/issue");
+    setShowFab(!isDashboardOrReport);
+  }, [location]);
+
   const goToReportBug = ()=>{
     history.push("/dashboard/issue");
   }
   return (
     <>
-    <IonFab className="report-issue-fab" onClick={()=>goToReportBug()}>
+   {showFab && ( <IonFab className="report-issue-fab" onClick={()=>goToReportBug()}>
         <IonFabButton className="outline-fab-button">
           <IonIcon icon={warningSharp} />
         </IonFabButton>
-      </IonFab>
+      </IonFab>)}
    
     <IonTabs>
       <IonRouterOutlet>
