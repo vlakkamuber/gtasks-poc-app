@@ -9,7 +9,8 @@ import {
   IonLabel,
   IonRadio,
   IonToast,
-  useIonLoading
+  useIonLoading,
+  IonAlert
 } from '@ionic/react';
 
 import { useHistory, useParams } from 'react-router-dom';
@@ -416,12 +417,29 @@ const PerformTask: React.FC = () => {
                     </Button>
                   ]}
                   dismissiveAction={
-                    <Button
-                      kind={KIND.tertiary}
-                      onClick={stopWork}
-                      colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
-                      {t(`dcag.home.btn.cancel.label`)}
-                    </Button>
+                    <>
+                      <Button
+                        kind={KIND.tertiary}
+                        id="release-task"
+                        colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
+                        {t(`dcag.home.btn.cancel.label`)}
+                      </Button>
+                      <IonAlert
+                        header="Alert!"
+                        message="Are you sure, you want to release this task?"
+                        trigger="release-task"
+                        buttons={[
+                          {
+                            text: 'Cancel',
+                            role: 'cancel'
+                          },
+                          {
+                            text: 'Release',
+                            role: 'confirm',
+                            handler: stopWork
+                          }
+                        ]}></IonAlert>
+                    </>
                   }
                 />
               )}
