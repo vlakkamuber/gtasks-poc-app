@@ -26,6 +26,7 @@ import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../const
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
 import { Badge, COLOR } from 'baseui/badge';
+import {showPayout} from "../utils/Settings"
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -217,7 +218,7 @@ const Tasks: React.FC = () => {
       </IonHeader>
       <IonContent className="ion-padding-start" style={{'--padding-bottom': '77px'}}>
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
-        <div className="tasks-info" style={{ marginTop: '30px' }}>
+        {showPayout && <div className="tasks-info" style={{ marginTop: '30px' }}>
           <div className="task-detail">
             <div style={{ color: '#5e5e5e' }}>
               <IonIcon icon={people} /> {t(`dcag.tasks.page.completedTask.label`)}
@@ -231,7 +232,7 @@ const Tasks: React.FC = () => {
             </div>
             <div style={{ fontSize: '2rem' }}>${totalEarned}</div>
           </div>
-        </div>
+        </div>}
         <IonSegment
           color="default"
           value={selectedSegment}
@@ -305,9 +306,9 @@ const Tasks: React.FC = () => {
                                   color={COLOR.accent}
                                   />}
                                 </span>{' '}
-                                <p>
+                                {showPayout && <p>
                                   {t(`dcag.tasks.payouts.label`)}: ${task.price}
-                                </p>
+                                </p>}
                                 {/* <p>
                                   <small>
                                     {t(`dcag.tasks.createdAt.label`)}:{' '}
@@ -378,9 +379,9 @@ const Tasks: React.FC = () => {
                       <span style={{ display: 'flex' }}>
                         <h2>Default Task</h2>
                         </span>
-                        <p>
+                        {showPayout && <p>
                                       {t(`dcag.tasks.payouts.label`)}: $2
-                                    </p>
+                                    </p>}
                   </IonLabel>
                         <IonButton
                                     slot="end"

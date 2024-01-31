@@ -28,6 +28,7 @@ import LoadingComponent from '../components/Loader';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { useUserAuth } from '../context/UserAuthContext';
 import { LOADER_MESSAGE } from '../constants/contant';
+import { showPayout } from '../utils/Settings';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -216,10 +217,10 @@ const PerformTask: React.FC = () => {
                   {t(`dcag.tasks.dueDate.label`)}: {formatDate(selectedTask.dueDateTime)}
                 </samll>
               </p> */}
-              <p className="no-padding-margin">
+              {showPayout &&<p className="no-padding-margin">
                 <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
                 <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
-              </p>
+              </p>}
             </div>
             <div
               style={{

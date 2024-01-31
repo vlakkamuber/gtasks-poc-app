@@ -87,7 +87,7 @@
   "dcag.home.taskHub.localize": "Localise",
   "dcag.home.taskHub.record": "Record",
   "dcag.tasks.performTask.inputAudio.confirm": "Is this input audio accurate?",
-  "dcag.tasks.performTask.inputAudio.confirm.yes": "yes",
+  "dcag.tasks.performTask.inputAudio.confirm.yes": "Yes",
   "dcag.tasks.performTask.inputAudio.confirm.no": "No",
   "dcag.tasks.performTask.image.description.label": "Describe Image",
   "dcag.tasks.performTask.uploadImage.taskInput.label": "Task Name",

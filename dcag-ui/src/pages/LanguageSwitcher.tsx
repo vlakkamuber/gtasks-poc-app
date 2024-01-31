@@ -22,7 +22,7 @@ const LanguageSwitcher: React.FC = () => {
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
-    <IonSelect placeholder="Select Language" value={language} onIonChange={handleChange}>
+    <IonSelect placeholder="Select Language" value={language} onIonChange={handleChange} disabled={true}>
       <IonSelectOption value="en">English</IonSelectOption>
       <IonSelectOption value="ts">Telugu</IonSelectOption>
     </IonSelect>

@@ -25,6 +25,7 @@ import {
   import LoadingComponent from '../components/Loader';
   import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import { useUserAuth } from '../context/UserAuthContext';
+import { showPayout } from '../utils/Settings';
 
 
   const ImageUploadTask: React.FC = () => {
@@ -179,10 +180,10 @@ import { useUserAuth } from '../context/UserAuthContext';
                   {t(`dcag.tasks.dueDate.label`)}: {formatDate(selectedTask.dueDateTime)}
                 </samll>
               </p> */}
-              <p className="no-padding-margin">
+              {showPayout &&<p className="no-padding-margin">
                 <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
                 <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
-              </p>
+              </p>}
               {selectedTask.taskType === 'UPLOAD_IMAGE' && (
                 <div style={{marginTop:'10px'}}>
                   <IonLabel className="label-with-margin" style={{ marginTop: '10px', marginBottom: '10px' }}>

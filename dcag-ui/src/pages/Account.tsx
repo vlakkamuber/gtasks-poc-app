@@ -80,11 +80,11 @@ const Account: React.FC = () => {
           <IonIcon icon={settings} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.appSettings`)}</IonLabel>
           </IonItem> */}
-          <IonItem button className="no-border clickable-cursor">
+          <IonItem button className="no-border clickable-cursor" routerLink="/dashboard/training">
           <IonIcon icon={school} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.trainingmodule`)}</IonLabel>
           </IonItem>
-          <IonItem button className="no-border clickable-cursor">
+          <IonItem button className="no-border clickable-cursor" disabled={true}>
           <IonIcon icon={help} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.help`)}</IonLabel>
           </IonItem>
