@@ -27,11 +27,13 @@ import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
 import { Badge, COLOR } from 'baseui/badge';
 import {showPayout} from "../utils/Settings"
+import ErrorView from '../components/ErrorView';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
   const [tasks, setTasks] = useState([]);
+  const [isError, setIsError] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
   const [availableCount, setAvailableCount] = useState(0);
   const [myTasksCount, setMyTasksCount] = useState(0);
@@ -56,30 +58,31 @@ const Tasks: React.FC = () => {
   const getAvailableTasks = async () => {
     try {
       setShowLoading(true);
-  
+      setIsError(false);
       const userId = JSON.parse(localStorage.getItem('loggedInUser'));
       const myTasks = await apiService.getMyTasksList({ userId, user, status: "IN_PROGRESS" });
       const myCompletedTasks = await apiService.getMyTasksList({ userId, user, status: "COMPLETED" });
       setMyTasksCount(myCompletedTasks.length);
-  
+
       let availableTasks = [];
-  
+
       if (selectedCategory === "ALL") {
         const categories = ["AUDIO_TO_AUDIO", "IMAGE_TO_TEXT", "UPLOAD_IMAGE", "TEXT_TO_AUDIO"];
-  
+
         // Fetch tasks for each category concurrently
         const tasksPromises = categories.map(category =>
           apiService.getAvailableTasks({ userId, user, selectedCategory: category })
         );
-  
+
         const categoryTasks = await Promise.all(tasksPromises);
         availableTasks = [...myTasks, ...categoryTasks.flat()];
       } else {
         availableTasks = await apiService.getAvailableTasks({ userId, user, selectedCategory });
       }
-  
+
       setShowLoading(false);
-  
+      setIsError(false);
+
       const filteredMyTasks = filterTaskWithSelectedCategory(myTasks, selectedCategory);
       const isImageUploadAvailable = myTasks.some(task => task.taskType === "UPLOAD_IMAGE");
       setIsImageUploadAvailable(isImageUploadAvailable)
@@ -95,11 +98,13 @@ const Tasks: React.FC = () => {
       setAvailableCount(orderedTasks.length);
       setTasks(groupBy(orderedTasks, 'taskType'));
     } catch (error) {
+      setShowLoading(false);
+      setIsError(true);
       console.error('Error fetching task data:', error);
       // Handle the error accordingly
     }
   };
-  
+
   const getTaskSummary = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
@@ -201,10 +206,24 @@ const Tasks: React.FC = () => {
         ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
         : finalTaskList;
       const orderedTasks = orderTasksByType(result, ["AUDIO_TO_AUDIO", "IMAGE_TO_TEXT", "UPLOAD_IMAGE", "TEXT_TO_AUDIO"]);
-      
+
       setAvailableCount(orderedTasks.length);
       setTasks(groupBy(orderedTasks, 'taskType'));
       setShowLoading(false);
+  }
+  if (isError) {
+    return (
+      <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding-start" style={{'--padding-bottom': '77px'}}>
+          <ErrorView />
+        </IonContent>
+    </IonPage>
+    );
   }
   return (
     <IonPage>
@@ -338,9 +357,9 @@ const Tasks: React.FC = () => {
                             </IonItem>
                             {/* Add more IonItem elements as needed */}
                           </IonList>
-                          
+
                         </React.Fragment>
-                        
+
                       );
                     })}
                   <div style={{ display: 'flex', justifyContent: 'right',cursor:'pointer' }}>
@@ -350,7 +369,7 @@ const Tasks: React.FC = () => {
 
                   </React.Fragment>
                 );
-                
+
               })}
             </React.Fragment>
             {((selectedCategory==="UPLOAD_IMAGE"  || selectedCategory==="ALL") && isImageUploadAvailable===false) &&<>
