@@ -79,6 +79,14 @@ paths:
           description: A successful response
           schema:
             type: object
+    options:
+      description: "Cors for createUser"
+      operationId: "createUser CORS"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
   /users/{userId}:
     get:
       summary: "Get user by id"
