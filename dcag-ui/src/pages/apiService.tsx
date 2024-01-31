@@ -190,21 +190,13 @@ const apiService = {
   async releaseTask({ userId, taskId, user }) {
     const headers = getHeaders({ user });
     const endPoint = `users/${userId}/tasks/${taskId}`;
-    const response = await fetch(endPoint, {
+    const response = await fetch(`${API_BASE_URL}/${endPoint}`, {
       method: 'DELETE',
       headers
     });
-    return response.json();
+    return response.text();
   },
-  async saveIssue({
-    userId,
-    body,
-    user
-  }: {
-    userId: string;
-    body: any;
-    user: any;
-  }) {
+  async saveIssue({ userId, body, user }: { userId: string; body: any; user: any }) {
     const endpoint = `users/${userId}/issues`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
@@ -215,19 +207,19 @@ const apiService = {
       },
       body: JSON.stringify(body)
     });
-    return response
+    return response;
   },
-  async createUserInDB(uid,phoneNumber) {
+  async createUserInDB(uid, phoneNumber) {
     const endpoint = `users`;
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({userId:uid,phoneNumber:phoneNumber})
+      body: JSON.stringify({ userId: uid, phoneNumber: phoneNumber })
     });
-    return response
-  },
+    return response;
+  }
 };
 
 export default apiService;

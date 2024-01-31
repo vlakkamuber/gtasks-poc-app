@@ -8,7 +8,8 @@ import {
   IonIcon,
   IonLabel,
   IonRadio,
-  IonToast
+  IonToast,
+  useIonLoading
 } from '@ionic/react';
 
 import { useHistory, useParams } from 'react-router-dom';
@@ -25,15 +26,19 @@ import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { useUserAuth } from '../context/UserAuthContext';
+import { LOADER_MESSAGE } from '../constants/contant';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = useParams();
   const { user } = useUserAuth();
+  console.log('user ', user);
 
   const goBack = () => {
     history.push('/dashboard/tasks'); // This function navigates back to the previous page
   };
+
+  const [present, dismiss] = useIonLoading();
 
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
@@ -165,9 +170,18 @@ const PerformTask: React.FC = () => {
     }
   };
 
-  const stopWork = () => {
-    // apiService.releaseTask(userId, taskId, user);
-    history.push('/dashboard/tasks');
+  const stopWork = async () => {
+    try {
+      let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+      const taskId = selectedTask.taskId;
+      present(LOADER_MESSAGE);
+      await apiService.releaseTask({ userId, taskId, user });
+      dismiss();
+      history.push('/dashboard/tasks');
+    } catch (err) {
+      dismiss();
+      console.log('Error ', err);
+    }
   };
 
   return (
@@ -402,7 +416,10 @@ const PerformTask: React.FC = () => {
                     </Button>
                   ]}
                   dismissiveAction={
-                    <Button kind={KIND.tertiary} onClick={stopWork}>
+                    <Button
+                      kind={KIND.tertiary}
+                      onClick={stopWork}
+                      colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
                       {t(`dcag.home.btn.cancel.label`)}
                     </Button>
                   }
