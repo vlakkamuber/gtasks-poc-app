@@ -11,9 +11,10 @@ import { Toast, KIND } from 'baseui/toast';
 type Props = {
   setSendOtpResponse: Dispatch<SetStateAction<string>>;
   setIsOtpSent: Dispatch<SetStateAction<boolean>>;
+  setIsUserExist:Dispatch<SetStateAction<boolean>>;
 };
 
-const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent }: Props) => {
+const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist }: Props) => {
   const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] = useState(COUNTRY_OPTIONS[0]);
   const [phone, setPhone] = useState('');
@@ -52,9 +53,13 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent }: Props) => {
       dismiss();
       if (res.id) {
         setIsNextDisabled(true);
+        setIsUserExist(true)
         sendOtp(phone);
       } else {
-        setError('This phone number does not have access. Please contact administrator');
+        setIsNextDisabled(true);
+        setIsUserExist(false)
+        sendOtp(phone);
+        //setError('This phone number does not have access. Please contact administrator');
       }
     } catch (err) {
       setError(err.message);
@@ -68,6 +73,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent }: Props) => {
       <div className="phone-select-container">
         <IonSelect
           placeholder={selectedCountry.flag}
+          disabled={true}
           className="country-select-box"
           value={selectedCountry.flag}
           style={{ height: '5vh', minHeight: 'unset', paddingeft: '9px' }}>

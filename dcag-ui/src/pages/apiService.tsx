@@ -217,6 +217,17 @@ const apiService = {
     });
     return response
   },
+  async createUserInDB(uid,phoneNumber) {
+    const endpoint = `users`;
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({userId:uid,phoneNumber:phoneNumber})
+    });
+    return response
+  },
 };
 
 export default apiService;

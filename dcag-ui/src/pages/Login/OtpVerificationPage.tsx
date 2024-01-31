@@ -8,12 +8,14 @@ import { Block } from 'baseui/block';
 import { Button, KIND, SHAPE } from 'baseui/button';
 import NavigationBar from './NavigationBar';
 import { Toast, KIND as TOAST_KIND } from 'baseui/toast';
+import apiService from '../apiService';
 
 type Props = {
   sendOtpResponse: any;
+  isUserExist:any;
 };
 
-const OtpVerificationPage = ({ sendOtpResponse }: Props) => {
+const OtpVerificationPage = ({ sendOtpResponse,isUserExist }: Props) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const { t } = useTranslation();
   const inputRefs = [
@@ -37,6 +39,12 @@ const OtpVerificationPage = ({ sendOtpResponse }: Props) => {
     setOtp(updatedOtp);
   };
 
+  const createUserInDB = async (uid,phoneNumber)=>{
+    await apiService.createUserInDB(uid,phoneNumber)
+    dismiss();
+    history.push('/dashboard/home');
+  }
+
   const verifyOtp = () => {
     async function verify() {
       setError('');
@@ -44,9 +52,14 @@ const OtpVerificationPage = ({ sendOtpResponse }: Props) => {
       try {
         const otpnumeric = mapTeluguDigitsToNumeric(otp.join(''));
         present(LOADER_MESSAGE);
-        await sendOtpResponse.confirm(otpnumeric);
-        dismiss();
-        history.push('/dashboard/home');
+        let result = await sendOtpResponse.confirm(otpnumeric);
+        if(!isUserExist) {
+          createUserInDB(result.user.uid,result.user.phoneNumber)
+        }else{
+          dismiss();
+          history.push('/dashboard/home');
+        }
+       
       } catch (err) {
         setError(err.message);
       }

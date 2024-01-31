@@ -6,13 +6,14 @@ import OtpVerificationPage from './OtpVerificationPage';
 const Login = () => {
   const [sendOtpResponse, setSendOtpResponse] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isUserExist,setIsUserExist] = useState(false)
 
   return (
     <IonPage className="p-16">
       {isOtpSent ? (
-        <OtpVerificationPage sendOtpResponse={sendOtpResponse} />
+        <OtpVerificationPage sendOtpResponse={sendOtpResponse} isUserExist={isUserExist}/>
       ) : (
-        <LoginWithNumberPage setSendOtpResponse={setSendOtpResponse} setIsOtpSent={setIsOtpSent} />
+        <LoginWithNumberPage setSendOtpResponse={setSendOtpResponse} setIsOtpSent={setIsOtpSent} setIsUserExist={setIsUserExist}/>
       )}
     </IonPage>
   );
