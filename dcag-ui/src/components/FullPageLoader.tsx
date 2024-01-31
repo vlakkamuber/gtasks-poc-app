@@ -4,9 +4,7 @@ import { IonContent, IonHeader, IonPage, IonSpinner } from '@ionic/react';
 const FullPageLoader = () => (
   <IonPage>
     <IonHeader></IonHeader>
-    <IonContent>
-      <IonSpinner name="circular"></IonSpinner>
-    </IonContent>
+    <IonContent></IonContent>
   </IonPage>
 );
 
