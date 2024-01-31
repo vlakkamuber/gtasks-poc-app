@@ -215,7 +215,7 @@ const Tasks: React.FC = () => {
           <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding-start">
+      <IonContent className="ion-padding-start" style={{'--padding-bottom': '77px'}}>
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         <div className="tasks-info" style={{ marginTop: '30px' }}>
           <div className="task-detail">
@@ -343,7 +343,7 @@ const Tasks: React.FC = () => {
                       );
                     })}
                   <div style={{ display: 'flex', justifyContent: 'right',cursor:'pointer' }}>
-                    <span style={{fontSize:'1rem',fontWeight:'normal',marginRight:'12px'}} onClick={() => loadMore(key)}>{t(`dcag.home.btn.loadMore.label`)}
+                    <span style={{fontSize:'1rem',fontWeight:'normal',marginRight:'12px',textDecoration:'underline',color:'#0000EE'}} onClick={() => loadMore(key)}>{t(`dcag.home.btn.loadMore.label`)}
                     </span>
                   </div>
 

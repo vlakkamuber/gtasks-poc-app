@@ -31,7 +31,7 @@ const Dashboard: React.FC = ({content}) => {
   return (
     <>
     <IonFab className="report-issue-fab" onClick={()=>goToReportBug()}>
-        <IonFabButton>
+        <IonFabButton className="outline-fab-button">
           <IonIcon icon={warningSharp} />
         </IonFabButton>
       </IonFab>
