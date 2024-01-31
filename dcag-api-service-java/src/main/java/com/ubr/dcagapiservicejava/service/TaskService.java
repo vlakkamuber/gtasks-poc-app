@@ -2,38 +2,24 @@ package com.ubr.dcagapiservicejava.service;
 
 
 import com.ubr.dcagapiservicejava.domain.Task;
-import com.ubr.dcagapiservicejava.domain.User;
-import com.ubr.dcagapiservicejava.domain.UserTask;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
-import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 import com.ubr.dcagapiservicejava.dto.*;
-import com.ubr.dcagapiservicejava.error.TaskException;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
-import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @Service
 public class TaskService {
 
@@ -72,6 +58,7 @@ public class TaskService {
                 .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                 .dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
+        log.info("Task is created - {}",taskDTO.name());
         return taskToTaskResponse(savedTask);
     }
 
@@ -112,6 +99,7 @@ public class TaskService {
 
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
 
+        log.info("Update Task start - {}",taskDTO.name());
         Task task = new Task()
                 .name(taskDTO.name())
                 .taskType(taskDTO.taskType())
@@ -139,6 +127,9 @@ public class TaskService {
     }
 
     public void delete(Long taskId) {
+
+        log.info("Delete Task start - {}",taskId);
+
         taskRepository.findById(taskId)
                 .ifPresentOrElse(taskRepository::delete,
                         () -> {

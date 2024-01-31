@@ -15,7 +15,7 @@ import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
-import org.apache.commons.lang3.EnumUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +26,7 @@ import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+@Slf4j
 @Service
 public class UserTaskService {
 
@@ -67,7 +68,7 @@ public class UserTaskService {
                         .status(status)
                         .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                 userTask = userTasksRepository.save(userTask);
-
+                log.info("User - {} In progress task - {} created",userId,taskId);
                 updateTaskStatus(taskId);
 
                 return userTaskToBasicUserTaskResponse(userTask, task.get());
@@ -119,6 +120,7 @@ public class UserTaskService {
                             .startTime(userTask.startTime())
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                     updatedUserTask = userTasksRepository.save(updatedUserTask);
+                    log.info("User - {}  task - {} status completed",userId,taskId);
                     updateTaskStatus(taskId);
                     return updatedUserTask;
                 })
@@ -170,6 +172,7 @@ public class UserTaskService {
 
     private void updateTaskStatus(Long taskId) {
 
+        log.info("Updating user task status for task - {}",taskId);
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
         TaskStatus status = null;
         long completedCount = 0;
@@ -277,6 +280,7 @@ public class UserTaskService {
 
         if (userTask.isPresent()) {
             userTasksRepository.deleteById(userTask.get().id());
+            log.info("User - {} task - {} deleted",userId,taskId);
             updateTaskStatus(taskId);
         }
 

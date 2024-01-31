@@ -9,6 +9,7 @@ import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import com.ubr.dcagapiservicejava.repository.UserIssueRepository;
 import com.ubr.dcagapiservicejava.repository.UserRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ubr.dcagapiservicejava.domain.User;
@@ -18,6 +19,7 @@ import java.util.function.Supplier;
 
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -41,6 +43,7 @@ public class UserService {
                 .lastName(userDTO.lastName())
                 .phoneNumber(userDTO.phoneNumber());
 
+        log.info("User creation started - {}",userDTO.userId());
         return new UserResponse(userRepository.save(user));
     }
 
@@ -58,7 +61,7 @@ public class UserService {
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
                 .phoneNumber(userDTO.phoneNumber());
-
+        log.info("User update started - {}",userDTO.userId());
         return userRepository
                 .findById(userId)
                 .map(existingUser -> userRepository.save(userToSave))
@@ -67,6 +70,7 @@ public class UserService {
     }
 
     public void delete(String userId) {
+        log.info("User delete started - {}",userId);
         userRepository.findById(userId)
                 .ifPresentOrElse(userRepository::delete,
                         () -> {
@@ -91,6 +95,8 @@ public class UserService {
 
             UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId)).
                     description(userIssueDTO.description()).summary(userIssueDTO.summary()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+
+            log.info("User issue submitted - {}",userId);
 
             return issue.id();
         }else {
