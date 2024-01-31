@@ -12,7 +12,7 @@ import {
   IonBadge,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
-import { arrowBack, person, wallet, settings, logOut as logOutIcon, star, documentText, card, school, lockClosed, help, information, informationCircle } from "ionicons/icons";
+import { arrowBack, person, wallet, settings, logOut as logOutIcon, star, documentText, card, school, lockClosed, help, warningSharp } from "ionicons/icons";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from "../context/UserAuthContext";
@@ -89,7 +89,7 @@ const Account: React.FC = () => {
             <IonLabel>{t(`dcag.account.page.link.help`)}</IonLabel>
           </IonItem>
           <IonItem onClick={()=>goToReportBug()} button className="no-border clickable-cursor">
-          <IonIcon icon={documentText} slot="start" />
+          <IonIcon icon={warningSharp} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.reportBug`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border clickable-cursor" onClick={logOut}>
