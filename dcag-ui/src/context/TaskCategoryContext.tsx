@@ -3,7 +3,7 @@ import { createContext, useContext, useState,useEffect } from 'react';
 const TaskCategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedCategory, setSelectedCategory] = useState("AUDIO_TO_AUDIO");
 
   const value = {
     selectedCategory,

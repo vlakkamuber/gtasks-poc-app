@@ -80,19 +80,19 @@ const Account: React.FC = () => {
           <IonIcon icon={settings} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.appSettings`)}</IonLabel>
           </IonItem> */}
-          <IonItem button className="no-border">
+          <IonItem button className="no-border clickable-cursor">
           <IonIcon icon={school} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.trainingmodule`)}</IonLabel>
           </IonItem>
-          <IonItem button className="no-border">
+          <IonItem button className="no-border clickable-cursor">
           <IonIcon icon={help} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.help`)}</IonLabel>
           </IonItem>
-          <IonItem onClick={()=>goToReportBug()}>
-          <IonIcon icon={help} slot="start" />
+          <IonItem onClick={()=>goToReportBug()} button className="no-border clickable-cursor">
+          <IonIcon icon={documentText} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.reportBug`)}</IonLabel>
           </IonItem>
-          <IonItem button className="no-border" onClick={logOut}>
+          <IonItem button className="no-border clickable-cursor" onClick={logOut}>
           <IonIcon icon={logOutIcon} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.logout`)}</IonLabel>
           </IonItem>

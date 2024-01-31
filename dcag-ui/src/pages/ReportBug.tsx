@@ -17,6 +17,7 @@ import {
 
   import { Button, KIND } from 'baseui/button';
   import { Textarea } from 'baseui/textarea';
+  import {Input} from 'baseui/input';
 
   import apiService from './apiService';
   import { useTranslation } from 'react-i18next';
@@ -29,6 +30,7 @@ import {
     const { user } = useUserAuth();
 
     const [description,setDescription] = useState("")
+    const [summary,setSummary] = useState("")
     const [submitted, setSubmitted] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
@@ -36,7 +38,8 @@ import {
     const saveIssue = ()=>{
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
       let body = {
-        description:description
+        description:description,
+        summary:summary
       }
       apiService
         .saveIssue({ userId,body, user })
@@ -77,8 +80,7 @@ import {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-            <>
-           
+          <>
             <div
               style={{
                 display: 'flex',
@@ -87,43 +89,58 @@ import {
                 padding: '10px',
                 margin: '20px'
               }}>
-                 <h4>Report an issue</h4>
-                 <p>We're always looking for ways to improve the app. If you've identified an issue, please report it by adding the details below. </p>
-            <p>After receiving your report, our team will look into the concern. Please note our support team won't be able to provide status updates on reported issues.</p> 
-                 <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
-                  Enter details of the issue  
-        </IonLabel>
-        <Textarea
-                    value={description}
-                    style={{ marginTop: '10px' }}
-                    onChange={(e)=>setDescription(e.target.value)}
-                    rows="2"
-                    overrides={{
-
-                      Root: {
-                        style: () => ({
-                          marginTop: '10px',
-                          marginBottom:'10px'
-                        })
-                      }
-                    }}
-                  />
-                   <div style={{display:'flex',flexDirection:'column',marginTop:'10px',gap:'15px'}}>
-                    <Button kind={KIND.primary} disabled={submitted} onClick={(e)=>submitIssue(e)}>Submit</Button>
-                    <Button kind={KIND.secondary} onClick={()=>goBack()}>Cancel</Button>
-                   </div>
-                </div>
-                <IonToast
-              isOpen={showToast}
-              onDidDismiss={() => setShowToast(false)}
-              message="Success! Task completed successfully."
-              duration={5000}
-              color="success"
-              position="top"
-              className="success-toast"
-            />
-            </>
-       
+              <h4>Report an issue</h4>
+              <p>We're always looking for ways to improve the app. If you've identified an issue, please report it by adding the details below. </p>
+              <p>After receiving your report, our team will look into the concern. Please note our support team won't be able to provide status updates on reported issues.</p> 
+              <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
+                Summary 
+              </IonLabel>
+              <Input
+                value={summary}
+                placeholder='Enter summary of the issue'
+                overrides={{
+                  Root: {
+                    style: () => ({
+                      marginTop: '10px',
+                      marginBottom:'10px'
+                    })
+                  }
+                }}
+                onChange={e => setSummary(e.target.value)}
+              />
+              <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
+                Details 
+              </IonLabel>
+              <Textarea
+                value={description}
+                placeholder='Please add details to help us understand the issue'
+                style={{ marginTop: '10px' }}
+                onChange={(e)=>setDescription(e.target.value)}
+                rows="2"
+                overrides={{
+                  Root: {
+                    style: () => ({
+                      marginTop: '10px',
+                      marginBottom:'10px'
+                    })
+                  }
+                }}
+              />
+              <div style={{display:'flex',flexDirection:'column',marginTop:'10px',gap:'15px'}}>
+                <Button kind={KIND.primary} disabled={submitted || !summary.length || !description.length} onClick={(e)=>submitIssue(e)}>Submit</Button>
+                <Button kind={KIND.secondary} onClick={()=>goBack()}>Cancel</Button>
+              </div>
+            </div>
+          <IonToast
+            isOpen={showToast}
+            onDidDismiss={() => setShowToast(false)}
+            message="Success! Issue submitted successfully."
+            duration={5000}
+            color="success"
+            position="top"
+            className="success-toast"
+          />
+        </>
         </IonContent>
       </IonPage>
     );

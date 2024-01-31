@@ -49,7 +49,7 @@ const Home: React.FC = () => {
             <h3 className="mt-0 mb-0">{t(`dcag.home.taskHub.title`)}</h3>
             <p className="mt-0 mb-0">{t(`dcag.home.taskHub.subtitle`)}</p>
           </div>
-          <IonButton onClick={()=>handleTaskCategory("ALL")} style={{
+          <IonButton onClick={()=>handleTaskCategory("AUDIO_TO_AUDIO")} style={{
                                   "--background": "#000",
                                   "--border-radius": "23px",
                                   "height": "30px",
@@ -67,14 +67,13 @@ const Home: React.FC = () => {
           />
           <IonCardHeader>
             <IonCardTitle>{t(`dcag.home.taskHub.RECORD_AUDIO.title`)}</IonCardTitle>
-            {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
             {t(`dcag.home.taskHub.RECORD_AUDIO.subtitle`)}
           </IonCardContent>
         </IonCard>
-        <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("IMAGE_TO_TEXT")}>
+        {/* <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("IMAGE_TO_TEXT")}>
           <img
             alt="Silhouette of mountains"
             src="assets/audio_to_audio.png"
@@ -82,14 +81,13 @@ const Home: React.FC = () => {
           />
           <IonCardHeader>
             <IonCardTitle>{t(`dcag.home.taskHub.DESCRIBE_IMAGE.title`)}</IonCardTitle>
-            {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
           {t(`dcag.home.taskHub.DESCRIBE_IMAGE.subtitle`)}
           </IonCardContent>
-        </IonCard>
-        <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("UPLOAD_IMAGE")}>
+        </IonCard> */}
+        {/* <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("UPLOAD_IMAGE")}>
           <img
             alt="Silhouette of mountains"
             src="assets/text_to_image.png"
@@ -97,13 +95,12 @@ const Home: React.FC = () => {
           />
           <IonCardHeader>
             <IonCardTitle> {t(`dcag.home.taskHub.UPLOAD_IMAGE.title`)}</IonCardTitle>
-            {/* <IonCardSubtitle>Card Subtitle</IonCardSubtitle> */}
           </IonCardHeader>
 
           <IonCardContent>
           {t(`dcag.home.taskHub.UPLOAD_IMAGE.subtitle`)}
           </IonCardContent>
-        </IonCard>
+        </IonCard> */}
       </IonContent>
     </IonPage>
   );
