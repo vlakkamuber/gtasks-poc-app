@@ -89,7 +89,6 @@ import {
                 padding: '10px',
                 margin: '20px'
               }}>
-              <h4>Report an issue</h4>
               <p>We're always looking for ways to improve the app. If you've identified an issue, please report it by adding the details below. </p>
               <p>After receiving your report, our team will look into the concern. Please note our support team won't be able to provide status updates on reported issues.</p> 
               <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
