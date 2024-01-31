@@ -49,7 +49,7 @@ import {
           setShowToast(true);
           setTimeout(() => {
             setShowToast(false);
-            history.push('/dashboard/account');
+            history.push('/dashboard/tasks');
           }, 2000);
         })
         .catch((error) => {
@@ -66,7 +66,7 @@ import {
     
 
     const goBack = () => {
-        history.push('/dashboard/account'); // This function navigates back to the previous page
+        history.push('/dashboard/home'); // This function navigates back to the previous page
       };
 
     return (

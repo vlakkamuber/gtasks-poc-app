@@ -331,6 +331,23 @@ label {
   position: absolute;
   bottom: 60px;
   right: 10px;
+  cursor: pointer;
+}
+.outline-fab-button{
+  width: 32px; 
+  height: 32px;
+}
+.outline-fab-button:hover::before {
+  content: "Report an Issue"; 
+  display: inline-block;
+  position: absolute;
+  background-color: #333; 
+  color: #fff; 
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-top: -35px;
+  right:0
 }
 
 @media only screen and (min-width: 992px) {
