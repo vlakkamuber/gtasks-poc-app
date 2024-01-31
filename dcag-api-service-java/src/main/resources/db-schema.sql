@@ -57,6 +57,10 @@ CREATE TABLE user_issues
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
+-- creating index
+CREATE INDEX idx_user_id ON user_tasks (user_id);
+CREATE INDEX idx_task_id ON user_tasks (task_id);
+
 ------------------ DATA ------------------
 ------------------ Tasks ------------------
 -- TEXT_TO_AUDIO
