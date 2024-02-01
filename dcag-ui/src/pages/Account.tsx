@@ -9,29 +9,42 @@ import {
   IonItem,
   IonLabel,
   IonIcon,
-  IonBadge,
-} from "@ionic/react";
-import { useHistory } from "react-router-dom";
-import { arrowBack, person, wallet, settings, logOut as logOutIcon, star, documentText, card, school, lockClosed, help, warningSharp } from "ionicons/icons";
-import LanguageSwitcher from "./LanguageSwitcher";
+  IonBadge
+} from '@ionic/react';
+import { useHistory } from 'react-router-dom';
+import {
+  arrowBack,
+  person,
+  wallet,
+  settings,
+  logOut as logOutIcon,
+  star,
+  documentText,
+  card,
+  school,
+  lockClosed,
+  help,
+  warningSharp
+} from 'ionicons/icons';
+import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
-import { useUserAuth } from "../context/UserAuthContext";
+import { useUserAuth } from '../context/UserAuthContext';
 const Account: React.FC = () => {
   const { t } = useTranslation();
-  const {logOut: firebaseLogOut} = useUserAuth();
+  const { logOut: firebaseLogOut } = useUserAuth();
   const logOut = async () => {
     await firebaseLogOut();
-    history.push("/home");
+    history.push('/home');
     localStorage.clear();
     window.location.reload(true);
-  }
+  };
   const history = useHistory();
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
-  const goToReportBug = ()=>{
-    history.push("/dashboard/issue");
-  }
+  const goToReportBug = () => {
+    history.push('/dashboard/issue');
+  };
   return (
     <IonPage>
       <IonHeader>
@@ -40,10 +53,10 @@ const Account: React.FC = () => {
             <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
-          <IonTitle className="ion-text-center">{t(`dcag.account.page.heading`)}</IonTitle>
+          <IonTitle>{t(`dcag.account.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent style={{padding:'10px'}}>
+      <IonContent style={{ padding: '10px' }}>
         {/* <div className="ion-padding" style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'20px'}}>
           <div style={{paddingLeft:'20px'}}>
           <h2>Evan Rob</h2>
@@ -53,7 +66,7 @@ const Account: React.FC = () => {
           <IonIcon icon={person} slot="start" style={{fontSize: '2rem'}}/>
         </div> */}
 
-        <IonList style={{padding:'20px'}}>
+        <IonList style={{ padding: '20px' }}>
           {/* <IonItem button className="no-border">
             <IonIcon icon={informationCircle} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.myaccount`)}</IonLabel>
@@ -81,23 +94,23 @@ const Account: React.FC = () => {
             <IonLabel>{t(`dcag.account.page.link.appSettings`)}</IonLabel>
           </IonItem> */}
           <IonItem button className="no-border clickable-cursor" routerLink="/dashboard/training">
-          <IonIcon icon={school} slot="start" />
+            <IonIcon icon={school} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.trainingmodule`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border clickable-cursor" disabled={true}>
-          <IonIcon icon={help} slot="start" />
+            <IonIcon icon={help} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.help`)}</IonLabel>
           </IonItem>
-          <IonItem onClick={()=>goToReportBug()} button className="no-border clickable-cursor">
-          <IonIcon icon={warningSharp} slot="start" />
+          <IonItem onClick={() => goToReportBug()} button className="no-border clickable-cursor">
+            <IonIcon icon={warningSharp} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.reportBug`)}</IonLabel>
           </IonItem>
           <IonItem button className="no-border clickable-cursor" onClick={logOut}>
-          <IonIcon icon={logOutIcon} slot="start" />
+            <IonIcon icon={logOutIcon} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.logout`)}</IonLabel>
           </IonItem>
           <IonItem>
-          <IonLabel>App Language</IonLabel> <LanguageSwitcher/>
+            <IonLabel>App Language</IonLabel> <LanguageSwitcher />
           </IonItem>
         </IonList>
       </IonContent>

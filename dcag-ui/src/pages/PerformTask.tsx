@@ -193,7 +193,7 @@ const PerformTask: React.FC = () => {
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} className="clickable-cursor" />
           </IonButtons>
-          <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
+          <IonTitle>{t(`dcag.tasks.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

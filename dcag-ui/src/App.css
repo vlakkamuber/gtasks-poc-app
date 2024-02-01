@@ -18,6 +18,9 @@
 .p-16 {
   padding: 16px;
 }
+.p-4 {
+  padding: 4px;
+}
 
 .otp-input {
   display: flex;
@@ -302,7 +305,7 @@ label {
 }
 
 .image-container {
-  height: 200px; 
+  height: 200px;
   overflow: hidden;
   border-radius: 5px;
 }
@@ -313,41 +316,41 @@ label {
   object-fit: cover;
 }
 
-.image-upload-container{
+.image-upload-container {
   justify-content: center;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #eeeeee;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #eeeeee;
 }
-.success-toast{
+.success-toast {
   position: absolute;
   top: 50px; /* Adjust the top position according to your needs */
   left: 50%; /* Adjust the left position if needed */
   transform: translateX(-50%); /* Center horizontally */
 }
-.report-issue-fab{
+.report-issue-fab {
   position: absolute;
   bottom: 60px;
   right: 10px;
   cursor: pointer;
 }
-.outline-fab-button{
-  width: 32px; 
+.outline-fab-button {
+  width: 32px;
   height: 32px;
 }
 .outline-fab-button:hover::before {
-  content: "Report an Issue"; 
+  content: 'Report an Issue';
   display: inline-block;
   position: absolute;
-  background-color: #333; 
-  color: #fff; 
+  background-color: #333;
+  color: #fff;
   padding: 8px;
   border-radius: 4px;
   font-size: 12px;
   margin-top: -35px;
-  right:0
+  right: 0;
 }
 
 @media only screen and (min-width: 992px) {
