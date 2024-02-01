@@ -35,6 +35,4 @@ public class UserTaskResponse {
     private Long dueDateTime;
     private Boolean useInput;
 
-    private List<AnswersResponse> answersResponseList = new ArrayList<>();
-
 }

@@ -30,6 +30,4 @@ public class TaskResponse {
     private LocalDateTime createDateTime;
     private LocalDateTime dueDateTime;
 
-    private List<QuestionsResponse> questionsResponseList = new ArrayList<>();
-
 }

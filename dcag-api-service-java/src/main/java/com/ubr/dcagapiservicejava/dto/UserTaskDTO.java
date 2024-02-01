@@ -14,9 +14,7 @@ public record UserTaskDTO(
 
         String outputDesc,
 
-        Boolean useInput,
-
-        List<QuestionAnswerDTO> answers
+        Boolean useInput
 
 ) {
 }

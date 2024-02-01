@@ -53,6 +53,4 @@ public class UserTask implements Serializable {
     @Column(name = "completion_time")
     private LocalDateTime completionTime;
 
-    @OneToMany(mappedBy = "userTask")
-    Set<UserTaskAnswers> userTaskAnswers;
 }

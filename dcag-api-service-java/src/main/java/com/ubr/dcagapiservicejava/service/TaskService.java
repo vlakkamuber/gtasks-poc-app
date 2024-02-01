@@ -2,13 +2,10 @@ package com.ubr.dcagapiservicejava.service;
 
 
 import com.ubr.dcagapiservicejava.domain.Task;
-import com.ubr.dcagapiservicejava.domain.TaskQuestions;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
-import com.ubr.dcagapiservicejava.repository.QuestionsRepository;
-import com.ubr.dcagapiservicejava.repository.TaskQuestionsRepository;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
@@ -36,13 +33,6 @@ public class TaskService {
 
     @Autowired
     private GCPUtils gcpUtils;
-
-    @Autowired
-    private TaskQuestionsRepository taskQuestionsRepository;
-
-    @Autowired
-    private QuestionsRepository questionsRepository;
-
     @Value("${task-available-limit}")
     Integer limit;
 
@@ -80,9 +70,6 @@ public class TaskService {
 
     private TaskResponse taskToTaskResponse(Task task) {
 
-        List<TaskQuestions> taskQuestions = taskQuestionsRepository.findByTaskId(task.id());
-        List<QuestionsResponse>  questionsResponse = taskQuestions.stream().map(this::questionsToquestionsResponse).toList();;
-
         TaskResponse.TaskResponseBuilder taskResponseBuilder = TaskResponse.builder()
                 .id(task.id())
                 .name(task.name())
@@ -93,8 +80,7 @@ public class TaskService {
                 .currency(task.currency())
                 .price(task.price())
                 .createDateTime(task.createTime())
-                .dueDateTime(task.dueDate())
-                .questionsResponseList(questionsResponse);
+                .dueDateTime(task.dueDate());
 
         /*String objectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
 
@@ -109,15 +95,6 @@ public class TaskService {
         }*/
 
         return taskResponseBuilder.build();
-    }
-
-    private QuestionsResponse questionsToquestionsResponse(TaskQuestions questions){
-
-            return QuestionsResponse.builder()
-                    .questionId(questions.questions().id())
-                    .questionType(questions.questions().questionType())
-                    .description(questions.questions().description())
-                    .typeContent(questions.questions().typeContent()).build();
     }
 
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
