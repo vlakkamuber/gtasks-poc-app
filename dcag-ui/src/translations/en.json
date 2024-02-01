@@ -92,5 +92,9 @@
   "dcag.tasks.performTask.image.description.label": "Describe Image",
   "dcag.tasks.performTask.uploadImage.taskInput.label": "Task Name",
   "dcag.tasks.performTask.uploadImage.image.decription": "Describe Image",
-  "dcag.tasks.performTask.uploadImage.label": "Upload image"
+  "dcag.tasks.imageDigitization.page.heading": "Gig hub",
+  "dcag.tasks.imageDigitization.questions.receiptReadable.label": "Upload image",
+  "dcag.tasks.imageDigitization.questions.receiptID.label": "Upload image",
+  "dcag.tasks.imageDigitization.questions.receiptDate.label": "Upload image",
+  "dcag.tasks.imageDigitization.questions.totalAmount.label": "Upload image"
 }

@@ -37,6 +37,7 @@ import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import RequireAuth from './components/RequireAuth';
 import ReportBug from './pages/ReportBug';
+import ReceiptDigitization from './pages/ReceiptDigitization/ReceiptDigitization';
 
 setupIonicReact();
 
@@ -78,6 +79,15 @@ const App: React.FC = () => (
           render={() => (
             <RequireAuth>
               <Dashboard content={<Tasks />} />
+            </RequireAuth>
+          )}
+          exact
+        />
+        <Route
+          path="/receipt-digitization"
+          render={() => (
+            <RequireAuth>
+              <ReceiptDigitization />
             </RequireAuth>
           )}
           exact
