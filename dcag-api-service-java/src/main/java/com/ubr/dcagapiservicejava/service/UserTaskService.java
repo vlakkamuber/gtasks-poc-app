@@ -247,6 +247,11 @@ public class UserTaskService {
         if (taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
             userTaskResponse.setInputUrl(gcpUtils.signTaskInputAudioUrl(task.input()));
         }
+        if (taskType.equals(TaskType.RECEIPT_DIGITIZATION) ||
+            taskType.equals(TaskType.DATA_ANNOTATION) ||
+            taskType.equals(TaskType.LOCALIZATION)) {
+            userTaskResponse.setInputUrl(gcpUtils.signTaskInputImageUrl(task.taskCategory().name().toLowerCase()+ "/" +task.input()));
+        }
         if (taskType.equals(TaskType.IMAGE_TO_TEXT)) {
             userTaskResponse.setInputUrl(gcpUtils.signTaskInputImageUrl(task.input()));
         }
