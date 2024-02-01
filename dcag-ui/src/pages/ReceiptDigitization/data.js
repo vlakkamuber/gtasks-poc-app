@@ -21,7 +21,7 @@ export default {
   questionnaire: [
     {
       id: 1,
-      description: 'is the receipt readable?',
+      description: 'Is the receipt readable or not readable ?',
       type: 'RADIO',
       required: true,
       options: [{ value: 'yes', label: 'Readable',},{value: 'no', label: 'Non readable'}]
