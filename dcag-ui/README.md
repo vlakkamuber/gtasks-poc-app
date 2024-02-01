@@ -10,7 +10,6 @@ ionic serve
 ## Deploy to firebase hosting
 ### Prerequisites
 ````
-npm install -g @ionic/cli
 npm install -g firebase-tools
 firebase login
 firebase use anz-driver-ops-ritu
