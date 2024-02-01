@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.domain;
 
+import com.ubr.dcagapiservicejava.domain.enums.TaskCategory;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import jakarta.persistence.*;
@@ -60,6 +61,10 @@ public class Task implements Serializable {
 
     @Column(name = "is_available")
     private Boolean isAvailable = true;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "task_category")
+    private TaskCategory taskCategory = TaskCategory.NA;
 
     @OneToMany(mappedBy = "task")
     Set<UserTask> userTasks;

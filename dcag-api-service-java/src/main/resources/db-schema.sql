@@ -61,6 +61,8 @@ CREATE TABLE user_issues
 CREATE INDEX idx_user_id ON user_tasks (user_id);
 CREATE INDEX idx_task_id ON user_tasks (task_id);
 
+Alter table tasks add column task_category VARCHAR(255) default task_type;
+
 ------------------ DATA ------------------
 ------------------ Tasks ------------------
 -- TEXT_TO_AUDIO

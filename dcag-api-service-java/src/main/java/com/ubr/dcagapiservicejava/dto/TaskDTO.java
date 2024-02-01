@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.dto;
 
+import com.ubr.dcagapiservicejava.domain.enums.TaskCategory;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 
@@ -10,6 +11,8 @@ public record TaskDTO(
         String name,
 
         TaskType taskType,
+
+        TaskCategory taskCategory,
 
         String input,
 

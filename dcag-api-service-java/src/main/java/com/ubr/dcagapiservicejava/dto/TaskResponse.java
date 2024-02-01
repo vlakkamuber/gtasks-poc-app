@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.dto;
 
+import com.ubr.dcagapiservicejava.domain.enums.TaskCategory;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class TaskResponse {
     private Long id;
     private String name;
     private TaskType taskType;
+    private TaskCategory taskCategory;
     private String input;
     private TaskStatus status;
     private long  maxNoOfUsers;
