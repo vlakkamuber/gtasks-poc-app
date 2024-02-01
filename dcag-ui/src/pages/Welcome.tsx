@@ -7,11 +7,10 @@ const Welcome: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className="ion-text-center">{t(`dcag.home.welcome`)}</IonTitle>
+          <IonTitle>{t(`dcag.home.welcome`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-      </IonContent>
+      <IonContent fullscreen></IonContent>
     </IonPage>
   );
 };

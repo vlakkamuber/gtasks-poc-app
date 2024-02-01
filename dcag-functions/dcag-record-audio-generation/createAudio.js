@@ -2,7 +2,7 @@ var txtomp3 = require("text-to-mp3");
 const fs = require("fs");
 const names = require("./data");
 
-txtomp3.attributes = {
+Object.getPrototypeOf(txtomp3).attributes = {
   ie: "UTF-8",
   client: "tw-ob",
   // tl : "It-it"

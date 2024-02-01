@@ -9,7 +9,8 @@ import {
   IonLabel,
   IonRadio,
   IonToast,
-  useIonLoading
+  useIonLoading,
+  IonAlert
 } from '@ionic/react';
 
 import { useHistory, useParams } from 'react-router-dom';
@@ -27,6 +28,7 @@ import LoadingComponent from '../components/Loader';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { useUserAuth } from '../context/UserAuthContext';
 import { LOADER_MESSAGE } from '../constants/contant';
+import { showPayout } from '../utils/Settings';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -191,7 +193,7 @@ const PerformTask: React.FC = () => {
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} className="clickable-cursor" />
           </IonButtons>
-          <IonTitle className="ion-text-center">{t(`dcag.tasks.page.heading`)}</IonTitle>
+          <IonTitle>{t(`dcag.tasks.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -215,10 +217,12 @@ const PerformTask: React.FC = () => {
                   {t(`dcag.tasks.dueDate.label`)}: {formatDate(selectedTask.dueDateTime)}
                 </samll>
               </p> */}
-              <p className="no-padding-margin">
-                <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
-                <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
-              </p>
+              {showPayout && (
+                <p className="no-padding-margin">
+                  <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
+                  <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
+                </p>
+              )}
             </div>
             <div
               style={{
@@ -416,12 +420,29 @@ const PerformTask: React.FC = () => {
                     </Button>
                   ]}
                   dismissiveAction={
-                    <Button
-                      kind={KIND.tertiary}
-                      onClick={stopWork}
-                      colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
-                      {t(`dcag.home.btn.cancel.label`)}
-                    </Button>
+                    <>
+                      <Button
+                        kind={KIND.tertiary}
+                        id="cancel-task"
+                        colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
+                        {t(`dcag.home.btn.cancel.label`)}
+                      </Button>
+                      <IonAlert
+                        header="Alert!"
+                        message="Are you sure, you want to cancel this task?"
+                        trigger="cancel-task"
+                        buttons={[
+                          {
+                            text: 'No',
+                            role: 'cancel'
+                          },
+                          {
+                            text: 'Yes',
+                            role: 'confirm',
+                            handler: stopWork
+                          }
+                        ]}></IonAlert>
+                    </>
                   }
                 />
               )}

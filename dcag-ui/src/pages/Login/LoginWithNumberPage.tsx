@@ -1,4 +1,4 @@
-import react, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { COUNTRY_OPTIONS, LOADER_MESSAGE } from '../../constants/contant';
 import { IonContent, IonSelect, IonSelectOption, useIonLoading } from '@ionic/react';
