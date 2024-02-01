@@ -282,7 +282,7 @@ const Tasks: React.FC = () => {
           <IonSegmentButton
             value="available_task"
             className={
-              selectedSegment === 'available_task' ? 'tasks-tab-content capitalize' : 'capitalize'
+              selectedSegment === 'available_task' ? 'tasks-tab-content capitalize task-tab-link' : 'capitalize task-tab-link'
             }>
             <div className="mytask-segment-content">
               <div className="mytask-segment-text">
@@ -294,7 +294,7 @@ const Tasks: React.FC = () => {
           <IonSegmentButton
             value="my_tasks"
             className={
-              selectedSegment === 'my_tasks' ? 'tasks-tab-content capitalize' : 'capitalize'
+              selectedSegment === 'my_tasks' ? 'tasks-tab-content capitalize task-tab-link' : 'capitalize task-tab-link'
             }>
             {' '}
             <div className="mytask-segment-content">
@@ -338,10 +338,8 @@ const Tasks: React.FC = () => {
                             <IonItem>
                               <IonLabel>
                                   <h2>{task.name || task.taskName} </h2>
-                                  {task.userId && task.status === 'IN_PROGRESS' && (<p><Badge
-                                      content={t(`dcag.home.taskHub.status.${task.status}`)}
-                                      color={COLOR.accent}
-                                    /></p>)}
+                                  {task.userId && task.status === 'IN_PROGRESS' && (<p style={{color:'#276ef1'}}>{t(`dcag.home.taskHub.status.${task.status}`)}
+                                      </p>)}
                                 {showPayout && (
                                   <p>
                                     {t(`dcag.tasks.payouts.label`)}: ${task.price}
@@ -370,8 +368,9 @@ const Tasks: React.FC = () => {
                                 <IonButton
                                   slot="end"
                                   style={{
-                                    '--background': 'black',
-                                    '--border-radius': '10px'
+                                    '--background': '#eeeeee',
+                                    '--border-radius': '10px',
+                                    '--color':"#000"
                                   }}
                                   onClick={(e) => goToPerformResumeWork(e, task)}>
                                   {t(`dcag.home.btn.resumeWork.label`)}

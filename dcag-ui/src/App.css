@@ -166,6 +166,9 @@ ion-button.prev-next-button {
   border: 2px solid;
   font-size: 11px;
 }
+.task-tab-link{
+  font-size: 11px;
+}
 
 .label-with-margin {
   /* margin-left: 20px;  */
