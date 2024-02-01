@@ -41,7 +41,7 @@
   "dcag.tasks.page.earnedPoints.label": "Earned Points",
   "dcag.tasks.page.youEarned.label": "You earned",
   "dcag.tasks.tabs.availableTask.label": "Available Tasks",
-  "dcag.tasks.tabs.myTask.label": "My Tasks",
+  "dcag.tasks.tabs.myTask.label": "Completed Tasks",
   "dcag.tasks.textToAudio.title": "Text to Audio",
   "dcag.tasks.textToAudio.subtitle": "Record audio of the text and submit.",
   "dcag.tasks.audioToAudio.title": "Audio to Audio",
