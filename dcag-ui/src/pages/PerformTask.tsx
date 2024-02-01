@@ -217,10 +217,12 @@ const PerformTask: React.FC = () => {
                   {t(`dcag.tasks.dueDate.label`)}: {formatDate(selectedTask.dueDateTime)}
                 </samll>
               </p> */}
-              {showPayout &&<p className="no-padding-margin">
-                <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
-                <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
-              </p>}
+              {showPayout && (
+                <p className="no-padding-margin">
+                  <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
+                  <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
+                </p>
+              )}
             </div>
             <div
               style={{
@@ -421,21 +423,21 @@ const PerformTask: React.FC = () => {
                     <>
                       <Button
                         kind={KIND.tertiary}
-                        id="release-task"
+                        id="cancel-task"
                         colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
                         {t(`dcag.home.btn.cancel.label`)}
                       </Button>
                       <IonAlert
                         header="Alert!"
-                        message="Are you sure, you want to release this task?"
-                        trigger="release-task"
+                        message="Are you sure, you want to cancel this task?"
+                        trigger="cancel-task"
                         buttons={[
                           {
-                            text: 'Cancel',
+                            text: 'No',
                             role: 'cancel'
                           },
                           {
-                            text: 'Release',
+                            text: 'Yes',
                             role: 'confirm',
                             handler: stopWork
                           }
