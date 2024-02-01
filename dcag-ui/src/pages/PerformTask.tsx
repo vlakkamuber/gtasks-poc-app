@@ -410,15 +410,6 @@ const PerformTask: React.FC = () => {
                       {t(`dcag.home.btn.submit.label`)}
                     </Button>
                   }
-                  secondaryActions={[
-                    <Button
-                      kind={KIND.secondary}
-                      key="first"
-                      onClick={(e) => history.push('/dashboard/help')}
-                      disabled={selectedTask.status === 'COMPLETED'}>
-                      {t(`dcag.home.btn.help.label`)}
-                    </Button>
-                  ]}
                   dismissiveAction={
                     <>
                       <Button

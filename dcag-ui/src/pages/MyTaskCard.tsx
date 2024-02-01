@@ -25,10 +25,10 @@ const MyTaskCard = ({ task }) => {
         <IonLabel>
           <span style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <h2>{task.taskName}</h2>
-            <Badge
+            {/* <Badge
               content={t(`dcag.home.taskHub.status.${task.status}`)}
               color={statusBadgeColor}
-            />
+            /> */}
           </span>{' '}
           {showPayout &&<p>
             {t(`dcag.tasks.payouts.label`)}: ${task.price}

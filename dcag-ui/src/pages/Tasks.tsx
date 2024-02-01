@@ -289,9 +289,6 @@ const Tasks: React.FC = () => {
                 {' '}
                 {t(`dcag.tasks.tabs.availableTask.label`)}{' '}
               </div>
-              {availableCount > 0 && (
-                <IonBadge className="mytask-segmnet-badge">{availableCount}</IonBadge>
-              )}
             </div>
           </IonSegmentButton>
           <IonSegmentButton
@@ -340,16 +337,11 @@ const Tasks: React.FC = () => {
                           <IonList>
                             <IonItem>
                               <IonLabel>
-                                <span
-                                  style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                                   <h2>{task.name || task.taskName} </h2>
-                                  {task.userId && task.status === 'IN_PROGRESS' && (
-                                    <Badge
+                                  {task.userId && task.status === 'IN_PROGRESS' && (<p><Badge
                                       content={t(`dcag.home.taskHub.status.${task.status}`)}
                                       color={COLOR.accent}
-                                    />
-                                  )}
-                                </span>{' '}
+                                    /></p>)}
                                 {showPayout && (
                                   <p>
                                     {t(`dcag.tasks.payouts.label`)}: ${task.price}
