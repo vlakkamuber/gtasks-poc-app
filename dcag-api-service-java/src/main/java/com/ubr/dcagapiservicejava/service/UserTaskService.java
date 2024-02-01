@@ -1,17 +1,18 @@
 package com.ubr.dcagapiservicejava.service;
 
-import com.ubr.dcagapiservicejava.domain.Task;
-import com.ubr.dcagapiservicejava.domain.User;
-import com.ubr.dcagapiservicejava.domain.UserTask;
+import com.ubr.dcagapiservicejava.domain.*;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
+import com.ubr.dcagapiservicejava.dto.AnswersResponse;
 import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
 import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
 import com.ubr.dcagapiservicejava.dto.UserTaskSummaryResponse;
 import com.ubr.dcagapiservicejava.error.TaskException;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
+import com.ubr.dcagapiservicejava.repository.QuestionsRepository;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
+import com.ubr.dcagapiservicejava.repository.UserTaskAnswersRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
@@ -40,6 +41,12 @@ public class UserTaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private UserTaskAnswersRepository userTaskAnswersRepository;
+
+    @Autowired
+    private QuestionsRepository questionsRepository;
 
 
     public UserTaskResponse createUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
@@ -120,6 +127,11 @@ public class UserTaskService {
                             .startTime(userTask.startTime())
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                     updatedUserTask = userTasksRepository.save(updatedUserTask);
+
+                    if(!userTaskDTO.answers().isEmpty()){
+                        updatedUserTaskAnswers(updatedUserTask,userTaskDTO);
+                    }
+
                     log.info("User - {}  task - {} status completed",userId,taskId);
                     updateTaskStatus(taskId);
                     return updatedUserTask;
@@ -127,6 +139,23 @@ public class UserTaskService {
                 .map(userTask -> userTaskToBasicUserTaskResponse(userTask, task))
                 .orElseThrow(DcagUtils.userNotFound(userId));
 
+    }
+
+    private void updatedUserTaskAnswers(UserTask userTask, UserTaskDTO userTaskDTO) {
+
+        List<UserTaskAnswers> userTaskAnswers = new ArrayList<>();
+
+        userTaskDTO.answers().forEach(answer -> {
+            UserTaskAnswers userTaskAnswer = new UserTaskAnswers()
+                    .userTask(new UserTask().id(userTask.id()))
+                    .questions(new Questions().id(answer.questionId()))
+                    .answer(answer.answer());
+            userTaskAnswers.add(userTaskAnswer);
+        });
+
+        userTaskAnswersRepository.saveAll(userTaskAnswers);
+
+        log.info("User task answers submitted for user - {} task - {}",userTask.user().id(),userTaskDTO.taskName());
     }
 
     public List<UserTaskResponse> findUserTasks(String userId, UserTaskStatus status) {
@@ -214,6 +243,12 @@ public class UserTaskService {
 
     private UserTaskResponse userTaskToUserTaskResponse(UserTask userTask) {
 
+        List<UserTaskAnswers> userTaskAnswers = userTaskAnswersRepository.findByUserTaskId(userTask.id());
+        List<AnswersResponse> answersResponseList = new ArrayList<>();
+        if(!userTaskAnswers.isEmpty()){
+            answersResponseList = userTaskAnswers.stream().map(this::userTaskAnswerResponse).toList();
+        }
+
         Task task = userTask.task();
         TaskType taskType = task.taskType();
         return UserTaskResponse.builder()
@@ -241,7 +276,18 @@ public class UserTaskService {
                 .completedTime(userTask.completionTime() != null ?
                         userTask.completionTime().atZone(ZoneId.systemDefault()).toEpochSecond() * MILLISECOND :
                         null
-                ).build();
+                )
+                .answersResponseList(answersResponseList).build();
+    }
+
+    private AnswersResponse userTaskAnswerResponse(UserTaskAnswers userTaskAnswers) {
+
+            return AnswersResponse.builder()
+                    .questionId(userTaskAnswers.questions().id())
+                    .questionType(userTaskAnswers.questions().questionType())
+                    .description(userTaskAnswers.questions().description())
+                    .typeContent(userTaskAnswers.questions().typeContent())
+                    .answer(userTaskAnswers.answer()).build();
     }
 
     private void addUrlsToTaskResponse(UserTaskResponse userTaskResponse, UserTask userTask, Task task) {

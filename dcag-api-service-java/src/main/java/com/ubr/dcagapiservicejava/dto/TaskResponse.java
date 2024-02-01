@@ -6,9 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -28,4 +29,7 @@ public class TaskResponse {
     private String uploadUrl;
     private LocalDateTime createDateTime;
     private LocalDateTime dueDateTime;
+
+    private List<QuestionsResponse> questionsResponseList = new ArrayList<>();
+
 }

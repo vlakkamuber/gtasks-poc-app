@@ -64,4 +64,7 @@ public class Task implements Serializable {
     @OneToMany(mappedBy = "task")
     Set<UserTask> userTasks;
 
+    @OneToMany(mappedBy = "task")
+    Set<TaskQuestions> taskQuestions;
+
 }

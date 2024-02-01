@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -51,4 +52,7 @@ public class UserTask implements Serializable {
 
     @Column(name = "completion_time")
     private LocalDateTime completionTime;
+
+    @OneToMany(mappedBy = "userTask")
+    Set<UserTaskAnswers> userTaskAnswers;
 }
