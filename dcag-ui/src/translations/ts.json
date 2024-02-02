@@ -21,6 +21,8 @@
     "dcag.home.taskHub.DESCRIBE_IMAGE.subtitle": "స్థాన చిత్రాన్ని వీక్షించండి మరియు చిత్రం గురించి వివరణను అందించండి.",
     "dcag.home.taskHub.UPLOAD_IMAGE.title": "చిత్రాన్ని అప్‌లోడ్ చేయండి",
     "dcag.home.taskHub.UPLOAD_IMAGE.subtitle": "స్థాన చిత్రాన్ని అప్‌లోడ్ చేయండి మరియు చిత్రం గురించి వివరణను అందించండి.",
+    "dcag.home.taskHub.RECEIPT_DIGITIZATION.title": "Receipt Digitization",
+  "dcag.home.taskHub.RECEIPT_DIGITIZATION.subtitle": "View the receipt image and provide answer about the image.",
     "dcag.home.page.heading": "ఇల్లు",
     "dcag.home.bottomTabs.home": "ఇల్లు",
     "dcag.home.bottomTabs.tasks": "టాస్క",

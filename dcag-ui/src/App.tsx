@@ -38,6 +38,7 @@ import { UserAuthContextProvider } from './context/UserAuthContext';
 import RequireAuth from './components/RequireAuth';
 import ReportBug from './pages/ReportBug';
 import ReceiptDigitization from './pages/ReceiptDigitization/ReceiptDigitization';
+import LocalisationQuality from './pages/LocalisationQuality/LocalisationQuality';
 
 setupIonicReact();
 
@@ -88,6 +89,15 @@ const App: React.FC = () => (
           render={() => (
             <RequireAuth>
               <ReceiptDigitization />
+            </RequireAuth>
+          )}
+          exact
+        />
+         <Route
+          path="/localisation-quality"
+          render={() => (
+            <RequireAuth>
+              <LocalisationQuality />
             </RequireAuth>
           )}
           exact

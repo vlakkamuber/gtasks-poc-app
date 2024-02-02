@@ -77,7 +77,7 @@ const Tasks: React.FC = () => {
       let availableTasks = [];
 
       if (selectedCategory === 'ALL') {
-        const categories = ['AUDIO_TO_AUDIO', 'IMAGE_TO_TEXT', 'UPLOAD_IMAGE', 'TEXT_TO_AUDIO'];
+        const categories = ['AUDIO_TO_AUDIO', 'IMAGE_TO_TEXT', 'UPLOAD_IMAGE', 'TEXT_TO_AUDIO','RECEIPT_DIGITIZATION'];
 
         // Fetch tasks for each category concurrently
         const tasksPromises = categories.map((category) =>
@@ -108,7 +108,8 @@ const Tasks: React.FC = () => {
         'AUDIO_TO_AUDIO',
         'IMAGE_TO_TEXT',
         'UPLOAD_IMAGE',
-        'TEXT_TO_AUDIO'
+        'TEXT_TO_AUDIO',
+        'RECEIPT_DIGITIZATION'
       ]);
       setAvailableCount(orderedTasks.length);
       setTasks(groupBy(orderedTasks, 'taskType'));
@@ -133,23 +134,6 @@ const Tasks: React.FC = () => {
         console.error('Error fetching task data:', error);
       });
   };
-
-  // const getMyTasksList = () => {
-  //   let userId = JSON.parse(localStorage.getItem('loggedInUser'));
-  //   apiService
-  //     .getMyTasksList({ userId, user })
-  //     .then((res) => {
-  //       let myComopletedTasks = filterTaskWithStatus(res, "COMPLETED")
-  //       // temporary - this filter should be removed in future;
-  //       const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-  //         ? filterTaskWithType(myComopletedTasks, TEXT_TO_AUDIO_TASK_TYPE)
-  //         : myComopletedTasks;
-  //       setMyTasksCount(result.length);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching task data:', error);
-  //     });
-  // };
   useEffect(() => {
     setShowLoading(true);
     getAvailableTasks();
@@ -224,7 +208,8 @@ const Tasks: React.FC = () => {
       'AUDIO_TO_AUDIO',
       'IMAGE_TO_TEXT',
       'UPLOAD_IMAGE',
-      'TEXT_TO_AUDIO'
+      'TEXT_TO_AUDIO',
+      'RECEIPT_DIGITIZATION'
     ]);
 
     setAvailableCount(orderedTasks.length);
