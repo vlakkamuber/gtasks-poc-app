@@ -16,7 +16,6 @@ const NavigationBar = ({ onClickNext, onClickPrevious, isNextDisabled }: Props) 
     <div className="navigation-bar">
       <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={onClickPrevious}>
         <ArrowLeft size={36} />
-        {/* <ArrowLeftFilled /> */}
       </Button>
       <Button
         shape={SHAPE.pill}
