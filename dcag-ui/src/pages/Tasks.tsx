@@ -396,7 +396,7 @@ const Tasks: React.FC = () => {
                         alignItems: 'center'
                       }}>
                       <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                        {t(`dcag.tasks.performTask.uploadImage.label`)}
+                        {t(`dcag.tasks.UPLOAD_IMAGE.title`)}
                       </h1>
                       {/* <span style={{ color: "#467ff4" }}>
                             {tasks[key].length} {t(`dcag.home.btn.new.label`)}
