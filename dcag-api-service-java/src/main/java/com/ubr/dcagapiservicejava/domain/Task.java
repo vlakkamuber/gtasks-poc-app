@@ -59,6 +59,9 @@ public class Task implements Serializable {
     @Column(name = "due_time")
     private LocalDateTime dueDate;
 
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
+
     @Column(name = "is_available")
     private Boolean isAvailable = true;
 

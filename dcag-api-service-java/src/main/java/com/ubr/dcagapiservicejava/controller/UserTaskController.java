@@ -1,7 +1,5 @@
 package com.ubr.dcagapiservicejava.controller;
 
-import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
-import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
 import com.ubr.dcagapiservicejava.dto.UserTaskResponse;

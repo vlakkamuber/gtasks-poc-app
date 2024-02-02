@@ -34,6 +34,13 @@ public class DcagExceptionHandler {
         return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = UnauthorizedUserException.class)
+    public ResponseEntity handleUnauthorizedException(UnauthorizedUserException exception) {
+        log.error("Unauthorized user: ", exception);
+        DcagException ex = new DcagException(new Date(), exception.getMessage());
+        return new ResponseEntity(ex, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity handleException(Exception exception) {
         log.error("Exception: ", exception);

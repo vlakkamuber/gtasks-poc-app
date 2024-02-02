@@ -26,6 +26,7 @@ CREATE TABLE tasks
     is_available        boolean default true,
     create_time         TIMESTAMP,
     due_time            TIMESTAMP,
+    start_time          TIMESTAMP,
     PRIMARY KEY (id)
 );
 -- CREATE SPATIAL INDEX idx_tasks_location ON tasks(location);

@@ -81,7 +81,7 @@ public class UserTaskService {
     public UserTaskResponse updateUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
 
         UserTaskStatus status = userTaskDTO.status();
-        if (!status.equals(UserTaskStatus.COMPLETED)) {
+        if (!(status.equals(UserTaskStatus.CANCELLED) || status.equals(UserTaskStatus.COMPLETED))) {
             throw new TaskException("Task can only be updated to COMPLETED. Task Id: " + taskId + " Status: " + status);
         }
         Optional<Task> taskOptional = taskRepository.findById(taskId);
@@ -174,9 +174,10 @@ public class UserTaskService {
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
         TaskStatus status = null;
         long completedCount = 0;
+        long totalCount = 0;
         if (userTaskList.isPresent()) {
 
-            long totalCount = userTaskList.get().size();
+            totalCount = userTaskList.get().size();
 
             completedCount = userTaskList.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
@@ -192,6 +193,9 @@ public class UserTaskService {
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.status(status);
+            if(totalCount==1 && completedCount==0){
+                task.startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+            }
             if (completedCount > taskOptional.get().maxNoOfUsers()) {
                 task.isAvailable(false);
             }
