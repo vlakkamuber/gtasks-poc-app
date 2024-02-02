@@ -155,17 +155,19 @@ public class UserTaskService {
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
 
         List<UserTask> userTasks = userTasksRepository.findByUserIdAndStatus(userId, UserTaskStatus.COMPLETED); // TODO: Get only completed tasks
-
+        double totalEarning = userTasks.stream().mapToDouble(e -> e.task().price()).sum();
+        UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder;
         if (!userTasks.isEmpty()) {
-            UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
-                    .completedTaskCount((long) userTasks.size()).totalEarning(userTasks.stream().mapToDouble(e -> e.task().price()).sum());
-
-            return summaryResponseBuilder.build();
+            summaryResponseBuilder = UserTaskSummaryResponse.builder()
+                    .completedTaskCount((long) userTasks.size()).totalEarning(totalEarning);
+            if(totalEarning >= 200){
+                summaryResponseBuilder.errorMessage("User has reached the daily limit and can resume again the next day.");
+            }
         } else {
-            UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder = UserTaskSummaryResponse.builder()
+            summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount(0L).totalEarning(0.0);
-            return summaryResponseBuilder.build();
         }
+        return summaryResponseBuilder.build();
     }
 
     private void updateTaskStatus(Long taskId) {

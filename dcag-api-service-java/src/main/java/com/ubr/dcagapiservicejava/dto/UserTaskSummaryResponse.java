@@ -14,4 +14,6 @@ public class UserTaskSummaryResponse {
     private Long completedTaskCount;
 
     private Double totalEarning;
+
+    private String errorMessage;
 }
