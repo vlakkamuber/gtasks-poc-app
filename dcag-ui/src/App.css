@@ -126,6 +126,9 @@
   border-radius: 10px;
   flex-basis: 22%;
   font-size: 2rem;
+  padding: 4px;
+  display: flex;
+  align-items: center;
 }
 
 ion-button.prev-next-button {
@@ -166,7 +169,7 @@ ion-button.prev-next-button {
   border: 2px solid;
   font-size: 11px;
 }
-.task-tab-link{
+.task-tab-link {
   font-size: 11px;
 }
 
@@ -355,16 +358,15 @@ label {
   margin-top: -35px;
   right: 0;
 }
-.receipt-container{
+.receipt-container {
   height: 212px;
   background: #eeee;
-  
 }
-.receipt-container img{
+.receipt-container img {
   display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 @media only screen and (min-width: 992px) {
