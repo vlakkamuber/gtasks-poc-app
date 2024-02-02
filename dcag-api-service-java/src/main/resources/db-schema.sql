@@ -70,9 +70,12 @@ CREATE INDEX idx_user_tasks_task_id ON user_tasks (task_id);
 -- AUDIO_TO_AUDIO
 INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Barkatpura', 'AUDIO_TO_AUDIO', 3,  'barkatpura.mp3', 'NEW', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-16 00:00:00');
 -- RECEIPT_DIGITIZATION
-INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Auto Cobro', 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'auto_cobro.png', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
-INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Costco', 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'costco.png', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
-INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Chedraui', 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'chedraui.png', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
+INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('H-E-B 1'        , 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'h-e-b1.jpg', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
+INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('H-E-B 2'        , 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'h-e-b2.jpeg', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
+INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('H-E-B 3'        , 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'h-e-b3.jpg', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
+INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('H-E-B 4'        , 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'h-e-b4.jpg', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
+INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Auto Cobro 1', 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'auto_cobro_1.jpg', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
+INSERT INTO tasks (name, task_type, task_category, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Auto Cobro 2', 'RECEIPT_DIGITIZATION', 'RECEIPT_DIGITIZATION', 5,  'auto_cobro_2.jpg', 'NEW', 'USD', 1.0, '2024-02-01 00:00:00', null);
 
 -- IMAGE_TO_TEXT
 INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('Barkatpura', 'AUDIO_TO_AUDIO', 3,  'barkatpura.mp3', 'NEW', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-16 00:00:00');

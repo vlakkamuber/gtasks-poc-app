@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
 import { filterTaskWithType, formatDate,filterTaskWithStatus } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
-import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
+import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/constant';
 import MyTaskCard from './MyTaskCard';
 import MyTaskCardList from './MyTaskCardList';
 import { useUserAuth } from '../context/UserAuthContext';

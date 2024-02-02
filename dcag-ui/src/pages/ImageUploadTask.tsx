@@ -201,7 +201,7 @@ const ImageUploadTask: React.FC = () => {
                   <IonLabel
                     className="label-with-margin"
                     style={{ marginTop: '10px', marginBottom: '10px' }}>
-                    {t(`dcag.tasks.performTask.uploadImage.label`)}
+                    {t(`dcag.tasks.UPLOAD_IMAGE.title`)}
                   </IonLabel>
                   {file && (
                     <div

@@ -15,9 +15,48 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategory } from '../context/TaskCategoryContext';
 
+const taskCategories = [
+  {
+    id: 'RECORD_AUDIO',
+    imageSrc: 'assets/text_to_audio.png',
+    title: 'Record Audio',
+    subtitle: 'Read text, validate pronunciation and record correct audio',
+    show:true
+  },
+  {
+    id: 'DESCRIBE_IMAGE',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Describe Image',
+    subtitle: 'View the location image and provide description about the image.',
+    show:false
+  },
+  {
+    id: 'UPLOAD_IMAGE',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Upload Image',
+    subtitle: 'upload a location image and provide description about the image.',
+    show:false
+  },
+  {
+    id: 'RECEIPT_DIGITIZATION',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Receipt Digitization',
+    subtitle: 'View the receipt image and provide answer about the image.',
+    show:true
+  },
+  {
+    id: 'LOCALISATION_QUALITY',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Localisation Quality',
+    subtitle: 'View the receipt image and provide answer about the image.',
+    show:true
+  },
+
+];
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  
 
   const { selectedCategory, setSelectedCategory } = useCategory();
 
@@ -28,10 +67,25 @@ const Home: React.FC = () => {
     history.push('/dashboard/tasks');
   };
 
+
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
-
+  const renderTaskCards = () => {
+    return taskCategories.map((category) => (
+      category.show && (<div key={category.id} className="mt-0 mb-0 p-4">
+        <IonCard
+          style={{ borderRadius: '10px', marginBottom: '3rem', cursor: 'pointer' }}
+          onClick={() => handleTaskCategory(category.id)}>
+          <img alt="Silhouette of mountains" src={category.imageSrc} style={{ objectFit: 'cover' }} />
+          <IonCardHeader>
+            <IonCardTitle>{t(`dcag.home.taskHub.${category.id}.title`)}</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</IonCardContent>
+        </IonCard>
+      </div>)
+    ));
+  };
   return (
     <IonPage>
       <IonHeader>
@@ -68,77 +122,8 @@ const Home: React.FC = () => {
         </div>
         <p className="mt-0 mb-0 p-16">{t(`dcag.home.taskHub.subtitle`)}</p>
         <div className="mt-0 mb-0 p-4">
-          <IonCard
-            style={{ borderRadius: '10px', marginBottom: '3rem', cursor: 'pointer' }}
-            onClick={() => handleTaskCategory('AUDIO_TO_AUDIO')}>
-            <img
-              alt="Silhouette of mountains"
-              src="assets/text_to_audio.png"
-              style={{ objectFit: 'cover' }}
-            />
-            <IonCardHeader>
-              <IonCardTitle>{t(`dcag.home.taskHub.RECORD_AUDIO.title`)}</IonCardTitle>
-            </IonCardHeader>
-
-            <IonCardContent>{t(`dcag.home.taskHub.RECORD_AUDIO.subtitle`)}</IonCardContent>
-          </IonCard>
+        {renderTaskCards()}
         </div>
-        {/* <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("IMAGE_TO_TEXT")}>
-          <img
-            alt="Silhouette of mountains"
-            src="assets/audio_to_audio.png"
-            style={{objectFit:'cover'}}
-          />
-          <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.DESCRIBE_IMAGE.title`)}</IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>
-          {t(`dcag.home.taskHub.DESCRIBE_IMAGE.subtitle`)}
-          </IonCardContent>
-        </IonCard> */}
-        {/* <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("UPLOAD_IMAGE")}>
-          <img
-            alt="Silhouette of mountains"
-            src="assets/text_to_image.png"
-            style={{objectFit:'cover'}}
-          />
-          <IonCardHeader>
-            <IonCardTitle> {t(`dcag.home.taskHub.UPLOAD_IMAGE.title`)}</IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>
-          {t(`dcag.home.taskHub.UPLOAD_IMAGE.subtitle`)}
-          </IonCardContent>
-        </IonCard> */}
-         <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("RECEIPT_DIGITIZATION")}>
-          <img
-            alt="Silhouette of mountains"
-            src="assets/audio_to_audio.png"
-            style={{objectFit:'cover'}}
-          />
-          <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.RECEIPT_DIGITIZATION.title`)}</IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>
-          {t(`dcag.home.taskHub.RECEIPT_DIGITIZATION.subtitle`)}
-          </IonCardContent>
-        </IonCard>
-        <IonCard style={{borderRadius:'10px',marginBottom: '3rem',cursor:'pointer'}} onClick={()=>handleTaskCategory("LOCALISATION_QUALITY")}>
-          <img
-            alt="Silhouette of mountains"
-            src="assets/audio_to_audio.png"
-            style={{objectFit:'cover'}}
-          />
-          <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.LOCALISATION_QUALITY.title`)}</IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>
-          {t(`dcag.home.taskHub.LOCALISATION_QUALITY.subtitle`)}
-          </IonCardContent>
-        </IonCard>
       </IonContent>
     </IonPage>
   );

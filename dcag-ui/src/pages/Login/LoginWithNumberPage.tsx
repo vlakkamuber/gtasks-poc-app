@@ -1,17 +1,18 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { COUNTRY_OPTIONS, LOADER_MESSAGE } from '../../constants/contant';
+import { COUNTRY_OPTIONS, LOADER_MESSAGE } from '../../constants/constant';
 import { IonContent, IonSelect, IonSelectOption, useIonLoading } from '@ionic/react';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { useHistory } from 'react-router';
 import apiService from '../apiService';
 import NavigationBar from './NavigationBar';
 import { Toast, KIND } from 'baseui/toast';
+import { HeadingSmall, ParagraphXSmall } from 'baseui/typography';
 
 type Props = {
   setSendOtpResponse: Dispatch<SetStateAction<string>>;
   setIsOtpSent: Dispatch<SetStateAction<boolean>>;
-  setIsUserExist:Dispatch<SetStateAction<boolean>>;
+  setIsUserExist: Dispatch<SetStateAction<boolean>>;
 };
 
 const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist }: Props) => {
@@ -53,11 +54,11 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
       dismiss();
       if (res.id) {
         setIsNextDisabled(true);
-        setIsUserExist(true)
+        setIsUserExist(true);
         sendOtp(phone);
       } else {
         setIsNextDisabled(true);
-        setIsUserExist(false)
+        setIsUserExist(false);
         sendOtp(phone);
         //setError('This phone number does not have access. Please contact administrator');
       }
@@ -68,8 +69,8 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
   };
 
   return (
-    <IonContent>
-      <label>{t(`dcag.home.otp.mobilenumber.label`)}</label>
+    <IonContent className="p-16">
+      <HeadingSmall>{t(`dcag.home.otp.mobilenumber.label`)}</HeadingSmall>
       <div className="phone-select-container">
         <IonSelect
           placeholder={selectedCountry.flag}
@@ -78,7 +79,11 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
           value={selectedCountry.flag}
           style={{ height: '5vh', minHeight: 'unset', paddingeft: '9px' }}>
           {COUNTRY_OPTIONS.map(function (country) {
-            return <IonSelectOption key={country.value} value={country.value}>{country.flag}</IonSelectOption>;
+            return (
+              <IonSelectOption key={country.value} value={country.value}>
+                {country.flag}
+              </IonSelectOption>
+            );
           })}
         </IonSelect>
         <input
@@ -90,10 +95,9 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
       </div>
       {isValidPhone ? null : <p style={{ color: 'red' }}>Invalid phone number.</p>}
       {error && <Toast kind={KIND.negative}>{error}</Toast>}
-
-      <p style={{ padding: '10px' }}>
-        <small>{t(`dcag.home.otp.mobilenumber.helptext`)}</small>
-      </p>
+      <ParagraphXSmall color="contentTertiary">
+        {t(`dcag.home.otp.mobilenumber.helptext`)}
+      </ParagraphXSmall>
       <div id="recaptcha-container"></div>
       <NavigationBar
         onClickPrevious={() => history.push('/home')}

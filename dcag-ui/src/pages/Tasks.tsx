@@ -28,7 +28,7 @@ import {
   orderTasksByType
 } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
-import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE,taskTypeMapperRoute } from '../constants/contant';
+import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE,taskTypeMapperRoute } from '../constants/constant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
 import { Badge, COLOR } from 'baseui/badge';
@@ -396,7 +396,7 @@ const Tasks: React.FC = () => {
                         alignItems: 'center'
                       }}>
                       <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                        {t(`dcag.tasks.performTask.uploadImage.label`)}
+                        {t(`dcag.tasks.UPLOAD_IMAGE.title`)}
                       </h1>
                       {/* <span style={{ color: "#467ff4" }}>
                             {tasks[key].length} {t(`dcag.home.btn.new.label`)}
