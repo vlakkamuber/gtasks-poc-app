@@ -248,8 +248,8 @@ public class UserTaskService {
             userTaskResponse.setInputUrl(gcpUtils.signTaskInputAudioUrl(task.input()));
         }
         if (taskType.equals(TaskType.RECEIPT_DIGITIZATION) ||
-            taskType.equals(TaskType.DATA_ANNOTATION) ||
-            taskType.equals(TaskType.LOCALIZATION)) {
+            taskType.equals(TaskType.LOCALIZATION_QUALITY) ||
+            taskType.equals(TaskType.IMAGE_LABELLING)) {
             userTaskResponse.setInputUrl(gcpUtils.signTaskInputImageUrl(task.taskCategory().name().toLowerCase()+ "/" +task.input()));
         }
         if (taskType.equals(TaskType.IMAGE_TO_TEXT)) {
