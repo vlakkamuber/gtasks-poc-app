@@ -28,7 +28,7 @@ import {
   orderTasksByType
 } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
-import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE,taskTypeMapperRoute } from '../constants/contant';
+import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE,taskTypeMapperRoute } from '../constants/constant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
 import { Badge, COLOR } from 'baseui/badge';

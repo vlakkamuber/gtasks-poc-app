@@ -6,6 +6,8 @@ import { chevronForward } from 'ionicons/icons';
 import { Badge, COLOR } from 'baseui/badge';
 import { useHistory } from 'react-router';
 import { showPayout } from '../utils/Settings';
+import { taskTypeMapperRoute } from '../constants/constant';
+
 
 const MyTaskCard = ({ task }) => {
   const { t } = useTranslation();
@@ -13,9 +15,9 @@ const MyTaskCard = ({ task }) => {
   const statusBadgeColor = task.status === 'COMPLETED' ? COLOR.positive : COLOR.accent;
   const goToPerformTask = (e, task) => {
     if(task.taskType==='UPLOAD_IMAGE'){
-      history.push('/dashboard/tasks/image-upload-task/' + task.taskId);
+      history.push(taskTypeMapperRoute[task.taskType] + task.taskId);
     }else{
-      history.push('/dashboard/tasks/perform-task/' + task.taskId);
+      history.push(taskTypeMapperRoute[task.taskType] + task.taskId);
     }
     
   };

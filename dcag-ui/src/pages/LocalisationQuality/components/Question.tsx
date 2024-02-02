@@ -11,18 +11,22 @@ interface QuestionProps {
   question: {
     id: string;
     description: string;
+    questionId:string;
     type: string;
     placeholder?: string;
     required: boolean;
     options: [{ label: string; value: string }];
   };
+  value: string; // Ensure the correct type for value
+  onChange: (questionId: string, value: string) => void; // Ensure the correct 
+  isCompleted: boolean;
 }
 
-export default function Question({ question, value, onChange }: QuestionProps): JSX.Element {
-  const { id, description, placeholder = '', type, required, options } = question;
+export default function Question({ question, value,isCompleted, onChange }: QuestionProps): JSX.Element {
+  const { id, description, placeholder = '', type, required, options,questionId } = question;
   const [css, theme] = useStyletron();
   const cardRef = useRef();
-
+  const isDisabled = isCompleted;
   return (
     <Card overrides={{ Root: { style: { marginTop: theme.sizing.scale400 } } }}>
       <div ref={cardRef.current}>
@@ -35,12 +39,13 @@ export default function Question({ question, value, onChange }: QuestionProps): 
           {type === 'RADIO' ? (
             <RadioGroup
               value={value}
+              disabled={isDisabled}
               required={required}
-              onChange={(e) => onChange(id, e.currentTarget.value)}
-              name={id}
+              onChange={(e) => onChange(questionId, e.currentTarget.value)}
+              name={questionId}
               align={ALIGN.horizontal}>
               {options.map((option) => (
-                <Radio key={option.value} value={option.value}>
+                <Radio key={option.value} value={option.value} disabled={isDisabled}>
                   {option.label}
                 </Radio>
               ))}
@@ -50,12 +55,13 @@ export default function Question({ question, value, onChange }: QuestionProps): 
               required={required}
               placeholder={placeholder}
               onChange={(e) => {
-                onChange(id, e.target.value);
+                onChange(questionId, e.target.value);
               }}
+              disabled={isDisabled} 
               value={value}
             />
           ) : type === 'DATE' ? (
-            <DatePicker required={required} mountNode={cardRef.current} value={value} onChange={({ date }) => onChange(id, date)} />
+            <DatePicker required={required} mountNode={cardRef.current} value={new Date(value)} onChange={({ date }) => onChange(questionId, date)} disabled={isDisabled} />
           ) : null}
         </FormControl>
       </div>

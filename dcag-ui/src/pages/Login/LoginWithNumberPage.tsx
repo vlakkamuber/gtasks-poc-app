@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { COUNTRY_OPTIONS, LOADER_MESSAGE } from '../../constants/contant';
+import { COUNTRY_OPTIONS, LOADER_MESSAGE } from '../../constants/constant';
 import { IonContent, IonSelect, IonSelectOption, useIonLoading } from '@ionic/react';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { useHistory } from 'react-router';

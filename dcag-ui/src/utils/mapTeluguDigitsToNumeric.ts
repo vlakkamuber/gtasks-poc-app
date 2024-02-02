@@ -1,4 +1,4 @@
-import { COMPLETED_TASK_STATUS, IN_PROGRESS_TASK_STATUS } from '../constants/contant';
+import { COMPLETED_TASK_STATUS, IN_PROGRESS_TASK_STATUS } from '../constants/constant';
 
 export function mapTeluguDigitsToNumeric(inputText) {
   const teluguDigitsMap = {

@@ -27,7 +27,7 @@ import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { useUserAuth } from '../context/UserAuthContext';
-import { LOADER_MESSAGE } from '../constants/contant';
+import { LOADER_MESSAGE } from '../constants/constant';
 import { showPayout } from '../utils/Settings';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { mapTeluguDigitsToNumeric } from '../../utils/mapTeluguDigitsToNumeric';
-import { LOADER_MESSAGE } from '../../constants/contant';
+import { LOADER_MESSAGE } from '../../constants/constant';
 import { Block } from 'baseui/block';
 import { Button, KIND, SHAPE } from 'baseui/button';
 import NavigationBar from './NavigationBar';
