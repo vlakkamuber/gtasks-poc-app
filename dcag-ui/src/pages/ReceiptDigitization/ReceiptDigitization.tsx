@@ -21,6 +21,7 @@ import { useHistory,useParams } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
 
 const receiptDigitizationQuestions = questionnaireData.RECEIPT_DIGITIZATION;
+console.log(receiptDigitizationQuestions)
 
 export default function ReceiptDigitization() {
   const { user } = useUserAuth();

@@ -1,6 +1,8 @@
-const generateQuestionId = (question) => {
-    return question.replace(/\s+/g, '_').toUpperCase();
-};
+function generateQuestionId(description) {
+  const cleanedDescription = description.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '_');
+
+  return cleanedDescription;
+}
 
 export const questionnaireData = {
   RECEIPT_DIGITIZATION: [
@@ -44,7 +46,7 @@ export const questionnaireData = {
     LOCALIZATION_QUALITY: [
         {
             id: 1,
-            description: 'The language on this screen is clear and concise',
+            description: 'The language on this screen is clear and easily understood.',
             type: 'RADIO',
             required: false,
             options: [
@@ -56,19 +58,57 @@ export const questionnaireData = {
           },
       {
         id: 2,
-        description: 'The language on this screen meets the level of formality i expect from uber',
+        description: 'The language on this screen is as simple and respectful as we expect from Uber.',
         type: 'RADIO',
         required: true,
         options: [
-          { value: 'yes', label: 'Yes' },
-          { value: 'no', label: 'No' },
+          { value: 'stronglyAgree', label: 'Strongly Agree' },
+              { value: 'agree', label: 'Agree' },
+              { value: 'disagree', label: 'Disagree' },
+              { value: 'stronglyDisagree', label: 'Strongly Disagree' },
+        ],
+      },
+      {
+        id: 3,
+        description: `The language on this screen is similar to what I speak - it doesn't sound awkward or mechanical.`,
+        type: 'RADIO',
+        required: true,
+        options: [
+          { value: 'stronglyAgree', label: 'Strongly Agree' },
+          { value: 'agree', label: 'Agree' },
+          { value: 'disagree', label: 'Disagree' },
+          { value: 'stronglyDisagree', label: 'Strongly Disagree' },
+        ],
+      },
+      {
+        id: 4,
+        description: 'The icons and designs on this screen match my culture.',
+        type: 'RADIO',
+        required: true,
+        options: [
+          { value: 'stronglyAgree', label: 'Strongly Agree' },
+          { value: 'agree', label: 'Agree' },
+          { value: 'disagree', label: 'Disagree' },
+          { value: 'stronglyDisagree', label: 'Strongly Disagree' },
+        ],
+      },
+      {
+        id: 5,
+        description: 'Please rank between 1-4',
+        type: 'RADIO',
+        required: true,
+        options: [
+          { value: 'stronglyAgree', label: 'Strongly Agree' },
+          { value: 'agree', label: 'Agree' },
+          { value: 'disagree', label: 'Disagree' },
+          { value: 'stronglyDisagree', label: 'Strongly Disagree' },
         ],
       },
     ],
     IMAGE_LABELLING: [
         {
           id: 1,
-          description: 'Is Packaging present?',
+          description: 'Is the food item clearly visible in the photo?',
           type: 'RADIO',
           required: true,
           options: [
@@ -78,7 +118,7 @@ export const questionnaireData = {
         },
         {
           id: 2,
-          description: 'Is Packaging damaged?',
+          description: 'Does the photo have alcohol or tobacco?',
           type: 'RADIO',
           required: true,
           options: [
@@ -88,7 +128,7 @@ export const questionnaireData = {
         },
         {
           id: 3,
-          description: 'Is Food present?',
+          description: 'Does the photo have a watermark?',
           type: 'RADIO',
           required: true,
           options: [
@@ -98,7 +138,17 @@ export const questionnaireData = {
         },
         {
           id: 4,
-          description: 'Is Drink present?',
+          description: 'Is there more than 1 dish in the photo?',
+          type: 'RADIO',
+          required: true,
+          options: [
+            { value: 'yes', label: 'Yes' },
+            { value: 'no', label: 'No' },
+          ],
+        },
+        {
+          id: 5,
+          description: 'Are there any humans in the photo?',
           type: 'RADIO',
           required: true,
           options: [
@@ -150,3 +200,9 @@ export const questionnaireData = {
         },
       ],
 };
+
+Object.keys(questionnaireData).forEach(category => {
+  questionnaireData[category].forEach(question => {
+    question.questionId = generateQuestionId(question.description);
+  });
+});
