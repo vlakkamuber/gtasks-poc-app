@@ -84,24 +84,7 @@ const App: React.FC = () => (
           )}
           exact
         />
-        <Route
-          path="/receipt-digitization"
-          render={() => (
-            <RequireAuth>
-              <ReceiptDigitization />
-            </RequireAuth>
-          )}
-          exact
-        />
-         <Route
-          path="/localisation-quality"
-          render={() => (
-            <RequireAuth>
-              <LocalisationQuality />
-            </RequireAuth>
-          )}
-          exact
-        />
+         
         <Route
           path="/dashboard/account"
           render={() => (
@@ -143,6 +126,24 @@ const App: React.FC = () => (
           render={() => (
             <RequireAuth>
               <ImageUploadTask />
+            </RequireAuth>
+          )}
+          exact
+        />
+        <Route
+          path="/dashboard/tasks/receipt-digitization/:id"
+          render={() => (
+            <RequireAuth>
+              <ReceiptDigitization />
+            </RequireAuth>
+          )}
+          exact
+        />
+        <Route
+          path="/dashboard/tasks/localisation-quality/:id"
+          render={() => (
+            <RequireAuth>
+              <LocalisationQuality />
             </RequireAuth>
           )}
           exact

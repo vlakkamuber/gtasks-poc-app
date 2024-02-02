@@ -28,7 +28,7 @@ import {
   orderTasksByType
 } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
-import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE } from '../constants/contant';
+import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE,taskTypeMapperRoute } from '../constants/contant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
 import { Badge, COLOR } from 'baseui/badge';
@@ -150,7 +150,8 @@ const Tasks: React.FC = () => {
     apiService
       .assignTask({ userId, taskId: task.id, user })
       .then((result) => {
-        history.push('/dashboard/tasks/perform-task/' + task.id);
+        
+        history.push(taskTypeMapperRoute[task.taskType] + task.id);
         console.log(result);
       })
       .catch((error) => {
@@ -163,7 +164,7 @@ const Tasks: React.FC = () => {
   };
 
   const goToPerformResumeWork = (e, task) => {
-    history.push('/dashboard/tasks/perform-task/' + task.taskId);
+    history.push(taskTypeMapperRoute[task.taskType] + task.taskId);
   };
 
   const goToUploadImageTask = async () => {

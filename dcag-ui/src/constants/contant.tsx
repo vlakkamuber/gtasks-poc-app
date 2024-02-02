@@ -22,3 +22,12 @@ export const FILTER_OUT_TEXT_TO_AUDIO_TASK = true;
 export const COMPLETED_TASK_STATUS = 'COMPLETED';
 export const IN_PROGRESS_TASK_STATUS = 'IN_PROGRESS';
 
+export const taskTypeMapperRoute = {
+  "AUDIO_TO_AUDIO":"/dashboard/tasks/perform-task/",
+  "IMAGE_TO_TEXT":"/dashboard/tasks/perform-task/",
+  "TEXT_TO_AUDIO":"/dashboard/tasks/perform-task/",
+  "RECEIPT_DIGITIZATION":"/dashboard/tasks/receipt-digitization/",
+  "LOCALISATION_QUALITY":"/dashboard/tasks/localisation-quality/",
+  "UPLOAD_IMAGE":"/dashboard/tasks/image-upload-task/"
+}
+
