@@ -163,9 +163,12 @@ export default function QuestionnaireTaskCategory() {
           </Block>
         </div>
       {selectedTask && <>
+        <div className="p-16">
+        <div className="fixed-header-buffer"></div>
        
         {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
         <HeadingXSmall>{selectedTask.taskName}</HeadingXSmall>
+        <HeadingXSmall>{t(`dcag.home.taskHub.${selectedTask.taskType}.title`)} </HeadingXSmall>
         <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg>
         <HeadingXSmall>Task questionnaire</HeadingXSmall>
         <form onSubmit={handleSubmit}>
@@ -188,6 +191,7 @@ export default function QuestionnaireTaskCategory() {
             dismissiveAction={<Button kind={KIND.tertiary} onClick={handleCancel}>Cancel</Button>}
           />}
         </form>
+        </div>
         </>}
         <IonToast
               isOpen={showToast}
