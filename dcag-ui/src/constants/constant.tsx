@@ -39,9 +39,9 @@ export const taskCategoriesToShow = {
   "UPLOAD_IMAGE": false,
   "TEXT_TO_AUDIO":false,
   "RECEIPT_DIGITIZATION":true,
-  "LOCALIZATION_QUALITY":false,
-  "IMAGE_LABELLING":false,
-  "MENU_PHOTO_REVIEW":false,
+  "LOCALIZATION_QUALITY":true,
+  "IMAGE_LABELLING":true,
+  "MENU_PHOTO_REVIEW":true,
 }
 
 export const TasksOrder = [
