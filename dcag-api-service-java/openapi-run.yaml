@@ -135,6 +135,37 @@ paths:
             type: object
         '404':
           description: "User not found"
+  /users/{userId}/analytics/events:
+    post:
+      summary: "Create analytics events of the user"
+      operationId: "createAnalyticsEvents"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+        '404':
+          description: "User not found"
+    options:
+      description: "Cors for createAnalyticsEvents"
+      operationId: "createAnalyticsEvents CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
   /users/{userId}/tasks:
     get:
       summary: "Get tasks of the user"
@@ -432,6 +463,29 @@ paths:
           required: true
           type: string
           description: "Image File Name"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
+  /docs:
+    get:
+      summary: "Get docs"
+      operationId: "getDocs"
+      parameters:
+        - name: type
+          in: query
+          required: false
+          type: string
+          description: "Type of doc"
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: object
+    options:
+      description: "Cors for createUser"
+      operationId: "getDocs CORS"
       responses:
         200:
           description: "Allow"
