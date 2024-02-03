@@ -84,9 +84,9 @@ public class TaskService {
                 .createDateTime(task.createTime())
                 .dueDateTime(task.dueDate());
 
-        /*String objectName = task.taskType().equals(TaskType.AUDIO_TO_AUDIO) ? task.input() : task.input() + ".mp3";
+        /*String objectName = task.taskType().equals(TaskType.RECORD_AUDIO) ? task.input() : task.input() + ".mp3";
 
-        if (task.taskType().equals(TaskType.AUDIO_TO_AUDIO)) {
+        if (task.taskType().equals(TaskType.RECORD_AUDIO)) {
             String inputUrl = gcpUtils.generateV4GetObjectSignedUrl("dcag-tasks-input", objectName);
             taskResponseBuilder.inputUrl(inputUrl);
         }

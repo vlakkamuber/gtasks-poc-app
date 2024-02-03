@@ -27,7 +27,7 @@ public class TaskController {
 
     @GetMapping(produces = "application/json")
     ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false, defaultValue = "true") Boolean available,
-                                                          @RequestParam(required = false, defaultValue = "AUDIO_TO_AUDIO") TaskType taskType,
+                                                          @RequestParam(required = false, defaultValue = "RECORD_AUDIO") TaskType taskType,
                                                           @RequestParam(required = false, defaultValue = "test") String userId) {
         return ResponseEntity.ok(taskService.findAvailableTasks(available, userId, taskType));
     }

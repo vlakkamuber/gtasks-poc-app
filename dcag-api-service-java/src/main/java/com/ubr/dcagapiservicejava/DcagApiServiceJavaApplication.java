@@ -22,9 +22,9 @@ public class DcagApiServiceJavaApplication {
         return (args) -> {
 //			repository.save(new User().id("abcdefg").email("jack@xyz.com").firstName("Jack").lastName("Smith").phoneNumber("1234567890"));
 //			taskRepository.save(new Task().name("CityName").taskType(TaskType.TEXT_TO_AUDIO).currency("INR").price(100.0));
-//			taskRepository.save(new Task().name("CityName12").taskType(TaskType.AUDIO_TO_AUDIO).currency("INR").price(50.0));
+//			taskRepository.save(new Task().name("CityName12").taskType(TaskType.RECORD_AUDIO).currency("INR").price(50.0));
 //			taskRepository.save(new Task().name("CityName13").taskType(TaskType.TEXT_TO_AUDIO).currency("INR").price(120.0));
-//			taskRepository.save(new Task().name("CityName14").taskType(TaskType.AUDIO_TO_AUDIO).currency("INR").price(150.0));
+//			taskRepository.save(new Task().name("CityName14").taskType(TaskType.RECORD_AUDIO).currency("INR").price(150.0));
 //			taskRepository.save(new Task().name("CityName15").taskType(TaskType.TEXT_TO_AUDIO).currency("INR").price(180.0));
         };
     }

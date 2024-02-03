@@ -260,7 +260,7 @@ public class UserTaskService {
 
     private void addUrlsToTaskResponse(UserTaskResponse userTaskResponse, UserTask userTask, Task task) {
         TaskType taskType = task.taskType();
-        if (taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
+        if (taskType.equals(TaskType.RECORD_AUDIO)) {
             userTaskResponse.setInputUrl(gcpUtils.signTaskInputAudioUrl(task.input()));
         }
         if (taskType.equals(TaskType.RECEIPT_DIGITIZATION) ||
@@ -278,7 +278,7 @@ public class UserTaskService {
             userTaskResponse.setOutputUrl(gcpUtils.signTaskOutputImageUrl(outputFilename));
         }
 
-        if (taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.AUDIO_TO_AUDIO)) {
+        if (taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.RECORD_AUDIO)) {
             String fileNameSuffix = taskType.equals(TaskType.TEXT_TO_AUDIO) ? ".mp3" : "";
             String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + fileNameSuffix;
 
