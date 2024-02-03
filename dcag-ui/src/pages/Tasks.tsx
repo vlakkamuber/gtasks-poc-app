@@ -122,6 +122,7 @@ const Tasks: React.FC = () => {
   };
 
   const getTaskSummary = () => {
+    setIsError(false);
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getTaskSummary({ userId, user })
@@ -133,6 +134,7 @@ const Tasks: React.FC = () => {
         setShowLoading(false)
       })
       .catch((error) => {
+        setIsError(true);
         console.error('Error fetching task data:', error);
       });
   };
@@ -143,7 +145,7 @@ const Tasks: React.FC = () => {
   }, []);
 
   useEffect(()=>{
-    if(todayEarnings && todayEarnings<9){
+    if(todayEarnings && todayEarnings< 200){
       getAvailableTasks();
     }
   },[todayEarnings])
@@ -306,7 +308,7 @@ const Tasks: React.FC = () => {
         </IonSegment>
         {selectedSegment === 'available_task' && (
         <React.Fragment>
-          {todayEarnings > 8 ?(<AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!"/>) :(<>
+          {todayEarnings > 200 ?(<AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!"/>) :(<>
             <React.Fragment>
               {Object.keys(tasks).map((key, index) => {
                 return (

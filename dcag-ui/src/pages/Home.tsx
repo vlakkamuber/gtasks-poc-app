@@ -93,13 +93,13 @@ const Home: React.FC = () => {
     return taskCategories.map(
       (category) =>
         category.show && (
-          <div key={category.id}>
+          <div key={category.id} onClick={() => handleTaskCategory(category.id)} className='clickable-cursor'>
             <Card
               overrides={{ Root: { style: { marginBottom: '32px' } } }}
-              headerImage={category.imageSrc}
+              // headerImage={category.imageSrc}
               title={t(`dcag.home.taskHub.${category.id}.title`)}>
               <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
-              <StyledAction>
+              {/* <StyledAction>
                 <Button
                   kind={KIND.tertiary}
                   overrides={{
@@ -114,7 +114,7 @@ const Home: React.FC = () => {
                   <LabelSmall>View all details</LabelSmall>
                   <ArrowRight size={24} />
                 </Button>
-              </StyledAction>
+              </StyledAction> */}
             </Card>
           </div>
         )
