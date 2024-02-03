@@ -39,6 +39,10 @@ public class GCPUtils {
             return generateV4GetObjectSignedUrl("dcag-tasks-output", "image/" + fileName);
         }
 
+        public String signTrainingVideoUrl(String fileName) throws StorageException {
+            return generateV4GetObjectSignedUrl("dcag-training", fileName);
+        }
+
         /**
          * Signing a URL requires Credentials which implement ServiceAccountSigner. These can be set
          * explicitly using the Storage.SignUrlOption.signWith(ServiceAccountSigner) option. If you don't,
