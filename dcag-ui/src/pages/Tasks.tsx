@@ -41,6 +41,7 @@ import { Badge, COLOR } from 'baseui/badge';
 import { showPayout } from '../utils/Settings';
 import ErrorView from '../components/ErrorView';
 import { Button, SIZE, SHAPE } from 'baseui/button';
+import useAnalytics from '../hooks/useAnanlytics';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -57,6 +58,8 @@ const Tasks: React.FC = () => {
   const { selectedCategory } = useCategory();
   const [isImageUploadAvailable, setIsImageUploadAvailable] = useState(false);
   const [finalTasks, setFinalTasks] = useState([]);
+
+  const logEvent = useAnalytics({ page: 'Task List', city: 'test' });
 
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -158,11 +161,19 @@ const Tasks: React.FC = () => {
       });
   };
 
-  const goToPerformTask = (e, task) => {
+  const goToPerformTask = async (e, task) => {
+    logEvent({
+      actions: 'Start work',
+      properties: task.id
+    });
     assignTask(task);
   };
 
   const goToPerformResumeWork = (e, task) => {
+    logEvent({
+      actions: 'Resume work',
+      properties: task.id
+    });
     history.push(taskTypeMapperRoute[task.taskType] + task.taskId);
   };
 
@@ -331,13 +342,6 @@ const Tasks: React.FC = () => {
                                     {t(`dcag.tasks.payouts.label`)}: ${task.price}
                                   </p>
                                 )}
-                                {/* <p>
-                                  <small>
-                                    {t(`dcag.tasks.createdAt.label`)}:{' '}
-                                    {formatDate(task.createDateTime)}{' '}
-                                    {t(`dcag.tasks.dueDate.label`)}: {formatDate(task.dueDateTime)}
-                                  </small>
-                                </p> */}
                               </IonLabel>
                               {!task.userId && (
                                 <Button

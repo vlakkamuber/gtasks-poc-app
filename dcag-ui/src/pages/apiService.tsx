@@ -219,6 +219,27 @@ const apiService = {
       body: JSON.stringify({ userId: uid, phoneNumber: phoneNumber })
     });
     return response;
+  },
+  async recordAnalytics(
+    userId,
+    user,
+    { sessionId, actions, page, city, properties, otherDetails }
+  ) {
+    const endpoint = `users/${userId}/analytics/events`;
+    const headers = getHeaders({ user });
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        sessionId,
+        actions,
+        page,
+        city,
+        properties,
+        otherDetails
+      })
+    });
+    return response;
   }
 };
 
