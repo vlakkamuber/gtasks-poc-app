@@ -1,6 +1,8 @@
 package com.ubr.dcagapiservicejava.service;
 
-import com.ubr.dcagapiservicejava.domain.*;
+import com.ubr.dcagapiservicejava.domain.Task;
+import com.ubr.dcagapiservicejava.domain.User;
+import com.ubr.dcagapiservicejava.domain.UserTask;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
@@ -65,7 +67,7 @@ public class UserTaskService {
                         .status(status)
                         .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                 userTask = userTasksRepository.save(userTask);
-                log.info("User - {} In progress task - {} created",userId,taskId);
+                log.info("User - {} In progress task - {} created", userId, taskId);
                 updateTaskStatus(taskId);
 
                 return userTaskToBasicUserTaskResponse(userTask, task.get());
@@ -118,7 +120,7 @@ public class UserTaskService {
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                     updatedUserTask = userTasksRepository.save(updatedUserTask);
 
-                    log.info("User - {}  task - {} status completed",userId,taskId);
+                    log.info("User - {}  task - {} status completed", userId, taskId);
                     updateTaskStatus(taskId);
                     return updatedUserTask;
                 })
@@ -130,7 +132,7 @@ public class UserTaskService {
     public List<UserTaskResponse> findUserTasks(String userId, UserTaskStatus status) {
 
         List<UserTask> userTasks = new ArrayList<>();
-        if(status == null) {
+        if (status == null) {
             userTasks = userTasksRepository.findByUserId(userId);
         } else {
             userTasks = userTasksRepository.findByUserIdAndStatus(userId, status);
@@ -160,7 +162,7 @@ public class UserTaskService {
         if (!userTasks.isEmpty()) {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount((long) userTasks.size()).totalEarning(totalEarning);
-            if(totalEarning >= 200){
+            if (totalEarning >= 200) {
                 summaryResponseBuilder.errorMessage("User has reached the daily limit and can resume again the next day.");
             }
         } else {
@@ -172,7 +174,7 @@ public class UserTaskService {
 
     private void updateTaskStatus(Long taskId) {
 
-        log.info("Updating user task status for task - {}",taskId);
+        log.info("Updating user task status for task - {}", taskId);
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
         TaskStatus status = null;
         long completedCount = 0;
@@ -195,7 +197,7 @@ public class UserTaskService {
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.status(status);
-            if(totalCount==1 && completedCount==0){
+            if (totalCount == 1 && completedCount == 0) {
                 task.startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
             }
             if (completedCount > taskOptional.get().maxNoOfUsers()) {
@@ -254,9 +256,10 @@ public class UserTaskService {
             userTaskResponse.setInputUrl(gcpUtils.signTaskInputAudioUrl(task.input()));
         }
         if (taskType.equals(TaskType.RECEIPT_DIGITIZATION) ||
-            taskType.equals(TaskType.LOCALIZATION_QUALITY) ||
-            taskType.equals(TaskType.IMAGE_LABELLING)) {
-            userTaskResponse.setInputUrl(gcpUtils.signTaskInputImageUrl(task.taskCategory().name().toLowerCase()+ "/" +task.input()));
+                taskType.equals(TaskType.LOCALIZATION_QUALITY) ||
+                taskType.equals(TaskType.IMAGE_LABELLING) ||
+                taskType.equals(TaskType.MENU_PHOTO_REVIEW)) {
+            userTaskResponse.setInputUrl(gcpUtils.signTaskInputImageUrl(task.taskCategory().name().toLowerCase() + "/" + task.input()));
         }
         if (taskType.equals(TaskType.IMAGE_TO_TEXT)) {
             userTaskResponse.setInputUrl(gcpUtils.signTaskInputImageUrl(task.input()));
@@ -289,7 +292,7 @@ public class UserTaskService {
 
         if (userTask.isPresent()) {
             userTasksRepository.deleteById(userTask.get().id());
-            log.info("User - {} task - {} deleted",userId,taskId);
+            log.info("User - {} task - {} deleted", userId, taskId);
             updateTaskStatus(taskId);
         }
 
