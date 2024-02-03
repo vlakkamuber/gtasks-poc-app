@@ -1,6 +1,7 @@
 package com.ubr.dcagapiservicejava.controller;
 
-import com.ubr.dcagapiservicejava.utils.GCPUtils;
+import com.ubr.dcagapiservicejava.dto.DocResponse;
+import com.ubr.dcagapiservicejava.service.DocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +11,14 @@ import org.springframework.web.bind.annotation.*;
 public class DcagController {
 
 
-    private final String APP_VERSION = "demo-v0.1";
-
     @Autowired
-    private GCPUtils gcpUtils;
+    private DocService docService;
 
     @CrossOrigin
-    @GetMapping(value = "/doc", produces = "application/json")
-    ResponseEntity<String> getTrainingDocUrl(@RequestParam String type) {
+    @GetMapping(value = "/docs", produces = "application/json")
+    ResponseEntity<DocResponse> getDocsUrl(@RequestParam String type) {
 
-        String fileName = type + APP_VERSION + ".mp4";
-
-       return ResponseEntity.ok(gcpUtils.signTrainingVideoUrl(fileName));
+       return ResponseEntity.ok(docService.getDocsUrl(type));
 
     }
 }
