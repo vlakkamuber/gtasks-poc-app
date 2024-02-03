@@ -1,15 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
   IonImg,
   IonToast,
+  useIonLoading
 } from '@ionic/react';
-import Question from './components/Question';
+import Question from './components/Questions';
+import { Block } from 'baseui/block';
+import { ArrowLeft } from 'baseui/icon';
+import { LabelMedium } from 'baseui/typography';
 import {questionnaireData} from "./questions"
 import { useTranslation } from 'react-i18next';
 import { HeadingXSmall, LabelSmall } from 'baseui/typography';
@@ -19,11 +19,10 @@ import { useStyletron } from 'baseui';
 import apiService from '../apiService';
 import { useHistory,useParams } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
+import { LOADER_MESSAGE } from '../../constants/constant';
+import LoadingComponent from '../../components/Loader';
 
-const receiptDigitizationQuestions = questionnaireData.RECEIPT_DIGITIZATION;
-console.log(receiptDigitizationQuestions)
-
-export default function ReceiptDigitization() {
+export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
   const history = useHistory()
   const params = useParams();
@@ -33,45 +32,59 @@ export default function ReceiptDigitization() {
   const [selectedTask,setSelectedTask] = useState(null)
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [questions,setQuestions] = useState([])
+  const [present, dismiss] = useIonLoading();
   const getTaskDetail = async () => {
     let taskId = params.id;
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .getTaskDetail({ userId, taskId, user })
       .then((result) => {
-        console.log(result);
         setShowLoading(false);
         setSelectedTask(result);
-        const outputArray = JSON.parse(result.output);
-        if(outputArray){
-          const updatedFormState = {};
-        outputArray.forEach(({ questionId, answer }) => {
-          updatedFormState[questionId] = answer;
-        });
-        setFormState(updatedFormState);
-        }else {
-          const updatedFormState = {};
-          receiptDigitizationQuestions.forEach((item) => {
-            updatedFormState[item.questionId] = item.type === "DATE" ? new Date() : '';
-          });
-          setFormState(updatedFormState);
-        }
+        const questionsData = questionnaireData[result.taskType];
+        setQuestions(questionsData)
         
       })
       .catch((error) => {
         console.error('Error fetching task data:', error);
       });
   };
+
+  useEffect(() => {
+    if (selectedTask && questions.length > 0) {
+      const outputArray = JSON.parse(selectedTask.output);
+      if (outputArray) {
+        const updatedFormState = {};
+        outputArray.forEach(({ questionId, answer }) => {
+          updatedFormState[questionId] = answer;
+        });
+        setFormState(updatedFormState);
+      } else {
+        const updatedFormState = {};
+        questions.forEach((item) => {
+          updatedFormState[item.questionId] = item.type === "DATE" ? new Date() : '';
+        });
+        setFormState(updatedFormState);
+      }
+    }
+  }, [questions, selectedTask]);
+  
+
   useEffect(()=>{
+    setShowLoading(true);
     getTaskDetail();
   },[])
+
+  const goBack = () => {
+    history.goBack(); // This function navigates back to the previous page
+  };
 
   const assignTaskToCompleted = (taskId, body) => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .assignTaskToCompleted({ userId, taskId, body:{output:JSON.stringify(body),status:"COMPLETED"}, user })
       .then((result) => {
-        console.log(result);
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
@@ -92,6 +105,22 @@ export default function ReceiptDigitization() {
     }));
     assignTaskToCompleted(selectedTask.taskId,formDataForSubmission)
   };
+
+  const handleCancel = async (e)=>{
+    e.preventDefault();
+    try {
+      let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+      const taskId = selectedTask.taskId;
+      present(LOADER_MESSAGE);
+      await apiService.releaseTask({ userId, taskId, user });
+      dismiss();
+      history.push('/dashboard/tasks');
+    } catch (err) {
+      dismiss();
+      console.log('Error ', err);
+    }
+  }
+
   const isFormValid = () => {
     for (const questionId in formState) {
       if (!formState[questionId]) {
@@ -103,17 +132,36 @@ export default function ReceiptDigitization() {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            {/* <IonIcon onClick={goBack} icon={arrowBack} className="clickable-cursor" /> */}
-          </IonButtons>
-          <IonTitle className="ion-text-center">
-            {t(`dcag.tasks.page.heading`)}
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent className="ion-padding" fullscreen>
+      <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
+      <div className="fixed-header">
+          <Block className="p-16 fixed-header-home-content ">
+            <Button
+              kind={KIND.tertiary}
+              onClick={goBack}
+              overrides={{
+                BaseButton: {
+                  style: () => ({
+                    padding: '0px'
+                  })
+                }
+              }}>
+              <ArrowLeft size={32} />
+            </Button>
+            <LabelMedium>{t(`dcag.tasks.page.heading`)}</LabelMedium>
+            <Button
+              kind={KIND.tertiary}
+              overrides={{
+                BaseButton: {
+                  style: () => ({
+                    padding: '0px'
+                  })
+                }
+              }}>
+              <LabelSmall>Help</LabelSmall>
+            </Button>
+          </Block>
+        </div>
       {selectedTask && <>
        
         {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
@@ -121,7 +169,7 @@ export default function ReceiptDigitization() {
         <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg>
         <HeadingXSmall>Task questionnaire</HeadingXSmall>
         <form onSubmit={handleSubmit}>
-          {receiptDigitizationQuestions.map((item) => (
+          {questions.map((item) => (
             <Question
               key={item.id}
               question={item}
@@ -137,7 +185,7 @@ export default function ReceiptDigitization() {
           </LabelSmall>}
           {selectedTask.status !== "COMPLETED" && <ButtonDock
             primaryAction={<Button onClick={handleSubmit}  disabled={!isFormValid() || selectedTask.status === "COMPLETED"}>Submit</Button>}
-            dismissiveAction={<Button kind={KIND.tertiary}>Cancel</Button>}
+            dismissiveAction={<Button kind={KIND.tertiary} onClick={handleCancel}>Cancel</Button>}
           />}
         </form>
         </>}

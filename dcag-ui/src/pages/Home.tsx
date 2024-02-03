@@ -39,25 +39,39 @@ const taskCategories = [
   },
   {
     id: 'UPLOAD_IMAGE',
-    imageSrc: 'assets/audio_to_audio.png',
+    imageSrc: 'assets/text_to_audio.png',
     title: 'Upload Image',
     subtitle: 'upload a location image and provide description about the image.',
     show: false
   },
   {
     id: 'RECEIPT_DIGITIZATION',
-    imageSrc: 'assets/audio_to_audio.png',
+    imageSrc: 'assets/text_to_image.png',
     title: 'Receipt Digitization',
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true
   },
-  {
-    id: 'LOCALISATION_QUALITY',
-    imageSrc: 'assets/audio_to_audio.png',
-    title: 'Localisation Quality',
-    subtitle: 'View the receipt image and provide answer about the image.',
-    show: true
-  }
+  // {
+  //   id: 'LOCALIZATION_QUALITY',
+  //   imageSrc: 'assets/audio_to_audio.png',
+  //   title: 'Localization Quality',
+  //   subtitle: 'View the receipt image and provide answer about the image.',
+  //   show: true
+  // },
+  // {
+  //   id: 'IMAGE_LABELLING',
+  //   imageSrc: 'assets/audio_to_audio.png',
+  //   title: 'Image Labelling',
+  //   subtitle: 'View the image  and provide answer about the image.',
+  //   show: true
+  // },
+  // {
+  //   id: 'MENU_PHOTO_REVIEW',
+  //   imageSrc: 'assets/text_to_image.png',
+  //   title: 'Menu Photo Review',
+  //   subtitle: 'View the image  and provide answer about the image.',
+  //   show: true
+  // }
 ];
 const Home: React.FC = () => {
   const { t } = useTranslation();

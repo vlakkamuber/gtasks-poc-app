@@ -37,8 +37,7 @@ import Help from './pages/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import RequireAuth from './components/RequireAuth';
 import ReportBug from './pages/ReportBug';
-import ReceiptDigitization from './pages/ReceiptDigitization/ReceiptDigitization';
-import LocalisationQuality from './pages/LocalisationQuality/LocalisationQuality';
+import QuestionnaireTaskCategory from './pages/QuestionnaireTaskCategory/QuestionnaireTaskCategory';
 
 setupIonicReact();
 
@@ -131,19 +130,10 @@ const App: React.FC = () => (
           exact
         />
         <Route
-          path="/dashboard/tasks/receipt-digitization/:id"
+          path="/dashboard/tasks/questionnaire/:id"
           render={() => (
             <RequireAuth>
-              <ReceiptDigitization />
-            </RequireAuth>
-          )}
-          exact
-        />
-        <Route
-          path="/dashboard/tasks/localisation-quality/:id"
-          render={() => (
-            <RequireAuth>
-              <LocalisationQuality />
+              <QuestionnaireTaskCategory />
             </RequireAuth>
           )}
           exact

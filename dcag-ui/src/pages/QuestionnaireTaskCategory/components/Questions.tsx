@@ -61,7 +61,7 @@ export default function Question({ question, value,isCompleted, onChange }: Ques
               value={value}
             />
           ) : type === 'DATE' ? (
-            <DatePicker required={required} mountNode={cardRef.current} value={new Date(value)} onChange={({ date }) => onChange(questionId, date)} disabled={isDisabled} />
+            <DatePicker required={required} mountNode={cardRef.current} value={value? new Date(value) : new Date()} onChange={({ date }) => onChange(questionId, date)} disabled={isDisabled} />
           ) : null}
         </FormControl>
       </div>
