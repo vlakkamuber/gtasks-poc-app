@@ -37,7 +37,7 @@ const Training: React.FC = () => {
   const videoRef = useRef(null);
   useEffect(()=>{
     getTrainingsDoc();
-  },)
+  },[])
 
   const playVideo = () => {
     if (videoRef.current) {
