@@ -5,6 +5,7 @@ import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +20,11 @@ public class DcagUtils {
     public static LocalDateTime convertEpochToLocalDateTime(Long epoch) {
         Instant instant = Instant.ofEpochMilli(epoch);
         return instant.atZone(ZoneOffset.UTC).toLocalDateTime();
+    }
+
+    public static LocalDate convertEpochToLocalDate(Long epoch) {
+        Instant instant = Instant.ofEpochMilli(epoch);
+        return instant.atZone(ZoneOffset.UTC).toLocalDate();
     }
 
     public static  long convertLocalDateTimeToEpoch(LocalDateTime dateTime) {
@@ -40,4 +46,14 @@ public class DcagUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         return LocalDateTime.parse(dateTime, formatter);
     }
+
+//    public static void authenticateUserId(String userId) {
+//        SecurityContext securityContext = SecurityContextHolder.getContext();
+//        FirebaseAuthenticationToken authentication = (FirebaseAuthenticationToken) securityContext.getAuthentication();
+//        String uid = authentication.getFirebaseToken().getUid();
+//
+//        if(!uid.equals(userId)){
+//            throw new UnauthorizedUserException("User is not Authorized - " + userId);
+//        }
+//    }
 }

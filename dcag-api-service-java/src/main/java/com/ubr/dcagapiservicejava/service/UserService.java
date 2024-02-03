@@ -1,11 +1,14 @@
 package com.ubr.dcagapiservicejava.service;
 
  
+import com.ubr.dcagapiservicejava.domain.UserEvents;
 import com.ubr.dcagapiservicejava.domain.UserIssue;
 import com.ubr.dcagapiservicejava.dto.UserDTO;
+import com.ubr.dcagapiservicejava.dto.UserEventsDTO;
 import com.ubr.dcagapiservicejava.dto.UserIssueDTO;
 import com.ubr.dcagapiservicejava.dto.UserResponse;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
+import com.ubr.dcagapiservicejava.repository.UserEventsRepository;
 import com.ubr.dcagapiservicejava.repository.UserIssueRepository;
 import com.ubr.dcagapiservicejava.repository.UserRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
@@ -28,6 +31,9 @@ public class UserService {
 
     @Autowired
     UserIssueRepository userIssueRepository;
+
+    @Autowired
+    UserEventsRepository userEventsRepository;
 
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
@@ -99,6 +105,22 @@ public class UserService {
             log.info("User issue submitted - {}",userId);
 
             return issue.id();
+        }else {
+            throw new UserNotFoundException("User not found: " + userId);
+        }
+    }
+
+    public Long saveUserEvents(String userId, UserEventsDTO userEventsDTO) {
+
+        if(userRepository.findById(userId).isPresent()) {
+
+            UserEvents userEvents = userEventsRepository.save(new UserEvents().user(new User().id(userId))
+                    .sessionId(userEventsDTO.sessionId()).page(userEventsDTO.page())
+                    .actions(userEventsDTO.actions()).properties(userEventsDTO.properties())
+                    .city(userEventsDTO.city()).otherDetails(userEventsDTO.otherDetails()))
+                    .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+            log.info("Saved User Events for user - {}",userId);
+            return userEvents.id();
         }else {
             throw new UserNotFoundException("User not found: " + userId);
         }

@@ -60,10 +60,27 @@ CREATE TABLE user_issues
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
+CREATE TABLE user_events
+(
+    id              BIGINT       NOT NULL AUTO_INCREMENT,
+    user_id         VARCHAR(255) NOT NULL,
+    session_id      VARCHAR(255),
+    page            VARCHAR(255),
+    actions         VARCHAR(255),
+    city            VARCHAR(255),
+    properties      VARCHAR(255),
+    other_details   VARCHAR(255),
+    create_time     TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 -- creating index
 CREATE INDEX idx_user_tasks_user_id ON user_tasks (user_id);
 CREATE INDEX idx_user_tasks_task_id ON user_tasks (task_id);
 
+CREATE INDEX idx_user_issues_user_id ON user_issues (user_id);
+CREATE INDEX idx_user_events_user_id ON user_events (user_id);
 
 ------------------ DATA ------------------
 ------------------ Tasks ------------------

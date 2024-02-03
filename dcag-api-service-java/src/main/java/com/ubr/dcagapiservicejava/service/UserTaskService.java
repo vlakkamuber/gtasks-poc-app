@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,15 +155,22 @@ public class UserTaskService {
 
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
 
-        List<UserTask> userTasks = userTasksRepository.findByUserIdAndStatus(userId, UserTaskStatus.COMPLETED); // TODO: Get only completed tasks
+        List<UserTask> userTasks = userTasksRepository.findByUserIdAndStatus(userId, UserTaskStatus.COMPLETED);
+
         double totalEarning = userTasks.stream().mapToDouble(e -> e.task().price()).sum();
+
+        LocalDate todayDate = DcagUtils.convertEpochToLocalDate(System.currentTimeMillis());
+
+        List<UserTask> todayTasks = userTasks.stream().filter(e -> e.completionTime().equals(todayDate.atStartOfDay())
+                || e.completionTime().isAfter(todayDate.atStartOfDay())).toList();
+
+        double todayEarning = todayTasks.stream().mapToDouble(e -> e.task().price()).sum();
+
         UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder;
         if (!userTasks.isEmpty()) {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
-                    .completedTaskCount((long) userTasks.size()).totalEarning(totalEarning);
-            if(totalEarning >= 200){
-                summaryResponseBuilder.errorMessage("User has reached the daily limit and can resume again the next day.");
-            }
+                    .completedTaskCount((long) userTasks.size()).totalEarning(totalEarning)
+                    .todayCompletedTasks((long) todayTasks.size()).todayEarnings(todayEarning);
         } else {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount(0L).totalEarning(0.0);
