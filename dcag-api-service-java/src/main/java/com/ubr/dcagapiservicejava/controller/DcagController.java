@@ -16,7 +16,7 @@ public class DcagController {
 
     @CrossOrigin
     @GetMapping(value = "/docs", produces = "application/json")
-    ResponseEntity<DocResponse> getDocsUrl(@RequestParam String type) {
+    ResponseEntity<DocResponse> getDocsUrl(@RequestParam(defaultValue = "training") String type) {
 
        return ResponseEntity.ok(docService.getDocsUrl(type));
 
