@@ -408,6 +408,25 @@ label {
   align-items: center;
 }
 
+.alert-wrapper{
+  position: relative;
+  padding: 2rem;
+  margin: 1rem -15px 0;
+  border: solid #f7f7f9;
+  border-width: 0.2rem 0 0;
+}
+.alert-box{
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
 @media only screen and (min-width: 992px) {
   html {
     width: 100%;

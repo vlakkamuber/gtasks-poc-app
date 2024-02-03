@@ -12,7 +12,6 @@ import {
   IonList,
   IonItem,
   IonButton,
-  IonButtons,
   IonBadge
 } from '@ionic/react';
 import { people, business } from 'ionicons/icons';
@@ -22,8 +21,6 @@ import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
 import {
   filterTaskWithType,
-  formatDate,
-  filterTaskWithStatus,
   filterTaskWithSelectedCategory,
   orderTasksByType
 } from '../utils/mapTeluguDigitsToNumeric';
@@ -37,7 +34,6 @@ import {
 } from '../constants/constant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
-import { Badge, COLOR } from 'baseui/badge';
 import { showPayout } from '../utils/Settings';
 import ErrorView from '../components/ErrorView';
 import { Button, SIZE, SHAPE } from 'baseui/button';
@@ -58,6 +54,7 @@ const Tasks: React.FC = () => {
   const { selectedCategory } = useCategory();
   const [isImageUploadAvailable, setIsImageUploadAvailable] = useState(false);
   const [finalTasks, setFinalTasks] = useState([]);
+  const [todayEarnings,setTodayEarnings] = useState(null)
 
   const logEvent = useAnalytics({ page: 'Task List', city: 'test' });
 
@@ -132,17 +129,24 @@ const Tasks: React.FC = () => {
         console.log(result);
         setCompletedCount(result.completedTaskCount);
         setTotalEarned(result.totalEarning);
+        setTodayEarnings(result.todayEarnings)
+        setShowLoading(false)
       })
       .catch((error) => {
         console.error('Error fetching task data:', error);
       });
   };
+  
   useEffect(() => {
     setShowLoading(true);
-    getAvailableTasks();
     getTaskSummary();
-    //getMyTasksList();
   }, []);
+
+  useEffect(()=>{
+    if(todayEarnings && todayEarnings<9){
+      getAvailableTasks();
+    }
+  },[todayEarnings])
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
@@ -293,15 +297,16 @@ const Tasks: React.FC = () => {
             {' '}
             <div className="mytask-segment-content">
               <div className="mytask-segment-text"> {t(`dcag.tasks.tabs.myTask.label`)} </div>
-              {myTasksCount > 0 && (
-                <IonBadge className="mytask-segmnet-badge">{myTasksCount}</IonBadge>
+              {completedCount > 0 && (
+                <IonBadge className="mytask-segmnet-badge">{completedCount}</IonBadge>
               )}
             </div>
           </IonSegmentButton>
           {/* Add more segments as needed */}
         </IonSegment>
         {selectedSegment === 'available_task' && (
-          <React.Fragment>
+        <React.Fragment>
+          {todayEarnings > 8 ?(<AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!"/>) :(<>
             <React.Fragment>
               {Object.keys(tasks).map((key, index) => {
                 return (
@@ -424,7 +429,8 @@ const Tasks: React.FC = () => {
                 </IonList>
               </>
             )}
-          </React.Fragment>
+            </>)}
+        </React.Fragment>
         )}
 
         {selectedSegment === 'my_tasks' && (

@@ -240,6 +240,12 @@ const apiService = {
       })
     });
     return response;
+  },
+  async getTrainingsDoc({user}:{user:any}){
+    const endpoint = `docs?type=training`;
+    const headers = getHeaders({ user });
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
+    return response.json();
   }
 };
 
