@@ -14,6 +14,13 @@ import {
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategory } from '../context/TaskCategoryContext';
+import { ArrowRight, ArrowLeft } from 'baseui/icon';
+
+import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
+import { Card, StyledBody, StyledAction } from 'baseui/card';
+import { Block } from 'baseui/block';
+import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
+import { StyledDivider } from 'baseui/divider';
 
 const taskCategories = [
   {
@@ -21,42 +28,54 @@ const taskCategories = [
     imageSrc: 'assets/text_to_audio.png',
     title: 'Record Audio',
     subtitle: 'Read text, validate pronunciation and record correct audio',
-    show:true
+    show: true
   },
   {
     id: 'DESCRIBE_IMAGE',
     imageSrc: 'assets/audio_to_audio.png',
     title: 'Describe Image',
     subtitle: 'View the location image and provide description about the image.',
-    show:false
+    show: false
   },
   {
     id: 'UPLOAD_IMAGE',
-    imageSrc: 'assets/audio_to_audio.png',
+    imageSrc: 'assets/text_to_audio.png',
     title: 'Upload Image',
     subtitle: 'upload a location image and provide description about the image.',
-    show:false
+    show: false
   },
   {
     id: 'RECEIPT_DIGITIZATION',
-    imageSrc: 'assets/audio_to_audio.png',
+    imageSrc: 'assets/text_to_image.png',
     title: 'Receipt Digitization',
     subtitle: 'View the receipt image and provide answer about the image.',
-    show:true
+    show: true
   },
   {
-    id: 'LOCALISATION_QUALITY',
+    id: 'LOCALIZATION_QUALITY',
     imageSrc: 'assets/audio_to_audio.png',
-    title: 'Localisation Quality',
+    title: 'Localization Quality',
     subtitle: 'View the receipt image and provide answer about the image.',
-    show:true
+    show: true
   },
-
+  {
+    id: 'IMAGE_LABELLING',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Image Labelling',
+    subtitle: 'View the image  and provide answer about the image.',
+    show: true
+  },
+  {
+    id: 'MENU_PHOTO_REVIEW',
+    imageSrc: 'assets/text_to_image.png',
+    title: 'Menu Photo Review',
+    subtitle: 'View the image  and provide answer about the image.',
+    show: true
+  }
 ];
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  
 
   const { selectedCategory, setSelectedCategory } = useCategory();
 
@@ -67,62 +86,89 @@ const Home: React.FC = () => {
     history.push('/dashboard/tasks');
   };
 
-
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
   };
   const renderTaskCards = () => {
-    return taskCategories.map((category) => (
-      category.show && (<div key={category.id} className="mt-0 mb-0 p-4">
-        <IonCard
-          style={{ borderRadius: '10px', marginBottom: '3rem', cursor: 'pointer' }}
-          onClick={() => handleTaskCategory(category.id)}>
-          <img alt="Silhouette of mountains" src={category.imageSrc} style={{ objectFit: 'cover' }} />
-          <IonCardHeader>
-            <IonCardTitle>{t(`dcag.home.taskHub.${category.id}.title`)}</IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</IonCardContent>
-        </IonCard>
-      </div>)
-    ));
+    return taskCategories.map(
+      (category) =>
+        category.show && (
+          <div key={category.id}>
+            <Card
+              overrides={{ Root: { style: { marginBottom: '32px' } } }}
+              headerImage={category.imageSrc}
+              title={t(`dcag.home.taskHub.${category.id}.title`)}>
+              <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
+              <StyledAction>
+                <Button
+                  kind={KIND.tertiary}
+                  overrides={{
+                    BaseButton: {
+                      style: () => ({
+                        paddingLeft: '0px',
+                        paddingRight: '0px'
+                      })
+                    }
+                  }}
+                  onClick={() => handleTaskCategory(category.id)}>
+                  <LabelSmall>View all details</LabelSmall>
+                  <ArrowRight size={24} />
+                </Button>
+              </StyledAction>
+            </Card>
+          </div>
+        )
+    );
   };
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          {/* <IonButtons slot="start">
-            <IonIcon onClick={goBack} icon={arrowBack} />
-          </IonButtons> */}
-          <IonTitle>{t(`dcag.home.bottomTabs.home`)}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '15px',
-            paddingBottom: '0px',
-            alignItems: 'center'
-          }}>
-          <div>
-            <h3 className="mt-0 mb-0">{t(`dcag.home.taskHub.title`)}</h3>
-          </div>
-          <IonButton
-            onClick={() => handleTaskCategory('ALL')}
-            style={{
-              '--background': '#000',
-              '--border-radius': '23px',
-              height: '30px',
-              color: '#fff',
-              fontSize: '0.7rem'
-            }}>
-            {t(`dcag.home.taskHub.btn.viewAllTasks`)}
-          </IonButton>
+        <div className="fixed-header">
+          <Block className="p-16 fixed-header-home-content ">
+            <Button
+              kind={KIND.tertiary}
+              onClick={goBack}
+              overrides={{
+                BaseButton: {
+                  style: () => ({
+                    padding: '0px'
+                  })
+                }
+              }}>
+              <ArrowLeft size={32} />
+            </Button>
+            <LabelMedium>{t(`dcag.home.bottomTabs.home`)}</LabelMedium>
+            <Button
+              kind={KIND.tertiary}
+              overrides={{
+                BaseButton: {
+                  style: () => ({
+                    padding: '0px'
+                  })
+                }
+              }}>
+              <LabelSmall>Help</LabelSmall>
+            </Button>
+          </Block>
         </div>
-        <p className="mt-0 mb-0 p-16">{t(`dcag.home.taskHub.subtitle`)}</p>
-        <div className="mt-0 mb-0 p-4">
-        {renderTaskCards()}
+        <div className="p-16">
+          <div className="fixed-header-buffer"></div>
+          <div className="fixed-header-home-content">
+            <div>
+              <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
+            </div>
+            <Button
+              kind={KIND.secondary}
+              onClick={() => handleTaskCategory('ALL')}
+              shape={SHAPE.pill}
+              size={SIZE.compact}>
+              <LabelSmall>{t(`dcag.home.taskHub.btn.viewAllTasks`)}</LabelSmall>
+            </Button>
+          </div>
+          <ParagraphMedium className="mt-4 mb-32">
+            {t(`dcag.home.taskHub.subtitle`)}
+          </ParagraphMedium>
+          <div className="mt-16 mb-0">{renderTaskCards()}</div>
         </div>
       </IonContent>
     </IonPage>

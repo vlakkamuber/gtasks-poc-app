@@ -79,7 +79,7 @@ const PerformTask: React.FC = () => {
       if (selectedTask.taskType === 'IMAGE_TO_TEXT') {
         isDisabled =
           selectedTask.status === 'COMPLETED' || selectedTask.output === null || submitted;
-      } else if (selectedTask.taskType === 'AUDIO_TO_AUDIO') {
+      } else if (selectedTask.taskType === 'RECORD_AUDIO') {
         if (useInput === true) {
           isDisabled = selectedTask.status === 'COMPLETED' || submitted;
         } else {
@@ -150,7 +150,7 @@ const PerformTask: React.FC = () => {
   const saveAudioToAPI = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-    if (useInput === true && selectedTask.taskType === 'AUDIO_TO_AUDIO') {
+    if (useInput === true && selectedTask.taskType === 'RECORD_AUDIO') {
       assignTaskToCompleted(selectedTask.taskId, { useInput: true, status: 'COMPLETED' });
     } else if (selectedTask.taskType === 'IMAGE_TO_TEXT') {
       assignTaskToCompleted(selectedTask.taskId, {
@@ -277,14 +277,14 @@ const PerformTask: React.FC = () => {
                   />
                 </div>
               )}
-              {(selectedTask.taskType === 'AUDIO_TO_AUDIO' ||
-                selectedTask.taskType === 'AUDIO_TO_AUDIO') && (
+              {(selectedTask.taskType === 'RECORD_AUDIO' ||
+                selectedTask.taskType === 'RECORD_AUDIO') && (
                 <div>
                   <h5>{t(`dcag.tasks.performTask.input.label`)}</h5>
                   <AudioPlayer audioSrc={selectedTask.inputUrl} />
                 </div>
               )}
-              {selectedTask.taskType === 'AUDIO_TO_AUDIO' && (
+              {selectedTask.taskType === 'RECORD_AUDIO' && (
                 <div>
                   <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
                   <RadioGroup
