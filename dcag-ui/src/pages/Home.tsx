@@ -51,27 +51,27 @@ const taskCategories = [
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true
   },
-  // {
-  //   id: 'LOCALIZATION_QUALITY',
-  //   imageSrc: 'assets/audio_to_audio.png',
-  //   title: 'Localization Quality',
-  //   subtitle: 'View the receipt image and provide answer about the image.',
-  //   show: true
-  // },
-  // {
-  //   id: 'IMAGE_LABELLING',
-  //   imageSrc: 'assets/audio_to_audio.png',
-  //   title: 'Image Labelling',
-  //   subtitle: 'View the image  and provide answer about the image.',
-  //   show: true
-  // },
-  // {
-  //   id: 'MENU_PHOTO_REVIEW',
-  //   imageSrc: 'assets/text_to_image.png',
-  //   title: 'Menu Photo Review',
-  //   subtitle: 'View the image  and provide answer about the image.',
-  //   show: true
-  // }
+  {
+    id: 'LOCALIZATION_QUALITY',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Localization Quality',
+    subtitle: 'View the receipt image and provide answer about the image.',
+    show: true
+  },
+  {
+    id: 'IMAGE_LABELLING',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Image Labelling',
+    subtitle: 'View the image  and provide answer about the image.',
+    show: true
+  },
+  {
+    id: 'MENU_PHOTO_REVIEW',
+    imageSrc: 'assets/text_to_image.png',
+    title: 'Menu Photo Review',
+    subtitle: 'View the image  and provide answer about the image.',
+    show: true
+  }
 ];
 const Home: React.FC = () => {
   const { t } = useTranslation();
