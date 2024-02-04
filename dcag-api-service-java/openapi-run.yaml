@@ -15,17 +15,16 @@ x-google-backend:
   address: https://dcag-api-service-s4osc3diiq-el.a.run.app
 
 
-#securityDefinitions:
-#  firebase:
-#    authorizationUrl: ""
-#    flow: "implicit"
-#    type: "oauth2"
-#    # Replace YOUR-PROJECT-ID with your project ID
-#    x-google-issuer: "https://securetoken.google.com/anz-driver-ops-ritu"
-#    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
-#    x-google-audiences: "anz-driver-ops-ritu"
-#security:
-#  - firebase: []
+securityDefinitions:
+  firebase:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    # Replace YOUR-PROJECT-ID with your project ID
+    x-google-issuer: "https://securetoken.google.com/anz-driver-ops-ritu"
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+    x-google-audiences: "anz-driver-ops-ritu"
+
 
 paths:
   /:
@@ -64,6 +63,8 @@ paths:
           description: "Cors not allowed"
   /users:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get all users"
       operationId: "getUsers"
       responses:
@@ -72,6 +73,8 @@ paths:
           schema:
             type: array
     post:
+      security:
+        - firebase: [ ]
       summary: "Create new user"
       operationId: "createUser"
       responses:
@@ -89,6 +92,8 @@ paths:
           description: "Cors not allowed"
   /users/{userId}:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get user by id"
       operationId: "getUserById"
       parameters:
@@ -105,6 +110,8 @@ paths:
         '404':
           description: "User not found"
     put:
+      security:
+        - firebase: [ ]
       summary: "Update user"
       operationId: "updateUserById"
       parameters:
@@ -120,6 +127,8 @@ paths:
             type: object
   /users/byPhoneNumber/{phoneNumber}:
     get:
+#      security:
+#        - firebase: [ ]
       summary: "Get user by phone number"
       operationId: "getUserByPhoneNumber"
       parameters:
@@ -137,6 +146,8 @@ paths:
           description: "User not found"
   /users/{userId}/analytics/events:
     post:
+      security:
+        - firebase: [ ]
       summary: "Create analytics events of the user"
       operationId: "createAnalyticsEvents"
       parameters:
@@ -168,6 +179,8 @@ paths:
           description: "Cors not allowed"
   /users/{userId}/tasks:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get tasks of the user"
       operationId: "getUserTasks"
       parameters:
@@ -209,6 +222,8 @@ paths:
           description: "Cors not allowed"
   /users/{userId}/tasks/summary:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get task summary of the user"
       operationId: "getUserTasksSummary"
       parameters:
@@ -226,6 +241,8 @@ paths:
           description: "User task summary not found"
   /users/{userId}/tasks/{taskId}:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get assigned task of the user"
       operationId: "getAssignedUserTask"
       parameters:
@@ -245,6 +262,8 @@ paths:
           schema:
             type: object
     post:
+      security:
+        - firebase: [ ]
       summary: "Assign task to the user"
       operationId: "createUserTask"
       parameters:
@@ -264,6 +283,8 @@ paths:
           schema:
             type: object
     put:
+      security:
+        - firebase: [ ]
       summary: "Update assigned task of the user"
       operationId: "updateUserTask"
       parameters:
@@ -283,6 +304,8 @@ paths:
           schema:
             type: object
     delete:
+      security:
+        - firebase: [ ]
       summary: "Delete assigned task of the user"
       operationId: "deleteUserTask"
       parameters:
@@ -320,6 +343,8 @@ paths:
           description: "Cors not allowed"
   /users/{userId}/issues:
     post:
+      security:
+        - firebase: [ ]
       summary: "Create reported issue of the user"
       operationId: "createReportedIssue"
       parameters:
@@ -349,6 +374,8 @@ paths:
           description: "Cors not allowed"
   /tasks:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get all tasks"
       operationId: "getAllTasks"
       parameters:
@@ -373,6 +400,8 @@ paths:
           schema:
             type: array
     post:
+      security:
+        - firebase: [ ]
       summary: "Create new task"
       operationId: "createTask"
       responses:
@@ -390,6 +419,8 @@ paths:
           description: "Cors not allowed"
   /tasks/{taskId}:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get task by id"
       operationId: "getTaskById"
       parameters:
@@ -406,6 +437,8 @@ paths:
         '404':
           description: "Task not found"
     put:
+      security:
+        - firebase: [ ]
       summary: "Update task"
       operationId: "updateTaskById"
       parameters:
@@ -421,6 +454,8 @@ paths:
             type: object
   /users/{userId}/tasks/{taskId}/uploadUrl:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get upload url for upload image task type"
       operationId: "getUploadURL"
       parameters:
@@ -470,6 +505,8 @@ paths:
           description: "Cors not allowed"
   /docs:
     get:
+      security:
+        - firebase: [ ]
       summary: "Get docs"
       operationId: "getDocs"
       parameters:
