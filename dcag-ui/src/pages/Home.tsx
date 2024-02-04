@@ -93,7 +93,7 @@ const Home: React.FC = () => {
     return taskCategories.map(
       (category) =>
         category.show && (
-          <div key={category.id} onClick={() => handleTaskCategory(category.id)} className='clickable-cursor'>
+          <div key={category.id} onClick={() => handleTaskCategory(category.id)} className='clickable-cursor task-category-wrapper' >
             <Card
               overrides={{ Root: { style: { marginBottom: '32px' } } }}
               // headerImage={category.imageSrc}

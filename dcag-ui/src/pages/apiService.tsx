@@ -191,8 +191,9 @@ const apiService = {
     const headers = getHeaders({ user });
     const endPoint = `users/${userId}/tasks/${taskId}`;
     const response = await fetch(`${API_BASE_URL}/${endPoint}`, {
-      method: 'DELETE',
-      headers
+      method: 'PUT',
+      headers,
+      body:JSON.stringify({status:'CANCELLED'})
     });
     return response.text();
   },

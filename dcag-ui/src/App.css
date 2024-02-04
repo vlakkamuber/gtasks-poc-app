@@ -427,6 +427,10 @@ label {
   font-size: 1rem;
   font-weight: 400;
 }
+.task-category-wrapper{
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+    border-radius: 12px;
+}
 @media only screen and (min-width: 992px) {
   html {
     width: 100%;

@@ -4,7 +4,8 @@ import {
   IonPage,
   IonImg,
   IonToast,
-  useIonLoading
+  useIonLoading,
+  IonAlert
 } from '@ionic/react';
 import Question from './components/Questions';
 import { Block } from 'baseui/block';
@@ -89,7 +90,7 @@ export default function QuestionnaireTaskCategory() {
         setTimeout(() => {
           setShowToast(false);
           history.push('/dashboard/tasks');
-        }, 2000);
+        }, 1000);
       })
       .catch((error) => {
         console.error('Error fetching task data:', error);
@@ -106,8 +107,7 @@ export default function QuestionnaireTaskCategory() {
     assignTaskToCompleted(selectedTask.taskId,formDataForSubmission)
   };
 
-  const handleCancel = async (e)=>{
-    e.preventDefault();
+  const handleCancel = async ()=>{
     try {
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
       const taskId = selectedTask.taskId;
@@ -187,7 +187,31 @@ export default function QuestionnaireTaskCategory() {
           </LabelSmall>}
           {selectedTask.status !== "COMPLETED" && <ButtonDock
             primaryAction={<Button onClick={handleSubmit}  disabled={!isFormValid() || selectedTask.status === "COMPLETED"}>Submit</Button>}
-            dismissiveAction={<Button kind={KIND.tertiary} onClick={handleCancel}>Cancel</Button>}
+            dismissiveAction={
+              <>
+                <Button
+                  kind={KIND.tertiary}
+                  id="cancel-task"
+                  colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
+                  {t(`dcag.home.btn.cancel.label`)}
+                </Button>
+                <IonAlert
+                  header="Alert!"
+                  message="Are you sure, you want to cancel this task?"
+                  trigger="cancel-task"
+                  buttons={[
+                    {
+                      text: 'No',
+                      role: 'cancel'
+                    },
+                    {
+                      text: 'Yes',
+                      role: 'confirm',
+                      handler: handleCancel
+                    }
+                  ]}></IonAlert>
+              </>
+            }
           />}
         </div>
         </>}

@@ -140,7 +140,7 @@ const PerformTask: React.FC = () => {
         setTimeout(() => {
           setShowToast(false);
           history.push('/dashboard/tasks');
-        }, 2000);
+        }, 1000);
       })
       .catch((error) => {
         console.error('Error fetching task data:', error);
