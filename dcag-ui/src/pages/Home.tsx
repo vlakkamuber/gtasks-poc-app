@@ -21,6 +21,7 @@ import { Card, StyledBody, StyledAction } from 'baseui/card';
 import { Block } from 'baseui/block';
 import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
 import { StyledDivider } from 'baseui/divider';
+import useAnalytics from '../hooks/useAnanlytics';
 
 const taskCategories = [
   {
@@ -76,10 +77,12 @@ const taskCategories = [
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const logEvent = useAnalytics({ page: 'Home' });
 
   const { selectedCategory, setSelectedCategory } = useCategory();
 
   const handleTaskCategory = (category) => {
+    logEvent({ actions: 'View tasks', properties: category });
     // Set the selected category in localStorage
     localStorage.setItem('selectedCategory', category);
     setSelectedCategory(category);
