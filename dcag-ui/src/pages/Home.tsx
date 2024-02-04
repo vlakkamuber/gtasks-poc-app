@@ -93,28 +93,15 @@ const Home: React.FC = () => {
     return taskCategories.map(
       (category) =>
         category.show && (
-          <div key={category.id} onClick={() => handleTaskCategory(category.id)} className='clickable-cursor task-category-wrapper' >
+          <div
+            key={category.id}
+            onClick={() => handleTaskCategory(category.id)}
+            className="clickable-cursor task-category-wrapper">
             <Card
               overrides={{ Root: { style: { marginBottom: '32px' } } }}
               // headerImage={category.imageSrc}
               title={t(`dcag.home.taskHub.${category.id}.title`)}>
               <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
-              {/* <StyledAction>
-                <Button
-                  kind={KIND.tertiary}
-                  overrides={{
-                    BaseButton: {
-                      style: () => ({
-                        paddingLeft: '0px',
-                        paddingRight: '0px'
-                      })
-                    }
-                  }}
-                  onClick={() => handleTaskCategory(category.id)}>
-                  <LabelSmall>View all details</LabelSmall>
-                  <ArrowRight size={24} />
-                </Button>
-              </StyledAction> */}
             </Card>
           </div>
         )
