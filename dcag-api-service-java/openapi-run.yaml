@@ -530,8 +530,8 @@ paths:
           description: "Cors not allowed"
   /ingest-tasks:
     post:
-#      security:
-#        - firebase: [ ]
+      security:
+        - firebase: [ ]
       summary: "Injest tasks"
       operationId: "injestTasks"
       responses:
