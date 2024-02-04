@@ -22,6 +22,7 @@ import { useHistory,useParams } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { LOADER_MESSAGE } from '../../constants/constant';
 import LoadingComponent from '../../components/Loader';
+import ZoomedImage from './components/ZoomedImage';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -134,7 +135,7 @@ export default function QuestionnaireTaskCategory() {
     <IonPage>
       <IonContent className="ion-padding" fullscreen>
       <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
-      <div className="fixed-header">
+      <div className="fixed-header" style={{zIndex: '22222222'}}>
           <Block className="p-16 fixed-header-home-content ">
             <Button
               kind={KIND.tertiary}
@@ -169,7 +170,12 @@ export default function QuestionnaireTaskCategory() {
         {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
         <HeadingXSmall>{selectedTask.taskName}</HeadingXSmall>
         <HeadingXSmall>{t(`dcag.home.taskHub.${selectedTask.taskType}.title`)} </HeadingXSmall>
-        <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg>
+        {/* <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg> */}
+        <Block className='receipt-container'>
+        <ZoomedImage imageUrl={selectedTask.inputUrl} ></ZoomedImage>
+        </Block>
+        
+
         <HeadingXSmall>Task questionnaire</HeadingXSmall>
           {questions.map((item) => (
             <Question

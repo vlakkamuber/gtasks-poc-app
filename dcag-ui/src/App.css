@@ -383,6 +383,9 @@ label {
   height: 212px;
   background: #eeee;
 }
+.transform-component-module_wrapper__SPB86{
+  height:100% !important;
+}
 .receipt-container img {
   display: block;
   width: 100%;
@@ -431,6 +434,34 @@ label {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
     border-radius: 12px;
 }
+
+.zoomable-container {
+  position: relative;
+  width: 500px; /* Set your desired width */
+  height: 300px; /* Set your desired height */
+  overflow: hidden;
+}
+
+.zoomable-image {
+  width: 100%;
+  height: 100%;
+}
+
+.button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container button {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+
+
 @media only screen and (min-width: 992px) {
   html {
     width: 100%;
