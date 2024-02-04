@@ -9,15 +9,17 @@ import { Button, KIND, SHAPE } from 'baseui/button';
 import NavigationBar from './NavigationBar';
 import { Toast, KIND as TOAST_KIND } from 'baseui/toast';
 import apiService from '../apiService';
+import useAnalytics from '../../hooks/useAnanlytics';
 
 type Props = {
   sendOtpResponse: any;
-  isUserExist:any;
+  isUserExist: any;
 };
 
-const OtpVerificationPage = ({ sendOtpResponse,isUserExist }: Props) => {
+const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const { t } = useTranslation();
+  const logEvent = useAnalytics({ page: 'login' });
   const inputRefs = [
     useRef(null),
     useRef(null),
@@ -57,11 +59,11 @@ const OtpVerificationPage = ({ sendOtpResponse,isUserExist }: Props) => {
     }
   };
 
-  const createUserInDB = async (uid,phoneNumber)=>{
-    await apiService.createUserInDB(uid,phoneNumber)
+  const createUserInDB = async (uid, phoneNumber) => {
+    await apiService.createUserInDB(uid, phoneNumber);
     dismiss();
     history.push('/dashboard/home');
-  }
+  };
 
   const verifyOtp = () => {
     async function verify() {
@@ -71,13 +73,13 @@ const OtpVerificationPage = ({ sendOtpResponse,isUserExist }: Props) => {
         const otpnumeric = mapTeluguDigitsToNumeric(otp.join(''));
         present(LOADER_MESSAGE);
         let result = await sendOtpResponse.confirm(otpnumeric);
-        if(!isUserExist) {
-          createUserInDB(result.user.uid,result.user.phoneNumber)
-        }else{
+        logEvent({ actions: 'login' });
+        if (!isUserExist) {
+          createUserInDB(result.user.uid, result.user.phoneNumber);
+        } else {
           dismiss();
           history.push('/dashboard/home');
         }
-
       } catch (err) {
         dismiss();
         setError(err.message);

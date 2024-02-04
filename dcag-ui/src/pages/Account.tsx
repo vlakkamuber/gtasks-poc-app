@@ -29,10 +29,13 @@ import {
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
+import useAnalytics from '../hooks/useAnanlytics';
 const Account: React.FC = () => {
   const { t } = useTranslation();
   const { logOut: firebaseLogOut } = useUserAuth();
+  const logEvent = useAnalytics({ page: 'account' });
   const logOut = async () => {
+    logEvent({ actions: 'logout' });
     await firebaseLogOut();
     history.push('/home');
     localStorage.clear();
