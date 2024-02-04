@@ -28,6 +28,11 @@ public class UserTaskController {
     @CrossOrigin
     @PutMapping(value = "/{taskId}", consumes = "application/json")
     ResponseEntity<UserTaskResponse> updateUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
+
+        if(userTaskDTO.status().equals(UserTaskStatus.CANCELLED)){
+            return ResponseEntity.ok(userTaskService.cancelUserTask(userId, taskId, userTaskDTO));
+        }
+
         return ResponseEntity.ok(userTaskService.updateUserTask(userId, taskId, userTaskDTO));
     }
 

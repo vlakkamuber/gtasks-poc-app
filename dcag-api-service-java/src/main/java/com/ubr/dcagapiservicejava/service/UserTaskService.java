@@ -84,7 +84,7 @@ public class UserTaskService {
     public UserTaskResponse updateUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
 
         UserTaskStatus status = userTaskDTO.status();
-        if (!(status.equals(UserTaskStatus.CANCELLED) || status.equals(UserTaskStatus.COMPLETED))) {
+        if (!status.equals(UserTaskStatus.COMPLETED)) {
             throw new TaskException("Task can only be updated to COMPLETED. Task Id: " + taskId + " Status: " + status);
         }
         Optional<Task> taskOptional = taskRepository.findById(taskId);
@@ -124,6 +124,29 @@ public class UserTaskService {
                     log.info("User - {}  task - {} status completed", userId, taskId);
                     updateTaskStatus(taskId);
                     return updatedUserTask;
+                })
+                .map(userTask -> userTaskToBasicUserTaskResponse(userTask, task))
+                .orElseThrow(DcagUtils.userNotFound(userId));
+
+    }
+
+    public UserTaskResponse cancelUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
+
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+        if (taskOptional.isEmpty()) {
+            throw new TaskNotFoundException("Task not found: " + taskId);
+        }
+
+        Task task = taskOptional.get();
+
+        Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
+        return userTaskOptional
+                .map(userTask -> {
+                    userTask.status(userTaskDTO.status());
+                    userTask = userTasksRepository.save(userTask);
+                    log.info("User - {}  task - {} status Cancelled", userId, taskId);
+                    updateTaskStatus(taskId);
+                    return userTask;
                 })
                 .map(userTask -> userTaskToBasicUserTaskResponse(userTask, task))
                 .orElseThrow(DcagUtils.userNotFound(userId));
