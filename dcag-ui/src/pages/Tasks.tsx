@@ -145,7 +145,7 @@ const Tasks: React.FC = () => {
   }, []);
 
   useEffect(()=>{
-    if(todayEarnings && todayEarnings< 200){
+    if(todayEarnings< 200){
       getAvailableTasks();
     }
   },[todayEarnings])

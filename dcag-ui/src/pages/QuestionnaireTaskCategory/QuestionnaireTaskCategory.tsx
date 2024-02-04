@@ -171,7 +171,6 @@ export default function QuestionnaireTaskCategory() {
         <HeadingXSmall>{t(`dcag.home.taskHub.${selectedTask.taskType}.title`)} </HeadingXSmall>
         <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg>
         <HeadingXSmall>Task questionnaire</HeadingXSmall>
-        <form onSubmit={handleSubmit}>
           {questions.map((item) => (
             <Question
               key={item.id}
@@ -190,7 +189,6 @@ export default function QuestionnaireTaskCategory() {
             primaryAction={<Button onClick={handleSubmit}  disabled={!isFormValid() || selectedTask.status === "COMPLETED"}>Submit</Button>}
             dismissiveAction={<Button kind={KIND.tertiary} onClick={handleCancel}>Cancel</Button>}
           />}
-        </form>
         </div>
         </>}
         <IonToast
