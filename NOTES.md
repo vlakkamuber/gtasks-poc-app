@@ -11,10 +11,14 @@
 `gcloud api-gateway gateways create dcag-gateway --api=dcag-api --api-config=dcag-api-config-cors --location=asia-northeast1`
 
 ### Create API Config
-`gcloud api-gateway api-configs create dcag-api-config-21 --api=dcag-api --openapi-spec=./dcag-api-service-java/openapi-run.yaml`
+```
+gcloud api-gateway api-configs create dcag-api-config-25 --api=dcag-api --openapi-spec=./dcag-api-service-java/openapi-run.yaml
+```
 
 ### Update API Gateway with new config
-`gcloud api-gateway gateways update dcag-gateway --api=dcag-api --location=asia-northeast1 --api-config=dcag-api-config-21`
+```
+gcloud api-gateway gateways update dcag-gateway --api=dcag-api --location=asia-northeast1 --api-config=dcag-api-config-25
+```
 
 ### Test API Gateway
 `curl https://dcag-gateway-cpypkzbg.an.gateway.dev/health`
