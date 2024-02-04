@@ -1,0 +1,998 @@
+task_name,input_file_name,city
+Siri Fort,siri_fort.mp3,DELHI
+Vishnu Garden,vishnu_garden.mp3,DELHI
+Shahdara,shahdara.mp3,DELHI
+Paschim Vihar,paschim_vihar.mp3,DELHI
+Sadar bazar,sadar_bazar.mp3,DELHI
+Tilak nagar,tilak_nagar.mp3,DELHI
+Lajpat Nagar,lajpat_nagar.mp3,DELHI
+Rohini,rohini.mp3,DELHI
+Punjabi Bagh,punjabi_bagh.mp3,DELHI
+Bali Nagar,bali_nagar.mp3,DELHI
+Kirti Nagar,kirti_nagar.mp3,DELHI
+DELHI Cantoment,DELHI_cantoment.mp3,DELHI
+Shakurpur,shakurpur.mp3,DELHI
+Kailash Colony,kailash_colony.mp3,DELHI
+Malviya Nagar,malviya_nagar.mp3,DELHI
+Rohini Sector 12,rohini_sector_12.mp3,DELHI
+New Ashok Nagar,new_ashok_nagar.mp3,DELHI
+Ashok Nagar,ashok_nagar.mp3,DELHI
+Vishal Enclave,vishal_enclave.mp3,DELHI
+Ramesh Nagar,ramesh_nagar.mp3,DELHI
+Hauz Khas,hauz_khas.mp3,DELHI
+Hari Nagar,hari_nagar.mp3,DELHI
+Rohini Sector 9,rohini_sector_9.mp3,DELHI
+Gautam Nagar,gautam_nagar.mp3,DELHI
+Nehru Place,nehru_place.mp3,DELHI
+Krishna Nagar,krishna_nagar.mp3,DELHI
+Kalkaji,kalkaji.mp3,DELHI
+Tri Nagar,tri_nagar.mp3,DELHI
+Rohini Sector 5,rohini_sector_5.mp3,DELHI
+Dwarka,dwarka.mp3,DELHI
+Rohini Sector 16,rohini_sector_16.mp3,DELHI
+Rohini Sector 8,rohini_sector_8.mp3,DELHI
+Ajmeri Gate,ajmeri_gate.mp3,DELHI
+Mandawali,mandawali.mp3,DELHI
+Asian Games Village Complex,asian_games_village_complex.mp3,DELHI
+Mansarover Garden,mansarover_garden.mp3,DELHI
+Mayapuri,mayapuri.mp3,DELHI
+Rajender Nagar,rajender_nagar.mp3,DELHI
+Karol Bagh,karol_bagh.mp3,DELHI
+Indraprastha Extension,indraprastha_extension.mp3,DELHI
+Raja Garden,raja_garden.mp3,DELHI
+Civil Lines,civil_lines.mp3,DELHI
+Vikas Puri,vikas_puri.mp3,DELHI
+Khirki Extension,khirki_extension.mp3,DELHI
+Panchsheel Park,panchsheel_park.mp3,DELHI
+Soami Nagar,soami_nagar.mp3,DELHI
+Patparganj,patparganj.mp3,DELHI
+Chandni Chowk,chandni_chowk.mp3,DELHI
+Green Park,green_park.mp3,DELHI
+Pushp Vihar,pushp_vihar.mp3,DELHI
+Tagore Garden,tagore_garden.mp3,DELHI
+Uttam Nagar,uttam_nagar.mp3,DELHI
+Sri Niwaspuri,sri_niwaspuri.mp3,DELHI
+Rajouri Garden,rajouri_garden.mp3,DELHI
+Subhash Nagar,subhash_nagar.mp3,DELHI
+Kidwai Nagar,kidwai_nagar.mp3,DELHI
+Chirag DELHI,chirag_DELHI.mp3,DELHI
+Adarsh Nagar,adarsh_nagar.mp3,DELHI
+Greater Kailash I,greater_kailash_i.mp3,DELHI
+Moti Nagar,moti_nagar.mp3,DELHI
+Sadiq Nagar,sadiq_nagar.mp3,DELHI
+Anand Vihar,anand_vihar.mp3,DELHI
+Pira Garhi,pira_garhi.mp3,DELHI
+Chittaranjan Park,chittaranjan_park.mp3,DELHI
+Rohini Sector 10,rohini_sector_10.mp3,DELHI
+C R Park,c_r_park.mp3,DELHI
+South Extension Part 2,south_extension_part_2.mp3,DELHI
+Bhogal,bhogal.mp3,DELHI
+East Of Kailash,east_of_kailash.mp3,DELHI
+Connaught Place,connaught_place.mp3,DELHI
+Okhla,okhla.mp3,DELHI
+Geeta Colony,geeta_colony.mp3,DELHI
+Indraprastha Estate,indraprastha_estate.mp3,DELHI
+Safdarjung Enclave,safdarjung_enclave.mp3,DELHI
+Mangolpuri,mangolpuri.mp3,DELHI
+Naraina,naraina.mp3,DELHI
+Greater Kailash II,greater_kailash_ii.mp3,DELHI
+Roop Nagar,roop_nagar.mp3,DELHI
+Rohini Sector 15,rohini_sector_15.mp3,DELHI
+R K Puram,r_k_puram.mp3,DELHI
+Azadpur,azadpur.mp3,DELHI
+Shalimar Bagh,shalimar_bagh.mp3,DELHI
+South Extension Part 1,south_extension_part_1.mp3,DELHI
+Sheikh Sarai,sheikh_sarai.mp3,DELHI
+Manglapuri,manglapuri.mp3,DELHI
+Rohini Sector 13,rohini_sector_13.mp3,DELHI
+Kalyan Vihar,kalyan_vihar.mp3,DELHI
+Dwarka Sector 2,dwarka_sector_2.mp3,DELHI
+Alaknanda,alaknanda.mp3,DELHI
+Budh Vihar,budh_vihar.mp3,DELHI
+Chokhandi,chokhandi.mp3,DELHI
+Gokalpur,gokalpur.mp3,DELHI
+Bahapur,bahapur.mp3,DELHI
+Preet Vihar,preet_vihar.mp3,DELHI
+Maharani Bagh,maharani_bagh.mp3,DELHI
+Chawri Bazar,chawri_bazar.mp3,DELHI
+Nangloi,nangloi.mp3,DELHI
+Moti Bagh,moti_bagh.mp3,DELHI
+Govindpuri,govindpuri.mp3,DELHI
+Rani Bagh,rani_bagh.mp3,DELHI
+Rohini Sector 1,rohini_sector_1.mp3,DELHI
+West Enclave,west_enclave.mp3,DELHI
+Kamla Nagar,kamla_nagar.mp3,DELHI
+Trilokpuri,trilokpuri.mp3,DELHI
+Mayur Vihar,mayur_vihar.mp3,DELHI
+Jangpura,jangpura.mp3,DELHI
+Dilshad Garden,dilshad_garden.mp3,DELHI
+Dashrath Puri,dashrath_puri.mp3,DELHI
+Mandi House,mandi_house.mp3,DELHI
+Karampura,karampura.mp3,DELHI
+Ghazipur,ghazipur.mp3,DELHI
+Rohini Sector 17,rohini_sector_17.mp3,DELHI
+Jasola,jasola.mp3,DELHI
+Mukherjee Nagar,mukherjee_nagar.mp3,DELHI
+Rohini Sector 14,rohini_sector_14.mp3,DELHI
+Laxmi Nagar,laxmi_nagar.mp3,DELHI
+Palam,palam.mp3,DELHI
+Tis hazari,tis_hazari.mp3,DELHI
+Vinod Nagar East,vinod_nagar_east.mp3,DELHI
+Rohini Sector 4,rohini_sector_4.mp3,DELHI
+Govindpuri Extension,govindpuri_extension.mp3,DELHI
+Keshavpuram,keshavpuram.mp3,DELHI
+Ganesh Nagar,ganesh_nagar.mp3,DELHI
+Bindapur,bindapur.mp3,DELHI
+Saket,saket.mp3,DELHI
+Dabri,dabri.mp3,DELHI
+Nawada,nawada.mp3,DELHI
+Yamuna Vihar,yamuna_vihar.mp3,DELHI
+Karkardooma,karkardooma.mp3,DELHI
+LOCALITY,locality.mp3,DELHI
+Sainik Farm,sainik_farm.mp3,DELHI
+Adchini,adchini.mp3,DELHI
+Shadipur,shadipur.mp3,DELHI
+Dwarka Sector 7,dwarka_sector_7.mp3,DELHI
+Dwarka Sector 6,dwarka_sector_6.mp3,DELHI
+Shakarpur,shakarpur.mp3,DELHI
+Kakrola,kakrola.mp3,DELHI
+Katwaria Sarai,katwaria_sarai.mp3,DELHI
+Dwarka Sector 3,dwarka_sector_3.mp3,DELHI
+Tughlakabad,tughlakabad.mp3,DELHI
+Babarpur,babarpur.mp3,DELHI
+Jhilmil Colony,jhilmil_colony.mp3,DELHI
+Matiala,matiala.mp3,DELHI
+Hastsal,hastsal.mp3,DELHI
+GTB Enclave,gtb_enclave.mp3,DELHI
+Mustafabad,mustafabad.mp3,DELHI
+Dwarka Sector 5,dwarka_sector_5.mp3,DELHI
+Jamia Nagar,jamia_nagar.mp3,DELHI
+Vivek Vihar,vivek_vihar.mp3,DELHI
+Sunlight Colony,sunlight_colony.mp3,DELHI
+Seelampur,seelampur.mp3,DELHI
+Shakti Nagar,shakti_nagar.mp3,DELHI
+Sarai Rohilla,sarai_rohilla.mp3,DELHI
+Lodi Colony,lodi_colony.mp3,DELHI
+Timarpur,timarpur.mp3,DELHI
+Wazirpur,wazirpur.mp3,DELHI
+Sukhdev Vihar,sukhdev_vihar.mp3,DELHI
+Sarojini Nagar,sarojini_nagar.mp3,DELHI
+Sidhartha Nagar,sidhartha_nagar.mp3,DELHI
+Mayur Vihar Phase 1,mayur_vihar_phase_1.mp3,DELHI
+Yusuf Sarai,yusuf_sarai.mp3,DELHI
+Ashok Vihar,ashok_vihar.mp3,DELHI
+Mayur Vihar Phase 3,mayur_vihar_phase_3.mp3,DELHI
+Vikas Kunj,vikas_kunj.mp3,DELHI
+Sultanpuri,sultanpuri.mp3,DELHI
+Razapur Khurd,razapur_khurd.mp3,DELHI
+Sarita Vihar,sarita_vihar.mp3,DELHI
+Dwarka Sector-10,dwarka_sector-10.mp3,DELHI
+Lado Sarai,lado_sarai.mp3,DELHI
+Madangir,madangir.mp3,DELHI
+Dwarka Sector 4,dwarka_sector_4.mp3,DELHI
+Bhajanpura,bhajanpura.mp3,DELHI
+Rohini Sector 2,rohini_sector_2.mp3,DELHI
+Gujranwala Town,gujranwala_town.mp3,DELHI
+Mehrauli,mehrauli.mp3,DELHI
+Gopalpur Village,gopalpur_village.mp3,DELHI
+Nilothi,nilothi.mp3,DELHI
+Mayur Vihar Phase 2,mayur_vihar_phase_2.mp3,DELHI
+Rohini Sector 24,rohini_sector_24.mp3,DELHI
+Mahavir Enclave,mahavir_enclave.mp3,DELHI
+Kashmiri Gate,kashmiri_gate.mp3,DELHI
+Vasant Vihar,vasant_vihar.mp3,DELHI
+Khureji,khureji.mp3,DELHI
+Vasant Kunj,vasant_kunj.mp3,DELHI
+Dakshinpuri,dakshinpuri.mp3,DELHI
+Daryaganj,daryaganj.mp3,DELHI
+Nangal Raya,nangal_raya.mp3,DELHI
+Khajoori Khas,khajoori_khas.mp3,DELHI
+Daya Basti,daya_basti.mp3,DELHI
+Sundar Nagar,sundar_nagar.mp3,DELHI
+Savitri Nagar,savitri_nagar.mp3,DELHI
+Anand Parbat,anand_parbat.mp3,DELHI
+Dwarka Sector 11,dwarka_sector_11.mp3,DELHI
+Munirka,munirka.mp3,DELHI
+Dwarka Sector 15,dwarka_sector_15.mp3,DELHI
+Inderlok,inderlok.mp3,DELHI
+Karawal Nagar,karawal_nagar.mp3,DELHI
+Jharoda Majra Burari,jharoda_majra_burari.mp3,DELHI
+Vasundhara Enclave,vasundhara_enclave.mp3,DELHI
+Mukundpur,mukundpur.mp3,DELHI
+New Friends Colony,new_friends_colony.mp3,DELHI
+Rohini Sector 18,rohini_sector_18.mp3,DELHI
+Sarai Kale Khan,sarai_kale_khan.mp3,DELHI
+Badli,badli.mp3,DELHI
+Rohini Sector 20,rohini_sector_20.mp3,DELHI
+Dwarka Sector 12,dwarka_sector_12.mp3,DELHI
+Prem Nagar,prem_nagar.mp3,DELHI
+Jahangir Puri,jahangir_puri.mp3,DELHI
+Neb Sarai,neb_sarai.mp3,DELHI
+Nizamuddin,nizamuddin.mp3,DELHI
+Khan Market,khan_market.mp3,DELHI
+Golf Links,golf_links.mp3,DELHI
+Pitampura,pitampura.mp3,DELHI
+Kondli,kondli.mp3,DELHI
+Gulmohar Park,gulmohar_park.mp3,DELHI
+Vigyan Vihar,vigyan_vihar.mp3,DELHI
+Rohini Sector 19,rohini_sector_19.mp3,DELHI
+Chanakyapuri,chanakyapuri.mp3,DELHI
+Pulpahladpur,pulpahladpur.mp3,DELHI
+Rohini Sector 6,rohini_sector_6.mp3,DELHI
+Sagar Pur,sagar_pur.mp3,DELHI
+Batla house,batla_house.mp3,DELHI
+Dwarka Sector 13,dwarka_sector_13.mp3,DELHI
+Bhikaji Cama Place,bhikaji_cama_place.mp3,DELHI
+Seemapuri,seemapuri.mp3,DELHI
+Dwarka Sector 20,dwarka_sector_20.mp3,DELHI
+Gandhi Nagar,gandhi_nagar.mp3,DELHI
+Dwarka Sector 8,dwarka_sector_8.mp3,DELHI
+Gulabi Bagh,gulabi_bagh.mp3,DELHI
+Mahipalpur,mahipalpur.mp3,DELHI
+Rohini Sector 21,rohini_sector_21.mp3,DELHI
+Siraspur,siraspur.mp3,DELHI
+Dwarka Sector 18,dwarka_sector_18.mp3,DELHI
+Johripur,johripur.mp3,DELHI
+Rohini Extension,rohini_extension.mp3,DELHI
+Dwarka Sector-1,dwarka_sector-1.mp3,DELHI
+Sant Nagar,sant_nagar.mp3,DELHI
+Kalu Sarai,kalu_sarai.mp3,DELHI
+Harsh Vihar,harsh_vihar.mp3,DELHI
+Savita Vihar,savita_vihar.mp3,DELHI
+Burari,burari.mp3,DELHI
+Madanpur Khadar,madanpur_khadar.mp3,DELHI
+Dwarka Sector 14,dwarka_sector_14.mp3,DELHI
+Kapashera,kapashera.mp3,DELHI
+Dwarka Sector 23,dwarka_sector_23.mp3,DELHI
+Begumpur,begumpur.mp3,DELHI
+Rohini Sector 23,rohini_sector_23.mp3,DELHI
+Ranjeet Nagar,ranjeet_nagar.mp3,DELHI
+Ber Sarai,ber_sarai.mp3,DELHI
+Ranhola,ranhola.mp3,DELHI
+Azad Nagar,azad_nagar.mp3,DELHI
+Wazirabad,wazirabad.mp3,DELHI
+Navjeevan Vihar,navjeevan_vihar.mp3,DELHI
+Dwarka Sector 22,dwarka_sector_22.mp3,DELHI
+Rohini Sector 11,rohini_sector_11.mp3,DELHI
+Inderpuri,inderpuri.mp3,DELHI
+Pragati Maidan,pragati_maidan.mp3,DELHI
+Yojana Vihar,yojana_vihar.mp3,DELHI
+Bhalswa,bhalswa.mp3,DELHI
+Devli,devli.mp3,DELHI
+Ghitorni,ghitorni.mp3,DELHI
+Sangam Vihar,sangam_vihar.mp3,DELHI
+Dwarka Sector 24,dwarka_sector_24.mp3,DELHI
+Aya Nagar,aya_nagar.mp3,DELHI
+Sonia Vihar,sonia_vihar.mp3,DELHI
+Narela,narela.mp3,DELHI
+Jhandewalan,jhandewalan.mp3,DELHI
+Malka Ganj,malka_ganj.mp3,DELHI
+Chhatarpur,chhatarpur.mp3,DELHI
+Dwarka Sector 21,dwarka_sector_21.mp3,DELHI
+Dwarka Sector 19,dwarka_sector_19.mp3,DELHI
+Dwarka Sector 17,dwarka_sector_17.mp3,DELHI
+Dwarka Sector 16 A,dwarka_sector_16_a.mp3,DELHI
+Dwarka Sector 16 B,dwarka_sector_16_b.mp3,DELHI
+Dwarka Sector 16,dwarka_sector_16.mp3,DELHI
+Rohini Sector 28,rohini_sector_28.mp3,DELHI
+Bapa Nagar,bapa_nagar.mp3,DELHI
+Rangpuri,rangpuri.mp3,DELHI
+Rohini Sector 25,rohini_sector_25.mp3,DELHI
+Jaitpur,jaitpur.mp3,DELHI
+Rohini Sector 38,rohini_sector_38.mp3,DELHI
+Bijwasan,bijwasan.mp3,DELHI
+Dwarka Sector 27,dwarka_sector_27.mp3,DELHI
+Inder Enclave,inder_enclave.mp3,DELHI
+Goyla Village,goyla_village.mp3,DELHI
+Qutub Vihar,qutub_vihar.mp3,DELHI
+Singhu,singhu.mp3,DELHI
+Maidangarhi,maidangarhi.mp3,DELHI
+Rohini Sector 27,rohini_sector_27.mp3,DELHI
+Dwarka Sector 26,dwarka_sector_26.mp3,DELHI
+Mundka,mundka.mp3,DELHI
+Rohini Sector-37,rohini_sector-37.mp3,DELHI
+Alipur,alipur.mp3,DELHI
+Deenpur,deenpur.mp3,DELHI
+Rohini Sector 29,rohini_sector_29.mp3,DELHI
+Tilangpur Kotla,tilangpur_kotla.mp3,DELHI
+Bawana,bawana.mp3,DELHI
+Kanjhawala,kanjhawala.mp3,DELHI
+Rohini Sector 32,rohini_sector_32.mp3,DELHI
+Rohini Sector 30,rohini_sector_30.mp3,DELHI
+Karala,karala.mp3,DELHI
+Najafgarh,najafgarh.mp3,DELHI
+Rohini Sector 34,rohini_sector_34.mp3,DELHI
+Khera Kalan,khera_kalan.mp3,DELHI
+Satbari,satbari.mp3,DELHI
+Chaman Vihar,chaman_vihar.mp3,DELHI
+Bakhtawarpur,bakhtawarpur.mp3,DELHI
+Bakkar Wala,bakkar_wala.mp3,DELHI
+Dwarka Sector 28,dwarka_sector_28.mp3,DELHI
+Dera Mandi,dera_mandi.mp3,DELHI
+Sawda,sawda.mp3,DELHI
+Fatehpur Beri,fatehpur_beri.mp3,DELHI
+Loknayakpuram,loknayakpuram.mp3,DELHI
+Dhaula Kuan,dhaula_kuan.mp3,DELHI
+Rohini Sector 35,rohini_sector_35.mp3,DELHI
+Haibutpur,haibutpur.mp3,DELHI
+Rohini Sector-36,rohini_sector-36.mp3,DELHI
+Kair,kair.mp3,DELHI
+West End Colony,west_end_colony.mp3,DELHI
+Sultanpur,sultanpur.mp3,DELHI
+Shiv Nagar,shiv_nagar.mp3,DELHI
+Akbarpur Majra,akbarpur_majra.mp3,DELHI
+Village Mandoli,village_mandoli.mp3,DELHI
+AIIMS,aiims.mp3,DELHI
+Vinod Nagar West,vinod_nagar_west.mp3,DELHI
+Ansari Nagar East,ansari_nagar_east.mp3,DELHI
+Badarpur,badarpur.mp3,DELHI
+Tagore Garden Extension,tagore_garden_extension.mp3,DELHI
+Swasthya Vihar,swasthya_vihar.mp3,DELHI
+Ashram,ashram.mp3,DELHI
+Tilak Marg,tilak_marg.mp3,DELHI
+Arjun Nagar,arjun_nagar.mp3,DELHI
+Vijay Nagar,vijay_nagar.mp3,DELHI
+Vaishali,vaishali.mp3,DELHI
+Akshar Dham,akshar_dham.mp3,DELHI
+Uday Park,uday_park.mp3,DELHI
+Vijay Vihar,vijay_vihar.mp3,DELHI
+Panchsheel Enclave,panchsheel_enclave.mp3,DELHI
+Lakshmi Bai Nagar,lakshmi_bai_nagar.mp3,DELHI
+Lal Kuan,lal_kuan.mp3,DELHI
+L Zone,l_zone.mp3,DELHI
+Kalindi Kunj,kalindi_kunj.mp3,DELHI
+Dwarka Sector 19B,dwarka_sector_19b.mp3,DELHI
+Lawrence Road,lawrence_road.mp3,DELHI
+Lodi Road,lodi_road.mp3,DELHI
+Khanpur,khanpur.mp3,DELHI
+Mayur Vihar Phase 1 Extension,mayur_vihar_phase_1_extension.mp3,DELHI
+Dummy,dummy.mp3,DELHI
+Dwarka Mor,dwarka_mor.mp3,DELHI
+Mandi Hills,mandi_hills.mp3,DELHI
+Jhuljhuli,jhuljhuli.mp3,DELHI
+Janakpuri,janakpuri.mp3,DELHI
+G T B Nagar,g_t_b_nagar.mp3,DELHI
+Gagan Vihar,gagan_vihar.mp3,DELHI
+Freedom Fighter Enclave,freedom_fighter_enclave.mp3,DELHI
+Fateh Nagar,fateh_nagar.mp3,DELHI
+Dwarka Sector 9,dwarka_sector_9.mp3,DELHI
+Greater Kailash III,greater_kailash_iii.mp3,DELHI
+Gole Market,gole_market.mp3,DELHI
+IP Estate,ip_estate.mp3,DELHI
+Hauz Khas Enclave,hauz_khas_enclave.mp3,DELHI
+India Gate,india_gate.mp3,DELHI
+Green Park Extension,green_park_extension.mp3,DELHI
+Model Town,model_town.mp3,DELHI
+Mohan Garden,mohan_garden.mp3,DELHI
+Rohini Sector 3,rohini_sector_3.mp3,DELHI
+Bhagwan Das Road,bhagwan_das_road.mp3,DELHI
+Rohini Sector 22,rohini_sector_22.mp3,DELHI
+Bharat Nagar,bharat_nagar.mp3,DELHI
+Brahmpuri,brahmpuri.mp3,DELHI
+Rohini Sector 7,rohini_sector_7.mp3,DELHI
+Barakhamba Road,barakhamba_road.mp3,DELHI
+Shanti Niketan,shanti_niketan.mp3,DELHI
+Shastri Nagar,shastri_nagar.mp3,DELHI
+Shakur Basti,shakur_basti.mp3,DELHI
+Balbir Nagar,balbir_nagar.mp3,DELHI
+Safdarjung Development Area,safdarjung_development_area.mp3,DELHI
+Ranaji Enclave,ranaji_enclave.mp3,DELHI
+Rithala,rithala.mp3,DELHI
+Nirman Vihar,nirman_vihar.mp3,DELHI
+Pahar Ganj,pahar_ganj.mp3,DELHI
+New Mustafabad,new_mustafabad.mp3,DELHI
+Defence Colony,defence_colony.mp3,DELHI
+Neeti Bagh,neeti_bagh.mp3,DELHI
+Pandav Nagar,pandav_nagar.mp3,DELHI
+Mithapur,mithapur.mp3,DELHI
+Central Secretariat,central_secretariat.mp3,DELHI
+Raj Nagar,raj_nagar.mp3,DELHI
+Qutabgarh,qutabgarh.mp3,DELHI
+Chittaranjan,chittaranjan.mp3,DELHI
+Jor Bagh,jor_bagh.mp3,DELHI
+Aara Mohalla ,aara_mohalla_.mp3,JALANDHAR
+ABADI JALOWALI ,abadi_jalowali_.mp3,JALANDHAR
+Abadpura,abadpura.mp3,JALANDHAR
+Abadpura Gali No. to  ,abadpura_gali_no._to__.mp3,JALANDHAR
+Abinandan Park ,abinandan_park_.mp3,JALANDHAR
+ADDA BASTI ,adda_basti_.mp3,JALANDHAR
+Adarsh Nagar ,adarsh_nagar_.mp3,JALANDHAR
+ADDA BASTIAN BASTI ROAD ,adda_bastian_basti_road_.mp3,JALANDHAR
+ADDA HOSHIARPUR ,adda_hoshiarpur_.mp3,JALANDHAR
+ADDA TANDA ,adda_tanda_.mp3,JALANDHAR
+Adrash Nagar ,adrash_nagar_.mp3,JALANDHAR
+AJAY NAGAR ,ajay_nagar_.mp3,JALANDHAR
+Shastri Park,shastri_park.mp3,DELHI
+Ajit Nagar ,ajit_nagar_.mp3,JALANDHAR
+Ajit Pura ,ajit_pura_.mp3,JALANDHAR
+AJIT VIHAR,ajit_vihar.mp3,JALANDHAR
+Ajit Singh Nagar ,ajit_singh_nagar_.mp3,JALANDHAR
+Akal Avenue ,akal_avenue_.mp3,JALANDHAR
+AKAL COLONY,akal_colony.mp3,JALANDHAR
+Akash Nagar ,akash_nagar_.mp3,JALANDHAR
+ALI MOHALLA ,ali_mohalla_.mp3,JALANDHAR
+Alli Mohalla ,alli_mohalla_.mp3,JALANDHAR
+Aman Nagar ,aman_nagar_.mp3,JALANDHAR
+Amandeep Avenue ,amandeep_avenue_.mp3,JALANDHAR
+AMANDEEP NAGAR ,amandeep_nagar_.mp3,JALANDHAR
+Amar Garden ,amar_garden_.mp3,JALANDHAR
+Amar Nagar ,amar_nagar_.mp3,JALANDHAR
+AMBEDKAR NAGAR,ambedkar_nagar.mp3,JALANDHAR
+Chhawla,chhawla.mp3,DELHI
+AMRIK NAGAR ,amrik_nagar_.mp3,JALANDHAR
+Amrit Vihar,amrit_vihar.mp3,JALANDHAR
+Anand Nagar ,anand_nagar_.mp3,JALANDHAR
+Angad Nagar ,angad_nagar_.mp3,JALANDHAR
+ARJAN NAGAR ,arjan_nagar_.mp3,JALANDHAR
+Arjan Singh Nagar ,arjan_singh_nagar_.mp3,JALANDHAR
+Anoop Nagar ,anoop_nagar_.mp3,JALANDHAR
+Arjun Nagar ,arjun_nagar_.mp3,JALANDHAR
+Army Encleve ,army_encleve_.mp3,JALANDHAR
+Arman Nagar,arman_nagar.mp3,JALANDHAR
+Arya Nagar ,arya_nagar_.mp3,JALANDHAR
+ARYA SAMAJ ,arya_samaj_.mp3,JALANDHAR
+Ashok Nagar ,ashok_nagar_.mp3,JALANDHAR
+AMBIKA COLONY ,ambika_colony_.mp3,JALANDHAR
+Attari Bazar ,attari_bazar_.mp3,JALANDHAR
+Ashok Vihar ,ashok_vihar_.mp3,JALANDHAR
+Atwal House,atwal_house.mp3,JALANDHAR
+Atwal Colony,atwal_colony.mp3,JALANDHAR
+Avtar Nagar ,avtar_nagar_.mp3,JALANDHAR
+Awan Mohalla ,awan_mohalla_.mp3,JALANDHAR
+Azad Nagar ,azad_nagar_.mp3,JALANDHAR
+B.D.A.ENCLAVE ,b.d.a.enclave_.mp3,JALANDHAR
+B.D.Steel ,b.d.steel_.mp3,JALANDHAR
+B.S.F Colony ,b.s.f_colony_.mp3,JALANDHAR
+B S SABZI MANDI ,b_s_sabzi_mandi_.mp3,JALANDHAR
+Baba Bachittar Ji Nagar Mithu Basti ,baba_bachittar_ji_nagar_mithu_basti_.mp3,JALANDHAR
+Baba Balak Nath Market ,baba_balak_nath_market_.mp3,JALANDHAR
+Baba Balak Nath Nagar ,baba_balak_nath_nagar_.mp3,JALANDHAR
+Baba Budha Ji Colony,baba_budha_ji_colony.mp3,JALANDHAR
+Baba Budha Ji Nagar ,baba_budha_ji_nagar_.mp3,JALANDHAR
+Baba Budha Singh Nagar,baba_budha_singh_nagar.mp3,JALANDHAR
+Baba Gadila Shah colony ,baba_gadila_shah_colony_.mp3,JALANDHAR
+Baba Kahandass Nagar ,baba_kahandass_nagar_.mp3,JALANDHAR
+Baba Makhan Shah Lubana,baba_makhan_shah_lubana.mp3,JALANDHAR
+Baba Math Shah ,baba_math_shah_.mp3,JALANDHAR
+Baba Mohan Dass Nagar,baba_mohan_dass_nagar.mp3,JALANDHAR
+BABA MOHAN DASS ROAD,baba_mohan_dass_road.mp3,JALANDHAR
+BABA SHIRI CHAND NAGAR,baba_shiri_chand_nagar.mp3,JALANDHAR
+BABRIK CHOWK ,babrik_chowk_.mp3,JALANDHAR
+Babu Labh Singh Nagar ,babu_labh_singh_nagar_.mp3,JALANDHAR
+Bada Bazar ,bada_bazar_.mp3,JALANDHAR
+Bachint Nagar ,bachint_nagar_.mp3,JALANDHAR
+Badhri Colony ,badhri_colony_.mp3,JALANDHAR
+Badridass Colony,badridass_colony.mp3,JALANDHAR
+Bagampura Mohalla ,bagampura_mohalla_.mp3,JALANDHAR
+Bagh Ahluwalia ,bagh_ahluwalia_.mp3,JALANDHAR
+Bagh Baharia ,bagh_baharia_.mp3,JALANDHAR
+Bagh Bharian ,bagh_bharian_.mp3,JALANDHAR
+BAGH KARAM BAKSH ,bagh_karam_baksh_.mp3,JALANDHAR
+Baghia Whra ,baghia_whra_.mp3,JALANDHAR
+BAJWA COLONY ,bajwa_colony_.mp3,JALANDHAR
+Bal bro Nagar ,bal_bro_nagar_.mp3,JALANDHAR
+Baldev Nagar ,baldev_nagar_.mp3,JALANDHAR
+Balmik Mohalla ,balmik_mohalla_.mp3,JALANDHAR
+Balmiki Colony ,balmiki_colony_.mp3,JALANDHAR
+Balwant Nagar ,balwant_nagar_.mp3,JALANDHAR
+Bandha Bhader Nagar ,bandha_bhader_nagar_.mp3,JALANDHAR
+Bank Colony,bank_colony.mp3,JALANDHAR
+BANK ENCLAVE,bank_enclave.mp3,JALANDHAR
+Patel Nagar,patel_nagar.mp3,DELHI
+Bansa Wala Bazar ,bansa_wala_bazar_.mp3,JALANDHAR
+Bara Bazar ,bara_bazar_.mp3,JALANDHAR
+BARA GURUDWARA BASTI SHEIKH ,bara_gurudwara_basti_sheikh_.mp3,JALANDHAR
+BARADARI,baradari.mp3,JALANDHAR
+BASANT AVENUE EXTENSION,basant_avenue_extension.mp3,JALANDHAR
+Barring Pind,barring_pind.mp3,JALANDHAR
+Basant Hill ,basant_hill_.mp3,JALANDHAR
+Bashirpura,bashirpura.mp3,JALANDHAR
+Basant Nagar ,basant_nagar_.mp3,JALANDHAR
+BASTI ADDA ,basti_adda_.mp3,JALANDHAR
+Basti Bawa Khel ,basti_bawa_khel_.mp3,JALANDHAR
+Basti Bhurey Khan ,basti_bhurey_khan_.mp3,JALANDHAR
+Basti Gujan ,basti_gujan_.mp3,JALANDHAR
+Basti Mithu ,basti_mithu_.mp3,JALANDHAR
+BASTI MITHU ROAD ,basti_mithu_road_.mp3,JALANDHAR
+Basti Nau ,basti_nau_.mp3,JALANDHAR
+BASTI PEER DAD ROAD ,basti_peer_dad_road_.mp3,JALANDHAR
+BASTI SHEIKH ROAD ,basti_sheikh_road_.mp3,JALANDHAR
+BASTI SHIEKH ,basti_shiekh_.mp3,JALANDHAR
+Batakh Wala Chowk ,batakh_wala_chowk_.mp3,JALANDHAR
+BATTIAN MOHALLA ,battian_mohalla_.mp3,JALANDHAR
+BAZAR CHARAT SINGH ,bazar_charat_singh_.mp3,JALANDHAR
+BAZAR BOHAR WALA ,bazar_bohar_wala_.mp3,JALANDHAR
+BAZAR PUNJPEER ,bazar_punjpeer_.mp3,JALANDHAR
+BBMB Colony,bbmb_colony.mp3,JALANDHAR
+BAZAR SARAFAN ,bazar_sarafan_.mp3,JALANDHAR
+Beant Nagar,beant_nagar.mp3,JALANDHAR
+BEANT NAGAR ,beant_nagar_.mp3,JALANDHAR
+Begumpura Colony Danishmandan ,begumpura_colony_danishmandan_.mp3,JALANDHAR
+BHAG JAWAND LAL ,bhag_jawand_lal_.mp3,JALANDHAR
+Bhagat Singh Chowk ,bhagat_singh_chowk_.mp3,JALANDHAR
+Bhagat Singh Colony ,bhagat_singh_colony_.mp3,JALANDHAR
+Bhagat Singh Nagar ,bhagat_singh_nagar_.mp3,JALANDHAR
+BHAGAT SINGH PARK,bhagat_singh_park.mp3,JALANDHAR
+Bhagatpura ,bhagatpura_.mp3,JALANDHAR
+Bhagwan Dass Pura ,bhagwan_dass_pura_.mp3,JALANDHAR
+Bhai Banno Ji Nagar,bhai_banno_ji_nagar.mp3,JALANDHAR
+BHAI DITT SINGH NAGAR ,bhai_ditt_singh_nagar_.mp3,JALANDHAR
+Bhai Gurdass Nagar ,bhai_gurdass_nagar_.mp3,JALANDHAR
+Bank Encleve,bank_encleve.mp3,JALANDHAR
+Bhai Samund Singh Nagar,bhai_samund_singh_nagar.mp3,JALANDHAR
+Bhairon Bazar ,bhairon_bazar_.mp3,JALANDHAR
+bhalwan Wali Gali,bhalwan_wali_gali.mp3,JALANDHAR
+Bhargo Camp ,bhargo_camp_.mp3,JALANDHAR
+BHARGAV CAMP ,bhargav_camp_.mp3,JALANDHAR
+BHARGO CAMP NEW SURAJ GANJ ,bhargo_camp_new_suraj_ganj_.mp3,JALANDHAR
+Bhargo Nagar ,bhargo_nagar_.mp3,JALANDHAR
+BHARGO CAMP SURJIT NAGAR ,bhargo_camp_surjit_nagar_.mp3,JALANDHAR
+Bhatra Mohalla,bhatra_mohalla.mp3,JALANDHAR
+BHEEM NAGAR ,bheem_nagar_.mp3,JALANDHAR
+Bhojowal Patti (Chugitte),bhojowal_patti_(chugitte).mp3,JALANDHAR
+Bhuda Ji Enclave,bhuda_ji_enclave.mp3,JALANDHAR
+Bhullar Colony,bhullar_colony.mp3,JALANDHAR
+Bhupinder Nagar ,bhupinder_nagar_.mp3,JALANDHAR
+Bikram pura ,bikram_pura_.mp3,JALANDHAR
+Biliya Mandir ,biliya_mandir_.mp3,JALANDHAR
+Binda Chowk ,binda_chowk_.mp3,JALANDHAR
+Block,block.mp3,JALANDHAR
+BMC Chowk,bmc_chowk.mp3,JALANDHAR
+Ajeet Vihar,ajeet_vihar.mp3,JALANDHAR
+Bohar Wala Mohalla ,bohar_wala_mohalla_.mp3,JALANDHAR
+Bombay Nagar ,bombay_nagar_.mp3,JALANDHAR
+Boonga Colony,boonga_colony.mp3,JALANDHAR
+Boota Mandi ,boota_mandi_.mp3,JALANDHAR
+Boota Pind ,boota_pind_.mp3,JALANDHAR
+Borah Mohalla ,borah_mohalla_.mp3,JALANDHAR
+Brahm Nagar,brahm_nagar.mp3,JALANDHAR
+BRANDRATH ROAD ,brandrath_road_.mp3,JALANDHAR
+BSF Camp,bsf_camp.mp3,JALANDHAR
+Brij Nagar ,brij_nagar_.mp3,JALANDHAR
+BT Colony ,bt_colony_.mp3,JALANDHAR
+Bulton Park Cricket Stadium ,bulton_park_cricket_stadium_.mp3,JALANDHAR
+Butti Enclave ,butti_enclave_.mp3,JALANDHAR
+Canal Colony ,canal_colony_.mp3,JALANDHAR
+Canal Road ,canal_road_.mp3,JALANDHAR
+Canal Industrial Complex ,canal_industrial_complex_.mp3,JALANDHAR
+CAP. H.S. DHAMI NAGAR,cap._h.s._dhami_nagar.mp3,JALANDHAR
+CANNAUGHT CIRCUT PACCA BAGH ,cannaught_circut_pacca_bagh_.mp3,JALANDHAR
+Central Town,central_town.mp3,JALANDHAR
+CAROL BAGH,carol_bagh.mp3,JALANDHAR
+Chack Hussiana ,chack_hussiana_.mp3,JALANDHAR
+Chahar Bagh ,chahar_bagh_.mp3,JALANDHAR
+Chadhian Mohalla ,chadhian_mohalla_.mp3,JALANDHAR
+Chaian Mohalla ,chaian_mohalla_.mp3,JALANDHAR
+Chajju Ram Gali ,chajju_ram_gali_.mp3,JALANDHAR
+Chak Jinda,chak_jinda.mp3,JALANDHAR
+Chakk Hussaina ,chakk_hussaina_.mp3,JALANDHAR
+Chanakya Vihar ,chanakya_vihar_.mp3,JALANDHAR
+Chanchal Nagar,chanchal_nagar.mp3,JALANDHAR
+Chandan Nagar ,chandan_nagar_.mp3,JALANDHAR
+Chandigarh Mohalla ,chandigarh_mohalla_.mp3,JALANDHAR
+Channan Nagar ,channan_nagar_.mp3,JALANDHAR
+Chapal Chowk ,chapal_chowk_.mp3,JALANDHAR
+Chappli Chowk ,chappli_chowk_.mp3,JALANDHAR
+Charanjit Pura ,charanjit_pura_.mp3,JALANDHAR
+Charjian Mohalla ,charjian_mohalla_.mp3,JALANDHAR
+Cheema Nagar,cheema_nagar.mp3,JALANDHAR
+Cheema Nagar Ext.,cheema_nagar_ext..mp3,JALANDHAR
+Chet Vihar ,chet_vihar_.mp3,JALANDHAR
+Chintpurni Mohalla,chintpurni_mohalla.mp3,JALANDHAR
+Chokan Kalan Pind ,chokan_kalan_pind_.mp3,JALANDHAR
+Chota Ali Mohalla ,chota_ali_mohalla_.mp3,JALANDHAR
+Chopra Colony ,chopra_colony_.mp3,JALANDHAR
+Chiragpura Mohalla ,chiragpura_mohalla_.mp3,JALANDHAR
+Chota Saipur Road ,chota_saipur_road_.mp3,JALANDHAR
+Chotta Saipur ,chotta_saipur_.mp3,JALANDHAR
+Chotte Ram Bagh,chotte_ram_bagh.mp3,JALANDHAR
+CHOTTI BARADARI,chotti_baradari.mp3,JALANDHAR
+Chotti Baradari Part,chotti_baradari_part.mp3,JALANDHAR
+Chouhan Colony ,chouhan_colony_.mp3,JALANDHAR
+Chowk Kade Shah ,chowk_kade_shah_.mp3,JALANDHAR
+CHOWK KISHANPURA ,chowk_kishanpura_.mp3,JALANDHAR
+CHOWK SUDAN ,chowk_sudan_.mp3,JALANDHAR
+CHOWK SAIDAN GATE ,chowk_saidan_gate_.mp3,JALANDHAR
+Chugitti,chugitti.mp3,JALANDHAR
+Chune Wali Gali Boota Mandi ,chune_wali_gali_boota_mandi_.mp3,JALANDHAR
+Chungi Mohalla ,chungi_mohalla_.mp3,JALANDHAR
+Chungi No,chungi_no.mp3,JALANDHAR
+CIRCULAR ROAD ,circular_road_.mp3,JALANDHAR
+Civil Hospital ,civil_hospital_.mp3,JALANDHAR
+COMPANY BAGH,company_bagh.mp3,JALANDHAR
+COMPLEX ROAD ,complex_road_.mp3,JALANDHAR
+COOL ROAD,cool_road.mp3,JALANDHAR
+Arya Samaj Mandir ,arya_samaj_mandir_.mp3,JALANDHAR
+BHAI JAITA JI Market,bhai_jaita_ji_market.mp3,JALANDHAR
+Board Wali Gali ,board_wali_gali_.mp3,JALANDHAR
+D.C Nagar,d.c_nagar.mp3,JALANDHAR
+Dairy Kalu Ram,dairy_kalu_ram.mp3,JALANDHAR
+DAIZY AVENUE,daizy_avenue.mp3,JALANDHAR
+DAKOHA ROAD,dakoha_road.mp3,JALANDHAR
+DAMORIA PULI ,damoria_puli_.mp3,JALANDHAR
+DANISH MANDA,danish_manda.mp3,JALANDHAR
+Dashmesh Avenue,dashmesh_avenue.mp3,JALANDHAR
+Dashmesh Nagar,dashmesh_nagar.mp3,JALANDHAR
+Daya Nand Chowk,daya_nand_chowk.mp3,JALANDHAR
+Datar Nagar ,datar_nagar_.mp3,JALANDHAR
+Deep Colony ,deep_colony_.mp3,JALANDHAR
+Deen Dayal Upadhyay Nagar ,deen_dayal_upadhyay_nagar_.mp3,JALANDHAR
+Defence Colony Ext.,defence_colony_ext..mp3,JALANDHAR
+Deol Nagar ,deol_nagar_.mp3,JALANDHAR
+Dera Preet Nagar Jhuggia ,dera_preet_nagar_jhuggia_.mp3,JALANDHAR
+Dhaliwal Enclave ,dhaliwal_enclave_.mp3,JALANDHAR
+Dhan Mohalla ,dhan_mohalla_.mp3,JALANDHAR
+Dhankian Mohalla ,dhankian_mohalla_.mp3,JALANDHAR
+Dhanowali,dhanowali.mp3,JALANDHAR
+Dhilwan,dhilwan.mp3,JALANDHAR
+Dhiman Nagar ,dhiman_nagar_.mp3,JALANDHAR
+D.C.COLONEY,d.c.coloney.mp3,JALANDHAR
+Dhonka Mohalla ,dhonka_mohalla_.mp3,JALANDHAR
+DIAMOND AVENUE GARHA,diamond_avenue_garha.mp3,JALANDHAR
+Dilbagh Nagar ,dilbagh_nagar_.mp3,JALANDHAR
+Dilbagh nagar Ext. ,dilbagh_nagar_ext._.mp3,JALANDHAR
+DOGRI ROAD ,dogri_road_.mp3,JALANDHAR
+Dolatpuri ,dolatpuri_.mp3,JALANDHAR
+Doordarshan Enclave ,doordarshan_enclave_.mp3,JALANDHAR
+Doriya Mohalla ,doriya_mohalla_.mp3,JALANDHAR
+Dr. Ambedkar Nagar ,dr._ambedkar_nagar_.mp3,JALANDHAR
+Durga Colony ,durga_colony_.mp3,JALANDHAR
+Durga Mandir Road ,durga_mandir_road_.mp3,JALANDHAR
+Durga Vihar ,durga_vihar_.mp3,JALANDHAR
+Dutta Street ,dutta_street_.mp3,JALANDHAR
+Dyal Nagar ,dyal_nagar_.mp3,JALANDHAR
+E.S.I Hospital ,e.s.i_hospital_.mp3,JALANDHAR
+E.S.I Hospital Flats ,e.s.i_hospital_flats_.mp3,JALANDHAR
+EKTA NAGAR BASHIRPURA,ekta_nagar_bashirpura.mp3,JALANDHAR
+Ekta Nagar,ekta_nagar.mp3,JALANDHAR
+Ekta Nagar PH,ekta_nagar_ph.mp3,JALANDHAR
+Ekta Vihar,ekta_vihar.mp3,JALANDHAR
+Engineer Enclave,engineer_enclave.mp3,JALANDHAR
+F.C.I Colony ,f.c.i_colony_.mp3,JALANDHAR
+Fateh Puri ,fateh_puri_.mp3,JALANDHAR
+Fauji Gali,fauji_gali.mp3,JALANDHAR
+Focal Point ,focal_point_.mp3,JALANDHAR
+Fouji Wali Gali,fouji_wali_gali.mp3,JALANDHAR
+Four Marla ,four_marla_.mp3,JALANDHAR
+Friends Colony,friends_colony.mp3,JALANDHAR
+G.GOBIND SGH AVENUE(. ACRE),g.gobind_sgh_avenue(._acre).mp3,JALANDHAR
+G.P.O to Shastri Chowk ,g.p.o_to_shastri_chowk_.mp3,JALANDHAR
+Dhobi Mohalla ,dhobi_mohalla_.mp3,JALANDHAR
+Dada Colony,dada_colony.mp3,JALANDHAR
+Dada Nagar,dada_nagar.mp3,JALANDHAR
+G.T Road Market,g.t_road_market.mp3,JALANDHAR
+G.T.B Enclave ,g.t.b_enclave_.mp3,JALANDHAR
+G.T.B Nagar extention ,g.t.b_nagar_extention_.mp3,JALANDHAR
+G.T.B. AVENUE ,g.t.b._avenue_.mp3,JALANDHAR
+Gadaipur ,gadaipur_.mp3,JALANDHAR
+G.T.ROAD ,g.t.road_.mp3,JALANDHAR
+Gagan Vihar ,gagan_vihar_.mp3,JALANDHAR
+Gain Giri Mandir ,gain_giri_mandir_.mp3,JALANDHAR
+Gajji Gulla ,gajji_gulla_.mp3,JALANDHAR
+GALI PAWAN KAUSHAL ,gali_pawan_kaushal_.mp3,JALANDHAR
+Gali Mirasiya Wali ,gali_mirasiya_wali_.mp3,JALANDHAR
+Gali Pawan Koshal ,gali_pawan_koshal_.mp3,JALANDHAR
+Gali Ravi Karyana Store ,gali_ravi_karyana_store_.mp3,JALANDHAR
+Gali Sharma Model School ,gali_sharma_model_school_.mp3,JALANDHAR
+Gandhi Camp ,gandhi_camp_.mp3,JALANDHAR
+Gandhi Nagar ,gandhi_nagar_.mp3,JALANDHAR
+Garden Colony,garden_colony.mp3,JALANDHAR
+Gali Somnath Aara Wala ,gali_somnath_aara_wala_.mp3,JALANDHAR
+Garha,garha.mp3,JALANDHAR
+Gautam Nagar ,gautam_nagar_.mp3,JALANDHAR
+Geeta Colony ,geeta_colony_.mp3,JALANDHAR
+Ghai Nagar ,ghai_nagar_.mp3,JALANDHAR
+Gian Nagar,gian_nagar.mp3,JALANDHAR
+Gill Colony,gill_colony.mp3,JALANDHAR
+Gobind Garh,gobind_garh.mp3,JALANDHAR
+Golden Aveune,golden_aveune.mp3,JALANDHAR
+Ganga Appartments,ganga_appartments.mp3,JALANDHAR
+Gobind Nagar ,gobind_nagar_.mp3,JALANDHAR
+GARDEN COLONY. ,garden_colony._.mp3,JALANDHAR
+Gopal Nagar ,gopal_nagar_.mp3,JALANDHAR
+Gandhi Camp Lane  ,gandhi_camp_lane__.mp3,JALANDHAR
+Green Avenue ,green_avenue_.mp3,JALANDHAR
+Green Couty ,green_couty_.mp3,JALANDHAR
+Green Enclave ,green_enclave_.mp3,JALANDHAR
+Green Garden Avenue,green_garden_avenue.mp3,JALANDHAR
+Green Model Town,green_model_town.mp3,JALANDHAR
+Green Wood Avenue,green_wood_avenue.mp3,JALANDHAR
+Green Woods Appartments ,green_woods_appartments_.mp3,JALANDHAR
+GTB Nagar ,gtb_nagar_.mp3,JALANDHAR
+Guard Colony,guard_colony.mp3,JALANDHAR
+Gujja Peer Road ,gujja_peer_road_.mp3,JALANDHAR
+Gujral Nagar ,gujral_nagar_.mp3,JALANDHAR
+Gujrati Colony ,gujrati_colony_.mp3,JALANDHAR
+Gujrati Mohalla ,gujrati_mohalla_.mp3,JALANDHAR
+Gulab Devi Road ,gulab_devi_road_.mp3,JALANDHAR
+Gulabia Mohalla ,gulabia_mohalla_.mp3,JALANDHAR
+Gulmarg Avenue ,gulmarg_avenue_.mp3,JALANDHAR
+Gulmarg Colony ,gulmarg_colony_.mp3,JALANDHAR
+Gulmohar City ,gulmohar_city_.mp3,JALANDHAR
+Gupta Colony ,gupta_colony_.mp3,JALANDHAR
+Gurbachan Nagar,gurbachan_nagar.mp3,JALANDHAR
+Gurditta Nagar ,gurditta_nagar_.mp3,JALANDHAR
+Gurdev Nagar ,gurdev_nagar_.mp3,JALANDHAR
+Gurjepal Nagar,gurjepal_nagar.mp3,JALANDHAR
+Gurjeet Nagar,gurjeet_nagar.mp3,JALANDHAR
+Gurmeet Nagar,gurmeet_nagar.mp3,JALANDHAR
+Guru Amar Dass Nagar ,guru_amar_dass_nagar_.mp3,JALANDHAR
+GURU AMAR DASS NAGAR EXT.,guru_amar_dass_nagar_ext..mp3,JALANDHAR
+Guru Anged Dev Colony,guru_anged_dev_colony.mp3,JALANDHAR
+Guru Arjan dev Nagar ,guru_arjan_dev_nagar_.mp3,JALANDHAR
+Guru Arjun Dev Nagar ,guru_arjun_dev_nagar_.mp3,JALANDHAR
+Guru Bazar ,guru_bazar_.mp3,JALANDHAR
+Guru Diwan Nagar Garha,guru_diwan_nagar_garha.mp3,JALANDHAR
+Guru Enclave ,guru_enclave_.mp3,JALANDHAR
+GOLDEN VIEW COLONY ,golden_view_colony_.mp3,JALANDHAR
+Guru Gobind Singh Nagar ,guru_gobind_singh_nagar_.mp3,JALANDHAR
+GURU HARKRISHAN NAGAR,guru_harkrishan_nagar.mp3,JALANDHAR
+Guru Nagar,guru_nagar.mp3,JALANDHAR
+Guru Nanak Mission Chowk,guru_nanak_mission_chowk.mp3,JALANDHAR
+Guru Nanak Nagar ,guru_nanak_nagar_.mp3,JALANDHAR
+GURU NANAK PURA,guru_nanak_pura.mp3,JALANDHAR
+Guru Nanak Pura East,guru_nanak_pura_east.mp3,JALANDHAR
+Guru Gobind Singh Avenue,guru_gobind_singh_avenue.mp3,JALANDHAR
+Guru Nanak Pura West,guru_nanak_pura_west.mp3,JALANDHAR
+Guru Ram Dass Colony,guru_ram_dass_colony.mp3,JALANDHAR
+Guru Ram Dass Nagar ,guru_ram_dass_nagar_.mp3,JALANDHAR
+Guru Ravidass Nagar ,guru_ravidass_nagar_.mp3,JALANDHAR
+Guru Sant Nagar ,guru_sant_nagar_.mp3,JALANDHAR
+Hans Enclave ,hans_enclave_.mp3,JALANDHAR
+Hamilton Tower ,hamilton_tower_.mp3,JALANDHAR
+Happy Colony,happy_colony.mp3,JALANDHAR
+Harbans Nagar ,harbans_nagar_.mp3,JALANDHAR
+HARBANS NAGAR EXT ,harbans_nagar_ext_.mp3,JALANDHAR
+Hardeep Nagar ,hardeep_nagar_.mp3,JALANDHAR
+Hardev Nagar ,hardev_nagar_.mp3,JALANDHAR
+Hardial Nagar ,hardial_nagar_.mp3,JALANDHAR
+Hardyal Nagar,hardyal_nagar.mp3,JALANDHAR
+Hargobind Nagar ,hargobind_nagar_.mp3,JALANDHAR
+Hargobind Colony ,hargobind_colony_.mp3,JALANDHAR
+Hargobind Pura,hargobind_pura.mp3,JALANDHAR
+Harkrishan Nagar ,harkrishan_nagar_.mp3,JALANDHAR
+Hari Singh Nagar ,hari_singh_nagar_.mp3,JALANDHAR
+Harnamdasspura ,harnamdasspura_.mp3,JALANDHAR
+Himachal Colony ,himachal_colony_.mp3,JALANDHAR
+Hindsamachar Ground ,hindsamachar_ground_.mp3,JALANDHAR
+Hoshiarpur Road ,hoshiarpur_road_.mp3,JALANDHAR
+Housing Board Colony ,housing_board_colony_.mp3,JALANDHAR
+Idgah Mohalla Garha,idgah_mohalla_garha.mp3,JALANDHAR
+Inderparsth Mohalla ,inderparsth_mohalla_.mp3,JALANDHAR
+Indian Oil Colony ,indian_oil_colony_.mp3,JALANDHAR
+Indra Colony,indra_colony.mp3,JALANDHAR
+Indra Park,indra_park.mp3,JALANDHAR
+Industrial Area ,industrial_area_.mp3,JALANDHAR
+Industrial Area Ext. ,industrial_area_ext._.mp3,JALANDHAR
+INDUSTRIAL ESTATE ,industrial_estate_.mp3,JALANDHAR
+Isharpuri Colony,isharpuri_colony.mp3,JALANDHAR
+ISHER PURI,isher_puri.mp3,JALANDHAR
+Isherpuri Colony,isherpuri_colony.mp3,JALANDHAR
+Ishwar Nagar ,ishwar_nagar_.mp3,JALANDHAR
+Islam Gunj ,islam_gunj_.mp3,JALANDHAR
+Islamabad ,islamabad_.mp3,JALANDHAR
+Issa Nagar ,issa_nagar_.mp3,JALANDHAR
+J.M.C Colony ,j.m.c_colony_.mp3,JALANDHAR
+J.P. Nagar Extension ,j.p._nagar_extension_.mp3,JALANDHAR
+J.P.Nagar ,j.p.nagar_.mp3,JALANDHAR
+Jagat Pura ,jagat_pura_.mp3,JALANDHAR
+JAGDISH NAGAR ,jagdish_nagar_.mp3,JALANDHAR
+Jagjit Colony,jagjit_colony.mp3,JALANDHAR
+Jagwali Kathi Near Canal ,jagwali_kathi_near_canal_.mp3,JALANDHAR
+Jail Road ,jail_road_.mp3,JALANDHAR
+Jaimal Nagar ,jaimal_nagar_.mp3,JALANDHAR
+Jain Colony ,jain_colony_.mp3,JALANDHAR
+Jaina Nagar ,jaina_nagar_.mp3,JALANDHAR
+JAINA NGR.B.SHEIKH ,jaina_ngr.b.sheikh_.mp3,JALANDHAR
+Jairtha Mohalla ,jairtha_mohalla_.mp3,JALANDHAR
+JALANDHAR Kanzo ,JALANDHAR_kanzo_.mp3,JALANDHAR
+JALANDHAR Prime ,JALANDHAR_prime_.mp3,JALANDHAR
+JALANDHAR Vihar ,JALANDHAR_vihar_.mp3,JALANDHAR
+Janak Nagar ,janak_nagar_.mp3,JALANDHAR
+Jangra Mohalla ,jangra_mohalla_.mp3,JALANDHAR
+Janta Colony ,janta_colony_.mp3,JALANDHAR
+JASBIR NAGAR ,jasbir_nagar_.mp3,JALANDHAR
+Jaswant Nagar,jaswant_nagar.mp3,JALANDHAR
+JASWANT NAGAR GARHA,jaswant_nagar_garha.mp3,JALANDHAR
+Jatt Pura ,jatt_pura_.mp3,JALANDHAR
+Jawala Nagar ,jawala_nagar_.mp3,JALANDHAR
+Jhansi Mohalla,jhansi_mohalla.mp3,JALANDHAR
+Jeet Nagar ,jeet_nagar_.mp3,JALANDHAR
+Joginder Nagar,joginder_nagar.mp3,JALANDHAR
+JOGINDER NAGAR ,joginder_nagar_.mp3,JALANDHAR
+Johan Colony,johan_colony.mp3,JALANDHAR
+Judge Colony ,judge_colony_.mp3,JALANDHAR
+Jybal Gali ,jybal_gali_.mp3,JALANDHAR
+Jyoti chowk to preet Hotel ,jyoti_chowk_to_preet_hotel_.mp3,JALANDHAR
+Jyoti Nagar,jyoti_nagar.mp3,JALANDHAR
+Kabir Avenue ,kabir_avenue_.mp3,JALANDHAR
+Kabir Evenue Extension ,kabir_evenue_extension_.mp3,JALANDHAR
+Kabir Mandir ,kabir_mandir_.mp3,JALANDHAR
+Kabir Nagar ,kabir_nagar_.mp3,JALANDHAR
+Kabir Vihar ,kabir_vihar_.mp3,JALANDHAR
+Greater Kailash ,greater_kailash_.mp3,JALANDHAR
+Kachari Colony ,kachari_colony_.mp3,JALANDHAR
+Kahanpur Avadi ,kahanpur_avadi_.mp3,JALANDHAR
+Kailash Nagar ,kailash_nagar_.mp3,JALANDHAR
+KAKAR STREET (MAI HIRAN GATE) ,kakar_street_(mai_hiran_gate)_.mp3,JALANDHAR
+Kala Mahal ,kala_mahal_.mp3,JALANDHAR
+KALAN BAZAR ,kalan_bazar_.mp3,JALANDHAR
+KALA SANGHIAN RD B.SHEIKH ,kala_sanghian_rd_b.sheikh_.mp3,JALANDHAR
+Kalgidhar Evenue,kalgidhar_evenue.mp3,JALANDHAR
+KALI MATA MANDIR ROAD ,kali_mata_mandir_road_.mp3,JALANDHAR
+Kalia Colony,kalia_colony.mp3,JALANDHAR
+Kalia Farm,kalia_farm.mp3,JALANDHAR
+Kalo Vani Mohalla ,kalo_vani_mohalla_.mp3,JALANDHAR
+Kalyani Mohalla ,kalyani_mohalla_.mp3,JALANDHAR
+Kamal Park ,kamal_park_.mp3,JALANDHAR
+Kamal Vihar ,kamal_vihar_.mp3,JALANDHAR
+Kamaliya Mohalla ,kamaliya_mohalla_.mp3,JALANDHAR
+Kanchia Bazar ,kanchia_bazar_.mp3,JALANDHAR
+Kanshi Nagar ,kanshi_nagar_.mp3,JALANDHAR
+Kanth Colony ,kanth_colony_.mp3,JALANDHAR
+Kapoor Colony ,kapoor_colony_.mp3,JALANDHAR
+KAPOOR NAGAR ,kapoor_nagar_.mp3,JALANDHAR
+Kapurthla Road ,kapurthla_road_.mp3,JALANDHAR
+Kartar Nagar ,kartar_nagar_.mp3,JALANDHAR
+Katahara Mohalla ,katahara_mohalla_.mp3,JALANDHAR
+Kathera Mohalla ,kathera_mohalla_.mp3,JALANDHAR
+KATRA MOHALLA ,katra_mohalla_.mp3,JALANDHAR
+Kattra Mohalla ,kattra_mohalla_.mp3,JALANDHAR
+Kay Pee Nagar ,kay_pee_nagar_.mp3,JALANDHAR
+Keshev Nagar,keshev_nagar.mp3,JALANDHAR
+Kewal Vihar,kewal_vihar.mp3,JALANDHAR
+Khateek Market Ramamandi,khateek_market_ramamandi.mp3,JALANDHAR
+Khazuria Mohalla ,khazuria_mohalla_.mp3,JALANDHAR
+Khera Colony ,khera_colony_.mp3,JALANDHAR
+Khera Enclave ,khera_enclave_.mp3,JALANDHAR
+KHINGRA NEAR G.T.B. NAGAR,khingra_near_g.t.b._nagar.mp3,JALANDHAR
+Khingran Gate ,khingran_gate_.mp3,JALANDHAR
+Khodian Mohalla ,khodian_mohalla_.mp3,JALANDHAR
+Khurla Colony ,khurla_colony_.mp3,JALANDHAR
+Khurla Kingra,khurla_kingra.mp3,JALANDHAR
+KHOTI HATA RAILWAY RD. ,khoti_hata_railway_rd._.mp3,JALANDHAR
+KHURLA KINGRA COL.WADALA RD ,khurla_kingra_col.wadala_rd_.mp3,JALANDHAR
+KHURLA KINGRA ROAD. MODEL TOWN ,khurla_kingra_road._model_town_.mp3,JALANDHAR
+Kila Mohalla ,kila_mohalla_.mp3,JALANDHAR
+King Colony,king_colony.mp3,JALANDHAR
+Kishanpura ( Gali) ,kishanpura_(_gali)_.mp3,JALANDHAR
+Kishan pura ,kishan_pura_.mp3,JALANDHAR
+KISHANPURA ROAD ,kishanpura_road_.mp3,JALANDHAR
+Kohinoor Enclave,kohinoor_enclave.mp3,JALANDHAR
+Kot Baba Deep Singh Nagar ,kot_baba_deep_singh_nagar_.mp3,JALANDHAR
+Kot Bahadur Khan ,kot_bahadur_khan_.mp3,JALANDHAR
+Kot Kishan Chand ,kot_kishan_chand_.mp3,JALANDHAR
+Kot Bazar ,kot_bazar_.mp3,JALANDHAR
+Kot Lakhpat Rai ,kot_lakhpat_rai_.mp3,JALANDHAR
+Kot Mohalla ,kot_mohalla_.mp3,JALANDHAR
+Kot Pakshian ,kot_pakshian_.mp3,JALANDHAR
+KOT RAM DASS ,kot_ram_dass_.mp3,JALANDHAR
+Guru Ravi dass Nagar ,guru_ravi_dass_nagar_.mp3,JALANDHAR
+Kot Sadiq Colony ,kot_sadiq_colony_.mp3,JALANDHAR
+Kotwali Bazar ,kotwali_bazar_.mp3,JALANDHAR
+KRISHNA COLONY ,krishna_colony_.mp3,JALANDHAR
+Krishan Nagar ,krishan_nagar_.mp3,JALANDHAR
+KRISHNA GALI ,krishna_gali_.mp3,JALANDHAR
+Krishna Nagar ,krishna_nagar_.mp3,JALANDHAR
+Krishna Sweet Wali Gali,krishna_sweet_wali_gali.mp3,JALANDHAR
+Kuki Dhab ,kuki_dhab_.mp3,JALANDHAR
+Kunowali,kunowali.mp3,JALANDHAR
+Kacha Kot ,kacha_kot_.mp3,JALANDHAR
+Labour Colony,labour_colony.mp3,JALANDHAR
+Ladhewali ,ladhewali_.mp3,JALANDHAR
+Labour Court Gali Panj Peer ,labour_court_gali_panj_peer_.mp3,JALANDHAR
+LADHEWALI HOSHIARPUR ROAD ,ladhewali_hoshiarpur_road_.mp3,JALANDHAR
+LADOWALI ROAD,ladowali_road.mp3,JALANDHAR
+Ladhewali Pind ,ladhewali_pind_.mp3,JALANDHAR
+Lahora Mohalla ,lahora_mohalla_.mp3,JALANDHAR
+Lahoria Mohalla ,lahoria_mohalla_.mp3,JALANDHAR
+LAJPAT RAI NAGAR,lajpat_rai_nagar.mp3,JALANDHAR
+LAJPAT NAGAR MARKET,lajpat_nagar_market.mp3,JALANDHAR
+Lakshmipura ,lakshmipura_.mp3,JALANDHAR
+Lal Nagar,lal_nagar.mp3,JALANDHAR
+Lamba Pind ,lamba_pind_.mp3,JALANDHAR
+Lamba pind Road ,lamba_pind_road_.mp3,JALANDHAR
+Lathi Mar Mohalla ,lathi_mar_mohalla_.mp3,JALANDHAR
+LATIF PURA,latif_pura.mp3,JALANDHAR
+Lawan Mohalla ,lawan_mohalla_.mp3,JALANDHAR
+Laxmi Vihar ,laxmi_vihar_.mp3,JALANDHAR
+Lasuri Mohalla ,lasuri_mohalla_.mp3,JALANDHAR
+Link Colony ,link_colony_.mp3,JALANDHAR
+Link Nagar,link_nagar.mp3,JALANDHAR
+Link Road Model Town,link_road_model_town.mp3,JALANDHAR
+LINK ROAD,link_road.mp3,JALANDHAR
+LOBOUR COLONY,lobour_colony.mp3,JALANDHAR
+Lohara Nagar Colony,lohara_nagar_colony.mp3,JALANDHAR
+Lohara Nangal,lohara_nangal.mp3,JALANDHAR
+M.W.ABADI SANTOKH PURA ,m.w.abadi_santokh_pura_.mp3,JALANDHAR
+Machi Mohalla ,machi_mohalla_.mp3,JALANDHAR
+Madhuban Colony ,madhuban_colony_.mp3,JALANDHAR
+Madrasi Mohalla ,madrasi_mohalla_.mp3,JALANDHAR
+Maharaja Garden ,maharaja_garden_.mp3,JALANDHAR
+Maharishi Valmiki Nagar ,maharishi_valmiki_nagar_.mp3,JALANDHAR
+Mahasha Colony ,mahasha_colony_.mp3,JALANDHAR
+Mai Hiran Gate ,mai_hiran_gate_.mp3,JALANDHAR
+MAHASHA NAGAR ,mahasha_nagar_.mp3,JALANDHAR
+Main Bazar ,main_bazar_.mp3,JALANDHAR
+Main Adda Basti Danishmandan ,main_adda_basti_danishmandan_.mp3,JALANDHAR
+Main Bazar Basti Danishmandan ,main_bazar_basti_danishmandan_.mp3,JALANDHAR
+Main Bazar Bhargo ,main_bazar_bhargo_.mp3,JALANDHAR
+Main Road Abadpura ,main_road_abadpura_.mp3,JALANDHAR
+Major Bahudur Singh Marg,major_bahudur_singh_marg.mp3,JALANDHAR
+Major Colony ,major_colony_.mp3,JALANDHAR
+Makhan Ram wali Gali,makhan_ram_wali_gali.mp3,JALANDHAR
+Makhdoom Pura ,makhdoom_pura_.mp3,JALANDHAR
+Malik Nagar ,malik_nagar_.mp3,JALANDHAR
+Malka Mohalla ,malka_mohalla_.mp3,JALANDHAR
+MALKAN CHOWK ,malkan_chowk_.mp3,JALANDHAR
+Golden Colony,golden_colony.mp3,JALANDHAR
+Kullian Mohalla ,kullian_mohalla_.mp3,JALANDHAR
+Kot Sadiq ,kot_sadiq_.mp3,JALANDHAR
+Malora Mohalla ,malora_mohalla_.mp3,JALANDHAR
+Mandi Road,mandi_road.mp3,JALANDHAR
+MANGU BASTI ,mangu_basti_.mp3,JALANDHAR
+Manjit Nagar ,manjit_nagar_.mp3,JALANDHAR
+Mann Singh Nagar ,mann_singh_nagar_.mp3,JALANDHAR
+Mann Nagar ,mann_nagar_.mp3,JALANDHAR
+MAQSUDAN CHOWK,maqsudan_chowk.mp3,JALANDHAR
+Maqsudan Road ,maqsudan_road_.mp3,JALANDHAR
+Market Opposite Bus Stand,market_opposite_bus_stand.mp3,JALANDHAR
+Maqsudan Byepass ,maqsudan_byepass_.mp3,JALANDHAR
+Maqsudan ,maqsudan_.mp3,JALANDHAR
+Masih Mohala Dakoha,masih_mohala_dakoha.mp3,JALANDHAR
+Mast Colony ,mast_colony_.mp3,JALANDHAR
+Master Colony ,master_colony_.mp3,JALANDHAR
+Master Tara Singh Nagar,master_tara_singh_nagar.mp3,JALANDHAR
+Mata Salani Madir ,mata_salani_madir_.mp3,JALANDHAR
+Mata Sant Kaur Nagar ,mata_sant_kaur_nagar_.mp3,JALANDHAR
+Mathura Nagar ,mathura_nagar_.mp3,JALANDHAR
+Mayor Colony,mayor_colony.mp3,JALANDHAR
+Meena Bazar ,meena_bazar_.mp3,JALANDHAR
+Mehnga Singh Colony,mehnga_singh_colony.mp3,JALANDHAR
+MILAP CHOWK ,milap_chowk_.mp3,JALANDHAR
+Mehtab Nagar ,mehtab_nagar_.mp3,JALANDHAR
+Mitha Bazar ,mitha_bazar_.mp3,JALANDHAR
+Misson Compound ,misson_compound_.mp3,JALANDHAR
+MITHAPUR CHOWK,mithapur_chowk.mp3,JALANDHAR
+MITHAPUR ROAD,mithapur_road.mp3,JALANDHAR
+Miya Colony ,miya_colony_.mp3,JALANDHAR
+Mochian Mohalla ,mochian_mohalla_.mp3,JALANDHAR
+Model Gram Colony ,model_gram_colony_.mp3,JALANDHAR
+Model Estate,model_estate.mp3,JALANDHAR
+MODEL TOWN ,model_town_.mp3,JALANDHAR
+Model House Road ,model_house_road_.mp3,JALANDHAR
+Modern Colony,modern_colony.mp3,JALANDHAR
+Modern Estate,modern_estate.mp3,JALANDHAR
+MOH FAGWARI GARHA,moh_fagwari_garha.mp3,JALANDHAR
+Modian Todh ,modian_todh_.mp3,JALANDHAR
+MOH. KANYA WALI GARHA,moh._kanya_wali_garha.mp3,JALANDHAR
+MOH. QUAZI ,moh._quazi_.mp3,JALANDHAR
+MOH.KODIAN PIR BODIA ,moh.kodian_pir_bodia_.mp3,JALANDHAR
+Mohalla Chaiaam ,mohalla_chaiaam_.mp3,JALANDHAR
+Mohalla Karar Khan ,mohalla_karar_khan_.mp3,JALANDHAR
+Mohalla Kot ,mohalla_kot_.mp3,JALANDHAR
+Mohalla Amar Saw Mill ,mohalla_amar_saw_mill_.mp3,JALANDHAR
+Mohalla Kot Ram Dass ( Abadi ) ,mohalla_kot_ram_dass_(_abadi_)_.mp3,JALANDHAR
+Mohalla Ladowali Raod,mohalla_ladowali_raod.mp3,JALANDHAR
+Mohalla Makhdumpura,mohalla_makhdumpura.mp3,JALANDHAR
+Mohalla Pakka Bagh ,mohalla_pakka_bagh_.mp3,JALANDHAR
+Mohalla Ravidass Nagar,mohalla_ravidass_nagar.mp3,JALANDHAR
+Mohalla Shastri Nagar,mohalla_shastri_nagar.mp3,JALANDHAR
+MOHALLA TARKHANA BASTI SHEIKH ,mohalla_tarkhana_basti_sheikh_.mp3,JALANDHAR
+Mohan Vihar ,mohan_vihar_.mp3,JALANDHAR
+Mohalla Vari Vatt ,mohalla_vari_vatt_.mp3,JALANDHAR
+Mohindra Colony ,mohindra_colony_.mp3,JALANDHAR
+Mohinder Singh Colony,mohinder_singh_colony.mp3,JALANDHAR
+Mohindru Mohalla ,mohindru_mohalla_.mp3,JALANDHAR
+Mohyall Nagar,mohyall_nagar.mp3,JALANDHAR
+Mota Singh Nagar,mota_singh_nagar.mp3,JALANDHAR
+Moti Bagh ,moti_bagh_.mp3,JALANDHAR
+Moti Nagar ,moti_nagar_.mp3,JALANDHAR
+Mughlan Dhiki ,mughlan_dhiki_.mp3,JALANDHAR
+Nagal Shama Pind ,nagal_shama_pind_.mp3,JALANDHAR
+Muslim Colony ,muslim_colony_.mp3,JALANDHAR
+Nagra Pind ,nagra_pind_.mp3,JALANDHAR
+Nagra Road ,nagra_road_.mp3,JALANDHAR
+Nakodar Road ,nakodar_road_.mp3,JALANDHAR
+NAI ABADI ,nai_abadi_.mp3,JALANDHAR
+Mandi Fenton Ganj,mandi_fenton_ganj.mp3,JALANDHAR

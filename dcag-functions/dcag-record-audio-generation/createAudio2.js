@@ -1,6 +1,6 @@
 var txtomp3 = require("text-to-mp3");
 const fs = require("fs");
-const tasks = require("./test");
+const tasks = require("./data2");
 
 Object.getPrototypeOf(txtomp3).attributes = {
   ie: "UTF-8",
@@ -17,7 +17,7 @@ function textToMp3(task) {
       console.log(err);
       return;
     }
-    var file = fs.createWriteStream(`./output111/${fileName}.mp3`); // write it down the file
+    var file = fs.createWriteStream(`./output/${fileName}.mp3`); // write it down the file
     file.write(binaryStream);
     file.end();
   });
