@@ -43,7 +43,18 @@ public class GCPUtils {
             return generateV4GetObjectSignedUrl("dcag-training", fileName);
         }
 
-        /**
+    public Blob getRecordAudioCSVFile(String fileName) throws StorageException {
+        return getBlobFile("dcag-tasks-source", "record_audio/" + fileName);
+    }
+
+    private Blob getBlobFile(String bucketName, String objectName) throws StorageException {
+
+        Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
+
+        return storage.get(bucketName,objectName);
+    }
+
+    /**
          * Signing a URL requires Credentials which implement ServiceAccountSigner. These can be set
          * explicitly using the Storage.SignUrlOption.signWith(ServiceAccountSigner) option. If you don't,
          * you could also pass a service account signer to StorageOptions, i.e.

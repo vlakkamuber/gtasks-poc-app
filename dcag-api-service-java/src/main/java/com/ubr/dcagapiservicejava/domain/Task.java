@@ -49,6 +49,8 @@ public class Task implements Serializable {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
+    private String city;
+
     private String currency;
 
     private Double price;
