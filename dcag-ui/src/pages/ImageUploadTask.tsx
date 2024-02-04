@@ -27,6 +27,7 @@ import LoadingComponent from '../components/Loader';
 import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import { useUserAuth } from '../context/UserAuthContext';
 import { showPayout } from '../utils/Settings';
+import useAnalytics from '../hooks/useAnanlytics';
 
 const ImageUploadTask: React.FC = () => {
   const [value, setValue] = useState('');
@@ -34,6 +35,7 @@ const ImageUploadTask: React.FC = () => {
   const history = useHistory();
   const params = useParams();
   const { user } = useUserAuth();
+  const logEvent = useAnalytics({ page: 'upload image Task' });
 
   const goBack = () => {
     history.push('/dashboard/tasks'); // This function navigates back to the previous page
@@ -154,6 +156,7 @@ const ImageUploadTask: React.FC = () => {
   };
 
   const saveImageAndCompleteTask = async (e) => {
+    logEvent({ actions: 'submit task', properties: selectedTask.taskId });
     e.preventDefault();
     setSubmitted(true);
     uploadImageToStorageUrl();

@@ -29,12 +29,14 @@ import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { useUserAuth } from '../context/UserAuthContext';
 import { LOADER_MESSAGE } from '../constants/constant';
 import { showPayout } from '../utils/Settings';
+import useAnalytics from '../hooks/useAnanlytics';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = useParams();
   const { user } = useUserAuth();
   console.log('user ', user);
+  const logEvent = useAnalytics({ page: 'Perform Task' });
 
   const goBack = () => {
     history.push('/dashboard/tasks'); // This function navigates back to the previous page
@@ -148,6 +150,7 @@ const PerformTask: React.FC = () => {
   };
 
   const saveAudioToAPI = async (e) => {
+    logEvent({ actions: 'submit task', properties: selectedTask.taskId });
     e.preventDefault();
     setSubmitted(true);
     if (useInput === true && selectedTask.taskType === 'RECORD_AUDIO') {
@@ -174,6 +177,7 @@ const PerformTask: React.FC = () => {
 
   const stopWork = async () => {
     try {
+      logEvent({ actions: 'cancel task', properties: selectedTask.taskId });
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
       const taskId = selectedTask.taskId;
       present(LOADER_MESSAGE);
