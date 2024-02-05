@@ -145,5 +145,14 @@
   "dcag.questionnaire.option.strongly_agree": "Strongly agree",
   "dcag.questionnaire.option.agree": "Agree",
   "dcag.questionnaire.option.disagree": "Disagree",
-  "dcag.questionnaire.option.strongly_disagree": "Strongly disagree"
+  "dcag.questionnaire.option.strongly_disagree": "Strongly disagree",
+  "dcag.home.taskHub.duration": "Duration",
+  "dcag.home.taskHub.rate": "Rate",
+  "dcag.tasks.limitReached":"You reached the daily earning limit of Rs.200! Please continue tomorrow!",
+  "dacg.tasks.pleaseWait":"Please wait...",
+  "dcag.report.taskType.General":"General",
+  "dcag.tasks.cancelAlert":"Are you sure, you want to cancel this task?",
+  "dcag.tasks.cancelAlert.Header":"Alert!",
+  "dcag.tasks.cancelAlert.No":"No",
+  "dcag.tasks.cancelAlert.Yes":"Yes"
 }
