@@ -131,7 +131,11 @@ const Tasks: React.FC = () => {
         setCompletedCount(result.completedTaskCount);
         setTotalEarned(result.totalEarning);
         setTodayEarnings(result.todayEarnings);
-        setShowLoading(false);
+        if( result.todayEarnings<200){
+          getAvailableTasks()
+        }else{
+          setShowLoading(false);
+        }
       })
       .catch((error) => {
         setIsError(true);
@@ -143,12 +147,6 @@ const Tasks: React.FC = () => {
     setShowLoading(true);
     getTaskSummary();
   }, []);
-
-  useEffect(() => {
-    if (todayEarnings < 200) {
-      getAvailableTasks();
-    }
-  }, [todayEarnings]);
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page

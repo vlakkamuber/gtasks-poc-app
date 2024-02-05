@@ -71,7 +71,7 @@ const Training: React.FC = () => {
               className="video-player"
               poster="assets/audio_to_audio.png"
               controls
-              style={{ height: '40vh', width: '100%', objectFit: 'cover' }}>
+              style={{ height: '100%', width: '100%', objectFit: 'cover' }}>
               <source src={doc.url} type="video/mp4" />
               Your browser does not support the video tag.
             </video>

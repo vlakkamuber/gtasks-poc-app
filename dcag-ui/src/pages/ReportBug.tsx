@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { Button, KIND } from 'baseui/button';
 import { Textarea } from 'baseui/textarea';
 import { Input } from 'baseui/input';
+import { Select } from "baseui/select";
 
 import apiService from './apiService';
 import { useTranslation } from 'react-i18next';
@@ -29,15 +30,45 @@ const ReportBug: React.FC = () => {
 
   const [description, setDescription] = useState('');
   const [summary, setSummary] = useState('');
+  const [taskType, setTaskType] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const taskTypes = [
+    {
+      id: 'RECORD_AUDIO',
+      label: 'Record Audio',
+      
+    },
+    {
+      id: 'RECEIPT_DIGITIZATION',
+      label: 'Receipt Digitization',
+    },
+    {
+      id: 'LOCALIZATION_QUALITY',
+      label: 'Language Quality',
+    },
+    {
+      id: 'IMAGE_LABELLING',
+      label: 'Image Labelling'
+    },
+    {
+      id: 'MENU_PHOTO_REVIEW',
+      label: 'Menu Photo Review'
+     
+    },
+    {
+      label: 'General',
+      id: 'GENERAL',
+    },
+  ];
 
   const saveIssue = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     let body = {
       description: description,
-      summary: summary
+      summary: summary,
+      taskType
     };
     apiService
       .saveIssue({ userId, body, user })
@@ -128,11 +159,30 @@ const ReportBug: React.FC = () => {
                 }
               }}
             />
+            <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
+              Task type
+            </IonLabel>
+            <Select
+              style={{ marginTop: '10px' }}
+              options={taskTypes}
+              value={taskType}
+              placeholder="Select task type"
+              onChange={(params) => setTaskType(params.value)}
+              overrides={{
+                Root: {
+                  style: () => ({
+                    marginTop: '10px',
+                    marginBottom: '10px'
+                  })
+                }
+              }}
+            />
+            
             <div
               style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', gap: '15px' }}>
               <Button
                 kind={KIND.primary}
-                disabled={submitted || !summary.length || !description.length}
+                disabled={submitted || !summary.length || !description.length || !taskType}
                 onClick={(e) => submitIssue(e)}>
                 Submit
               </Button>

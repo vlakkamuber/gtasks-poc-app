@@ -6,9 +6,26 @@ function generateQuestionId(description) {
   
   export const questionnaireData = {
     RECEIPT_DIGITIZATION: [
+      {
+        id: 1,
+        questionId:"RECEIPT_ID",
+        description: 'Receipt ID',
+        type: 'TEXT',
+        placeholder: 'Ex. knvlksdnvsdlknvs',
+        required: true,
+        options: '',
+      },
+      {
+        id: 2,
+        questionId:"RECEIPT_DATE",
+        description: 'Receipt date',
+        type: 'DATE',
+        required: true,
+        options: '',
+      },
           {
             questionId: "IS_THE_RECIEPT_AVAILABLE",  
-            id: 1,
+            id: 3,
             description: 'Is the receipt readable or not readable?',
             type: 'RADIO',
             required: true,
@@ -16,23 +33,6 @@ function generateQuestionId(description) {
               { value: 'yes', label: 'Readable' },
               { value: 'no', label: 'Non-readable' },
             ],
-          },
-          {
-            id: 2,
-            questionId:"RECEIPT_DATE",
-            description: 'Receipt date',
-            type: 'DATE',
-            required: true,
-            options: '',
-          },
-          {
-            id: 3,
-            questionId:"RECEIPT_ID",
-            description: 'Receipt ID',
-            type: 'TEXT',
-            placeholder: 'Ex. knvlksdnvsdlknvs',
-            required: true,
-            options: '',
           },
           {
             id: 4,
@@ -48,7 +48,7 @@ function generateQuestionId(description) {
               id: 1,
               description: 'The language on this screen is clear and easily understood.',
               type: 'RADIO',
-              required: false,
+              required: true,
               options: [
                 { value: 'stronglyAgree', label: 'Strongly Agree' },
                 { value: 'agree', label: 'Agree' },

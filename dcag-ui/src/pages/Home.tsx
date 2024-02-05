@@ -29,49 +29,63 @@ const taskCategories = [
     imageSrc: 'assets/text_to_audio.png',
     title: 'Record Audio',
     subtitle: 'Read text, validate pronunciation and record correct audio',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'DESCRIBE_IMAGE',
     imageSrc: 'assets/audio_to_audio.png',
     title: 'Describe Image',
     subtitle: 'View the location image and provide description about the image.',
-    show: false
+    show: false,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'UPLOAD_IMAGE',
     imageSrc: 'assets/text_to_audio.png',
     title: 'Upload Image',
     subtitle: 'upload a location image and provide description about the image.',
-    show: false
+    show: false,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'RECEIPT_DIGITIZATION',
     imageSrc: 'assets/text_to_image.png',
     title: 'Receipt Digitization',
     subtitle: 'View the receipt image and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'LOCALIZATION_QUALITY',
     imageSrc: 'assets/audio_to_audio.png',
     title: 'Localization Quality',
     subtitle: 'View the receipt image and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'IMAGE_LABELLING',
     imageSrc: 'assets/audio_to_audio.png',
     title: 'Image Labelling',
     subtitle: 'View the image  and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'MENU_PHOTO_REVIEW',
     imageSrc: 'assets/text_to_image.png',
     title: 'Menu Photo Review',
     subtitle: 'View the image  and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   }
 ];
 const Home: React.FC = () => {
@@ -137,7 +151,7 @@ const Home: React.FC = () => {
                   })
                 }
               }}>
-              <LabelSmall>Help</LabelSmall>
+              {/* <LabelSmall>Help</LabelSmall> */}
             </Button>
           </Block>
         </div>
