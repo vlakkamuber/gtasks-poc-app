@@ -20,29 +20,42 @@ import { arrowBack } from 'ionicons/icons';
 import { ListItem, ListItemLabel } from 'baseui/list';
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
-import apiService from "./apiService"
+import apiService from './apiService';
+import useAnalytics from '../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../constants/constant';
 const Training: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { user } = useUserAuth();
-  const [trainingDoc,setTrainingDoc] = useState(null)
+  const [trainingDoc, setTrainingDoc] = useState(null);
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.training });
+  useEffect(() => {
+    logEvent({ actions: '' });
+  }, []);
   const goBack = () => {
+    logEvent({ actions: 'click_go_back' });
     history.goBack(); // This function navigates back to the previous page
   };
 
-  const getTrainingsDoc = async ()=>{
-    let data = await apiService.getTrainingsDoc({user});
-    setTrainingDoc(data)
-  }
+  const getTrainingsDoc = async () => {
+    let data = await apiService.getTrainingsDoc({ user });
+    setTrainingDoc(data);
+  };
   const videoRef = useRef(null);
-  useEffect(()=>{
+  useEffect(() => {
     getTrainingsDoc();
-  },[])
+  }, []);
 
   const playVideo = () => {
     if (videoRef.current) {
       videoRef.current.play();
     }
+  };
+  const onPlay = () => {
+    logEvent({ actions: 'click_video_play' });
+  };
+  const onPause = () => {
+    logEvent({ actions: 'click_video_pause' });
   };
   return (
     <IonPage>
@@ -55,32 +68,35 @@ const Training: React.FC = () => {
           <IonTitle>{t(`dcag.home.training.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      {trainingDoc && <IonContent fullscreen>
-        <div style={{ padding: '10px' }}>
-          <h2 style={{ marginLeft: '16px' }}>{t(`dcag.home.training.page.title`)}</h2>
-          <ListItem>
-            <ListItemLabel description={t(`dcag.home.training.page.subtitle`)}>
-              <h2>{t(`dcag.home.training.page.required`)}</h2>
-            </ListItemLabel>
-          </ListItem>
-          {trainingDoc.docs.map((doc)=>{
-            return(
-              <IonCard className="rounded-card">
-            <video
-              ref={videoRef}
-              className="video-player"
-              poster="assets/audio_to_audio.png"
-              controls
-              style={{ height: '100%', width: '100%', objectFit: 'cover' }}>
-              <source src={doc.url} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </IonCard>
-            )
-          })}
-          
-        </div>
-      </IonContent>}
+      {trainingDoc && (
+        <IonContent fullscreen>
+          <div style={{ padding: '10px' }}>
+            <h2 style={{ marginLeft: '16px' }}>{t(`dcag.home.training.page.title`)}</h2>
+            <ListItem>
+              <ListItemLabel description={t(`dcag.home.training.page.subtitle`)}>
+                <h2>{t(`dcag.home.training.page.required`)}</h2>
+              </ListItemLabel>
+            </ListItem>
+            {trainingDoc.docs.map((doc) => {
+              return (
+                <IonCard className="rounded-card">
+                  <video
+                    ref={videoRef}
+                    className="video-player"
+                    poster="assets/audio_to_audio.png"
+                    controls
+                    onPlay={onPlay}
+                    onPause={onPause}
+                    style={{ height: '100%', width: '100%', objectFit: 'cover' }}>
+                    <source src={doc.url} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </IonCard>
+              );
+            })}
+          </div>
+        </IonContent>
+      )}
     </IonPage>
   );
 };
