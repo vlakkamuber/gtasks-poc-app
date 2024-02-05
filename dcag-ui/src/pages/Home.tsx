@@ -1,14 +1,6 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonButton
 } from '@ionic/react';
 
 import { useHistory } from 'react-router-dom';
@@ -17,10 +9,10 @@ import { useCategory } from '../context/TaskCategoryContext';
 import { ArrowRight, ArrowLeft } from 'baseui/icon';
 
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
-import { Card, StyledBody, StyledAction } from 'baseui/card';
+import { Card, StyledBody,StyledThumbnail } from 'baseui/card';
 import { Block } from 'baseui/block';
 import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
-import { StyledDivider } from 'baseui/divider';
+
 import useAnalytics from '../hooks/useAnanlytics';
 
 const taskCategories = [
@@ -116,13 +108,16 @@ const Home: React.FC = () => {
             className="clickable-cursor task-category-wrapper">
             <Card
               overrides={{ Root: { style: { marginBottom: '32px' } } }}
-              // headerImage={category.imageSrc}
-              title={t(`dcag.home.taskHub.${category.id}.title`)}>
-              <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
-              {/* <div>
+              title={t(`dcag.home.taskHub.${category.id}.title`)}
+            >
+            <StyledThumbnail
+              src={category.imageSrc}
+            />
+            <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
+            <div>
                 <p>Rate: ${category.rate}</p>
                 <p>Duration: {category.duration}</p>
-              </div> */}
+            </div>
             </Card>
           </div>
         )
