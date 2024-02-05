@@ -30,7 +30,8 @@ import {
   TEXT_TO_AUDIO_TASK_TYPE,
   taskTypeMapperRoute,
   taskCategoriesToShow,
-  TasksOrder
+  TasksOrder,
+  TASK_RATE
 } from '../constants/constant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
@@ -131,9 +132,9 @@ const Tasks: React.FC = () => {
         setCompletedCount(result.completedTaskCount);
         setTotalEarned(result.totalEarning);
         setTodayEarnings(result.todayEarnings);
-        if( result.todayEarnings<200){
-          getAvailableTasks()
-        }else{
+        if (result.todayEarnings < 200) {
+          getAvailableTasks();
+        } else {
           setShowLoading(false);
         }
       })
@@ -347,7 +348,7 @@ const Tasks: React.FC = () => {
                                     )}
                                     {showPayout && (
                                       <p>
-                                        {t(`dcag.tasks.payouts.label`)}: ${task.price}
+                                        {t(`dcag.tasks.payouts.label`)}: ₹{TASK_RATE[key]}
                                       </p>
                                     )}
                                   </IonLabel>

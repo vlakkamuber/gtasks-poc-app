@@ -1,7 +1,4 @@
-import {
-  IonContent,
-  IonPage,
-} from '@ionic/react';
+import { IonContent, IonPage } from '@ionic/react';
 
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -9,11 +6,12 @@ import { useCategory } from '../context/TaskCategoryContext';
 import { ArrowRight, ArrowLeft } from 'baseui/icon';
 
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
-import { Card, StyledBody,StyledThumbnail } from 'baseui/card';
+import { Card, StyledBody, StyledThumbnail } from 'baseui/card';
 import { Block } from 'baseui/block';
 import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
 
 import useAnalytics from '../hooks/useAnanlytics';
+import { TASK_RATE } from '../constants/constant';
 
 const taskCategories = [
   {
@@ -22,8 +20,8 @@ const taskCategories = [
     title: 'Record Audio',
     subtitle: 'Read text, validate pronunciation and record correct audio',
     show: true,
-    rate: 0.8,
-    duration: '30 seconds',
+    rate: TASK_RATE['RECORD_AUDIO'],
+    duration: '30 seconds'
   },
   {
     id: 'DESCRIBE_IMAGE',
@@ -31,8 +29,8 @@ const taskCategories = [
     title: 'Describe Image',
     subtitle: 'View the location image and provide description about the image.',
     show: false,
-    rate: 2, 
-    duration: '15 minutes',
+    rate: TASK_RATE['DESCRIBE_IMAGE'],
+    duration: '15 minutes'
   },
   {
     id: 'UPLOAD_IMAGE',
@@ -40,8 +38,8 @@ const taskCategories = [
     title: 'Upload Image',
     subtitle: 'upload a location image and provide description about the image.',
     show: false,
-    rate: 2, 
-    duration: '15 minutes',
+    rate: TASK_RATE['UPLOAD_IMAGE'],
+    duration: '15 minutes'
   },
   {
     id: 'RECEIPT_DIGITIZATION',
@@ -49,8 +47,8 @@ const taskCategories = [
     title: 'Receipt Digitization',
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true,
-    rate: 1.3,
-    duration: '45 seconds',
+    rate: TASK_RATE['RECEIPT_DIGITIZATION'],
+    duration: '45 seconds'
   },
   {
     id: 'LOCALIZATION_QUALITY',
@@ -58,8 +56,8 @@ const taskCategories = [
     title: 'Localization Quality',
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true,
-    rate: 1.7,
-    duration: '1 minute',
+    rate: TASK_RATE['LOCALIZATION_QUALITY'],
+    duration: '1 minute'
   },
   {
     id: 'IMAGE_LABELLING',
@@ -67,8 +65,8 @@ const taskCategories = [
     title: 'Image Labelling',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
-    rate: 0.6,
-    duration: '20 seconds',
+    rate: TASK_RATE['IMAGE_LABELLING'],
+    duration: '20 seconds'
   },
   {
     id: 'MENU_PHOTO_REVIEW',
@@ -76,8 +74,8 @@ const taskCategories = [
     title: 'Menu Photo Review',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
-    rate: 0.6,
-    duration: '20 seconds',
+    rate: TASK_RATE['MENU_PHOTO_REVIEW'],
+    duration: '20 seconds'
   }
 ];
 const Home: React.FC = () => {
@@ -108,16 +106,13 @@ const Home: React.FC = () => {
             className="clickable-cursor task-category-wrapper">
             <Card
               overrides={{ Root: { style: { marginBottom: '32px' } } }}
-              title={t(`dcag.home.taskHub.${category.id}.title`)}
-            >
-            <StyledThumbnail
-              src={category.imageSrc}
-            />
-            <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
-            <div>
-                <p style={{marginBottom: '0px'}}>Rate: ₹{category.rate}/task</p>
-                <p style={{marginTop: '0px'}}>Duration: {category.duration}/task</p>
-            </div>
+              title={t(`dcag.home.taskHub.${category.id}.title`)}>
+              <StyledThumbnail src={category.imageSrc} />
+              <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
+              <div>
+                <p style={{ marginBottom: '0px' }}>Rate: ₹{category.rate}</p>
+                <p style={{ marginTop: '0px' }}>Duration: {category.duration}</p>
+              </div>
             </Card>
           </div>
         )
