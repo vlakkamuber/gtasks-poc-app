@@ -30,12 +30,17 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
 import useAnalytics from '../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../constants/constant';
+import { useEffect } from 'react';
 const Account: React.FC = () => {
   const { t } = useTranslation();
   const { logOut: firebaseLogOut } = useUserAuth();
-  const logEvent = useAnalytics({ page: 'account' });
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.account });
+  useEffect(() => {
+    logEvent({ actions: '' });
+  }, []);
   const logOut = async () => {
-    logEvent({ actions: 'logout' });
+    logEvent({ actions: 'click_logout' });
     await firebaseLogOut();
     history.push('/home');
     localStorage.clear();
@@ -43,9 +48,11 @@ const Account: React.FC = () => {
   };
   const history = useHistory();
   const goBack = () => {
+    logEvent({ actions: 'click_go_back' });
     history.goBack(); // This function navigates back to the previous page
   };
   const goToReportBug = () => {
+    logEvent({ actions: 'click_report_bug' });
     history.push('/dashboard/issue');
   };
   return (
@@ -96,7 +103,13 @@ const Account: React.FC = () => {
           <IonIcon icon={settings} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.appSettings`)}</IonLabel>
           </IonItem> */}
-          <IonItem button className="no-border clickable-cursor" routerLink="/dashboard/training">
+          <IonItem
+            button
+            className="no-border clickable-cursor"
+            routerLink="/dashboard/training"
+            onClick={() => {
+              logEvent({ actions: 'click_training_modules' });
+            }}>
             <IonIcon icon={school} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.trainingmodule`)}</IonLabel>
           </IonItem>
