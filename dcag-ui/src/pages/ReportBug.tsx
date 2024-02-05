@@ -78,7 +78,7 @@ const ReportBug: React.FC = () => {
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
-          //history.push('/dashboard/tasks');
+          history.push('/dashboard/tasks');
         }, 2000);
       })
       .catch((error) => {
