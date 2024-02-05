@@ -7,7 +7,7 @@ interface OptionsType {
 }
 
 const getHeaders: (options?: OptionsType) => Record<string, string> = ({ user } = {}) => {
-  const token = user.accessToken;
+  const token = user?.accessToken;
 
   return {
     'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endPoint}`, {
       method: 'PUT',
       headers,
-      body:JSON.stringify({status:'CANCELLED'})
+      body: JSON.stringify({ status: 'CANCELLED' })
     });
     return response.text();
   },
@@ -242,7 +242,7 @@ const apiService = {
     });
     return response;
   },
-  async getTrainingsDoc({user}:{user:any}){
+  async getTrainingsDoc({ user }: { user: any }) {
     const endpoint = `docs?type=training`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });

@@ -11,7 +11,8 @@ import { Block } from 'baseui/block';
 import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
 
 import useAnalytics from '../hooks/useAnanlytics';
-import { TASK_RATE } from '../constants/constant';
+import { ANALYTICS_PAGE, TASK_RATE } from '../constants/constant';
+import { useEffect } from 'react';
 
 const taskCategories = [
   {
@@ -81,12 +82,19 @@ const taskCategories = [
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const logEvent = useAnalytics({ page: 'Home' });
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
 
   const { selectedCategory, setSelectedCategory } = useCategory();
 
+  useEffect(() => {
+    logEvent({ actions: '' });
+  }, []);
+
   const handleTaskCategory = (category) => {
-    logEvent({ actions: 'View tasks', properties: category });
+    logEvent({
+      actions: category === 'ALL' ? 'click_view_all_tasks' : 'click_banner',
+      properties: category
+    });
     // Set the selected category in localStorage
     localStorage.setItem('selectedCategory', category);
     setSelectedCategory(category);
@@ -94,6 +102,7 @@ const Home: React.FC = () => {
   };
 
   const goBack = () => {
+    logEvent({ actions: 'click_go_back' });
     history.goBack(); // This function navigates back to the previous page
   };
   const renderTaskCards = () => {

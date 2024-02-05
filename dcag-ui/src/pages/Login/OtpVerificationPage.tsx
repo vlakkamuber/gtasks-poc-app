@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { mapTeluguDigitsToNumeric } from '../../utils/mapTeluguDigitsToNumeric';
-import { LOADER_MESSAGE } from '../../constants/constant';
+import { ANALYTICS_PAGE, LOADER_MESSAGE } from '../../constants/constant';
 import { Block } from 'baseui/block';
 import { Button, KIND, SHAPE } from 'baseui/button';
 import NavigationBar from './NavigationBar';
@@ -19,7 +19,7 @@ type Props = {
 const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const { t } = useTranslation();
-  const logEvent = useAnalytics({ page: 'login' });
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.login });
   const inputRefs = [
     useRef(null),
     useRef(null),
@@ -72,8 +72,9 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
       try {
         const otpnumeric = mapTeluguDigitsToNumeric(otp.join(''));
         present(LOADER_MESSAGE);
+        logEvent({ actions: 'otp_entered' });
         let result = await sendOtpResponse.confirm(otpnumeric);
-        logEvent({ actions: 'login' });
+        logEvent({ actions: 'login_success' });
         if (!isUserExist) {
           createUserInDB(result.user.uid, result.user.phoneNumber);
         } else {
@@ -81,11 +82,17 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
           history.push('/dashboard/home');
         }
       } catch (err) {
+        logEvent({ actions: 'login_failed', properties: err.message });
         dismiss();
         setError(err.message);
       }
     }
     verify();
+  };
+
+  const goBack = () => {
+    logEvent({ actions: 'click_go_back', properties: 'otp_page' });
+    history.push('/login');
   };
 
   return (
@@ -112,7 +119,7 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
       </Button>
       {error && <Toast kind={TOAST_KIND.negative}>{error}</Toast>}
       <NavigationBar
-        onClickPrevious={() => history.push('/login')}
+        onClickPrevious={goBack}
         onClickNext={verifyOtp}
         isNextDisabled={otp.every((digit) => digit === '')}
       />

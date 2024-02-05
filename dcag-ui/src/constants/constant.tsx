@@ -64,3 +64,12 @@ export const TASK_RATE = {
   IMAGE_LABELLING: 0.6,
   MENU_PHOTO_REVIEW: 0.6
 };
+
+export const ANALYTICS_PAGE = {
+  tasks: 'tasks_page',
+  login: 'login_page',
+  home: 'home_page',
+  training: 'training_page',
+  account: 'account_page',
+  report_bug: 'report_bug_page'
+};
