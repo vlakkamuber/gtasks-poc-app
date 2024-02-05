@@ -99,8 +99,10 @@ public class UserService {
 
         if(userRepository.findById(userId).isPresent()) {
 
-            UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId)).
-                    description(userIssueDTO.description()).summary(userIssueDTO.summary()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+            UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId))
+                    .taskType(userIssueDTO.taskType()).description(userIssueDTO.description())
+                    .summary(userIssueDTO.summary())
+                    .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
 
             log.info("User issue submitted - {}",userId);
 

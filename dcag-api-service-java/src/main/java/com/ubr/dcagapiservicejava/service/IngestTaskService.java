@@ -50,7 +50,7 @@ public class IngestTaskService {
                 while ((nextRecord = csvReader.readNext()) != null) {
 
                     Task task = new Task().name(nextRecord[0]).input(nextRecord[1])
-                            .city(nextRecord[2]).taskType(ingestTaskDTO.taskType())
+                            .city(nextRecord[2].toUpperCase()).taskType(ingestTaskDTO.taskType())
                             .taskCategory(TaskCategory.valueOf(ingestTaskDTO.taskType().name()))
                             .maxNoOfUsers(TASK_MAX_NO_USER)
                             .currency(TASK_CURRENCY)
