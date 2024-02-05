@@ -10,8 +10,8 @@ type logEventArgsType = { actions: string; properties?: string; otherDetails?: s
 const useAnalytics = ({ page }: useAnalyticsArgsType) => {
   const { user } = useUserAuth();
   let userId = JSON.parse(localStorage.getItem('loggedInUser'));
-  const sessionId = 'test';
-  const city = 'test';
+  const sessionId = '';
+  const city = '';
   const logEvent = async ({ actions, properties, otherDetails }: logEventArgsType) => {
     await apiService.recordAnalytics(userId, user, {
       sessionId,
