@@ -3,7 +3,7 @@ import { IonContent, IonPage, IonImg, IonToast, useIonLoading, IonAlert } from '
 import Question from './components/Questions';
 import { Block } from 'baseui/block';
 import { ArrowLeft } from 'baseui/icon';
-import { LabelMedium } from 'baseui/typography';
+import { LabelMedium, ParagraphSmall } from 'baseui/typography';
 import { questionnaireData } from './questions';
 import { useTranslation } from 'react-i18next';
 import { HeadingXSmall, LabelSmall } from 'baseui/typography';
@@ -182,7 +182,6 @@ export default function QuestionnaireTaskCategory() {
           <>
             <div className="p-16">
               <div className="fixed-header-buffer"></div>
-
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
               <HeadingXSmall>{selectedTask.taskName}</HeadingXSmall>
               {showPayout && (
@@ -198,7 +197,20 @@ export default function QuestionnaireTaskCategory() {
               <Block className="receipt-container">
                 <ZoomedImage imageUrl={selectedTask.inputUrl}></ZoomedImage>
               </Block>
-
+              <ParagraphSmall>
+                Please select one of the following options for each question below to specify the
+                language quality of this screen
+                <Block display="flex">
+                  <ul>
+                    <li> Strongly agree</li>
+                    <li> Agree</li>
+                  </ul>
+                  <ul>
+                    <li> Disagree</li>
+                    <li> Strongly disagree</li>
+                  </ul>
+                </Block>
+              </ParagraphSmall>
               <HeadingXSmall>Task questionnaire</HeadingXSmall>
               {questions.map((item) => (
                 <Question
