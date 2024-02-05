@@ -198,16 +198,15 @@ export default function QuestionnaireTaskCategory() {
                 <ZoomedImage imageUrl={selectedTask.inputUrl}></ZoomedImage>
               </Block>
               <ParagraphSmall>
-                Please select one of the following options for each question below to specify the
-                language quality of this screen
+                {t('dcag.questionnaire.instruction')}
                 <Block display="flex">
                   <ul>
-                    <li> Strongly agree</li>
-                    <li> Agree</li>
+                    <li>{t('dcag.questionnaire.option.strongly_agree')}</li>
+                    <li>{t('dcag.questionnaire.option.agree')}</li>
                   </ul>
                   <ul>
-                    <li> Disagree</li>
-                    <li> Strongly disagree</li>
+                    <li>{t('dcag.questionnaire.option.disagree')}</li>
+                    <li>{t('dcag.questionnaire.option.strongly_disagree')}</li>
                   </ul>
                 </Block>
               </ParagraphSmall>
