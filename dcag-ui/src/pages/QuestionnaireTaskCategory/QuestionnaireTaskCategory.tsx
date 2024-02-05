@@ -13,10 +13,11 @@ import { useStyletron } from 'baseui';
 import apiService from '../apiService';
 import { useHistory, useParams } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
-import { LOADER_MESSAGE } from '../../constants/constant';
+import { ANALYTICS_PAGE, LOADER_MESSAGE } from '../../constants/constant';
 import LoadingComponent from '../../components/Loader';
 import ZoomedImage from './components/ZoomedImage';
 import { showPayout } from '../../utils/Settings';
+import useAnalytics from '../../hooks/useAnanlytics';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -30,6 +31,7 @@ export default function QuestionnaireTaskCategory() {
   const [showLoading, setShowLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [present, dismiss] = useIonLoading();
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const getTaskDetail = async () => {
     let taskId = params.id;
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -88,7 +90,20 @@ export default function QuestionnaireTaskCategory() {
     getTaskDetail();
   }, []);
 
+  useEffect(() => {
+    logEvent({
+      actions: '',
+      properties: selectedTask?.taskId,
+      otherDetails: selectedTask?.taskType
+    });
+  }, []);
+
   const goBack = () => {
+    logEvent({
+      actions: 'click_go_back',
+      properties: selectedTask?.taskId,
+      otherDetails: selectedTask?.taskType
+    });
     history.goBack(); // This function navigates back to the previous page
   };
 
@@ -114,6 +129,11 @@ export default function QuestionnaireTaskCategory() {
   };
 
   const handleSubmit = (e) => {
+    logEvent({
+      actions: 'click_submit',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
     e.preventDefault();
     console.log(formState);
     const formDataForSubmission = Object.keys(formState).map((questionId) => ({
@@ -123,8 +143,29 @@ export default function QuestionnaireTaskCategory() {
     assignTaskToCompleted(selectedTask.taskId, formDataForSubmission);
   };
 
+  const onClickCancel = () => {
+    logEvent({
+      actions: 'click_start_cancel',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
+  };
+
+  const closeCancelModal = () => {
+    logEvent({
+      actions: 'click_abort_cancel',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
+  };
+
   const handleCancel = async () => {
     try {
+      logEvent({
+        actions: 'click_confirm_cancel',
+        properties: selectedTask.taskId,
+        otherDetails: selectedTask.taskType
+      });
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
       const taskId = selectedTask.taskId;
       present(LOADER_MESSAGE);
@@ -144,6 +185,14 @@ export default function QuestionnaireTaskCategory() {
       }
     }
     return true;
+  };
+
+  const handleLogEvent = (actions, otherDetails) => {
+    logEvent({
+      actions,
+      properties: selectedTask.taskId,
+      otherDetails: JSON.stringify({ ...otherDetails, taskType: selectedTask.taskType })
+    });
   };
 
   return (
@@ -220,6 +269,7 @@ export default function QuestionnaireTaskCategory() {
                     setFormState((state) => ({ ...state, [questionId]: value }));
                   }}
                   isCompleted={selectedTask.status === 'COMPLETED' ? true : false}
+                  logEvent={handleLogEvent}
                 />
               ))}
               {selectedTask.status !== 'COMPLETED' && (
@@ -241,7 +291,8 @@ export default function QuestionnaireTaskCategory() {
                       <Button
                         kind={KIND.tertiary}
                         id="cancel-task"
-                        colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
+                        colors={{ color: '#E11900', backgroundColor: 'transparent' }}
+                        onClick={onClickCancel}>
                         {t(`dcag.home.btn.cancel.label`)}
                       </Button>
                       <IonAlert
@@ -251,7 +302,8 @@ export default function QuestionnaireTaskCategory() {
                         buttons={[
                           {
                             text: 'No',
-                            role: 'cancel'
+                            role: 'cancel',
+                            handler: closeCancelModal
                           },
                           {
                             text: 'Yes',

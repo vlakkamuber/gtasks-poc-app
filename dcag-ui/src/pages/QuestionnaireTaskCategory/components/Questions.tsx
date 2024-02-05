@@ -11,22 +11,33 @@ interface QuestionProps {
   question: {
     id: string;
     description: string;
-    questionId:string;
+    questionId: string;
     type: string;
     placeholder?: string;
     required: boolean;
     options: [{ label: string; value: string }];
   };
   value: string; // Ensure the correct type for value
-  onChange: (questionId: string, value: string) => void; // Ensure the correct 
+  onChange: (questionId: string, value: string) => void; // Ensure the correct
   isCompleted: boolean;
+  logEvent?: (action: string) => void;
 }
 
-export default function Question({ question, value,isCompleted, onChange }: QuestionProps): JSX.Element {
-  const { id, description, placeholder = '', type, required, options,questionId } = question;
+export default function Question({
+  question,
+  value,
+  isCompleted,
+  onChange,
+  logEvent
+}: QuestionProps): JSX.Element {
+  const { id, description, placeholder = '', type, required, options, questionId } = question;
   const [css, theme] = useStyletron();
   const cardRef = useRef();
   const isDisabled = isCompleted;
+  const handleRadioClick = (e) => {
+    logEvent('click_radio_button', { questionId, value: e.currentTarget.value });
+    onChange(questionId, e.currentTarget.value);
+  };
   return (
     <Card overrides={{ Root: { style: { marginTop: theme.sizing.scale400 } } }}>
       <div ref={cardRef.current}>
@@ -41,7 +52,7 @@ export default function Question({ question, value,isCompleted, onChange }: Ques
               value={value}
               disabled={isDisabled}
               required={required}
-              onChange={(e) => onChange(questionId, e.currentTarget.value)}
+              onChange={handleRadioClick}
               name={questionId}
               align={ALIGN.horizontal}>
               {options.map((option) => (
@@ -57,11 +68,17 @@ export default function Question({ question, value,isCompleted, onChange }: Ques
               onChange={(e) => {
                 onChange(questionId, e.target.value);
               }}
-              disabled={isDisabled} 
+              disabled={isDisabled}
               value={value}
             />
           ) : type === 'DATE' ? (
-            <DatePicker required={required} mountNode={cardRef.current} value={value? new Date(value) : new Date()} onChange={({ date }) => onChange(questionId, date)} disabled={isDisabled} />
+            <DatePicker
+              required={required}
+              mountNode={cardRef.current}
+              value={value ? new Date(value) : new Date()}
+              onChange={({ date }) => onChange(questionId, date)}
+              disabled={isDisabled}
+            />
           ) : null}
         </FormControl>
       </div>
