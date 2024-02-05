@@ -105,7 +105,7 @@ function generateQuestionId(description) {
           ],
         },
         ],
-        IMAGE_LABELLING: [
+        MENU_PHOTO_REVIEW: [
           {
             id: 1,
             description: 'Is the food item clearly visible in the photo?',
@@ -157,7 +157,7 @@ function generateQuestionId(description) {
             ],
           },
         ],
-        MENU_PHOTO_REVIEW: [
+        IMAGE_LABELLING: [
         {
           id: 1,
           description: 'Is Packaging present?',
