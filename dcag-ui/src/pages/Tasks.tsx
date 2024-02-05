@@ -31,7 +31,8 @@ import {
   taskTypeMapperRoute,
   taskCategoriesToShow,
   TasksOrder,
-  TASK_RATE
+  TASK_RATE,
+  ANALYTICS_PAGE
 } from '../constants/constant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
@@ -57,7 +58,11 @@ const Tasks: React.FC = () => {
   const [finalTasks, setFinalTasks] = useState([]);
   const [todayEarnings, setTodayEarnings] = useState(null);
 
-  const logEvent = useAnalytics({ page: 'Task List' });
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
+
+  useEffect(() => {
+    logEvent({ actions: '' });
+  }, []);
 
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -168,7 +173,7 @@ const Tasks: React.FC = () => {
 
   const goToPerformTask = async (e, task) => {
     logEvent({
-      actions: 'Start work',
+      actions: 'click_start_work',
       properties: task.id
     });
     assignTask(task);
@@ -176,7 +181,7 @@ const Tasks: React.FC = () => {
 
   const goToPerformResumeWork = (e, task) => {
     logEvent({
-      actions: 'Resume work',
+      actions: 'click_resume_work',
       properties: task.id
     });
     history.push(taskTypeMapperRoute[task.taskType] + task.taskId);
@@ -208,6 +213,11 @@ const Tasks: React.FC = () => {
       return accumulator;
     }, []);
     return finalTaskList;
+  };
+
+  const handleTabClick = (e) => {
+    logEvent({ actions: 'click_tab', properties: e.detail.value });
+    setSelectedSegment(e.detail.value);
   };
 
   const loadMore = async (key) => {
@@ -273,7 +283,7 @@ const Tasks: React.FC = () => {
           color="default"
           value={selectedSegment}
           className="tasks-tab"
-          onIonChange={(e) => setSelectedSegment(e.detail.value)}>
+          onIonChange={handleTabClick}>
           <IonSegmentButton
             value="available_task"
             className={
