@@ -1,6 +1,7 @@
 package com.ubr.dcagapiservicejava.controller;
 
 import com.ubr.dcagapiservicejava.dto.IngestTaskDTO;
+import com.ubr.dcagapiservicejava.dto.IngestTaskResponse;
 import com.ubr.dcagapiservicejava.service.IngestTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,9 @@ public class TaskIngestionController {
     @PostMapping(value = "/ingest-tasks",consumes = "application/json")
     ResponseEntity<?> ingestTasks(@RequestBody IngestTaskDTO ingestTaskDTO) throws IOException {
 
-        ingestTaskService.ingestTasks(ingestTaskDTO);
+        IngestTaskResponse ingestTaskResponse = ingestTaskService.ingestTasks(ingestTaskDTO);
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.ok(ingestTaskResponse);
     }
 
 }

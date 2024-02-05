@@ -207,31 +207,31 @@ public class UserTaskService {
 
         log.info("Updating user task status for task - {}", taskId);
         Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
         TaskStatus status = null;
         long completedCount = 0;
         long totalCount = 0;
-        if (userTaskList.isPresent()) {
-
+        Task task = null;
+        if (userTaskList.isPresent() && taskOptional.isPresent()) {
             totalCount = userTaskList.get().size();
+            task = taskOptional.get();
 
             completedCount = userTaskList.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
             if (completedCount == 0) {
                 status = TaskStatus.IN_PROGRESS;
-            } else if (totalCount == completedCount) {
+            } else if (task.maxNoOfUsers() == completedCount) {
                 status = TaskStatus.COMPLETED;
             } else {
                 status = TaskStatus.COMPLETED_PARTIALLY;
             }
         }
-        Optional<Task> taskOptional = taskRepository.findById(taskId);
-        if (taskOptional.isPresent()) {
-            Task task = taskOptional.get();
+        if (task != null) {
             task.status(status);
             if (totalCount == 1 && completedCount == 0) {
                 task.startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
             }
-            if (completedCount > taskOptional.get().maxNoOfUsers()) {
+            if (completedCount >= taskOptional.get().maxNoOfUsers()) {
                 task.isAvailable(false);
             }
             taskRepository.save(task);

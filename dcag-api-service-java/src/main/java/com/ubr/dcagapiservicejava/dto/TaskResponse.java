@@ -21,6 +21,7 @@ public class TaskResponse {
     private String name;
     private TaskType taskType;
     private TaskCategory taskCategory;
+    private String city;
     private String input;
     private TaskStatus status;
     private long  maxNoOfUsers;

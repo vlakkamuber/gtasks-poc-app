@@ -2,11 +2,13 @@ package com.ubr.dcagapiservicejava.service;
 
 
 import com.ubr.dcagapiservicejava.domain.Task;
+import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
+import com.ubr.dcagapiservicejava.repository.UserRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
@@ -16,14 +18,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.util.*;
+
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
 public class TaskService {
 
+
+    Map<String,List<String>> userCityTaskMap = new HashMap<>();
+
     public final static Integer MILLISECOND = 1000;
+
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -35,6 +46,18 @@ public class TaskService {
     private GCPUtils gcpUtils;
     @Value("${task-available-limit}")
     Integer limit;
+
+
+    @PostConstruct
+    public void init(){
+        userCityTaskMap.put("HYDERABAD",List.of("HYDERABAD"));
+        userCityTaskMap.put("DELHI",List.of("DELHI","FARIDABAD","JALANDHAR"));
+        userCityTaskMap.put("MUMBAI",List.of("MUMBAI","NAGPUR"));
+        userCityTaskMap.put("PUNE",List.of("PUNE","NAGPUR"));
+        userCityTaskMap.put("CHENNAI",List.of("CHENNAI","COIMBATORE"));
+        userCityTaskMap.put("BENGALURU",List.of("BENGALURU","MYSORE","UDUPI"));
+
+    }
 
     GeometryFactory factory = new GeometryFactory();
 
@@ -75,6 +98,7 @@ public class TaskService {
                 .id(task.id())
                 .name(task.name())
                 .taskType(task.taskType())
+                .city(task.city())
                 .taskCategory(task.taskCategory())
                 .input(task.input())
                 .status(task.status())
@@ -142,7 +166,14 @@ public class TaskService {
 
     public List<TaskResponse> findAvailableTasks(Boolean available, String userId, TaskType type) {
 
-        return taskRepository.findAvailableTasks(available,userId, type, limit).stream()
+        Optional<User> user = userRepository.findById(userId);
+
+        List<String> cities = new ArrayList<>();
+
+        if(user.isPresent()){
+            cities = userCityTaskMap.get(user.get().cityName());
+        }
+        return taskRepository.findAvailableTasks(available,userId, type, limit, cities).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
                 .collect(toList());

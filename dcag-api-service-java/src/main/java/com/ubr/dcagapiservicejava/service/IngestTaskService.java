@@ -1,74 +1,58 @@
 package com.ubr.dcagapiservicejava.service;
 
-
-import com.google.cloud.storage.Blob;
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
-import com.ubr.dcagapiservicejava.domain.Task;
-import com.ubr.dcagapiservicejava.domain.enums.TaskCategory;
-import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
+import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.dto.IngestTaskDTO;
+import com.ubr.dcagapiservicejava.dto.IngestTaskResponse;
+import com.ubr.dcagapiservicejava.parser.ImageLabellingTaskParser;
+import com.ubr.dcagapiservicejava.parser.RecordAudioTaskParser;
+import com.ubr.dcagapiservicejava.parser.TaskParser;
+import com.ubr.dcagapiservicejava.parser.TaskParserResponse;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
-import com.ubr.dcagapiservicejava.utils.DcagUtils;
-import com.ubr.dcagapiservicejava.utils.GCPUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
-import java.nio.channels.Channels;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @Service
 public class IngestTaskService {
-
-    private final String TASK_CURRENCY = "INR";
-
-    private final Double TASK_PRICE = 0.5;
-
-    private final Long TASK_MAX_NO_USER = 20L;
-
-
-
-    @Autowired
-    GCPUtils gcpUtils;
 
     @Autowired
     TaskRepository taskRepository;
 
-    public void ingestTasks(IngestTaskDTO ingestTaskDTO) throws IOException {
+    @Autowired
+    RecordAudioTaskParser recordAudioTaskParser;
 
-        Blob blobFile = gcpUtils.getRecordAudioCSVFile(ingestTaskDTO.file() + ".csv");
-        Set<Task> taskList = new HashSet<>();
-        if (blobFile != null) {
-            try (Reader reader = new BufferedReader(new InputStreamReader(Channels.newInputStream(blobFile.reader())))) {
+    @Autowired
+    ImageLabellingTaskParser imageLabellingTaskParser;
 
-                CSVReader csvReader = new CSVReader(reader);
-                csvReader.skip(1);
-                String[] nextRecord;
 
-                while ((nextRecord = csvReader.readNext()) != null) {
+    Map<TaskType, TaskParser> taskParserMap = new HashMap<>();
 
-                    Task task = new Task().name(nextRecord[0]).input(nextRecord[1])
-                            .city(nextRecord[2].toUpperCase()).taskType(ingestTaskDTO.taskType())
-                            .taskCategory(TaskCategory.valueOf(ingestTaskDTO.taskType().name()))
-                            .maxNoOfUsers(TASK_MAX_NO_USER)
-                            .currency(TASK_CURRENCY)
-                            .price(TASK_PRICE)
-                            .status(TaskStatus.NEW)
-                            .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+    @PostConstruct
+    public void init(){
 
-                    taskList.add(task);
-                }
+        taskParserMap.put(TaskType.RECORD_AUDIO,recordAudioTaskParser);
+        taskParserMap.put(TaskType.IMAGE_LABELLING,imageLabellingTaskParser);
+    }
 
-                taskRepository.saveAll(taskList);
+    public IngestTaskResponse ingestTasks(IngestTaskDTO ingestTaskDTO) throws IOException {
 
-            } catch (CsvValidationException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            throw new FileNotFoundException("File Not found");
-        }
+
+        TaskParser taskParser = taskParserMap.get(ingestTaskDTO.taskType());
+
+        TaskParserResponse taskParserResponse = taskParser.parseTaskFile(ingestTaskDTO);
+
+        taskRepository.saveAll(taskParserResponse.getTaskSet());
+
+
+        return IngestTaskResponse.builder().totalCount(taskParserResponse.getTotalCount())
+                .successCount(taskParserResponse.getSuccessCount()).errorCount(taskParserResponse.getErrorCount())
+                .build();
 
     }
 }
