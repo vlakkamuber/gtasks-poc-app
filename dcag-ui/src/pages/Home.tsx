@@ -115,8 +115,8 @@ const Home: React.FC = () => {
             />
             <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
             <div>
-                <p>Rate: ${category.rate}</p>
-                <p>Duration: {category.duration}</p>
+                <p style={{marginBottom: '0px'}}>Rate: ${category.rate}</p>
+                <p style={{marginTop: '0px'}}>Duration: {category.duration}</p>
             </div>
             </Card>
           </div>
