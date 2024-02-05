@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { Button, KIND } from 'baseui/button';
 import { Textarea } from 'baseui/textarea';
 import { Input } from 'baseui/input';
+import { Select } from "baseui/select";
 
 import apiService from './apiService';
 import { useTranslation } from 'react-i18next';
@@ -29,15 +30,45 @@ const ReportBug: React.FC = () => {
 
   const [description, setDescription] = useState('');
   const [summary, setSummary] = useState('');
+  const [taskType, setTaskType] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const taskTypes = [
+    {
+      label: 'General',
+      id: 'GENERAL',
+    },
+    {
+      id: 'RECORD_AUDIO',
+      label: 'Record Audio',
+      
+    },
+    {
+      id: 'RECEIPT_DIGITIZATION',
+      label: 'Receipt Digitization',
+    },
+    {
+      id: 'LOCALIZATION_QUALITY',
+      label: 'Language Quality',
+    },
+    {
+      id: 'IMAGE_LABELLING',
+      label: 'Image Labelling'
+    },
+    {
+      id: 'MENU_PHOTO_REVIEW',
+      label: 'Menu Photo Review'
+     
+    }
+  ];
 
   const saveIssue = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     let body = {
       description: description,
-      summary: summary
+      summary: summary,
+      type:taskType[0].id
     };
     apiService
       .saveIssue({ userId, body, user })
@@ -84,7 +115,8 @@ const ReportBug: React.FC = () => {
               justifyContent: 'center',
               flexDirection: 'column',
               padding: '10px',
-              margin: '20px'
+              margin: '20px',
+              marginTop:'1px'
             }}>
             <p>
               We're always looking for ways to improve the app. If you've identified an issue,
@@ -94,6 +126,24 @@ const ReportBug: React.FC = () => {
               After receiving your report, our team will look into the concern. Please note our
               support team won't be able to provide status updates on reported issues.
             </p>
+            <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
+              Task type
+            </IonLabel>
+            <Select
+              style={{ marginTop: '10px' }}
+              options={taskTypes}
+              value={taskType}
+              placeholder="Select task type"
+              onChange={(params) => setTaskType(params.value)}
+              overrides={{
+                Root: {
+                  style: () => ({
+                    marginTop: '10px',
+                    marginBottom: '10px'
+                  })
+                }
+              }}
+            />
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
               Summary
             </IonLabel>
@@ -118,7 +168,7 @@ const ReportBug: React.FC = () => {
               placeholder="Please add details to help us understand the issue"
               style={{ marginTop: '10px' }}
               onChange={(e) => setDescription(e.target.value)}
-              rows="2"
+              rows="4"
               overrides={{
                 Root: {
                   style: () => ({
@@ -132,7 +182,7 @@ const ReportBug: React.FC = () => {
               style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', gap: '15px' }}>
               <Button
                 kind={KIND.primary}
-                disabled={submitted || !summary.length || !description.length}
+                disabled={submitted || !summary.length || !description.length || !taskType}
                 onClick={(e) => submitIssue(e)}>
                 Submit
               </Button>

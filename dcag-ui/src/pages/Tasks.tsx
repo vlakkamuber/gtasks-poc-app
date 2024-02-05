@@ -54,9 +54,9 @@ const Tasks: React.FC = () => {
   const { selectedCategory } = useCategory();
   const [isImageUploadAvailable, setIsImageUploadAvailable] = useState(false);
   const [finalTasks, setFinalTasks] = useState([]);
-  const [todayEarnings,setTodayEarnings] = useState(null)
+  const [todayEarnings, setTodayEarnings] = useState(null);
 
-  const logEvent = useAnalytics({ page: 'Task List', city: 'test' });
+  const logEvent = useAnalytics({ page: 'Task List' });
 
   function groupBy(array, key) {
     return array.reduce((acc, item) => {
@@ -130,25 +130,23 @@ const Tasks: React.FC = () => {
         console.log(result);
         setCompletedCount(result.completedTaskCount);
         setTotalEarned(result.totalEarning);
-        setTodayEarnings(result.todayEarnings)
-        setShowLoading(false)
+        setTodayEarnings(result.todayEarnings);
+        if( result.todayEarnings<200){
+          getAvailableTasks()
+        }else{
+          setShowLoading(false);
+        }
       })
       .catch((error) => {
         setIsError(true);
         console.error('Error fetching task data:', error);
       });
   };
-  
+
   useEffect(() => {
     setShowLoading(true);
     getTaskSummary();
   }, []);
-
-  useEffect(()=>{
-    if(todayEarnings< 200){
-      getAvailableTasks();
-    }
-  },[todayEarnings])
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
@@ -307,12 +305,94 @@ const Tasks: React.FC = () => {
           {/* Add more segments as needed */}
         </IonSegment>
         {selectedSegment === 'available_task' && (
-        <React.Fragment>
-          {todayEarnings > 200 ?(<AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!"/>) :(<>
-            <React.Fragment>
-              {Object.keys(tasks).map((key, index) => {
-                return (
-                  <React.Fragment key={index}>
+          <React.Fragment>
+            {todayEarnings > 200 ? (
+              <AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!" />
+            ) : (
+              <>
+                <React.Fragment>
+                  {Object.keys(tasks).map((key, index) => {
+                    return (
+                      <React.Fragment key={index}>
+                        <div className="ion-padding">
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center'
+                            }}>
+                            <h1 style={{ margin: '0', marginBottom: '-4px' }}>
+                              {t(`dcag.tasks.${key}.title`)}
+                            </h1>
+                            {/* <span style={{ color: "#467ff4" }}>
+                          {tasks[key].length} {t(`dcag.home.btn.new.label`)}
+                        </span> */}
+                          </div>
+
+                          <p style={{ margin: '0' }}>
+                            <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
+                          </p>
+                        </div>
+                        {tasks[key].map((task, index) => {
+                          return (
+                            <React.Fragment key={task.id}>
+                              <IonList>
+                                <IonItem>
+                                  <IonLabel>
+                                    <h2>{task.name || task.taskName} </h2>
+                                    {task.userId && task.status === 'IN_PROGRESS' && (
+                                      <p style={{ color: '#276ef1' }}>
+                                        {t(`dcag.home.taskHub.status.${task.status}`)}
+                                      </p>
+                                    )}
+                                    {showPayout && (
+                                      <p>
+                                        {t(`dcag.tasks.payouts.label`)}: ${task.price}
+                                      </p>
+                                    )}
+                                  </IonLabel>
+                                  {!task.userId && (
+                                    <Button
+                                      onClick={(e) => goToPerformTask(e, task)}
+                                      size={SIZE.compact}
+                                      shape={SHAPE.pill}>
+                                      {t(`dcag.home.btn.startWork.label`)}
+                                    </Button>
+                                  )}
+                                  {task.userId && task.status === 'IN_PROGRESS' && (
+                                    <Button
+                                      onClick={(e) => goToPerformResumeWork(e, task)}
+                                      size={SIZE.compact}
+                                      shape={SHAPE.pill}>
+                                      {t(`dcag.home.btn.resumeWork.label`)}
+                                    </Button>
+                                  )}
+                                </IonItem>
+                                {/* Add more IonItem elements as needed */}
+                              </IonList>
+                            </React.Fragment>
+                          );
+                        })}
+                        <div
+                          style={{ display: 'flex', justifyContent: 'right', cursor: 'pointer' }}>
+                          <span
+                            style={{
+                              fontSize: '1rem',
+                              fontWeight: 'normal',
+                              marginRight: '12px',
+                              textDecoration: 'underline',
+                              color: '#0000EE'
+                            }}
+                            onClick={() => loadMore(key)}>
+                            {t(`dcag.home.btn.loadMore.label`)}
+                          </span>
+                        </div>
+                      </React.Fragment>
+                    );
+                  })}
+                </React.Fragment>
+                {taskCategoriesToShow.UPLOAD_IMAGE === true && isImageUploadAvailable === false && (
+                  <>
                     <div className="ion-padding">
                       <div
                         style={{
@@ -321,118 +401,41 @@ const Tasks: React.FC = () => {
                           alignItems: 'center'
                         }}>
                         <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                          {t(`dcag.tasks.${key}.title`)}
+                          {t(`dcag.tasks.UPLOAD_IMAGE.title`)}
                         </h1>
                         {/* <span style={{ color: "#467ff4" }}>
-                          {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                        </span> */}
+                            {tasks[key].length} {t(`dcag.home.btn.new.label`)}
+                          </span> */}
                       </div>
 
                       <p style={{ margin: '0' }}>
-                        <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
+                        <small>{t(`dcag.tasks.UPLOAD_IMAGE.taskDesc`)}.</small>
                       </p>
                     </div>
-                    {tasks[key].map((task, index) => {
-                      return (
-                        <React.Fragment key={task.id}>
-                          <IonList>
-                            <IonItem>
-                              <IonLabel>
-                                <h2>{task.name || task.taskName} </h2>
-                                {task.userId && task.status === 'IN_PROGRESS' && (
-                                  <p style={{ color: '#276ef1' }}>
-                                    {t(`dcag.home.taskHub.status.${task.status}`)}
-                                  </p>
-                                )}
-                                {showPayout && (
-                                  <p>
-                                    {t(`dcag.tasks.payouts.label`)}: ${task.price}
-                                  </p>
-                                )}
-                              </IonLabel>
-                              {!task.userId && (
-                                <Button
-                                  onClick={(e) => goToPerformTask(e, task)}
-                                  size={SIZE.compact}
-                                  shape={SHAPE.pill}>
-                                  {t(`dcag.home.btn.startWork.label`)}
-                                </Button>
-                              )}
-                              {task.userId && task.status === 'IN_PROGRESS' && (
-                                <Button
-                                  onClick={(e) => goToPerformResumeWork(e, task)}
-                                  size={SIZE.compact}
-                                  shape={SHAPE.pill}>
-                                  {t(`dcag.home.btn.resumeWork.label`)}
-                                </Button>
-                              )}
-                            </IonItem>
-                            {/* Add more IonItem elements as needed */}
-                          </IonList>
-                        </React.Fragment>
-                      );
-                    })}
-                    <div style={{ display: 'flex', justifyContent: 'right', cursor: 'pointer' }}>
-                      <span
-                        style={{
-                          fontSize: '1rem',
-                          fontWeight: 'normal',
-                          marginRight: '12px',
-                          textDecoration: 'underline',
-                          color: '#0000EE'
-                        }}
-                        onClick={() => loadMore(key)}>
-                        {t(`dcag.home.btn.loadMore.label`)}
-                      </span>
-                    </div>
-                  </React.Fragment>
-                );
-              })}
-            </React.Fragment>
-            {taskCategoriesToShow.UPLOAD_IMAGE === true && isImageUploadAvailable === false && (
-              <>
-                <div className="ion-padding">
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}>
-                    <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                      {t(`dcag.tasks.UPLOAD_IMAGE.title`)}
-                    </h1>
-                    {/* <span style={{ color: "#467ff4" }}>
-                            {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                          </span> */}
-                  </div>
-
-                  <p style={{ margin: '0' }}>
-                    <small>{t(`dcag.tasks.UPLOAD_IMAGE.taskDesc`)}.</small>
-                  </p>
-                </div>
-                <IonList>
-                  <IonItem>
-                    <IonLabel>
-                      <span style={{ display: 'flex' }}>
-                        <h2>Default Task</h2>
-                      </span>
-                      {showPayout && <p>{t(`dcag.tasks.payouts.label`)}: $2</p>}
-                    </IonLabel>
-                    <IonButton
-                      slot="end"
-                      style={{
-                        '--background': 'black',
-                        '--border-radius': '10px'
-                      }}
-                      onClick={() => goToUploadImageTask()}>
-                      {t(`dcag.home.btn.startWork.label`)}
-                    </IonButton>
-                  </IonItem>
-                </IonList>
+                    <IonList>
+                      <IonItem>
+                        <IonLabel>
+                          <span style={{ display: 'flex' }}>
+                            <h2>Default Task</h2>
+                          </span>
+                          {showPayout && <p>{t(`dcag.tasks.payouts.label`)}: $2</p>}
+                        </IonLabel>
+                        <IonButton
+                          slot="end"
+                          style={{
+                            '--background': 'black',
+                            '--border-radius': '10px'
+                          }}
+                          onClick={() => goToUploadImageTask()}>
+                          {t(`dcag.home.btn.startWork.label`)}
+                        </IonButton>
+                      </IonItem>
+                    </IonList>
+                  </>
+                )}
               </>
             )}
-            </>)}
-        </React.Fragment>
+          </React.Fragment>
         )}
 
         {selectedSegment === 'my_tasks' && (

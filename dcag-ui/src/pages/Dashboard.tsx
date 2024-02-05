@@ -15,10 +15,12 @@ import { home, school, person, list, warningSharp } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useHistory, useLocation } from 'react-router-dom';
+import useAnalytics from '../hooks/useAnanlytics';
 
 const Dashboard: React.FC = ({ content }) => {
   const { t } = useTranslation();
   const { user, loading } = useUserAuth();
+  const logEvent = useAnalytics({ page: 'Navigation Bar' });
   const history = useHistory();
   const location = useLocation();
   const [showFab, setShowFab] = useState(true);
@@ -34,6 +36,9 @@ const Dashboard: React.FC = ({ content }) => {
 
   const goToReportBug = () => {
     history.push('/dashboard/issue');
+  };
+  const recordAnalytics = (properties: string) => {
+    logEvent({ actions: 'navigate', properties });
   };
   return (
     <>
@@ -57,21 +62,30 @@ const Dashboard: React.FC = ({ content }) => {
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/dashboard/home">
+          <IonTabButton tab="home" href="/dashboard/home" onClick={() => recordAnalytics('home')}>
             <IonIcon icon={home} />
             <IonLabel>{t(`dcag.home.bottomTabs.home`)}</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tasks" href="/dashboard/tasks">
+          <IonTabButton
+            tab="tasks"
+            href="/dashboard/tasks"
+            onClick={() => recordAnalytics('tasks')}>
             <IonIcon icon={list} />
             <IonLabel>{t(`dcag.home.bottomTabs.tasks`)}</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="training" href="/dashboard/training">
+          <IonTabButton
+            tab="training"
+            href="/dashboard/training"
+            onClick={() => recordAnalytics('training')}>
             <IonIcon icon={school} />
             <IonLabel>{t(`dcag.home.bottomTabs.training`)}</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="account" href="/dashboard/account">
+          <IonTabButton
+            tab="account"
+            href="/dashboard/account"
+            onClick={() => recordAnalytics('account')}>
             <IonIcon icon={person} />
             <IonLabel>{t(`dcag.home.bottomTabs.account`)}</IonLabel>
           </IonTabButton>

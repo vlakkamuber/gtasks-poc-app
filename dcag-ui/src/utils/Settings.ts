@@ -1,1 +1,1 @@
-export let showPayout = false;
+export let showPayout = true;

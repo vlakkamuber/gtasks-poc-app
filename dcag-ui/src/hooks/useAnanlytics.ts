@@ -3,15 +3,15 @@ import apiService from '../pages/apiService';
 
 type useAnalyticsArgsType = {
   page: string;
-  city: string;
 };
 
 type logEventArgsType = { actions: string; properties?: string; otherDetails?: string };
 
-const useAnalytics = ({ page, city }: useAnalyticsArgsType) => {
+const useAnalytics = ({ page }: useAnalyticsArgsType) => {
   const { user } = useUserAuth();
   let userId = JSON.parse(localStorage.getItem('loggedInUser'));
-  const sessionId = 'test';
+  const sessionId = '';
+  const city = '';
   const logEvent = async ({ actions, properties, otherDetails }: logEventArgsType) => {
     await apiService.recordAnalytics(userId, user, {
       sessionId,

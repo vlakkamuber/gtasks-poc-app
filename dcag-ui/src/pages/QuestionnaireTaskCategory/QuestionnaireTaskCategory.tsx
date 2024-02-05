@@ -159,7 +159,7 @@ export default function QuestionnaireTaskCategory() {
                   })
                 }
               }}>
-              <LabelSmall>Help</LabelSmall>
+              {/* <LabelSmall>Help</LabelSmall> */}
             </Button>
           </Block>
         </div>

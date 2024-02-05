@@ -1,14 +1,6 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonButton
 } from '@ionic/react';
 
 import { useHistory } from 'react-router-dom';
@@ -17,10 +9,11 @@ import { useCategory } from '../context/TaskCategoryContext';
 import { ArrowRight, ArrowLeft } from 'baseui/icon';
 
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
-import { Card, StyledBody, StyledAction } from 'baseui/card';
+import { Card, StyledBody,StyledThumbnail } from 'baseui/card';
 import { Block } from 'baseui/block';
 import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
-import { StyledDivider } from 'baseui/divider';
+
+import useAnalytics from '../hooks/useAnanlytics';
 
 const taskCategories = [
   {
@@ -28,58 +21,74 @@ const taskCategories = [
     imageSrc: 'assets/text_to_audio.png',
     title: 'Record Audio',
     subtitle: 'Read text, validate pronunciation and record correct audio',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'DESCRIBE_IMAGE',
     imageSrc: 'assets/audio_to_audio.png',
     title: 'Describe Image',
     subtitle: 'View the location image and provide description about the image.',
-    show: false
+    show: false,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'UPLOAD_IMAGE',
     imageSrc: 'assets/text_to_audio.png',
     title: 'Upload Image',
     subtitle: 'upload a location image and provide description about the image.',
-    show: false
+    show: false,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'RECEIPT_DIGITIZATION',
     imageSrc: 'assets/text_to_image.png',
     title: 'Receipt Digitization',
     subtitle: 'View the receipt image and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'LOCALIZATION_QUALITY',
     imageSrc: 'assets/audio_to_audio.png',
     title: 'Localization Quality',
     subtitle: 'View the receipt image and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'IMAGE_LABELLING',
     imageSrc: 'assets/audio_to_audio.png',
     title: 'Image Labelling',
     subtitle: 'View the image  and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   },
   {
     id: 'MENU_PHOTO_REVIEW',
     imageSrc: 'assets/text_to_image.png',
     title: 'Menu Photo Review',
     subtitle: 'View the image  and provide answer about the image.',
-    show: true
+    show: true,
+    rate: 2, 
+    duration: '15 minutes',
   }
 ];
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const logEvent = useAnalytics({ page: 'Home' });
 
   const { selectedCategory, setSelectedCategory } = useCategory();
 
   const handleTaskCategory = (category) => {
+    logEvent({ actions: 'View tasks', properties: category });
     // Set the selected category in localStorage
     localStorage.setItem('selectedCategory', category);
     setSelectedCategory(category);
@@ -93,28 +102,22 @@ const Home: React.FC = () => {
     return taskCategories.map(
       (category) =>
         category.show && (
-          <div key={category.id} onClick={() => handleTaskCategory(category.id)} className='clickable-cursor task-category-wrapper' >
+          <div
+            key={category.id}
+            onClick={() => handleTaskCategory(category.id)}
+            className="clickable-cursor task-category-wrapper">
             <Card
               overrides={{ Root: { style: { marginBottom: '32px' } } }}
-              // headerImage={category.imageSrc}
-              title={t(`dcag.home.taskHub.${category.id}.title`)}>
-              <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
-              {/* <StyledAction>
-                <Button
-                  kind={KIND.tertiary}
-                  overrides={{
-                    BaseButton: {
-                      style: () => ({
-                        paddingLeft: '0px',
-                        paddingRight: '0px'
-                      })
-                    }
-                  }}
-                  onClick={() => handleTaskCategory(category.id)}>
-                  <LabelSmall>View all details</LabelSmall>
-                  <ArrowRight size={24} />
-                </Button>
-              </StyledAction> */}
+              title={t(`dcag.home.taskHub.${category.id}.title`)}
+            >
+            <StyledThumbnail
+              src={category.imageSrc}
+            />
+            <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
+            <div>
+                <p style={{marginBottom: '0px'}}>Rate: ${category.rate}</p>
+                <p style={{marginTop: '0px'}}>Duration: {category.duration}</p>
+            </div>
             </Card>
           </div>
         )
@@ -147,7 +150,7 @@ const Home: React.FC = () => {
                   })
                 }
               }}>
-              <LabelSmall>Help</LabelSmall>
+              {/* <LabelSmall>Help</LabelSmall> */}
             </Button>
           </Block>
         </div>
