@@ -1,11 +1,22 @@
 function generateQuestionId(description) {
     const cleanedDescription = description.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '_');
-  
+
     return cleanedDescription;
   }
-  
+
   export const questionnaireData = {
     RECEIPT_DIGITIZATION: [
+      {
+        questionId: "IS_THE_RECIEPT_AVAILABLE",
+        id: 3,
+        description: 'Is the receipt readable or not readable?',
+        type: 'RADIO',
+        required: true,
+        options: [
+          { value: 'yes', label: 'Readable' },
+          { value: 'no', label: 'Non-readable' },
+        ],
+      },
       {
         id: 1,
         questionId:"RECEIPT_ID",
@@ -23,17 +34,6 @@ function generateQuestionId(description) {
         required: true,
         options: '',
       },
-          {
-            questionId: "IS_THE_RECIEPT_AVAILABLE",  
-            id: 3,
-            description: 'Is the receipt readable or not readable?',
-            type: 'RADIO',
-            required: true,
-            options: [
-              { value: 'yes', label: 'Readable' },
-              { value: 'no', label: 'Non-readable' },
-            ],
-          },
           {
             id: 4,
             questionId:"TOTAL_AMOUNT",
@@ -200,7 +200,7 @@ function generateQuestionId(description) {
         },
         ],
   };
-  
+
   Object.keys(questionnaireData).forEach(category => {
     questionnaireData[category].forEach(question => {
       question.questionId = generateQuestionId(question.description);
