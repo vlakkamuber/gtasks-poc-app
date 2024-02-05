@@ -73,8 +73,8 @@ paths:
           schema:
             type: array
     post:
-      security:
-        - firebase: [ ]
+#      security:
+#        - firebase: [ ]
       summary: "Create new user"
       operationId: "createUser"
       responses:
