@@ -36,7 +36,7 @@ public class ImageLabellingTaskParser implements TaskParser{
 
     @Override
     public TaskParserResponse parseTaskFile(IngestTaskDTO ingestTaskDTO) throws FileNotFoundException {
-        Blob blobFile = gcpUtils.getRecordAudioCSVFile(ingestTaskDTO.file() + ".csv");
+        Blob blobFile = gcpUtils.getImageLabellingCSVFile(ingestTaskDTO.file() + ".csv");
         Set<Task> taskList = new HashSet<>();
 
         int totalCount=0,successCount=0,errorCount=0;

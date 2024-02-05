@@ -47,6 +47,10 @@ public class GCPUtils {
         return getBlobFile("dcag-tasks-source", "record_audio/" + fileName);
     }
 
+    public Blob getImageLabellingCSVFile(String fileName) throws StorageException {
+        return getBlobFile("dcag-tasks-source", "image_labelling/" + fileName);
+    }
+
     private Blob getBlobFile(String bucketName, String objectName) throws StorageException {
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
@@ -73,7 +77,7 @@ public class GCPUtils {
         BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, objectName)).build();
 
         URL url =
-                storage.signUrl(blobInfo, 15, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+                storage.signUrl(blobInfo, bucketName.equals("dcag-training") ? 24*60 : 15, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
 
         System.out.println("Generated GET signed URL:" + url);
         return url.toString();
