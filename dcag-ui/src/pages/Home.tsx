@@ -18,7 +18,7 @@ import useAnalytics from '../hooks/useAnanlytics';
 const taskCategories = [
   {
     id: 'RECORD_AUDIO',
-    imageSrc: 'assets/text_to_audio.png',
+    imageSrc: 'assets/record_audio.png',
     title: 'Record Audio',
     subtitle: 'Read text, validate pronunciation and record correct audio',
     show: true,
@@ -45,7 +45,7 @@ const taskCategories = [
   },
   {
     id: 'RECEIPT_DIGITIZATION',
-    imageSrc: 'assets/text_to_image.png',
+    imageSrc: 'assets/receipt_digitization.png',
     title: 'Receipt Digitization',
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true,
@@ -54,7 +54,7 @@ const taskCategories = [
   },
   {
     id: 'LOCALIZATION_QUALITY',
-    imageSrc: 'assets/audio_to_audio.png',
+    imageSrc: 'assets/language_quality.png',
     title: 'Localization Quality',
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true,
