@@ -173,7 +173,7 @@ public class TaskService {
         if(user.isPresent()){
             cities = userCityTaskMap.get(user.get().cityName());
         }
-        return taskRepository.findAvailableTasks(available,userId, type, limit, cities).stream()
+        return taskRepository.findAvailableTasks(available,userId, type, limit, cities.isEmpty() ? null : cities).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
                 .collect(toList());
