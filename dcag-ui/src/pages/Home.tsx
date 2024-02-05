@@ -63,7 +63,7 @@ const taskCategories = [
   },
   {
     id: 'IMAGE_LABELLING',
-    imageSrc: 'assets/audio_to_audio.png',
+    imageSrc: 'assets/Image_labelling.png',
     title: 'Image Labelling',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
@@ -72,7 +72,7 @@ const taskCategories = [
   },
   {
     id: 'MENU_PHOTO_REVIEW',
-    imageSrc: 'assets/text_to_image.png',
+    imageSrc: 'assets/men_review.png',
     title: 'Menu Photo Review',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
