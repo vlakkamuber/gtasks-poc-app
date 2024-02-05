@@ -28,7 +28,7 @@ const MyTaskCard = ({ task }) => {
             <h2>{task.taskName}</h2>
             {/* <p style={{color:'#048848'}}>{t(`dcag.home.taskHub.status.${task.status}`)}</p> */}
           {showPayout &&<p>
-            {t(`dcag.tasks.payouts.label`)}: ${task.price}
+            {t(`dcag.tasks.payouts.label`)}: ₹{task.price}
           </p>}
           {/* <p>
             <small>

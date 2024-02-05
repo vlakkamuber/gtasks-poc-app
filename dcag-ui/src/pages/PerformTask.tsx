@@ -224,7 +224,7 @@ const PerformTask: React.FC = () => {
               {showPayout && (
                 <p className="no-padding-margin">
                   <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
-                  <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
+                  <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
                 </p>
               )}
             </div>

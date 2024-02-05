@@ -16,6 +16,7 @@ import { useUserAuth } from '../../context/UserAuthContext';
 import { LOADER_MESSAGE } from '../../constants/constant';
 import LoadingComponent from '../../components/Loader';
 import ZoomedImage from './components/ZoomedImage';
+import { showPayout } from '../../utils/Settings';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -184,6 +185,12 @@ export default function QuestionnaireTaskCategory() {
 
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
               <HeadingXSmall>{selectedTask.taskName}</HeadingXSmall>
+              {showPayout && (
+                <p className="no-padding-margin">
+                  <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
+                  <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
+                </p>
+              )}
               <HeadingXSmall>
                 {t(`dcag.home.taskHub.${selectedTask.taskType}.title`)}{' '}
               </HeadingXSmall>
