@@ -12,21 +12,27 @@ import {
 
 import React, { useHistory } from 'react-router-dom';
 import { arrowBack } from 'ionicons/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, KIND } from 'baseui/button';
 import { Textarea } from 'baseui/textarea';
 import { Input } from 'baseui/input';
-import { Select } from "baseui/select";
+import { Select } from 'baseui/select';
 
 import apiService from './apiService';
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
+import useAnalytics from '../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../constants/constant';
 
 const ReportBug: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { user } = useUserAuth();
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.report_bug });
+  useEffect(() => {
+    logEvent({ actions: '' });
+  }, []);
 
   const [description, setDescription] = useState('');
   const [summary, setSummary] = useState('');
@@ -37,20 +43,19 @@ const ReportBug: React.FC = () => {
   const taskTypes = [
     {
       label: 'General',
-      id: 'GENERAL',
+      id: 'GENERAL'
     },
     {
       id: 'RECORD_AUDIO',
-      label: 'Record Audio',
-      
+      label: 'Record Audio'
     },
     {
       id: 'RECEIPT_DIGITIZATION',
-      label: 'Receipt Digitization',
+      label: 'Receipt Digitization'
     },
     {
       id: 'LOCALIZATION_QUALITY',
-      label: 'Language Quality',
+      label: 'Language Quality'
     },
     {
       id: 'IMAGE_LABELLING',
@@ -59,7 +64,6 @@ const ReportBug: React.FC = () => {
     {
       id: 'MENU_PHOTO_REVIEW',
       label: 'Menu Photo Review'
-     
     }
   ];
 
@@ -68,7 +72,7 @@ const ReportBug: React.FC = () => {
     let body = {
       description: description,
       summary: summary,
-      type:taskType[0].id
+      type: taskType[0].id
     };
     apiService
       .saveIssue({ userId, body, user })
@@ -87,6 +91,12 @@ const ReportBug: React.FC = () => {
   };
 
   const submitIssue = async (e) => {
+    const properties = JSON.stringify({
+      description: description,
+      summary: summary,
+      type: taskType[0].id
+    });
+    logEvent({ actions: 'click_submit', properties });
     e.preventDefault();
     setShowLoading(true);
     setSubmitted(true);
@@ -94,7 +104,13 @@ const ReportBug: React.FC = () => {
   };
 
   const goBack = () => {
+    logEvent({ actions: 'click_go_back' });
     history.push('/dashboard/home'); // This function navigates back to the previous page
+  };
+
+  const onCancel = () => {
+    logEvent({ actions: 'click_cancel' });
+    goBack();
   };
 
   return (
@@ -116,7 +132,7 @@ const ReportBug: React.FC = () => {
               flexDirection: 'column',
               padding: '10px',
               margin: '20px',
-              marginTop:'1px'
+              marginTop: '1px'
             }}>
             <p>
               We're always looking for ways to improve the app. If you've identified an issue,
@@ -186,7 +202,7 @@ const ReportBug: React.FC = () => {
                 onClick={(e) => submitIssue(e)}>
                 Submit
               </Button>
-              <Button kind={KIND.secondary} onClick={() => goBack()}>
+              <Button kind={KIND.secondary} onClick={onCancel}>
                 Cancel
               </Button>
             </div>

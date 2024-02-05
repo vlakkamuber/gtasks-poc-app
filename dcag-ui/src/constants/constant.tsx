@@ -71,5 +71,6 @@ export const ANALYTICS_PAGE = {
   home: 'home_page',
   training: 'training_page',
   account: 'account_page',
-  report_bug: 'report_bug_page'
+  report_bug: 'report_bug_page',
+  navigation_bar: 'navigation_bar'
 };

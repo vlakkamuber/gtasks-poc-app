@@ -16,11 +16,12 @@ import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useHistory, useLocation } from 'react-router-dom';
 import useAnalytics from '../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../constants/constant';
 
 const Dashboard: React.FC = ({ content }) => {
   const { t } = useTranslation();
   const { user, loading } = useUserAuth();
-  const logEvent = useAnalytics({ page: 'Navigation Bar' });
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.navigation_bar });
   const history = useHistory();
   const location = useLocation();
   const [showFab, setShowFab] = useState(true);
@@ -35,10 +36,11 @@ const Dashboard: React.FC = ({ content }) => {
   }, [location]);
 
   const goToReportBug = () => {
+    logEvent({ actions: `click_report_bug` });
     history.push('/dashboard/issue');
   };
   const recordAnalytics = (properties: string) => {
-    logEvent({ actions: 'navigate', properties });
+    logEvent({ actions: `click_${properties}` });
   };
   return (
     <>
