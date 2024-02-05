@@ -265,7 +265,7 @@ const Tasks: React.FC = () => {
               <div style={{ color: '#5e5e5e' }}>
                 <IonIcon icon={business} /> {t(`dcag.tasks.page.youEarned.label`)}
               </div>
-              <div style={{ fontSize: '2rem' }}>${totalEarned}</div>
+              <div style={{ fontSize: '2rem' }}>₹{totalEarned}</div>
             </div>
           </div>
         )}
