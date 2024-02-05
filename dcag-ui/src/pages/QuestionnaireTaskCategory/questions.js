@@ -30,7 +30,7 @@ function generateQuestionId(description) {
         id: 2,
         questionId:"RECEIPT_DATE",
         description: 'Receipt date',
-        type: 'DATE',
+        type: 'TEXT',
         required: true,
         options: '',
       },
