@@ -3,7 +3,7 @@ import Wavesurfer from 'wavesurfer.js';
 import { IonIcon } from '@ionic/react';
 import { play, pause } from 'ionicons/icons';
 
-const AudioPlayer = ({ audioSrc }) => {
+const AudioPlayer = ({ audioSrc, onPlay, onPause }) => {
   const wavesurferRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(false);
@@ -14,8 +14,10 @@ const AudioPlayer = ({ audioSrc }) => {
       const isCurrentlyPlaying = wavesurfer.current.isPlaying();
       if (!isCurrentlyPlaying) {
         wavesurfer.current.play();
+        onPlay();
       } else {
         wavesurfer.current.pause();
+        onPause();
       }
       setIsPlaying(!isCurrentlyPlaying);
     }

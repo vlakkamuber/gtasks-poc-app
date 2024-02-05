@@ -27,7 +27,7 @@ import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { useUserAuth } from '../context/UserAuthContext';
-import { LOADER_MESSAGE } from '../constants/constant';
+import { ANALYTICS_PAGE, LOADER_MESSAGE } from '../constants/constant';
 import { showPayout } from '../utils/Settings';
 import useAnalytics from '../hooks/useAnanlytics';
 const PerformTask: React.FC = () => {
@@ -36,9 +36,10 @@ const PerformTask: React.FC = () => {
   const params = useParams();
   const { user } = useUserAuth();
   console.log('user ', user);
-  const logEvent = useAnalytics({ page: 'Perform Task' });
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
 
   const goBack = () => {
+    logEvent({ actions: 'click_go_back' });
     history.push('/dashboard/tasks'); // This function navigates back to the previous page
   };
 
@@ -93,6 +94,11 @@ const PerformTask: React.FC = () => {
   }, [submitted, audioChunks, useInput, selectedTask]);
 
   const startRecording = async () => {
+    logEvent({
+      actions: 'click_start_record_audio',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
     setIsRecording(true);
     setSubmitted(false);
     audioChunks.length = 0;
@@ -150,7 +156,11 @@ const PerformTask: React.FC = () => {
   };
 
   const saveAudioToAPI = async (e) => {
-    logEvent({ actions: 'submit task', properties: selectedTask.taskId });
+    logEvent({
+      actions: 'click_submit',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask?.output ? `output: ${selectedTask?.output}` : ''
+    });
     e.preventDefault();
     setSubmitted(true);
     if (useInput === true && selectedTask.taskType === 'RECORD_AUDIO') {
@@ -177,7 +187,11 @@ const PerformTask: React.FC = () => {
 
   const stopWork = async () => {
     try {
-      logEvent({ actions: 'cancel task', properties: selectedTask.taskId });
+      logEvent({
+        actions: 'click_confirm_cancel',
+        properties: selectedTask.taskId,
+        otherDetails: selectedTask.tastType
+      });
       let userId = JSON.parse(localStorage.getItem('loggedInUser'));
       const taskId = selectedTask.taskId;
       present(LOADER_MESSAGE);
@@ -188,6 +202,39 @@ const PerformTask: React.FC = () => {
       dismiss();
       console.log('Error ', err);
     }
+  };
+
+  const closeCancelModal = () => {
+    logEvent({
+      actions: 'click_abort_cancel',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.tastType
+    });
+  };
+
+  const onPlay = () => {
+    logEvent({
+      actions: 'click_play_audio',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
+  };
+
+  const onPause = () => {
+    logEvent({
+      actions: 'click_pause_audio',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
+  };
+
+  const onRadioChange = (e) => {
+    logEvent({
+      actions: e.currentTarget.value === 'true' ? 'click_radio_yes' : 'click_radio_no',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
+    setUseInput(e.currentTarget.value === 'true');
   };
 
   return (
@@ -285,7 +332,7 @@ const PerformTask: React.FC = () => {
                 selectedTask.taskType === 'RECORD_AUDIO') && (
                 <div>
                   <h5>{t(`dcag.tasks.performTask.input.label`)}</h5>
-                  <AudioPlayer audioSrc={selectedTask.inputUrl} />
+                  <AudioPlayer audioSrc={selectedTask.inputUrl} onPause={onPause} onPlay={onPlay} />
                 </div>
               )}
               {selectedTask.taskType === 'RECORD_AUDIO' && (
@@ -293,7 +340,7 @@ const PerformTask: React.FC = () => {
                   <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
                   <RadioGroup
                     value={selectedTask.status === 'COMPLETED' ? selectedTask.useInput : useInput}
-                    onChange={(e) => setUseInput(e.currentTarget.value === 'true')}
+                    onChange={onRadioChange}
                     name="number"
                     align={ALIGN.horizontal}
                     disabled={selectedTask.status === 'COMPLETED'}>
@@ -315,6 +362,8 @@ const PerformTask: React.FC = () => {
                   {audioChunks.length > 0 && (
                     <AudioPlayer
                       audioSrc={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/mpeg' }))}
+                      onPause={onPause}
+                      onPlay={onPlay}
                     />
                   )}
                   {selectedTask.status === 'COMPLETED' && selectedTask.useInput === false && (
@@ -338,7 +387,11 @@ const PerformTask: React.FC = () => {
                             flexDirection: 'column',
                             width: '80vw'
                           }}>
-                          <AudioPlayer audioSrc={selectedTask.outputUrl} />
+                          <AudioPlayer
+                            audioSrc={selectedTask.outputUrl}
+                            onPause={onPause}
+                            onPlay={onPlay}
+                          />
                         </div>
                       </div>
                     </div>
@@ -429,7 +482,8 @@ const PerformTask: React.FC = () => {
                         buttons={[
                           {
                             text: 'No',
-                            role: 'cancel'
+                            role: 'cancel',
+                            handler: closeCancelModal
                           },
                           {
                             text: 'Yes',
