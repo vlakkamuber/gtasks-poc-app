@@ -119,6 +119,10 @@ const Home: React.FC = () => {
               // headerImage={category.imageSrc}
               title={t(`dcag.home.taskHub.${category.id}.title`)}>
               <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
+              {/* <div>
+                <p>Rate: ${category.rate}</p>
+                <p>Duration: {category.duration}</p>
+              </div> */}
             </Card>
           </div>
         )
