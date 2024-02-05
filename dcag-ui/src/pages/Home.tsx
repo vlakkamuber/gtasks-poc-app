@@ -22,8 +22,8 @@ const taskCategories = [
     title: 'Record Audio',
     subtitle: 'Read text, validate pronunciation and record correct audio',
     show: true,
-    rate: 2, 
-    duration: '15 minutes',
+    rate: 0.8,
+    duration: '30 seconds',
   },
   {
     id: 'DESCRIBE_IMAGE',
@@ -49,8 +49,8 @@ const taskCategories = [
     title: 'Receipt Digitization',
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true,
-    rate: 2, 
-    duration: '15 minutes',
+    rate: 1.3,
+    duration: '45 seconds',
   },
   {
     id: 'LOCALIZATION_QUALITY',
@@ -58,8 +58,8 @@ const taskCategories = [
     title: 'Localization Quality',
     subtitle: 'View the receipt image and provide answer about the image.',
     show: true,
-    rate: 2, 
-    duration: '15 minutes',
+    rate: 1.7,
+    duration: '1 minute',
   },
   {
     id: 'IMAGE_LABELLING',
@@ -67,8 +67,8 @@ const taskCategories = [
     title: 'Image Labelling',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
-    rate: 2, 
-    duration: '15 minutes',
+    rate: 0.6,
+    duration: '20 seconds',
   },
   {
     id: 'MENU_PHOTO_REVIEW',
@@ -76,8 +76,8 @@ const taskCategories = [
     title: 'Menu Photo Review',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
-    rate: 2, 
-    duration: '15 minutes',
+    rate: 0.6,
+    duration: '20 seconds',
   }
 ];
 const Home: React.FC = () => {
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
             />
             <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
             <div>
-                <p style={{marginBottom: '0px'}}>Rate: ${category.rate}</p>
+                <p style={{marginBottom: '0px'}}>Rate: ₹{category.rate}</p>
                 <p style={{marginTop: '0px'}}>Duration: {category.duration}</p>
             </div>
             </Card>
