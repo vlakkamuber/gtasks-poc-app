@@ -178,8 +178,8 @@ export default function QuestionnaireTaskCategory() {
   };
 
   const isFormValid = () => {
-    for (const questionId in formState) {
-      if (!formState[questionId]) {
+    for (const question of questions) {
+      if (!formState[question.questionId]) {
         return false;
       }
     }
