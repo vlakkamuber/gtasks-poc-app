@@ -442,7 +442,7 @@ const PerformTask: React.FC = () => {
                           borderRadius: '10px'
                         }}>
                         <div style={audioRecordingStyle} onClick={stopRecording}>
-                          <span>Recording in progress...</span>
+                          <span>{t('dcag.home.btn.recordInProgress.label')}...</span>
                           <div
                             className="tap-save-container"
                             style={{ width: '100px', height: '100px' }}>
@@ -506,17 +506,17 @@ const PerformTask: React.FC = () => {
                         {t(`dcag.home.btn.cancel.label`)}
                       </Button>
                       <IonAlert
-                        header="Alert!"
-                        message="Are you sure, you want to cancel this task?"
+                        header={t('dcag.tasks.cancelAlert.Header')}
+                        message={t('dcag.tasks.cancelAlert')}
                         trigger="cancel-task"
                         buttons={[
                           {
-                            text: 'No',
+                            text: t('dcag.tasks.cancelAlert.No'),
                             role: 'cancel',
                             handler: closeCancelModal
                           },
                           {
-                            text: 'Yes',
+                            text: t('dcag.tasks.cancelAlert.Yes'),
                             role: 'confirm',
                             handler: stopWork
                           }

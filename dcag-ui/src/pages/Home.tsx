@@ -120,9 +120,12 @@ const Home: React.FC = () => {
               <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
               <div>
                 <p style={{ marginBottom: '0px' }}>
-                  Rate: ₹{(Math.round(category.rate * 100) / 100).toFixed(2)}/task
+                  {t('dcag.home.taskHub.rate')}: ₹
+                  {(Math.round(category.rate * 100) / 100).toFixed(2)}/task
                 </p>
-                <p style={{ marginTop: '0px' }}>Duration: {category.duration}/task</p>
+                <p style={{ marginTop: '0px' }}>
+                  {t('dcag.home.taskHub.duration')}: {category.duration}/task
+                </p>
               </div>
             </Card>
           </div>

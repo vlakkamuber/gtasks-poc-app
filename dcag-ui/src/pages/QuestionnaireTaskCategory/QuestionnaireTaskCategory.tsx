@@ -284,7 +284,7 @@ export default function QuestionnaireTaskCategory() {
                     <Button
                       onClick={handleSubmit}
                       disabled={!isFormValid() || selectedTask.status === 'COMPLETED'}>
-                      Submit
+                      {t('dcag.home.btn.submit.label')}
                     </Button>
                   }
                   dismissiveAction={
@@ -297,17 +297,17 @@ export default function QuestionnaireTaskCategory() {
                         {t(`dcag.home.btn.cancel.label`)}
                       </Button>
                       <IonAlert
-                        header="Alert!"
-                        message="Are you sure, you want to cancel this task?"
+                        header={t('dcag.tasks.cancelAlert.Header')}
+                        message={t('dcag.tasks.cancelAlert')}
                         trigger="cancel-task"
                         buttons={[
                           {
-                            text: 'No',
+                            text: t('dcag.tasks.cancelAlert.No'),
                             role: 'cancel',
                             handler: closeCancelModal
                           },
                           {
-                            text: 'Yes',
+                            text: t('dcag.tasks.cancelAlert.Yes'),
                             role: 'confirm',
                             handler: handleCancel
                           }

@@ -6,6 +6,7 @@ import { useStyletron } from 'baseui';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { LabelMedium } from 'baseui/typography';
 import { DatePicker } from 'baseui/datepicker';
+import { useTranslation } from 'react-i18next';
 
 interface QuestionProps {
   question: {
@@ -32,6 +33,7 @@ export default function Question({
 }: QuestionProps): JSX.Element {
   const { id, description, placeholder = '', type, required, options, questionId } = question;
   const [css, theme] = useStyletron();
+  const { t } = useTranslation();
   const cardRef = useRef();
   const isDisabled = isCompleted;
   const handleRadioClick = (e) => {
@@ -43,7 +45,7 @@ export default function Question({
     <Card overrides={{ Root: { style: { marginTop: theme.sizing.scale400 } } }}>
       <div ref={cardRef.current}>
         <FormControl
-          label={description}
+          label={t(description)}
           labelEndEnhancer={
             required ? <span style={{ color: theme.colors.contentNegative }}>&nbsp;*</span> : null
           }
@@ -58,7 +60,7 @@ export default function Question({
               align={ALIGN.horizontal}>
               {options.map((option) => (
                 <Radio key={option.value} value={option.value} disabled={isDisabled}>
-                  {option.label}
+                  {t(option.label)}
                 </Radio>
               ))}
             </RadioGroup>

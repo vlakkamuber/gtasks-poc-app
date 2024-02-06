@@ -1,196 +1,198 @@
 function generateQuestionId(description) {
-    const cleanedDescription = description.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '_');
+  const cleanedDescription = description
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/\s+/g, '_');
 
-    return cleanedDescription;
-  }
+  return cleanedDescription;
+}
 
-  export const questionnaireData = {
-    RECEIPT_DIGITIZATION: [
-      {
-        questionId: "IS_THE_RECIEPT_AVAILABLE",
-        id: 3,
-        description: 'Is the receipt readable or not readable?',
-        type: 'RADIO',
-        required: true,
-        options: [
-          { value: 'yes', label: 'Readable' },
-          { value: 'no', label: 'Non-readable' },
-        ],
-      },
-      {
-        id: 1,
-        questionId:"RECEIPT_ID",
-        description: 'Receipt ID',
-        type: 'TEXT',
-        placeholder: 'Ex. knvlksdnvsdlknvs',
-        required: true,
-        options: '',
-      },
-      {
-        id: 2,
-        questionId:"RECEIPT_DATE",
-        description: 'Receipt date',
-        type: 'TEXT',
-        required: true,
-        options: '',
-      },
-          {
-            id: 4,
-            questionId:"TOTAL_AMOUNT",
-            description: 'Total Amount',
-            type: 'TEXT',
-            required: true,
-            options: '',
-          },
-        ],
-        LOCALIZATION_QUALITY: [
-          {
-              id: 1,
-              description: 'The language on this screen is clear and easily understood.',
-              type: 'RADIO',
-              required: true,
-              options: [
-                { value: 'stronglyAgree', label: 'Strongly Agree' },
-                { value: 'agree', label: 'Agree' },
-                { value: 'disagree', label: 'Disagree' },
-                { value: 'stronglyDisagree', label: 'Strongly Disagree' },
-              ],
-            },
-        {
-          id: 2,
-          description: 'The language on this screen is as simple and respectful as we expect from Uber.',
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'stronglyAgree', label: 'Strongly Agree' },
-                { value: 'agree', label: 'Agree' },
-                { value: 'disagree', label: 'Disagree' },
-                { value: 'stronglyDisagree', label: 'Strongly Disagree' },
-          ],
-        },
-        {
-          id: 3,
-          description: `The language on this screen is similar to what I speak - it doesn't sound awkward or mechanical.`,
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'stronglyAgree', label: 'Strongly Agree' },
-            { value: 'agree', label: 'Agree' },
-            { value: 'disagree', label: 'Disagree' },
-            { value: 'stronglyDisagree', label: 'Strongly Disagree' },
-          ],
-        },
-        {
-          id: 4,
-          description: 'The icons and designs on this screen match my culture.',
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'stronglyAgree', label: 'Strongly Agree' },
-            { value: 'agree', label: 'Agree' },
-            { value: 'disagree', label: 'Disagree' },
-            { value: 'stronglyDisagree', label: 'Strongly Disagree' },
-          ],
-        },
-        ],
-        MENU_PHOTO_REVIEW: [
-          {
-            id: 1,
-            description: 'Is the food item clearly visible in the photo?',
-            type: 'RADIO',
-            required: true,
-            options: [
-              { value: 'yes', label: 'Yes' },
-              { value: 'no', label: 'No' },
-            ],
-          },
-          {
-            id: 2,
-            description: 'Does the photo have alcohol or tobacco?',
-            type: 'RADIO',
-            required: true,
-            options: [
-              { value: 'yes', label: 'Yes' },
-              { value: 'no', label: 'No' },
-            ],
-          },
-          {
-            id: 3,
-            description: 'Does the photo have a watermark?',
-            type: 'RADIO',
-            required: true,
-            options: [
-              { value: 'yes', label: 'Yes' },
-              { value: 'no', label: 'No' },
-            ],
-          },
-          {
-            id: 4,
-            description: 'Is there more than 1 dish in the photo?',
-            type: 'RADIO',
-            required: true,
-            options: [
-              { value: 'yes', label: 'Yes' },
-              { value: 'no', label: 'No' },
-            ],
-          },
-          {
-            id: 5,
-            description: 'Are there any humans in the photo?',
-            type: 'RADIO',
-            required: true,
-            options: [
-              { value: 'yes', label: 'Yes' },
-              { value: 'no', label: 'No' },
-            ],
-          },
-        ],
-        IMAGE_LABELLING: [
-        {
-          id: 1,
-          description: 'Is Packaging present?',
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'yes', label: 'Yes' },
-            { value: 'no', label: 'No' },
-          ],
-        },
-        {
-          id: 2,
-          description: 'Is Packaging damaged?',
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'yes', label: 'Yes' },
-            { value: 'no', label: 'No' },
-          ],
-        },
-        {
-          id: 3,
-          description: 'Is Food present?',
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'yes', label: 'Yes' },
-            { value: 'no', label: 'No' },
-          ],
-        },
-        {
-          id: 4,
-          description: 'Is Drink present?',
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'yes', label: 'Yes' },
-            { value: 'no', label: 'No' },
-          ],
-        },
-        ],
-  };
+export const questionnaireData = {
+  RECEIPT_DIGITIZATION: [
+    {
+      questionId: 'IS_THE_RECIEPT_AVAILABLE',
+      id: 3,
+      description: 'dcag.tasks.RECEIPT_DIGITIZATION.q1',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'Readable' },
+        { value: 'no', label: 'Non-readable' }
+      ]
+    },
+    {
+      id: 1,
+      questionId: 'RECEIPT_ID',
+      description: 'dcag.tasks.RECEIPT_DIGITIZATION.q3',
+      type: 'TEXT',
+      required: true,
+      options: ''
+    },
+    {
+      id: 2,
+      questionId: 'RECEIPT_DATE',
+      description: 'dcag.tasks.RECEIPT_DIGITIZATION.q2',
+      type: 'TEXT',
+      required: true,
+      options: ''
+    },
+    {
+      id: 4,
+      questionId: 'TOTAL_AMOUNT',
+      description: 'dcag.tasks.RECEIPT_DIGITIZATION.q4',
+      type: 'TEXT',
+      required: true,
+      options: ''
+    }
+  ],
+  LOCALIZATION_QUALITY: [
+    {
+      id: 1,
+      description: 'dcag.tasks.LOCALIZATION_QUALITY.q1',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'stronglyAgree', label: 'dcag.tasks.answer.stronglyAgree' },
+        { value: 'agree', label: 'dcag.tasks.answer.agree' },
+        { value: 'disagree', label: 'dcag.tasks.answer.disagree' },
+        { value: 'stronglyDisagree', label: 'dcag.tasks.answer.stronglyDisagree' }
+      ]
+    },
+    {
+      id: 2,
+      description: 'dcag.tasks.LOCALIZATION_QUALITY.q2',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'stronglyAgree', label: 'dcag.tasks.answer.stronglyAgree' },
+        { value: 'agree', label: 'dcag.tasks.answer.agree' },
+        { value: 'disagree', label: 'dcag.tasks.answer.disagree' },
+        { value: 'stronglyDisagree', label: 'dcag.tasks.answer.stronglyDisagree' }
+      ]
+    },
+    {
+      id: 3,
+      description: `dcag.tasks.LOCALIZATION_QUALITY.q3`,
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'stronglyAgree', label: 'dcag.tasks.answer.stronglyAgree' },
+        { value: 'agree', label: 'dcag.tasks.answer.agree' },
+        { value: 'disagree', label: 'dcag.tasks.answer.disagree' },
+        { value: 'stronglyDisagree', label: 'dcag.tasks.answer.stronglyDisagree' }
+      ]
+    },
+    {
+      id: 4,
+      description: 'dcag.tasks.LOCALIZATION_QUALITY.q4',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'stronglyAgree', label: 'dcag.tasks.answer.stronglyAgree' },
+        { value: 'agree', label: 'dcag.tasks.answer.agree' },
+        { value: 'disagree', label: 'dcag.tasks.answer.disagree' },
+        { value: 'stronglyDisagree', label: 'dcag.tasks.answer.stronglyDisagree' }
+      ]
+    }
+  ],
+  MENU_PHOTO_REVIEW: [
+    {
+      id: 1,
+      description: 'dcag.tasks.IMAGE_LABELLING.q1',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    },
+    {
+      id: 2,
+      description: 'dcag.tasks.IMAGE_LABELLING.q2',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    },
+    {
+      id: 3,
+      description: 'dcag.tasks.IMAGE_LABELLING.q3',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    },
+    {
+      id: 4,
+      description: 'dcag.tasks.IMAGE_LABELLING.q4',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    },
+    {
+      id: 5,
+      description: 'dcag.tasks.IMAGE_LABELLING.q5',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    }
+  ],
+  IMAGE_LABELLING: [
+    {
+      id: 1,
+      description: 'dcag.tasks.MENU_PHOTO_REVIEW.q1',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    },
+    {
+      id: 2,
+      description: 'dcag.tasks.MENU_PHOTO_REVIEW.q2',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    },
+    {
+      id: 3,
+      description: 'dcag.tasks.MENU_PHOTO_REVIEW.q3',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    },
+    {
+      id: 4,
+      description: 'dcag.tasks.MENU_PHOTO_REVIEW.q4',
+      type: 'RADIO',
+      required: true,
+      options: [
+        { value: 'yes', label: 'dcag.tasks.answer.yes' },
+        { value: 'no', label: 'dcag.tasks.answer.no' }
+      ]
+    }
+  ]
+};
 
-  Object.keys(questionnaireData).forEach(category => {
-    questionnaireData[category].forEach(question => {
-      question.questionId = generateQuestionId(question.description);
-    });
+Object.keys(questionnaireData).forEach((category) => {
+  questionnaireData[category].forEach((question) => {
+    question.questionId = generateQuestionId(question.description);
   });
+});
