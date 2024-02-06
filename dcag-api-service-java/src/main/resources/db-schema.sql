@@ -7,6 +7,8 @@ CREATE TABLE users
     last_name    VARCHAR(255),
     city_name    VARCHAR(255),
     phone_number VARCHAR(255),
+    preferred_lang VARCHAR(255),
+    native_lang VARCHAR(255),
     PRIMARY KEY (id)
 );
 
@@ -29,7 +31,7 @@ CREATE TABLE tasks
     due_time            TIMESTAMP,
     start_time          TIMESTAMP,
     city                VARCHAR(255),
-    language            VARCHAR(255),
+    lang            VARCHAR(255),
     PRIMARY KEY (id)
 );
 -- CREATE SPATIAL INDEX idx_tasks_location ON tasks(location);
