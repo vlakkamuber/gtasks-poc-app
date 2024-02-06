@@ -131,7 +131,7 @@ export default function QuestionnaireTaskCategory() {
     logEvent({
       actions: 'click_submit',
       properties: selectedTask.taskId,
-      otherDetails: selectedTask.taskType
+      otherDetails: JSON.stringify({ ...formState, taskType: selectedTask.taskType })
     });
     e.preventDefault();
     console.log(formState);
