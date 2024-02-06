@@ -379,7 +379,7 @@ const Tasks: React.FC = () => {
                               <IonList>
                                 <IonItem>
                                   <IonLabel>
-                                    <h2>{task.name || task.taskName} </h2>
+                                    <h2>{`Task #${task.id}`}</h2>
                                     {task.userId && task.status === 'IN_PROGRESS' && (
                                       <p style={{ color: '#276ef1' }}>
                                         {t(`dcag.home.taskHub.status.${task.status}`)}
