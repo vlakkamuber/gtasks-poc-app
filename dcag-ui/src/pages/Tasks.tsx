@@ -282,7 +282,7 @@ const Tasks: React.FC = () => {
                     color: theme.colors.contentSecondary
                   }}>
                   {' '}
-                  ({todayCount} today)
+                  ({todayCount} {t('dcag.tasks.text.today')})
                 </span>
               </div>
             </div>
@@ -299,7 +299,7 @@ const Tasks: React.FC = () => {
                     color: theme.colors.contentSecondary
                   }}>
                   {' '}
-                  (₹{to2DecimalPlaces(todayEarnings)} today)
+                  (₹{to2DecimalPlaces(todayEarnings)} {t('dcag.tasks.text.today')})
                 </span>
               </div>
             </div>

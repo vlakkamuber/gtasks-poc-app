@@ -231,7 +231,9 @@ export default function QuestionnaireTaskCategory() {
             <div className="px-16">
               <div className="fixed-header-buffer"></div>
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
-              <HeadingXSmall style={{ padding: 0, margin: 0 }}>{selectedTask.taskName}</HeadingXSmall>
+              <HeadingXSmall style={{ padding: 0, margin: 0 }}>
+                {selectedTask.taskName}
+              </HeadingXSmall>
               {showPayout && (
                 <p className="no-padding-margin">
                   <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
@@ -275,7 +277,8 @@ export default function QuestionnaireTaskCategory() {
               ))}
               {selectedTask.status !== 'COMPLETED' && (
                 <LabelSmall>
-                  <span style={{ color: theme.colors.contentNegative }}>*</span> Required question
+                  <span style={{ color: theme.colors.contentNegative }}>*</span>{' '}
+                  {t('dcag.tasks.text.required_questions')}
                 </LabelSmall>
               )}
               {selectedTask.status !== 'COMPLETED' && (

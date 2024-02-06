@@ -16,8 +16,8 @@ export const questionnaireData = {
       type: 'RADIO',
       required: true,
       options: [
-        { value: 'yes', label: 'Readable' },
-        { value: 'no', label: 'Non-readable' }
+        { value: 'yes', label: 'dcag.tasks.imageDigitization.questions.option.label.readable' },
+        { value: 'no', label: 'dcag.tasks.imageDigitization.questions.option.label.nonreadable' }
       ]
     },
     {
