@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
 import apiService from './apiService';
 import useAnalytics from '../hooks/useAnanlytics';
-import { ANALYTICS_PAGE } from '../constants/constant';
+import { ANALYTICS_PAGE, LANGUAGE_CODE_MAPPER } from '../constants/constant';
 const Training: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -38,7 +38,8 @@ const Training: React.FC = () => {
   };
 
   const getTrainingsDoc = async () => {
-    const language = localStorage.getItem('selectedLanguage') || '';
+    const languageCode = localStorage.getItem('selectedLanguage') || '';
+    const language = LANGUAGE_CODE_MAPPER[languageCode];
     let data = await apiService.getTrainingsDoc({ user, language });
     setTrainingDoc(data);
   };

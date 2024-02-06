@@ -74,3 +74,9 @@ export const ANALYTICS_PAGE = {
   report_bug: 'report_bug_page',
   navigation_bar: 'navigation_bar'
 };
+
+export const LANGUAGE_CODE_MAPPER = {
+  en: 'english',
+  ts: 'telugu',
+  hn: 'hindi'
+};
