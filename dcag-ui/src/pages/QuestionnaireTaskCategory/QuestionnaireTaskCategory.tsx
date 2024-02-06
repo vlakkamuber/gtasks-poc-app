@@ -228,10 +228,10 @@ export default function QuestionnaireTaskCategory() {
         </div>
         {selectedTask && (
           <>
-            <div className="p-16">
+            <div className="px-16">
               <div className="fixed-header-buffer"></div>
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
-              <HeadingXSmall>{selectedTask.taskName}</HeadingXSmall>
+              <HeadingXSmall style={{ padding: 0, margin: 0 }}>{selectedTask.taskName}</HeadingXSmall>
               {showPayout && (
                 <p className="no-padding-margin">
                   <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}

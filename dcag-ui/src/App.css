@@ -42,6 +42,10 @@
 .p-16 {
   padding: 16px;
 }
+.px-16 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
 .p-4 {
   padding: 4px;
 }
