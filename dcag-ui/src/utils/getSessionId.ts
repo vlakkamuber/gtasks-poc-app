@@ -1,9 +1,7 @@
-import { v4 as uuid } from 'uuid';
-
-function getSessionId(): string {
+function getSessionId(userId: string): string {
   let sessionId = sessionStorage.getItem('sessionId');
   if (!sessionId) {
-    sessionId = uuid();
+    sessionId = userId + Date.now();
     sessionStorage.setItem('sessionId', sessionId);
   }
 
