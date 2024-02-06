@@ -124,7 +124,7 @@ const ReportBug: React.FC = () => {
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} className="clickable-cursor" />
           </IonButtons>
-          <IonTitle>Report an issue</IonTitle>
+          <IonTitle>{t('dcag.pages.reportAnIssue.title')}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -139,15 +139,13 @@ const ReportBug: React.FC = () => {
               marginTop: '1px'
             }}>
             <p>
-              We're always looking for ways to improve the app. If you've identified an issue,
-              please report it by adding the details below.{' '}
+              {t('dcag.pages.reportAnIssue.paragraph1')}{' '}
             </p>
             <p>
-              After receiving your report, our team will look into the concern. Please note our
-              support team won't be able to provide status updates on reported issues.
+              {t('dcag.pages.reportAnIssue.paragraph2')}
             </p>
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
-              Task type
+            {t('dcag.pages.reportAnIssue.taskType.label')}
             </IonLabel>
             {/* <Select
               style={{ marginTop: '10px' }}
@@ -172,18 +170,18 @@ const ReportBug: React.FC = () => {
                 marginBottom: '10px'
               }}>
               <option value="" disabled selected hidden>
-                Select task type
+                {t('dcag.pages.reportAnIssue.taskType.options.default')}
               </option>
               {taskTypes.map((item) => (
-                <option value={item.id}>{item.label}</option>
+                <option value={item.id}>{t(`dcag.pages.reportAnIssue.taskType.options.${item.id}`)}</option>
               ))}
             </select>
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
-              Summary
+            {t('dcag.pages.reportAnIssue.summary.label')}
             </IonLabel>
             <Input
               value={summary}
-              placeholder="Enter summary of the issue"
+              placeholder={t('dcag.pages.reportAnIssue.summary.placeholder')}
               overrides={{
                 Root: {
                   style: () => ({
@@ -195,11 +193,11 @@ const ReportBug: React.FC = () => {
               onChange={(e) => setSummary(e.target.value)}
             />
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
-              Details
+            {t('dcag.pages.reportAnIssue.details.label')}
             </IonLabel>
             <Textarea
               value={description}
-              placeholder="Please add details to help us understand the issue"
+              placeholder={t('dcag.pages.reportAnIssue.details.placeholder')}
               style={{ marginTop: '10px' }}
               onChange={(e) => setDescription(e.target.value)}
               rows="4"
@@ -218,17 +216,17 @@ const ReportBug: React.FC = () => {
                 kind={KIND.primary}
                 disabled={submitted || !summary.length || !description.length || !taskType}
                 onClick={(e) => submitIssue(e)}>
-                Submit
+                {t('dcag.pages.reportAnIssue.submitButton')}
               </Button>
               <Button kind={KIND.secondary} onClick={onCancel}>
-                Cancel
+                {t('dcag.pages.reportAnIssue.cancelButton')}
               </Button>
             </div>
           </div>
           <IonToast
             isOpen={showToast}
             onDidDismiss={() => setShowToast(false)}
-            message="Success! Issue submitted successfully."
+            message={t('dcag.pages.reportAnIssue.successMessage')}
             duration={5000}
             color="success"
             position="top"
