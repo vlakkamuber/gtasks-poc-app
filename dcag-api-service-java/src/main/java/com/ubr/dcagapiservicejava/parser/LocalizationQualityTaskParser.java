@@ -54,6 +54,7 @@ public class LocalizationQualityTaskParser implements TaskParser{
                     totalCount++;
                     try {
                         Task task = new Task().name(nextRecord[0].split("\\.")[0]).input(nextRecord[0])
+                                .language(nextRecord[1])
                                 .taskType(ingestTaskDTO.taskType())
                                 .taskCategory(TaskCategory.valueOf(ingestTaskDTO.taskType().name()))
                                 .maxNoOfUsers(maxNumberOfUser)
