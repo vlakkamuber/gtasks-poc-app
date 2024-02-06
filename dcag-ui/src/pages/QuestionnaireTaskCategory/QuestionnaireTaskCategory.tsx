@@ -75,7 +75,7 @@ export default function QuestionnaireTaskCategory() {
   useEffect(() => {
     console.log(selectedTask, formState);
     if (selectedTask && selectedTask.taskType === 'RECEIPT_DIGITIZATION') {
-      if (formState && formState['is_the_receipt_readable_or_not_readable'] === 'yes') {
+      if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'yes') {
         const questionsData = questionnaireData[selectedTask.taskType];
         setQuestions(questionsData);
       } else {
