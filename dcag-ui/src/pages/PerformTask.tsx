@@ -124,6 +124,11 @@ const PerformTask: React.FC = () => {
   };
 
   const stopRecording = () => {
+    logEvent({
+      actions: 'click_stop_recording',
+      properties: selectedTask?.taskId,
+      otherDetails: selectedTask?.taskType
+    });
     if (mediaRecorder) {
       audioChunks.length = 0;
       mediaRecorder.stop();
@@ -235,6 +240,14 @@ const PerformTask: React.FC = () => {
       otherDetails: selectedTask.taskType
     });
     setUseInput(e.currentTarget.value === 'true');
+  };
+
+  const handleClickCancel = () => {
+    logEvent({
+      actions: 'click_start_cancel',
+      properties: selectedTask.taskId,
+      otherDetails: selectedTask.taskType
+    });
   };
 
   return (
@@ -472,6 +485,7 @@ const PerformTask: React.FC = () => {
                       <Button
                         kind={KIND.tertiary}
                         id="cancel-task"
+                        onClick={handleClickCancel}
                         colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
                         {t(`dcag.home.btn.cancel.label`)}
                       </Button>
