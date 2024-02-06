@@ -29,6 +29,32 @@ app.post('/createUser', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// Create multiple users; Input is an array of phone numbers
+app.post('/createUsers', async (req, res) => {
+  try {
+    const phoneNumbers = req.body;
+    if (!phoneNumbers || !phoneNumbers.length) {
+      return res.status(400).json({ error: 'Phone numbers in array are required.' });
+    }
+    let createdUsers = [];
+    for (let i = 0; i < phoneNumbers.length; i++) {
+      const userRecord = await admin.auth().createUser({
+        phoneNumber: phoneNumbers[i],
+      });
+      createdUsers.push({ userId: userRecord.uid, phoneNumber: userRecord.phoneNumber });
+      console.log('Created new user:', userRecord.uid, " phone :", userRecord.phoneNumber);
+    }
+    console.log("Created users:", createdUsers);
+    // Respond with the created user details
+    //res.status(201).json({ userId: userRecord.uid, phoneNumber: userRecord.phoneNumber });
+    res.status(201).json(createdUsers);
+  } catch (error) {
+    console.error('Error creating user:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
