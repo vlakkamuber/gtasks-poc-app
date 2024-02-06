@@ -58,12 +58,12 @@ export function orderTasksByType(tasks, taskTypeOrder) {
   const tasksByType = {};
 
   // Initialize the map with empty arrays for each task type
-  taskTypeOrder.forEach(type => {
+  taskTypeOrder.forEach((type) => {
     tasksByType[type] = [];
   });
 
   // Group tasks by their type
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     if (tasksByType.hasOwnProperty(task.taskType)) {
       tasksByType[task.taskType].push(task);
     } else {
@@ -79,3 +79,9 @@ export function orderTasksByType(tasks, taskTypeOrder) {
 
   return orderedTasks;
 }
+
+export const snakeCaseToNormal = (snakeCaseString) => {
+  const words = snakeCaseString.split('_');
+  words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+  return words.join(' ');
+};

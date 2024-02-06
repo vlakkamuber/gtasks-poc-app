@@ -23,6 +23,7 @@ import { useUserAuth } from '../context/UserAuthContext';
 import apiService from './apiService';
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, LANGUAGE_CODE_MAPPER } from '../constants/constant';
+import { snakeCaseToNormal } from '../utils/mapTeluguDigitsToNumeric';
 const Training: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -81,7 +82,10 @@ const Training: React.FC = () => {
             </ListItem>
             {trainingDoc.docs.map((doc) => {
               return (
-                <IonCard className="rounded-card">
+                <IonCard className="rounded-card mt-16 mb-32">
+                  <IonCardHeader>
+                    <IonCardTitle>{snakeCaseToNormal(doc.name)}</IonCardTitle>
+                  </IonCardHeader>
                   <video
                     ref={videoRef}
                     className="video-player"

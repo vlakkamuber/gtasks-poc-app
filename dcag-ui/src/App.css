@@ -24,8 +24,17 @@
 .mt-8 {
   margin-top: 8px;
 }
+.mb-8 {
+  margin-bottom: 8px;
+}
 .mt-16 {
   margin-top: 16px;
+}
+.mb-16 {
+  margin-bottom: 16px;
+}
+.mt-32 {
+  margin-bottom: 32px;
 }
 .mb-32 {
   margin-bottom: 32px;
