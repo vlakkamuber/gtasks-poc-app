@@ -86,9 +86,6 @@ CREATE INDEX idx_user_tasks_task_id ON user_tasks (task_id);
 CREATE INDEX idx_user_issues_user_id ON user_issues (user_id);
 CREATE INDEX idx_user_events_user_id ON user_events (user_id);
 
-
-ALTER TABLE tasks ADD COLUMN city VARCHAR(255);
-
 ------------------ DATA ------------------
 ------------------ Tasks ------------------
 -- AUDIO_TO_AUDIO
