@@ -38,7 +38,7 @@ public class ReceiptDigitizationTaskParser implements TaskParser{
 
     @Override
     public TaskParserResponse parseTaskFile(IngestTaskDTO ingestTaskDTO) throws FileNotFoundException {
-        Blob blobFile = gcpUtils.getImageLabellingCSVFile(ingestTaskDTO.file() + ".csv");
+        Blob blobFile = gcpUtils.getReceiptDigitizationCSVFile(ingestTaskDTO.file());
         Set<Task> taskList = new HashSet<>();
 
         int totalCount=0,successCount=0,errorCount=0;

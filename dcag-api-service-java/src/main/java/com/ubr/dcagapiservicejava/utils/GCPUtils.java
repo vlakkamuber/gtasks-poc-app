@@ -51,6 +51,18 @@ public class GCPUtils {
         return getBlobFile("dcag-tasks-source", "image_labelling/" + fileName);
     }
 
+    public Blob getLocalizationCSVFile(String fileName) throws StorageException {
+        return getBlobFile("dcag-tasks-source", "localization_quality/" + fileName);
+    }
+
+    public Blob getReceiptDigitizationCSVFile(String fileName) throws StorageException {
+        return getBlobFile("dcag-tasks-source", "receipt_digitization/" + fileName);
+    }
+
+    public Blob getMenuPhotoReviewCSVFile(String fileName) throws StorageException {
+        return getBlobFile("dcag-tasks-source", "menu_photo_review/" + fileName);
+    }
+
     private Blob getBlobFile(String bucketName, String objectName) throws StorageException {
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();

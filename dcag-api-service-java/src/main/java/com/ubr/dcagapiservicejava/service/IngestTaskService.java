@@ -51,6 +51,7 @@ public class IngestTaskService {
 
     public IngestTaskResponse ingestTasks(IngestTaskDTO ingestTaskDTO) throws IOException {
 
+        log.info("Ingesting Task File:" + ingestTaskDTO.file()+ " for task type:" + ingestTaskDTO.taskType().name() + " started");
 
         TaskParser taskParser = taskParserMap.get(ingestTaskDTO.taskType());
 

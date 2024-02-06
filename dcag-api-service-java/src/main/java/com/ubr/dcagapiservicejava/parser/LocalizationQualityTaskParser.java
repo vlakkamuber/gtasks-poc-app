@@ -38,7 +38,11 @@ public class LocalizationQualityTaskParser implements TaskParser{
 
     @Override
     public TaskParserResponse parseTaskFile(IngestTaskDTO ingestTaskDTO) throws FileNotFoundException {
-        Blob blobFile = gcpUtils.getImageLabellingCSVFile(ingestTaskDTO.file() + ".csv");
+        log.info("Parsing Localization Quality Task File:" + ingestTaskDTO.file()+ " for task type:" + ingestTaskDTO.taskType().name() + " started");
+
+        Blob blobFile = gcpUtils.getLocalizationCSVFile(ingestTaskDTO.file());
+        log.info("Blob found: " + blobFile);
+
         Set<Task> taskList = new HashSet<>();
 
         int totalCount=0,successCount=0,errorCount=0;
