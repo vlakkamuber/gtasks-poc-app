@@ -19,10 +19,12 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     //WHERE ut.userId IS NULL AND t.isAvailable = 'true';
 
 
-    @Query("SELECT T FROM Task T WHERE T.isAvailable =:available and T.taskType =:type and (:type <> 'RECORD_AUDIO' or :cities is null or T.city in :cities) and" +
+    @Query("SELECT T FROM Task T WHERE T.isAvailable =:available and T.taskType =:type and" +
+            " (:cities is null or T.city in :cities) and" +
+            " (:language is null or T.language = :language) and" +
             " T.id not in (select UT.task.id from UserTask UT where UT.task.id = T.id and UT.user.id =:userId) " +
             " order by RAND() limit :limit")
-    List<Task> findAvailableTasks(boolean available, String userId, TaskType type, int limit, List<String> cities);
+    List<Task> findAvailableTasks(boolean available, String userId, TaskType type, int limit, List<String> cities, String language);
 
 
 //    @Query("SELECT T FROM Task T, User U WHERE ST_Distance_Sphere(T.location, :location) <= :distance")

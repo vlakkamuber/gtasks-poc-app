@@ -175,14 +175,24 @@ public class TaskService {
 
     public List<TaskResponse> findAvailableTasks(Boolean available, String userId, TaskType type) {
 
-        Optional<User> user = userRepository.findById(userId);
+        Optional<User> userOptional = userRepository.findById(userId);
 
         List<String> cities = new ArrayList<>();
 
-        if(user.isPresent()){
-            cities = userCityTaskMap.get(user.get().cityName());
+        String language = null;
+
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            language = user.preferredLanguage();
+            cities = userCityTaskMap.get(user.cityName());
         }
-        return taskRepository.findAvailableTasks(available,userId, type, limit, (cities==null || cities.isEmpty())  ? null : cities).stream()
+        if(type!=TaskType.RECORD_AUDIO){
+            cities = null;
+        }
+        if(type!=TaskType.LOCALIZATION_QUALITY){
+            language = null;
+        }
+        return taskRepository.findAvailableTasks(available,userId, type, limit, (cities==null || cities.isEmpty())  ? null : cities, language).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
                 .collect(toList());

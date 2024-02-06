@@ -12,5 +12,11 @@ public record UserDTO(
         String firstName,
 
         String lastName,
-        String phoneNumber
+        String phoneNumber,
+
+        String cityName,
+
+        String preferredLanguage,
+
+        String nativeLanguage
 ){}

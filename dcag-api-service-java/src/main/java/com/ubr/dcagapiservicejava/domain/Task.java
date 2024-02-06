@@ -51,6 +51,7 @@ public class Task implements Serializable {
 
     private String city;
 
+    @Column(name = "lang")
     private String language;
 
     private String currency;

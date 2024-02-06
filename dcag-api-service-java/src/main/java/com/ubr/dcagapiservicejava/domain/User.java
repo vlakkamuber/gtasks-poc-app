@@ -37,6 +37,12 @@ public class User implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "preferred_lang")
+    private String preferredLanguage;
+
+    @Column(name = "native_lang")
+    private String nativeLanguage;
+
     @OneToMany(mappedBy = "user")
     private Set<UserTask> userTasks;
 

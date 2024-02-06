@@ -47,7 +47,10 @@ public class UserService {
                 .email(userDTO.email())
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
-                .phoneNumber(userDTO.phoneNumber());
+                .phoneNumber(userDTO.phoneNumber())
+                .cityName(userDTO.cityName())
+                .nativeLanguage(userDTO.nativeLanguage())
+                .preferredLanguage(userDTO.preferredLanguage());
 
         log.info("User creation started - {}",userDTO.userId());
         return new UserResponse(userRepository.save(user));
@@ -70,7 +73,9 @@ public class UserService {
         log.info("User update started - {}",userDTO.userId());
         return userRepository
                 .findById(userId)
-                .map(existingUser -> userRepository.save(userToSave))
+                .map(existingUser -> userRepository.save(userToSave.cityName(existingUser.cityName())
+                        .nativeLanguage(existingUser.nativeLanguage())
+                        .preferredLanguage(existingUser.preferredLanguage())))
                 .map(UserResponse::new)
                 .orElseThrow(userNotFound(userId));
     }

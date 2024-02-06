@@ -12,7 +12,13 @@ public record UserResponse(
         @Size(min = 2, message = "Name should be at least 2 chars length")
         String firstName,
         String lastName,
-        String phoneNumber
+        String phoneNumber,
+
+        String cityName,
+
+        String preferredLanguage,
+
+        String nativeLanguage
 
 ) {
 
@@ -21,6 +27,9 @@ public record UserResponse(
                 user.email(),
                 user.firstName(),
                 user.lastName(),
-                user.phoneNumber());
+                user.phoneNumber(),
+                user.cityName(),
+                user.preferredLanguage(),
+                user.nativeLanguage());
     }
 }
