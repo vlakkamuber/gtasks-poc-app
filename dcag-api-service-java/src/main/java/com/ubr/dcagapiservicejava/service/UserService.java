@@ -119,8 +119,8 @@ public class UserService {
             UserEvents userEvents = userEventsRepository.save(new UserEvents().user(new User().id(userId))
                     .sessionId(userEventsDTO.sessionId()).page(userEventsDTO.page())
                     .actions(userEventsDTO.actions()).properties(userEventsDTO.properties())
-                    .city(userEventsDTO.city()).otherDetails(userEventsDTO.otherDetails()))
-                    .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+                    .city(userEventsDTO.city()).otherDetails(userEventsDTO.otherDetails())
+                    .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
             log.info("Saved User Events for user - {}",userId);
             return userEvents.id();
         }else {
