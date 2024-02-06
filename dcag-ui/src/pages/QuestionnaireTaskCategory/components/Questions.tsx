@@ -35,7 +35,8 @@ export default function Question({
   const cardRef = useRef();
   const isDisabled = isCompleted;
   const handleRadioClick = (e) => {
-    logEvent('click_radio_button', { questionId, value: e.currentTarget.value });
+    const option = options.find((item) => item.value === e.currentTarget.value);
+    logEvent('click_radio_button', { questionId, value: option?.label });
     onChange(questionId, e.currentTarget.value);
   };
   return (
