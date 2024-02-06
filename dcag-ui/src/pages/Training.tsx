@@ -38,7 +38,8 @@ const Training: React.FC = () => {
   };
 
   const getTrainingsDoc = async () => {
-    let data = await apiService.getTrainingsDoc({ user });
+    const language = localStorage.getItem('selectedLanguage') || '';
+    let data = await apiService.getTrainingsDoc({ user, language });
     setTrainingDoc(data);
   };
   const videoRef = useRef(null);

@@ -242,8 +242,12 @@ const apiService = {
     });
     return response;
   },
-  async getTrainingsDoc({ user }: { user: any }) {
-    const endpoint = `docs?type=training`;
+  async getTrainingsDoc({ user, language = '' }: { user: any; language?: string }) {
+    const queryParams = new URLSearchParams({
+      type: 'training',
+      language
+    });
+    const endpoint = `docs?${queryParams}`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
