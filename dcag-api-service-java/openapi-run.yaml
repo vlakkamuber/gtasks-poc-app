@@ -515,6 +515,11 @@ paths:
           required: false
           type: string
           description: "Type of doc"
+        - name: language
+          in: query
+          required: false
+          type: string
+          description: "Language of Doc"
       responses:
         '200':
           description: A successful response
