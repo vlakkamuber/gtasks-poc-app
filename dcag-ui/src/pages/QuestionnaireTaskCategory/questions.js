@@ -92,18 +92,6 @@ function generateQuestionId(description) {
             { value: 'stronglyDisagree', label: 'Strongly Disagree' },
           ],
         },
-        {
-          id: 5,
-          description: 'Please rank between 1-4',
-          type: 'RADIO',
-          required: true,
-          options: [
-            { value: 'stronglyAgree', label: 'Strongly Agree' },
-            { value: 'agree', label: 'Agree' },
-            { value: 'disagree', label: 'Disagree' },
-            { value: 'stronglyDisagree', label: 'Strongly Disagree' },
-          ],
-        },
         ],
         MENU_PHOTO_REVIEW: [
           {
