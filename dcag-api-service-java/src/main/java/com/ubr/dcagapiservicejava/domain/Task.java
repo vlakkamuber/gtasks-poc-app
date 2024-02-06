@@ -58,6 +58,9 @@ public class Task implements Serializable {
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
+    @Column(name = "last_updated_time")
+    private LocalDateTime lastUpdatedTime;
+
     @Column(name = "due_time")
     private LocalDateTime dueDate;
 

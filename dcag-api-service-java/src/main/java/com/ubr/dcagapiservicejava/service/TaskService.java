@@ -79,6 +79,7 @@ public class TaskService {
                 .price(taskDTO.price())
                 .maxNoOfUsers(taskDTO.taskType()!= null && taskDTO.taskType().equals(TaskType.UPLOAD_IMAGE) ? 1L : taskDTO.maxNoOfUsers())
                 .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
+                .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                 .dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
         log.info("Task is created - {}",taskDTO.name());
@@ -133,12 +134,15 @@ public class TaskService {
                 .status(taskDTO.status())
                 .maxNoOfUsers(taskDTO.maxNoOfUsers())
                 .currency(taskDTO.currency())
-                .price(taskDTO.price());
+                .price(taskDTO.price())
+                .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
 //                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
 
         return taskRepository
                 .findById(taskId)
-                .map(existingUser -> taskRepository.save(task))
+                .map(existingUser -> taskRepository.save(task.createTime(existingUser.createTime())
+                        .dueDate(existingUser.dueDate())
+                        .city(existingUser.city())))
                 .map(savedTask -> TaskResponse.builder()
                         .id(savedTask.id())
                         .name(savedTask.name())

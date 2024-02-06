@@ -10,6 +10,7 @@ import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -24,11 +25,14 @@ import java.util.Set;
 @Component
 public class RecordAudioTaskParser implements TaskParser{
 
-    private final String TASK_CURRENCY = "INR";
+    @Value("${task_currency}")
+    String taskCurrency;
 
-    private final Double TASK_PRICE = 0.5;
+    @Value("${record_audio_task_price}")
+    Double taskPrice;
 
-    private final Long TASK_MAX_NO_USER = 20L;
+    @Value("${record_audio_task_max_no_user}")
+    Long maxNumberOfUser;
 
     @Autowired
     GCPUtils gcpUtils;
@@ -48,17 +52,17 @@ public class RecordAudioTaskParser implements TaskParser{
                 String[] nextRecord;
 
                 while ((nextRecord = csvReader.readNext()) != null) {
-
+                    totalCount++;
                     try {
                         Task task = new Task().name(nextRecord[0]).input(nextRecord[1])
                                 .city(nextRecord[2].toUpperCase()).taskType(ingestTaskDTO.taskType())
                                 .taskCategory(TaskCategory.valueOf(ingestTaskDTO.taskType().name()))
-                                .maxNoOfUsers(TASK_MAX_NO_USER)
-                                .currency(TASK_CURRENCY)
-                                .price(TASK_PRICE)
+                                .maxNoOfUsers(maxNumberOfUser)
+                                .currency(taskCurrency)
+                                .price(taskPrice)
                                 .status(TaskStatus.NEW)
-                                .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
-
+                                .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
+                                .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                         taskList.add(task);
                         successCount++;
                     }catch (Exception e){
@@ -66,7 +70,6 @@ public class RecordAudioTaskParser implements TaskParser{
                         errorCount++;
                     }
                 }
-                totalCount = taskList.size();
 
             } catch (Exception e) {
                 throw new RuntimeException(e);

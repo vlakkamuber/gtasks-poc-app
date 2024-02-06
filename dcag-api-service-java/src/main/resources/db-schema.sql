@@ -25,6 +25,7 @@ CREATE TABLE tasks
     price               DOUBLE PRECISION,
     is_available        boolean default true,
     create_time         TIMESTAMP,
+    last_updated_time   TIMESTAMP,
     due_time            TIMESTAMP,
     start_time          TIMESTAMP,
     city                VARCHAR(255),
@@ -44,6 +45,7 @@ CREATE TABLE user_tasks
     output_desc     TEXT,
     start_time      TIMESTAMP,
     completion_time TIMESTAMP,
+    last_updated_time  TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (task_id) REFERENCES tasks (id)
@@ -54,6 +56,7 @@ CREATE TABLE user_issues
 (
     id              BIGINT       NOT NULL AUTO_INCREMENT,
     user_id         VARCHAR(255) NOT NULL,
+    task_type       VARCHAR(255),
     summary         VARCHAR(255) NOT NULL,
     description     TEXT,
     create_time     TIMESTAMP,
@@ -82,6 +85,9 @@ CREATE INDEX idx_user_tasks_task_id ON user_tasks (task_id);
 
 CREATE INDEX idx_user_issues_user_id ON user_issues (user_id);
 CREATE INDEX idx_user_events_user_id ON user_events (user_id);
+
+
+ALTER TABLE tasks ADD COLUMN city VARCHAR(255);
 
 ------------------ DATA ------------------
 ------------------ Tasks ------------------

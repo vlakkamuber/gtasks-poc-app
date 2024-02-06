@@ -23,16 +23,14 @@ import java.util.Set;
 
 @Slf4j
 @Component
-public class ImageLabellingTaskParser implements TaskParser{
-
-
+public class MenuPhotoReviewTaskParser implements TaskParser{
     @Value("${task_currency}")
     String taskCurrency;
 
-    @Value("${image_labelling_task_price}")
+    @Value("${menu_photo_review_task_price}")
     Double taskPrice;
 
-    @Value("${image_labelling_task_max_no_user}")
+    @Value("${menu_photo_review_max_no_user}")
     Long maxNumberOfUser;
 
     @Autowired
@@ -64,7 +62,6 @@ public class ImageLabellingTaskParser implements TaskParser{
                                 .status(TaskStatus.NEW)
                                 .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                                 .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
-
                         taskList.add(task);
                         successCount++;
                     }catch (Exception e){

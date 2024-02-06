@@ -53,4 +53,7 @@ public class UserTask implements Serializable {
     @Column(name = "completion_time")
     private LocalDateTime completionTime;
 
+    @Column(name = "last_updated_time")
+    private LocalDateTime lastUpdatedTime;
+
 }

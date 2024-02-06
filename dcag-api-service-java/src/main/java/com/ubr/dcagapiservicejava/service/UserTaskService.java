@@ -118,7 +118,8 @@ public class UserTaskService {
                             .output(userTaskDTO.output())
                             .outputDesc(userTaskDTO.outputDesc())
                             .startTime(userTask.startTime())
-                            .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+                            .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
+                            .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                     updatedUserTask = userTasksRepository.save(updatedUserTask);
 
                     log.info("User - {}  task - {} status completed", userId, taskId);
@@ -142,7 +143,8 @@ public class UserTaskService {
         Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
         return userTaskOptional
                 .map(userTask -> {
-                    userTask.status(userTaskDTO.status());
+                    userTask.status(userTaskDTO.status())
+                            .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                     userTask = userTasksRepository.save(userTask);
                     log.info("User - {}  task - {} status Cancelled", userId, taskId);
                     updateTaskStatus(taskId);
