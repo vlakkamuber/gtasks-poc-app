@@ -91,12 +91,12 @@ const ReportBug: React.FC = () => {
   };
 
   const submitIssue = async (e) => {
-    const properties = JSON.stringify({
+    const otherDetails = JSON.stringify({
       description: description,
       summary: summary,
       type: taskType[0].id
     });
-    logEvent({ actions: 'click_submit', properties });
+    logEvent({ actions: 'click_submit', otherDetails });
     e.preventDefault();
     setShowLoading(true);
     setSubmitted(true);
