@@ -40,6 +40,11 @@ import { showPayout } from '../utils/Settings';
 import ErrorView from '../components/ErrorView';
 import { Button, SIZE, SHAPE } from 'baseui/button';
 import useAnalytics from '../hooks/useAnanlytics';
+import { useStyletron } from 'baseui';
+
+function to2DecimalPlaces(num: number) {
+  return (Math.round(num * 100) / 100).toFixed(2);
+}
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -47,6 +52,7 @@ const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState([]);
   const [isError, setIsError] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
+  const [todayCount, setTodayCount] = useState(0);
   const [availableCount, setAvailableCount] = useState(0);
   const [myTasksCount, setMyTasksCount] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
@@ -56,7 +62,8 @@ const Tasks: React.FC = () => {
   const { selectedCategory } = useCategory();
   const [isImageUploadAvailable, setIsImageUploadAvailable] = useState(false);
   const [finalTasks, setFinalTasks] = useState([]);
-  const [todayEarnings, setTodayEarnings] = useState(null);
+  const [todayEarnings, setTodayEarnings] = useState(0);
+  const [css, theme] = useStyletron();
 
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
 
@@ -135,6 +142,7 @@ const Tasks: React.FC = () => {
       .then((result) => {
         console.log(result);
         setCompletedCount(result.completedTaskCount);
+        setTodayCount(result.todayCompletedTasks);
         setTotalEarned(result.totalEarning);
         setTodayEarnings(result.todayEarnings);
         if (result.todayEarnings < 200) {
@@ -269,7 +277,17 @@ const Tasks: React.FC = () => {
               <div style={{ color: '#5e5e5e' }}>
                 <IonIcon icon={people} /> {t(`dcag.tasks.page.completedTask.label`)}
               </div>
-              <div style={{ fontSize: '2rem' }}>{completedCount}</div>
+              <div style={{ fontSize: '2rem' }}>
+                {completedCount}
+                <span
+                  style={{
+                    ...theme.typography.ParagraphMedium,
+                    color: theme.colors.contentSecondary
+                  }}>
+                  {' '}
+                  ({todayCount} today)
+                </span>
+              </div>
             </div>
             <div className="vertical-bar" style={{ borderLeft: '2px solid #ddd' }}></div>
             <div className="task-count">
@@ -277,7 +295,15 @@ const Tasks: React.FC = () => {
                 <IonIcon icon={business} /> {t(`dcag.tasks.page.youEarned.label`)}
               </div>
               <div style={{ fontSize: '2rem' }}>
-                ₹{(Math.round(totalEarned * 100) / 100).toFixed(2)}
+                ₹{to2DecimalPlaces(totalEarned)}
+                <span
+                  style={{
+                    ...theme.typography.ParagraphMedium,
+                    color: theme.colors.contentSecondary
+                  }}>
+                  {' '}
+                  (₹{to2DecimalPlaces(todayEarnings)} today)
+                </span>
               </div>
             </div>
           </div>
