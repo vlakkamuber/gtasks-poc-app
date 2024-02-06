@@ -16,6 +16,10 @@ public record TaskDTO(
 
         String input,
 
+        String language,
+
+        String city,
+
         TaskStatus status,
 
         Double latitude,

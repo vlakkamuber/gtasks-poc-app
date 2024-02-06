@@ -29,6 +29,7 @@ CREATE TABLE tasks
     due_time            TIMESTAMP,
     start_time          TIMESTAMP,
     city                VARCHAR(255),
+    language            VARCHAR(255),
     PRIMARY KEY (id)
 );
 -- CREATE SPATIAL INDEX idx_tasks_location ON tasks(location);

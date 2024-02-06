@@ -51,6 +51,8 @@ public class Task implements Serializable {
 
     private String city;
 
+    private String language;
+
     private String currency;
 
     private Double price;
