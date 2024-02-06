@@ -241,10 +241,19 @@ const PerformTask: React.FC = () => {
   };
 
   const onRadioChange = (e) => {
+    const question = t(`dcag.tasks.performTask.inputAudio.confirm`);
+    const value =
+      e.currentTarget.value === 'true'
+        ? t(`dcag.tasks.performTask.inputAudio.confirm.yes`)
+        : t(`dcag.tasks.performTask.inputAudio.confirm.yes`);
     logEvent({
-      actions: e.currentTarget.value === 'true' ? 'click_radio_yes' : 'click_radio_no',
+      actions: 'click_radio_button',
       properties: selectedTask.taskId,
-      otherDetails: selectedTask.taskType
+      otherDetails: JSON.stringify({
+        question,
+        value,
+        taskType: selectedTask.taskType
+      })
     });
     setUseInput(e.currentTarget.value === 'true');
   };
