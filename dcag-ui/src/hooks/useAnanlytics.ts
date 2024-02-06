@@ -1,5 +1,6 @@
 import { useUserAuth } from '../context/UserAuthContext';
 import apiService from '../pages/apiService';
+import getSessionId from '../utils/getSessionId';
 
 type useAnalyticsArgsType = {
   page: string;
@@ -10,7 +11,7 @@ type logEventArgsType = { actions: string; properties?: string; otherDetails?: s
 const useAnalytics = ({ page }: useAnalyticsArgsType) => {
   const { user } = useUserAuth();
   let userId = JSON.parse(localStorage.getItem('loggedInUser'));
-  const sessionId = '';
+  const sessionId = getSessionId(userId);
   const city = '';
   const logEvent = async ({ actions, properties, otherDetails }: logEventArgsType) => {
     await apiService.recordAnalytics(userId, user, {
