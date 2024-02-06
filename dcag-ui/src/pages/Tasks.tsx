@@ -221,6 +221,7 @@ const Tasks: React.FC = () => {
   };
 
   const loadMore = async (key) => {
+    logEvent({ actions: 'click_load_more' });
     setShowLoading(true);
     const userId = JSON.parse(localStorage.getItem('loggedInUser'));
     let tasks = await apiService.getAvailableTasks({ userId, user, selectedCategory: key });
