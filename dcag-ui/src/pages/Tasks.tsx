@@ -22,7 +22,8 @@ import apiService from './apiService';
 import {
   filterTaskWithType,
   filterTaskWithSelectedCategory,
-  orderTasksByType
+  orderTasksByType,
+  to2DecimalPlaces
 } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import {
@@ -41,10 +42,6 @@ import ErrorView from '../components/ErrorView';
 import { Button, SIZE, SHAPE } from 'baseui/button';
 import useAnalytics from '../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
-
-function to2DecimalPlaces(num: number) {
-  return (Math.round(num * 100) / 100).toFixed(2);
-}
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();

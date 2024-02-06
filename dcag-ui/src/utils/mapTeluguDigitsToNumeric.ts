@@ -85,3 +85,7 @@ export const snakeCaseToNormal = (snakeCaseString) => {
   words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
   return words.join(' ');
 };
+
+export function to2DecimalPlaces(num: number) {
+  return (Math.round(num * 100) / 100).toFixed(2);
+}

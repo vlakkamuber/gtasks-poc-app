@@ -23,7 +23,7 @@ import { Textarea } from 'baseui/textarea';
 import { SIZE } from 'baseui/input';
 import { useTranslation } from 'react-i18next';
 import apiService from './apiService';
-import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
+import { formatDate, to2DecimalPlaces } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import { RadioGroup, Radio, ALIGN } from 'baseui/radio';
 import { useUserAuth } from '../context/UserAuthContext';
@@ -300,7 +300,7 @@ const PerformTask: React.FC = () => {
               {showPayout && (
                 <p className="no-padding-margin">
                   <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
-                  <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
+                  <span style={{ fontWeight: '600' }}>₹{to2DecimalPlaces(selectedTask.price)}</span>
                 </p>
               )}
             </div>
