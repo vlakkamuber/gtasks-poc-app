@@ -245,19 +245,21 @@ export default function QuestionnaireTaskCategory() {
               <Block className="receipt-container">
                 <ZoomedImage imageUrl={selectedTask.inputUrl}></ZoomedImage>
               </Block>
-              <ParagraphSmall>
-                {t('dcag.questionnaire.instruction')}
-                <Block display="flex">
-                  <ul>
-                    <li>{t('dcag.questionnaire.option.strongly_agree')}</li>
-                    <li>{t('dcag.questionnaire.option.agree')}</li>
-                  </ul>
-                  <ul>
-                    <li>{t('dcag.questionnaire.option.disagree')}</li>
-                    <li>{t('dcag.questionnaire.option.strongly_disagree')}</li>
-                  </ul>
-                </Block>
-              </ParagraphSmall>
+              {selectedTask.taskType == 'LOCALIZATION_QUALITY' && (
+                <ParagraphSmall>
+                  {t('dcag.questionnaire.instruction')}
+                  <Block display="flex">
+                    <ul>
+                      <li>{t('dcag.questionnaire.option.strongly_agree')}</li>
+                      <li>{t('dcag.questionnaire.option.agree')}</li>
+                    </ul>
+                    <ul>
+                      <li>{t('dcag.questionnaire.option.disagree')}</li>
+                      <li>{t('dcag.questionnaire.option.strongly_disagree')}</li>
+                    </ul>
+                  </Block>
+                </ParagraphSmall>
+              )}
               <HeadingXSmall>Task questionnaire</HeadingXSmall>
               {questions.map((item) => (
                 <Question
