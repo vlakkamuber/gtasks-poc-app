@@ -72,6 +72,13 @@ const PerformTask: React.FC = () => {
   };
 
   useEffect(() => {
+    logEvent({
+      actions: '',
+      properties: params.id
+    });
+  }, []);
+
+  useEffect(() => {
     setShowLoading(true);
     getTaskDetail();
   }, []);

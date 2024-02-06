@@ -93,8 +93,7 @@ export default function QuestionnaireTaskCategory() {
   useEffect(() => {
     logEvent({
       actions: '',
-      properties: selectedTask?.taskId,
-      otherDetails: selectedTask?.taskType
+      properties: params.id
     });
   }, []);
 
