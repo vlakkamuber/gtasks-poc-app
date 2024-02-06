@@ -1,5 +1,5 @@
 // LanguageSwitcher.tsx
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 // import { IonToggle } from '@ionic/react';
 import { IonSelect, IonSelectOption, IonLabel } from '@ionic/react';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,11 @@ const LanguageSwitcher: React.FC = () => {
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
-    <IonSelect placeholder="Select Language" value={language} onIonChange={handleChange} disabled={true}>
+    <IonSelect
+      placeholder="Select Language"
+      value={language}
+      onIonChange={handleChange}
+      disabled={false}>
       <IonSelectOption value="en">English</IonSelectOption>
       <IonSelectOption value="ts">Telugu</IonSelectOption>
     </IonSelect>
