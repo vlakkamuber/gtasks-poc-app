@@ -384,7 +384,8 @@ const Tasks: React.FC = () => {
                                     )}
                                     {showPayout && (
                                       <p>
-                                        {t(`dcag.tasks.payouts.label`)}: ₹{TASK_RATE[key]}
+                                        {t(`dcag.tasks.payouts.label`)}: ₹
+                                        {to2DecimalPlaces(TASK_RATE[key])}
                                       </p>
                                     )}
                                   </IonLabel>
