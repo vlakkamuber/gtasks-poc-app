@@ -113,6 +113,10 @@ const ReportBug: React.FC = () => {
     goBack();
   };
 
+  const handleTaskTypeChange = (e) => {
+    setTaskType(e.target.value);
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -145,7 +149,7 @@ const ReportBug: React.FC = () => {
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
               Task type
             </IonLabel>
-            <Select
+            {/* <Select
               style={{ marginTop: '10px' }}
               options={taskTypes}
               value={taskType}
@@ -159,7 +163,21 @@ const ReportBug: React.FC = () => {
                   })
                 }
               }}
-            />
+            /> */}
+            <select
+              onChange={handleTaskTypeChange}
+              className={taskType ? '' : 'muted-text'}
+              style={{
+                marginTop: '10px',
+                marginBottom: '10px'
+              }}>
+              <option value="" disabled selected hidden>
+                Select task type
+              </option>
+              {taskTypes.map((item) => (
+                <option value={item.id}>{item.label}</option>
+              ))}
+            </select>
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
               Summary
             </IonLabel>

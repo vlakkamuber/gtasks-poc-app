@@ -383,8 +383,8 @@ label {
   height: 212px;
   background: #eeee;
 }
-.transform-component-module_wrapper__SPB86{
-  height:100% !important;
+.transform-component-module_wrapper__SPB86 {
+  height: 100% !important;
 }
 .receipt-container img {
   display: block;
@@ -411,14 +411,14 @@ label {
   align-items: center;
 }
 
-.alert-wrapper{
+.alert-wrapper {
   position: relative;
   padding: 2rem;
   margin: 1rem -15px 0;
   border: solid #f7f7f9;
   border-width: 0.2rem 0 0;
 }
-.alert-box{
+.alert-box {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
@@ -430,9 +430,9 @@ label {
   font-size: 1rem;
   font-weight: 400;
 }
-.task-category-wrapper{
+.task-category-wrapper {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
-    border-radius: 12px;
+  border-radius: 12px;
 }
 
 .zoomable-container {
@@ -460,7 +460,23 @@ label {
   cursor: pointer;
 }
 
+select {
+  background-color: rgb(238, 238, 238);
+  padding-right: 14px;
+  padding-left: 14px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  line-height: 24px;
+  caret-color: rgb(0, 0, 0);
+  outline: none;
+  font-family: system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border: none;
+  border-radius: 8px;
+}
 
+.muted-text {
+  color: #6b6b6b;
+}
 
 @media only screen and (min-width: 992px) {
   html {
