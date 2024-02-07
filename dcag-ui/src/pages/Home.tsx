@@ -124,7 +124,7 @@ const Home: React.FC = () => {
               overrides={{ Root: { style: { marginBottom: '32px' } } }}
               title={t(`dcag.home.taskHub.${category.id}.title`)}>
               <StyledThumbnail src={category.imageSrc} />
-              <StyledBody>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
+              <StyledBody style={{ color: '#6b6b6b' }}>{t(`dcag.home.taskHub.${category.id}.subtitle`)}</StyledBody>
               <div>
                 <p style={{ marginBottom: '0px' }}>
                   {t('dcag.home.taskHub.rate')}: ₹

@@ -87,6 +87,7 @@ const Training: React.FC = () => {
                     <IonCardTitle>{snakeCaseToNormal(doc.name)}</IonCardTitle>
                   </IonCardHeader>
                   <video
+                  controlsList="nodownload"
                     ref={videoRef}
                     className="video-player"
                     poster="assets/audio_to_audio.png"

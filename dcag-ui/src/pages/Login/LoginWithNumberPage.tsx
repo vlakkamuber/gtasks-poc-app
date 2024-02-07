@@ -69,9 +69,9 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
       } else {
         logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: failed` });
         setIsNextDisabled(true);
-        setIsUserExist(false);
-        sendOtp(phone);
-        //setError('This phone number does not have access. Please contact administrator');
+        // setIsUserExist(false);
+        // sendOtp(phone);
+        setError('This phone number does not have access. Please contact administrator');
       }
     } catch (err) {
       setError(err.message);

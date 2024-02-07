@@ -75,12 +75,14 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
         logEvent({ actions: 'otp_entered' });
         let result = await sendOtpResponse.confirm(otpnumeric);
         logEvent({ actions: 'login_success' });
-        if (!isUserExist) {
-          createUserInDB(result.user.uid, result.user.phoneNumber);
-        } else {
-          dismiss();
-          history.push('/dashboard/home');
-        }
+        dismiss();
+        history.push('/dashboard/home');
+        // if (!isUserExist) {
+        //   createUserInDB(result.user.uid, result.user.phoneNumber);
+        // } else {
+        //   dismiss();
+        //   history.push('/dashboard/home');
+        // }
       } catch (err) {
         logEvent({ actions: 'login_failed', properties: err.message });
         dismiss();

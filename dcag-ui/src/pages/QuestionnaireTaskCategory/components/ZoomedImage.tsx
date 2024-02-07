@@ -4,8 +4,24 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const ZoomableImage = ({imageUrl}) => {
   const [scale, setScale] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
   const minScale = 1;
   const maxScale = 10;
+  if (isFullscreen) {
+    return (
+      <div className="fullscreen-container">
+        <div className="fullscreen-image">
+          <img src={imageUrl} alt="a kitten" />
+          <button onClick={toggleFullscreen} className="close-button">
+            Close
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
       <TransformWrapper
         initialScale={minScale}
@@ -28,6 +44,9 @@ const ZoomableImage = ({imageUrl}) => {
             </div> */}
             <TransformComponent>
               <img src={imageUrl} alt="a kitten"  style={{width:'100%',height:'100%'}}/>
+              <button onClick={toggleFullscreen} className="fullscreen-button">
+                  Fullscreen
+                </button>
             </TransformComponent>
           </React.Fragment>
         )}

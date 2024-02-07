@@ -72,7 +72,7 @@ const ReportBug: React.FC = () => {
     let body = {
       description: description,
       summary: summary,
-      type: taskType[0].id
+      task_type: taskType[0].id
     };
     apiService
       .saveIssue({ userId, body, user })

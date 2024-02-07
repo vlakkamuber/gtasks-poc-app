@@ -232,7 +232,7 @@ export default function QuestionnaireTaskCategory() {
               <div className="fixed-header-buffer"></div>
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
               <HeadingXSmall style={{ padding: 0, margin: 0 }}>
-                {selectedTask.taskName}
+              {`Task #${selectedTask.taskId}`}
               </HeadingXSmall>
               {showPayout && (
                 <p className="no-padding-margin">

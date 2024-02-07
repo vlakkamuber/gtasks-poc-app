@@ -274,7 +274,7 @@ const Tasks: React.FC = () => {
               <div style={{ color: '#5e5e5e' }}>
                 <IonIcon icon={people} /> {t(`dcag.tasks.page.completedTask.label`)}
               </div>
-              <div style={{ fontSize: '2rem' }}>
+              <div style={{ fontSize: '1.7rem' }}>
                 {completedCount}
                 <span
                   style={{
@@ -291,7 +291,7 @@ const Tasks: React.FC = () => {
               <div style={{ color: '#5e5e5e' }}>
                 <IonIcon icon={business} /> {t(`dcag.tasks.page.youEarned.label`)}
               </div>
-              <div style={{ fontSize: '2rem' }}>
+              <div style={{ fontSize: '1.7rem' }} className='task-count-rate'>
                 ₹{to2DecimalPlaces(totalEarned)}
                 <span
                   style={{
@@ -376,7 +376,7 @@ const Tasks: React.FC = () => {
                               <IonList>
                                 <IonItem>
                                   <IonLabel>
-                                    <h2>{`Task #${task.id}`}</h2>
+                                    <h2>{task.status==="IN_PROGRESS" ?`Task #${task.taskId}` : `Task #${task.id}`}</h2>
                                     {task.userId && task.status === 'IN_PROGRESS' && (
                                       <p style={{ color: '#276ef1' }}>
                                         {t(`dcag.home.taskHub.status.${task.status}`)}
