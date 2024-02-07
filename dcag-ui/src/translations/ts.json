@@ -179,7 +179,7 @@
   "dcag.tasks.text.today": "ఈ రోజు",
   "dcag.tasks.imageDigitization.questions.option.label.readable": "చదవగలిగేది",
   "dcag.tasks.imageDigitization.questions.option.label.nonreadable": "చదవడానికి వీలుకానిది",
-  "dcag.tasks.text.required_questions": "ఆవశ్యకమైన ప్రశ్న",
+  "dcag.tasks.text.required_questions": "అవసరమైన ప్రశ్న",
   "dcag.tasks.text.fullscreen": "పూర్తి స్క్రీన్",
   "dcag.tasks.closeBtn.label": "Close",
   "dcag.tasks.heading.label.task_questionnaire": "ప్రశ్నలు"
