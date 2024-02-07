@@ -1,6 +1,6 @@
 package com.ubr.dcagapiservicejava.domain;
 
-//import com.google.cloud.firestore.annotation.DocumentId;
+import com.ubr.dcagapiservicejava.domain.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-//@Document(collectionName = "users")
 
 @Entity
 @Data
@@ -33,6 +32,10 @@ public class User implements Serializable {
 
     @Column(name = "city_name")
     private String cityName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type")
+    private UserType userType;
 
     @Column(name = "phone_number")
     private String phoneNumber;

@@ -1,6 +1,6 @@
 package com.ubr.dcagapiservicejava.dto;
 
-import com.ubr.dcagapiservicejava.domain.User;
+import com.ubr.dcagapiservicejava.domain.enums.UserType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
@@ -15,6 +15,8 @@ public record UserDTO(
         String phoneNumber,
 
         String cityName,
+
+        UserType userType,
 
         String preferredLanguage,
 

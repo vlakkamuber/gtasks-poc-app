@@ -47,6 +47,7 @@ public class UserService {
                 .email(userDTO.email())
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
+                .userType(userDTO.userType())
                 .phoneNumber(userDTO.phoneNumber())
                 .cityName(userDTO.cityName())
                 .nativeLanguage(userDTO.nativeLanguage())
@@ -69,6 +70,7 @@ public class UserService {
                 .email(userDTO.email())
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
+                .userType(userDTO.userType())
                 .phoneNumber(userDTO.phoneNumber());
         log.info("User update started - {}",userDTO.userId());
         return userRepository
