@@ -89,3 +89,7 @@ export const snakeCaseToNormal = (snakeCaseString) => {
 export function to2DecimalPlaces(num: number) {
   return (Math.round(num * 100) / 100).toFixed(2);
 }
+
+export function capitalizeFirstLetter(word: string) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}

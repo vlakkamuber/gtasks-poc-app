@@ -232,7 +232,7 @@ export default function QuestionnaireTaskCategory() {
               <div className="fixed-header-buffer"></div>
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
               <HeadingXSmall style={{ padding: 0, margin: 0 }}>
-              {`Task #${selectedTask.taskId}`}
+                {`Task #${selectedTask.taskId}`}
               </HeadingXSmall>
               {showPayout && (
                 <p className="no-padding-margin">
@@ -262,7 +262,7 @@ export default function QuestionnaireTaskCategory() {
                   </Block>
                 </ParagraphSmall>
               )}
-              <HeadingXSmall>Task questionnaire</HeadingXSmall>
+              <HeadingXSmall>{t('dcag.tasks.heading.label.task_questionnaire')}</HeadingXSmall>
               {questions.map((item) => (
                 <Question
                   key={item.id}

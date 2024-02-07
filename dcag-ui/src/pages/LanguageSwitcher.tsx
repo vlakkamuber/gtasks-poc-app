@@ -28,7 +28,7 @@ const LanguageSwitcher: React.FC = () => {
       onIonChange={handleChange}
       disabled={false}>
       <IonSelectOption value="en">English</IonSelectOption>
-      <IonSelectOption value="ts">తెలుగు</IonSelectOption>
+      {/* <IonSelectOption value="ts">తెలుగు</IonSelectOption> */}
       <IonSelectOption value="hn">हिंदी</IonSelectOption>
     </IonSelect>
   );
