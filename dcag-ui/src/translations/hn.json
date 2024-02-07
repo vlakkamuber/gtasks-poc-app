@@ -180,6 +180,7 @@
   "dcag.tasks.imageDigitization.questions.option.label.readable": "पढ़ने लायक है ",
   "dcag.tasks.imageDigitization.questions.option.label.nonreadable": "पढ़ने लायक नहीं है ",
   "dcag.tasks.text.required_questions": "ज़रूरी सवाल",
-  "dcag.tasks.text.fullscreen": "Fullscreen",
-  "dcag.tasks.closeBtn.label": "Close"
+  "dcag.tasks.text.fullscreen": "पूरी स्क्रीन",
+  "dcag.tasks.closeBtn.label": "बंद करें",
+  "dcag.tasks.heading.label.task_questionnaire": "कार्य प्रश्नावली"
 }

@@ -23,7 +23,8 @@ import {
   filterTaskWithType,
   filterTaskWithSelectedCategory,
   orderTasksByType,
-  to2DecimalPlaces
+  to2DecimalPlaces,
+  capitalizeFirstLetter
 } from '../utils/mapTeluguDigitsToNumeric';
 import LoadingComponent from '../components/Loader';
 import {
@@ -242,6 +243,7 @@ const Tasks: React.FC = () => {
     setTasks(groupBy(orderedTasks, 'taskType'));
     setShowLoading(false);
   };
+  const taskLabel = capitalizeFirstLetter(t('dcag.home.text.task'));
   if (isError) {
     return (
       <IonPage>
@@ -291,7 +293,7 @@ const Tasks: React.FC = () => {
               <div style={{ color: '#5e5e5e' }}>
                 <IonIcon icon={business} /> {t(`dcag.tasks.page.youEarned.label`)}
               </div>
-              <div style={{ fontSize: '1.7rem' }} className='task-count-rate'>
+              <div style={{ fontSize: '1.7rem' }} className="task-count-rate">
                 ₹{to2DecimalPlaces(totalEarned)}
                 <span
                   style={{
@@ -376,7 +378,11 @@ const Tasks: React.FC = () => {
                               <IonList>
                                 <IonItem>
                                   <IonLabel>
-                                    <h2>{task.status==="IN_PROGRESS" ?`Task #${task.taskId}` : `Task #${task.id}`}</h2>
+                                    <h2>
+                                      {task.status === 'IN_PROGRESS'
+                                        ? `${taskLabel} #${task.taskId}`
+                                        : `${taskLabel} #${task.id}`}
+                                    </h2>
                                     {task.userId && task.status === 'IN_PROGRESS' && (
                                       <p style={{ color: '#276ef1' }}>
                                         {t(`dcag.home.taskHub.status.${task.status}`)}
