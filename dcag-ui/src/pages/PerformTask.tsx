@@ -35,7 +35,6 @@ const PerformTask: React.FC = () => {
   const history = useHistory();
   const params = useParams();
   const { user } = useUserAuth();
-  console.log('user ', user);
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
 
   const goBack = () => {
@@ -62,7 +61,6 @@ const PerformTask: React.FC = () => {
     apiService
       .getTaskDetail({ userId, taskId, user })
       .then((result) => {
-        console.log(result);
         setShowLoading(false);
         setSelectedTask(result);
       })
@@ -115,7 +113,7 @@ const PerformTask: React.FC = () => {
 
       recorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          setAudioChunks([...audioChunks, event.data]);
+          setAudioChunks(audioChunks => ([...audioChunks, event.data]));
         }
       };
 
@@ -123,7 +121,7 @@ const PerformTask: React.FC = () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
       };
 
-      recorder.start();
+      recorder.start(40000);
       setMediaRecorder(recorder);
     } catch (error) {
       console.error('Error accessing microphone:', error);
@@ -137,7 +135,6 @@ const PerformTask: React.FC = () => {
       otherDetails: selectedTask?.taskType
     });
     if (mediaRecorder) {
-      audioChunks.length = 0;
       mediaRecorder.stop();
       setIsRecording(false);
     }
@@ -146,7 +143,9 @@ const PerformTask: React.FC = () => {
   useEffect(() => {
     if (audioChunks.length) {
       const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
-      console.log(audioBlob.size, audioBlob.type);
+      if (audioChunks.length >= 1) {
+        stopRecording();
+      }
     }
   }, [audioChunks]);
 
@@ -155,7 +154,6 @@ const PerformTask: React.FC = () => {
     apiService
       .assignTaskToCompleted({ userId, taskId, body, user })
       .then((result) => {
-        console.log(result);
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
