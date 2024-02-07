@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -45,6 +46,9 @@ public class User implements Serializable {
 
     @Column(name = "native_lang")
     private String nativeLanguage;
+
+    @Column(name = "create_time")
+    private LocalDateTime createTime;
 
     @OneToMany(mappedBy = "user")
     private Set<UserTask> userTasks;

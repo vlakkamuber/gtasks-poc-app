@@ -51,7 +51,8 @@ public class UserService {
                 .phoneNumber(userDTO.phoneNumber())
                 .cityName(userDTO.cityName())
                 .nativeLanguage(userDTO.nativeLanguage())
-                .preferredLanguage(userDTO.preferredLanguage());
+                .preferredLanguage(userDTO.preferredLanguage())
+                .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
 
         log.info("User creation started - {}",userDTO.userId());
         return new UserResponse(userRepository.save(user));
@@ -77,7 +78,8 @@ public class UserService {
                 .findById(userId)
                 .map(existingUser -> userRepository.save(userToSave.cityName(existingUser.cityName())
                         .nativeLanguage(existingUser.nativeLanguage())
-                        .preferredLanguage(existingUser.preferredLanguage())))
+                        .preferredLanguage(existingUser.preferredLanguage())
+                        .createTime(existingUser.createTime())))
                 .map(UserResponse::new)
                 .orElseThrow(userNotFound(userId));
     }
