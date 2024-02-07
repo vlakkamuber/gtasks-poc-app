@@ -237,6 +237,7 @@ public class UserTaskService {
             if (completedCount >= taskOptional.get().maxNoOfUsers()) {
                 task.isAvailable(false);
             }
+            task.lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
             taskRepository.save(task);
         }
 
