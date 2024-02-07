@@ -179,5 +179,7 @@
   "dcag.tasks.text.today": "today",
   "dcag.tasks.imageDigitization.questions.option.label.readable": "Readable",
   "dcag.tasks.imageDigitization.questions.option.label.nonreadable": "Non-Readable",
-  "dcag.tasks.text.required_questions": "Required question"
+  "dcag.tasks.text.required_questions": "Required question",
+  "dcag.tasks.text.fullscreen": "Fullscreen",
+  "dcag.tasks.closeBtn.label": "Close"
 }

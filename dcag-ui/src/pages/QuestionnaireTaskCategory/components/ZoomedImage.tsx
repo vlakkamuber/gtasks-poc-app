@@ -1,9 +1,11 @@
 import React,{useState} from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const ZoomableImage = ({imageUrl}) => {
   const [scale, setScale] = useState(1);
+  const { t } = useTranslation();
   const [isFullscreen, setIsFullscreen] = useState(false);
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -16,7 +18,7 @@ const ZoomableImage = ({imageUrl}) => {
         <div className="fullscreen-image">
           <img src={imageUrl} alt="a kitten" />
           <button onClick={toggleFullscreen} className="close-button">
-            Close
+            {t(`dcag.tasks.closeBtn.label`)}
           </button>
         </div>
       </div>
@@ -44,10 +46,10 @@ const ZoomableImage = ({imageUrl}) => {
             </div> */}
             <TransformComponent>
               <img src={imageUrl} alt="a kitten"  style={{width:'100%',height:'100%'}}/>
-              <button onClick={toggleFullscreen} className="fullscreen-button">
-                  Fullscreen
-                </button>
             </TransformComponent>
+            <button onClick={toggleFullscreen} className="fullscreen-button">
+            {t('dcag.tasks.text.fullscreen')}
+                </button>
           </React.Fragment>
         )}
       </TransformWrapper>
