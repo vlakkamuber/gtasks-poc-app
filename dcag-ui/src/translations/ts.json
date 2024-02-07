@@ -150,5 +150,12 @@
   "dcag.home.taskHub.rate": "రేట్ చేయండి",
   "dcag.tasks.limitReached": "మీరు రోజుకు రూ. 200 సంపాదన పరిమితిని చేరుకున్నారు! దయచేసి తిరిగి  రేపు రండి!",
   "dacg.tasks.pleaseWait": "దయచేసి వేచి ఉండండి...",
-  "dcag.report.taskType.General": "సాధారణం"
+  "dcag.report.taskType.General": "సాధారణం",
+  "dcag.tasks.text.today": "today",
+  "dcag.tasks.imageDigitization.questions.option.label.readable": "Readable",
+  "dcag.tasks.imageDigitization.questions.option.label.nonreadable": "Non-Readable",
+  "dcag.tasks.text.required_questions": "Required question",
+  "dcag.tasks.text.fullscreen": "Fullscreen",
+  "dcag.tasks.closeBtn.label": "Close"
+
 }

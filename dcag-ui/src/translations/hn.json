@@ -150,5 +150,11 @@
   "dcag.home.taskHub.rate": "रेट",
   "dcag.tasks.limitReached": "आप प्रति दिन की 200 रुपये की कमाई की सीमा तक पहुँच गए हैं! कृपया कल फिर वापस आएँ!",
   "dacg.tasks.pleaseWait": "कृपया इंतज़ार करें...",
-  "dcag.report.taskType.General": "सामान्य"
+  "dcag.report.taskType.General": "सामान्य",
+  "dcag.tasks.text.today": "today",
+  "dcag.tasks.imageDigitization.questions.option.label.readable": "Readable",
+  "dcag.tasks.imageDigitization.questions.option.label.nonreadable": "Non-Readable",
+  "dcag.tasks.text.required_questions": "Required question",
+  "dcag.tasks.text.fullscreen": "Fullscreen",
+  "dcag.tasks.closeBtn.label": "Close"
 }
