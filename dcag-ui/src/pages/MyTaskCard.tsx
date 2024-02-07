@@ -25,10 +25,10 @@ const MyTaskCard = ({ task }) => {
     <>
       <IonItem onClick={(e) => goToPerformTask(e, task)} className="clickable-cursor">
         <IonLabel>
-            <h2>{task.taskName}</h2>
+            <h2>{`Task #${task.taskId}`}</h2>
             {/* <p style={{color:'#048848'}}>{t(`dcag.home.taskHub.status.${task.status}`)}</p> */}
           {showPayout &&<p>
-            {t(`dcag.tasks.payouts.label`)}: ₹{task.price}
+            {t('dcag.home.taskHub.rate')}: ₹{task.price}
           </p>}
           {/* <p>
             <small>

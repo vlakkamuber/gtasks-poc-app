@@ -236,7 +236,7 @@ export default function QuestionnaireTaskCategory() {
               </HeadingXSmall>
               {showPayout && (
                 <p className="no-padding-margin">
-                  <span style={{ fontSize: '0.9rem' }}>{t(`dcag.tasks.payouts.label`)}:</span>{' '}
+                  <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}::</span>{' '}
                   <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
                 </p>
               )}

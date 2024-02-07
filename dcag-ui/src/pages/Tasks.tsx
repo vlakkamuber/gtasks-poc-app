@@ -384,7 +384,7 @@ const Tasks: React.FC = () => {
                                     )}
                                     {showPayout && (
                                       <p>
-                                        {t(`dcag.tasks.payouts.label`)}: ₹
+                                        {t('dcag.home.taskHub.rate')}: ₹
                                         {to2DecimalPlaces(TASK_RATE[key])}
                                       </p>
                                     )}
@@ -456,7 +456,7 @@ const Tasks: React.FC = () => {
                           <span style={{ display: 'flex' }}>
                             <h2>Default Task</h2>
                           </span>
-                          {showPayout && <p>{t(`dcag.tasks.payouts.label`)}: $2</p>}
+                          {showPayout && <p>{t('dcag.home.taskHub.rate')}: $2</p>}
                         </IonLabel>
                         <IonButton
                           slot="end"
