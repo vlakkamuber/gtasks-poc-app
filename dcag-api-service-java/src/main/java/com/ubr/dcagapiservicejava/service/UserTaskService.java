@@ -66,7 +66,8 @@ public class UserTaskService {
                         .user(new User().id(userId))
                         .task(new Task().id(taskId))
                         .status(status)
-                        .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+                        .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
+                        .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                 userTask = userTasksRepository.save(userTask);
                 log.info("User - {} In progress task - {} created", userId, taskId);
                 updateTaskStatus(taskId);
