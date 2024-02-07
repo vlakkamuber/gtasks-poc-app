@@ -54,20 +54,28 @@ public class UserTaskService {
 
         Optional<Task> task = taskRepository.findById(taskId);
 
+        UserTask userTask = null;
         if (task.isPresent()) {
 
             if (userIdAndTaskId.isPresent()) {
-                throw new TaskNotFoundException(String.format("User - %s for task - %s already exist: ", userId, task.get().name()));
+                userTask = userIdAndTaskId.get();
+                if(!userTask.status().equals(UserTaskStatus.CANCELLED)) {
+                    throw new TaskNotFoundException(String.format("User - %s for task - %s already exist: ", userId, task.get().name()));
+                }
             }
 
             if (userTaskList.isEmpty() || task.get().isAvailable()) {
                 UserTaskStatus status = userTaskDTO.status();
-                UserTask userTask = new UserTask()
-                        .user(new User().id(userId))
-                        .task(new Task().id(taskId))
-                        .status(status)
-                        .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
-                        .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+                if(userTask==null) {
+                    userTask = new UserTask()
+                            .user(new User().id(userId))
+                            .task(new Task().id(taskId))
+                            .status(status)
+                            .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
+                            .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+                }else{
+                    userTask.status(status).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+                }
                 userTask = userTasksRepository.save(userTask);
                 log.info("User - {} In progress task - {} created", userId, taskId);
                 updateTaskStatus(taskId);
@@ -209,17 +217,17 @@ public class UserTaskService {
     private void updateTaskStatus(Long taskId) {
 
         log.info("Updating user task status for task - {}", taskId);
-        Optional<List<UserTask>> userTaskList = userTasksRepository.findByTaskId(taskId);
+        List<UserTask> userTaskList = userTasksRepository.findByTaskIdAndUserType(taskId);
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         TaskStatus status = null;
         long completedCount = 0;
         long totalCount = 0;
         Task task = null;
-        if (userTaskList.isPresent() && taskOptional.isPresent()) {
-            totalCount = userTaskList.get().size();
+        if (!userTaskList.isEmpty() && taskOptional.isPresent()) {
+            totalCount = userTaskList.size();
             task = taskOptional.get();
 
-            completedCount = userTaskList.get().stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
+            completedCount = userTaskList.stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
             if (completedCount == 0) {
                 status = TaskStatus.IN_PROGRESS;
