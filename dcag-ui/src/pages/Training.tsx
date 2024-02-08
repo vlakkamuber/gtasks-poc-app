@@ -54,11 +54,11 @@ const Training: React.FC = () => {
       videoRef.current.play();
     }
   };
-  const onPlay = () => {
-    logEvent({ actions: 'click_video_play' });
+  const onPlay = (videoName) => {
+    logEvent({ actions: 'click_video_play', properties: videoName });
   };
-  const onPause = () => {
-    logEvent({ actions: 'click_video_pause' });
+  const onPause = (videoName) => {
+    logEvent({ actions: 'click_video_pause', properties: videoName });
   };
   return (
     <IonPage>
@@ -87,13 +87,13 @@ const Training: React.FC = () => {
                     <IonCardTitle>{snakeCaseToNormal(doc.name)}</IonCardTitle>
                   </IonCardHeader>
                   <video
-                  controlsList="nodownload"
+                    controlsList="nodownload"
                     ref={videoRef}
                     className="video-player"
                     poster="assets/audio_to_audio.png"
                     controls
-                    onPlay={onPlay}
-                    onPause={onPause}
+                    onPlay={() => onPlay(doc.name)}
+                    onPause={() => onPause(doc.name)}
                     style={{ height: '100%', width: '100%', objectFit: 'cover' }}>
                     <source src={doc.url} type="video/mp4" />
                     Your browser does not support the video tag.

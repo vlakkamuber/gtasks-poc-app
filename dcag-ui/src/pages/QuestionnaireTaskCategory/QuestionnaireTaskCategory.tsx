@@ -18,6 +18,7 @@ import LoadingComponent from '../../components/Loader';
 import ZoomedImage from './components/ZoomedImage';
 import { showPayout } from '../../utils/Settings';
 import useAnalytics from '../../hooks/useAnanlytics';
+import { capitalizeFirstLetter } from '../../utils/mapTeluguDigitsToNumeric';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -232,7 +233,7 @@ export default function QuestionnaireTaskCategory() {
               <div className="fixed-header-buffer"></div>
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
               <HeadingXSmall style={{ padding: 0, margin: 0 }}>
-                {`Task #${selectedTask.taskId}`}
+                {`${capitalizeFirstLetter(t('dcag.home.text.task'))} #${selectedTask.taskId}`}
               </HeadingXSmall>
               {showPayout && (
                 <p className="no-padding-margin">
