@@ -54,28 +54,22 @@ public class UserTaskService {
 
         Optional<Task> task = taskRepository.findById(taskId);
 
-        UserTask userTask = null;
         if (task.isPresent()) {
 
             if (userIdAndTaskId.isPresent()) {
-                userTask = userIdAndTaskId.get();
-                if(!userTask.status().equals(UserTaskStatus.CANCELLED)) {
+                if(!userIdAndTaskId.get().status().equals(UserTaskStatus.CANCELLED)) {
                     throw new TaskNotFoundException(String.format("User - %s for task - %s already exist: ", userId, task.get().name()));
                 }
             }
 
             if (userTaskList.isEmpty() || task.get().isAvailable()) {
                 UserTaskStatus status = userTaskDTO.status();
-                if(userTask==null) {
-                    userTask = new UserTask()
+                UserTask userTask = new UserTask()
                             .user(new User().id(userId))
                             .task(new Task().id(taskId))
                             .status(status)
                             .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                             .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
-                }else{
-                    userTask.status(status).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
-                }
                 userTask = userTasksRepository.save(userTask);
                 log.info("User - {} In progress task - {} created", userId, taskId);
                 updateTaskStatus(taskId);
@@ -119,21 +113,17 @@ public class UserTaskService {
         Optional<UserTask> userTaskOptional = userTasksRepository.findByUserIdAndTaskId(userId, taskId);
         return userTaskOptional
                 .map(userTask -> {
-                    UserTask updatedUserTask = new UserTask().id(userTask.id())
-                            .user(userTask.user())
-                            .task(userTask.task())
-                            .status(status)
+                    userTask.status(status)
                             .useInputAsOutput(userTaskDTO.useInput() != null && userTaskDTO.useInput())
                             .output(userTaskDTO.output())
                             .outputDesc(userTaskDTO.outputDesc())
-                            .startTime(userTask.startTime())
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                             .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
-                    updatedUserTask = userTasksRepository.save(updatedUserTask);
+                    userTask = userTasksRepository.save(userTask);
 
                     log.info("User - {}  task - {} status completed", userId, taskId);
                     updateTaskStatus(taskId);
-                    return updatedUserTask;
+                    return userTask;
                 })
                 .map(userTask -> userTaskToBasicUserTaskResponse(userTask, task))
                 .orElseThrow(DcagUtils.userNotFound(userId));
@@ -224,12 +214,14 @@ public class UserTaskService {
         long totalCount = 0;
         Task task = null;
         if (!userTaskList.isEmpty() && taskOptional.isPresent()) {
-            totalCount = userTaskList.size();
+            totalCount = userTaskList.stream().filter(e -> !e.status().equals(UserTaskStatus.CANCELLED)).count();
             task = taskOptional.get();
 
             completedCount = userTaskList.stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
-            if (completedCount == 0) {
+            if(totalCount==0){
+                status = TaskStatus.NEW;
+            }else if (completedCount == 0) {
                 status = TaskStatus.IN_PROGRESS;
             } else if (task.maxNoOfUsers() == completedCount) {
                 status = TaskStatus.COMPLETED;
