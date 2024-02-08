@@ -353,6 +353,11 @@ paths:
           required: true
           type: string
           description: "ID of the user"
+        - name: taskType
+          in: query
+          required: false
+          type: string
+          description: "taskType such as TEXT_TO_AUDIO"
       responses:
         '200':
           description: "A successful response"
@@ -367,6 +372,11 @@ paths:
           required: true
           type: string
           description: "ID of the user"
+        - name: taskType
+          in: query
+          required: false
+          type: string
+          description: "taskType such as TEXT_TO_AUDIO"
       responses:
         200:
           description: "Allow"

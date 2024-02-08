@@ -72,7 +72,7 @@ const ReportBug: React.FC = () => {
     let body = {
       description: description,
       summary: summary,
-      task_type: taskType[0].id
+      taskType: taskType
     };
     apiService
       .saveIssue({ userId, body, user })
@@ -94,7 +94,7 @@ const ReportBug: React.FC = () => {
     const otherDetails = JSON.stringify({
       description: description,
       summary: summary,
-      type: taskType[0].id
+      taskType: taskType
     });
     logEvent({ actions: 'click_submit', otherDetails });
     e.preventDefault();
