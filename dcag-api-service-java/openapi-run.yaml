@@ -353,7 +353,7 @@ paths:
           required: true
           type: string
           description: "ID of the user"
-        - name: taskType
+        - name: type
           in: query
           required: false
           type: string
