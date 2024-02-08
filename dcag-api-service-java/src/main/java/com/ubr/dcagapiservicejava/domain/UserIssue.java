@@ -26,6 +26,7 @@ public class UserIssue implements Serializable {
     @JoinColumn(name="user_id", nullable=false)
     private User user;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "task_type")
     private TaskType taskType;
 
