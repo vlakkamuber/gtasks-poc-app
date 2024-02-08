@@ -109,7 +109,7 @@ public class UserService {
         if(userRepository.findById(userId).isPresent()) {
 
             UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId))
-                    .taskType(userIssueDTO.taskType()).description(userIssueDTO.description())
+                    .taskType(userIssueDTO.type()).description(userIssueDTO.description())
                     .summary(userIssueDTO.summary())
                     .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
 
