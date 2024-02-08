@@ -114,7 +114,6 @@ const ReportBug: React.FC = () => {
   };
 
   const handleTaskTypeChange = (e) => {
-    debugger
     setTaskType(e.target.value);
   };
 
