@@ -67,7 +67,7 @@ const HomeScreen = () => {
           </IonButton>
         </div> */}
          <div
-          className="button-container"
+          className=""
           style={{}}
         >
           <ButtonDock
@@ -75,7 +75,7 @@ const HomeScreen = () => {
           //   <Button kind={KIND.secondary} key="first" onClick={()=>history.push("/signup")}>
           //     Sign up
           //   </Button>,
-          // ]}
+          // ]
           primaryAction={<Button onClick={()=>history.push("/login")}>{t(`dcag.home.login.label`)}</Button>}
         />
         </div>
