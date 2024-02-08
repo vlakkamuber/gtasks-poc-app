@@ -72,7 +72,7 @@ const ReportBug: React.FC = () => {
     let body = {
       description: description,
       summary: summary,
-      taskType: taskType
+      type: taskType
     };
     apiService
       .saveIssue({ userId, body, user })
@@ -82,7 +82,7 @@ const ReportBug: React.FC = () => {
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
-          history.push('/dashboard/tasks');
+          //history.push('/dashboard/tasks');
         }, 2000);
       })
       .catch((error) => {
@@ -94,7 +94,7 @@ const ReportBug: React.FC = () => {
     const otherDetails = JSON.stringify({
       description: description,
       summary: summary,
-      taskType: taskType
+      type: taskType
     });
     logEvent({ actions: 'click_submit', otherDetails });
     e.preventDefault();
