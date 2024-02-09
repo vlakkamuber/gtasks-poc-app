@@ -21,10 +21,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query("SELECT T FROM Task T WHERE T.isAvailable =:available and T.taskType =:type and" +
             " (:cities is null or T.city in :cities) and" +
-            " (:language is null or T.language = :language) and" +
+            " (:languages is null or T.language in :languages) and" +
             " T.id not in (select UT.task.id from UserTask UT where UT.task.id = T.id and UT.user.id =:userId) " +
             " order by RAND() limit :limit")
-    List<Task> findAvailableTasks(boolean available, String userId, TaskType type, int limit, List<String> cities, String language);
+    List<Task> findAvailableTasks(boolean available, String userId, TaskType type, int limit, List<String> cities, List<String> languages);
 
 
 //    @Query("SELECT T FROM Task T, User U WHERE ST_Distance_Sphere(T.location, :location) <= :distance")

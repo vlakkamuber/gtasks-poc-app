@@ -179,20 +179,21 @@ public class TaskService {
 
         List<String> cities = new ArrayList<>();
 
-        String language = null;
+        List<String> languages = new ArrayList<>();
 
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            language = user.preferredLanguage();
+            languages.add(user.preferredLanguage());
+            languages.add(user.nativeLanguage());
             cities = userCityTaskMap.get(user.cityName());
         }
         if(type!=TaskType.RECORD_AUDIO){
             cities = null;
         }
         if(type!=TaskType.LOCALIZATION_QUALITY){
-            language = null;
+            languages = null;
         }
-        return taskRepository.findAvailableTasks(available,userId, type, limit, (cities==null || cities.isEmpty())  ? null : cities, language).stream()
+        return taskRepository.findAvailableTasks(available,userId, type, limit, (cities==null || cities.isEmpty())  ? null : cities, (languages==null || languages.isEmpty())  ? null : languages).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
                 .collect(toList());
