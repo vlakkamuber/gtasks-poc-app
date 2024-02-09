@@ -1,16 +1,15 @@
 package com.ubr.dcagapiservicejava.service;
 
- 
+
 import com.ubr.dcagapiservicejava.domain.UserEvents;
 import com.ubr.dcagapiservicejava.domain.UserIssue;
-import com.ubr.dcagapiservicejava.dto.UserDTO;
-import com.ubr.dcagapiservicejava.dto.UserEventsDTO;
-import com.ubr.dcagapiservicejava.dto.UserIssueDTO;
-import com.ubr.dcagapiservicejava.dto.UserResponse;
+import com.ubr.dcagapiservicejava.domain.UserSurvey;
+import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import com.ubr.dcagapiservicejava.repository.UserEventsRepository;
 import com.ubr.dcagapiservicejava.repository.UserIssueRepository;
 import com.ubr.dcagapiservicejava.repository.UserRepository;
+import com.ubr.dcagapiservicejava.repository.UserSurveyRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,9 @@ public class UserService {
 
     @Autowired
     UserEventsRepository userEventsRepository;
+
+    @Autowired
+    UserSurveyRepository userSurveyRepository;
 
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
@@ -136,5 +138,19 @@ public class UserService {
         }else {
             throw new UserNotFoundException("User not found: " + userId);
         }
+    }
+
+    public Long saveUserSurvey(String userId, UserSurveyDTO userSurveyDTO) {
+
+        if(userRepository.findById(userId).isPresent()) {
+            UserSurvey userSurvey = userSurveyRepository.save(new UserSurvey().user(new User().id(userId))
+                    .status(userSurveyDTO.status()).survey(userSurveyDTO.survey())
+                    .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+            log.info("Saved Survey for user - {}",userId);
+            return userSurvey.id();
+        }else {
+            throw new UserNotFoundException("User not found: " + userId);
+        }
+
     }
 }

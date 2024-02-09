@@ -96,6 +96,19 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
+
+    @PostMapping("/{userId}/survey")
+    ResponseEntity<?> saveUserSurvey(@PathVariable String userId, @RequestBody UserSurveyDTO userSurveyDTO) {
+        Long savedId =  userService.saveUserSurvey(userId,userSurveyDTO);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}") //UriComponentsBuilder.fromPath("/{id}")
+                .buildAndExpand(savedId)
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
 //    @GetMapping("/tasks/nearer")
 //    public List<TaskResponse> getAllNearerTask(@RequestParam double latitude, @RequestParam double longitude, @RequestParam Integer distance){
 //        return taskService.findAAllNearerTasks(latitude, longitude, distance);

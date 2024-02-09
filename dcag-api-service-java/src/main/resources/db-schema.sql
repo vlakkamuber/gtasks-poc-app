@@ -86,6 +86,18 @@ CREATE TABLE user_events
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
+
+CREATE TABLE user_survey
+(
+    id              BIGINT       NOT NULL AUTO_INCREMENT,
+    user_id         VARCHAR(255) NOT NULL,
+    status          VARCHAR(255),
+    survey          JSON,
+    create_time     TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 -- creating index
 CREATE INDEX idx_user_tasks_user_id ON user_tasks (user_id);
 CREATE INDEX idx_user_tasks_task_id ON user_tasks (task_id);
