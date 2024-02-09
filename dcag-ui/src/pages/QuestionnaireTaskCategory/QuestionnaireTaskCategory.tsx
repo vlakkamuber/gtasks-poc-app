@@ -197,7 +197,7 @@ export default function QuestionnaireTaskCategory() {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding" fullscreen>
+      <IonContent className="ion-padding custom-scroll" fullscreen>
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         <div className="fixed-header" style={{ zIndex: '22222222' }}>
           <Block className="p-16 fixed-header-home-content ">
@@ -264,6 +264,7 @@ export default function QuestionnaireTaskCategory() {
                 </ParagraphSmall>
               )}
               <HeadingXSmall>{t('dcag.tasks.heading.label.task_questionnaire')}</HeadingXSmall>
+              <Block className="question-container">
               {questions.map((item) => (
                 <Question
                   key={item.id}
@@ -276,7 +277,7 @@ export default function QuestionnaireTaskCategory() {
                   logEvent={handleLogEvent}
                 />
               ))}
-              {selectedTask.status !== 'COMPLETED' && (
+               {selectedTask.status !== 'COMPLETED' && (
                 <LabelSmall>
                   <span style={{ color: theme.colors.contentNegative }}>*</span>{' '}
                   {t('dcag.tasks.text.required_questions')}
@@ -320,6 +321,8 @@ export default function QuestionnaireTaskCategory() {
                   }
                 />
               )}
+</Block>
+             
             </div>
           </>
         )}

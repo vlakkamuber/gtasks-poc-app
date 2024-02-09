@@ -393,7 +393,6 @@ label {
   right: 0;
 }
 .receipt-container {
-  height: 212px;
   background: #eeee;
 }
 .transform-component-module_wrapper__SPB86 {
@@ -534,6 +533,13 @@ select {
 .task-count-rate{
   display: flex;
   flex-direction: column;
+}
+.question-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 80vh); /* Adjust as needed */
+}
+ion-content.custom-scroll {
+  --overflow: hidden !important;
 }
 
 

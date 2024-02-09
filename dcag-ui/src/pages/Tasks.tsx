@@ -45,6 +45,7 @@ import { Button, SIZE, SHAPE } from 'baseui/button';
 import useAnalytics from '../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
 
+import SurveyModal from './SurveyQuestions/SurveyModal';
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
@@ -63,6 +64,15 @@ const Tasks: React.FC = () => {
   const [finalTasks, setFinalTasks] = useState([]);
   const [todayEarnings, setTodayEarnings] = useState(0);
   const [css, theme] = useStyletron();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
 
@@ -269,6 +279,9 @@ const Tasks: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start" style={{ '--padding-bottom': '77px' }}>
+      {completedCount > 10 && (
+        <SurveyModal isOpen={isOpen} onClose={closeModal} />
+      )}
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         {showPayout && (
           <div className="tasks-info" style={{ marginTop: '30px' }}>
