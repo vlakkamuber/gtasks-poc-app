@@ -12,9 +12,9 @@ import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/
 
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, TASK_RATE } from '../constants/constant';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const taskCategories = [
+const taskCategoriesData = [
   {
     id: 'RECORD_AUDIO',
     imageSrc: 'assets/record_audio.png',
@@ -90,14 +90,35 @@ const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
+  const [taskCategories,setTaskCategories] = useState(taskCategoriesData)
 
-  const { selectedCategory, setSelectedCategory } = useCategory();
+  const { selectedCategory, setSelectedCategory, location } = useCategory();
 
   useEffect(() => {
     logEvent({ actions: '' });
+    // Update task categories based on location
+    // if (location === 'OTHER' || location === 'OTHER') {
+    //   const updatedCategories = taskCategories.map(category => {
+    //     if (category.id === 'IMAGE_LABELLING' || category.id === 'MENU_PHOTO_REVIEW') {
+    //       return {
+    //         ...category,
+    //         id: category.id === 'IMAGE_LABELLING' ? 'IMAGE_QUESTIONS' : 'MENU_QUESTIONS',
+    //         title: t(`dcag.home.taskHub.${category.id}.title`),
+    //         show: true
+    //       };
+    //     }
+    //     return category;
+    //   });
+    //   setTaskCategories(updatedCategories);
+    // }
   }, []);
 
   const handleTaskCategory = (category) => {
+    if(category==="IMAGE_QUESTIONS"){
+      category="IMAGE_LABELLING"
+    }else if(category==="MENU_QUESTIONS"){
+      category="MENU_PHOTO_REVIEW"
+    }
     logEvent({
       actions: category === 'ALL' ? 'click_view_all_tasks' : 'click_banner',
       properties: category
