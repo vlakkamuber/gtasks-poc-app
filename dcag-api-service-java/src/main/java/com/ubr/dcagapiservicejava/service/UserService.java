@@ -1,6 +1,8 @@
 package com.ubr.dcagapiservicejava.service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ubr.dcagapiservicejava.domain.UserEvents;
 import com.ubr.dcagapiservicejava.domain.UserIssue;
 import com.ubr.dcagapiservicejava.domain.UserSurvey;
@@ -36,6 +38,8 @@ public class UserService {
 
     @Autowired
     UserSurveyRepository userSurveyRepository;
+
+    final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<UserResponse> findAll() {
         return userRepository.findAll().stream()
@@ -140,11 +144,11 @@ public class UserService {
         }
     }
 
-    public Long saveUserSurvey(String userId, UserSurveyDTO userSurveyDTO) {
+    public Long saveUserSurvey(String userId, UserSurveyDTO userSurveyDTO) throws JsonProcessingException {
 
         if(userRepository.findById(userId).isPresent()) {
             UserSurvey userSurvey = userSurveyRepository.save(new UserSurvey().user(new User().id(userId))
-                    .status(userSurveyDTO.status()).survey(userSurveyDTO.survey())
+                    .status(userSurveyDTO.status()).survey(objectMapper.writeValueAsString(userSurveyDTO.survey()))
                     .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
             log.info("Saved Survey for user - {}",userId);
             return userSurvey.id();

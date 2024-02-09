@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.service.TaskService;
 import com.ubr.dcagapiservicejava.service.UserService;
@@ -98,7 +99,7 @@ public class UserController {
 
 
     @PostMapping("/{userId}/survey")
-    ResponseEntity<?> saveUserSurvey(@PathVariable String userId, @RequestBody UserSurveyDTO userSurveyDTO) {
+    ResponseEntity<?> saveUserSurvey(@PathVariable String userId, @RequestBody UserSurveyDTO userSurveyDTO) throws JsonProcessingException {
         Long savedId =  userService.saveUserSurvey(userId,userSurveyDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()

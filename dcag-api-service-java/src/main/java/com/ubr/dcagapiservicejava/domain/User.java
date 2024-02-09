@@ -59,4 +59,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<UserEvents> userEvents;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserSurvey> userSurveys;
 }
