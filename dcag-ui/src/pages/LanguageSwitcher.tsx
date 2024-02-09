@@ -4,13 +4,17 @@ import React, { useEffect } from 'react';
 import { IonSelect, IonSelectOption, IonLabel } from '@ionic/react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
+import useAnalytics from '../hooks/useAnanlytics';
+import { ANALYTICS_PAGE, LANGUAGE_CODE_MAPPER } from '../constants/constant';
 
 const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
   const { language, setLanguage } = useLanguage();
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.account });
   const handleChange = (event: CustomEvent) => {
     const selectedLanguage = event.detail.value;
     console.log(`Selected Language: ${selectedLanguage}`);
+    logEvent({ actions: 'language_change', properties: LANGUAGE_CODE_MAPPER[selectedLanguage] });
     setLanguage(selectedLanguage);
     i18n.changeLanguage(selectedLanguage);
     localStorage.setItem('selectedLanguage', selectedLanguage);
