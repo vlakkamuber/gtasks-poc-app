@@ -39,6 +39,9 @@ public class UserEvents {
     @Column(name = "other_details")
     private String otherDetails;
 
+    @Column(name = "user_agent")
+    private String userAgent;
+
     @Column(name = "create_time")
     private LocalDateTime createTime;
 

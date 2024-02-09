@@ -129,6 +129,7 @@ public class UserService {
                     .sessionId(userEventsDTO.sessionId()).page(userEventsDTO.page())
                     .actions(userEventsDTO.actions()).properties(userEventsDTO.properties())
                     .city(userEventsDTO.city()).otherDetails(userEventsDTO.otherDetails())
+                    .userAgent(userEventsDTO.userAgent())
                     .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
             log.info("Saved User Events for user - {}",userId);
             return userEvents.id();

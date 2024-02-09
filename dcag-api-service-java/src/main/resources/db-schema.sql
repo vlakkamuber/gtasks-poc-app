@@ -53,7 +53,8 @@ CREATE TABLE user_tasks
     last_updated_time  TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (task_id) REFERENCES tasks (id)
+    FOREIGN KEY (task_id) REFERENCES tasks (id),
+    UNIQUE KEY unique_user_task_status (user_id, task_id, status)
 );
 
 -- UserIssues table
@@ -79,6 +80,7 @@ CREATE TABLE user_events
     city            VARCHAR(255),
     properties      VARCHAR(255),
     other_details   VARCHAR(255),
+    user_agent      VARCHAR(255),
     create_time     TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id)

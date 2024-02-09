@@ -12,7 +12,9 @@ public record UserEventsDTO(
 
         String properties,
 
-        String otherDetails
+        String otherDetails,
+
+        String userAgent
 
 ) {
 }
