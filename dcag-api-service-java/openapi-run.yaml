@@ -562,3 +562,34 @@ paths:
           description: "Allow"
         401:
           description: "Cors not allowed"
+  /users/{userId}/survey:
+    post:
+      security:
+        - firebase: [ ]
+      summary: "Create User survey"
+      operationId: "createUserSurvey"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+    options:
+      description: "Cors for createUserSurvey"
+      operationId: "createUserSurvey CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
