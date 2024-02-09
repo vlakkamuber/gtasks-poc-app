@@ -224,8 +224,9 @@ const apiService = {
   async recordAnalytics(
     userId,
     user,
-    { sessionId, actions, page, city, properties, otherDetails }
+    { sessionId, actions, page, city, properties, otherDetails, userAgent }
   ) {
+    if (!userId) return;
     const endpoint = `users/${userId}/analytics/events`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
@@ -237,7 +238,8 @@ const apiService = {
         page,
         city,
         properties,
-        otherDetails
+        otherDetails,
+        userAgent
       })
     });
     return response;

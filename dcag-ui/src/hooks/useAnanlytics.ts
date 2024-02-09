@@ -13,6 +13,7 @@ const useAnalytics = ({ page }: useAnalyticsArgsType) => {
   let userId = JSON.parse(localStorage.getItem('loggedInUser'));
   const sessionId = getSessionId(userId);
   const city = '';
+  const userAgent = navigator.userAgent;
   const logEvent = async ({ actions, properties = '', otherDetails = '' }: logEventArgsType) => {
     await apiService.recordAnalytics(userId, user, {
       sessionId,
@@ -20,7 +21,8 @@ const useAnalytics = ({ page }: useAnalyticsArgsType) => {
       page,
       city,
       properties,
-      otherDetails
+      otherDetails,
+      userAgent
     });
   };
   return logEvent;
