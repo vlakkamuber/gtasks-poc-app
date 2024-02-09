@@ -185,9 +185,9 @@ public class UserTaskService {
 
         double totalEarning = userTasks.stream().mapToDouble(e -> e.task().price()).sum();
 
-        LocalDate todayDate = DcagUtils.convertEpochToLocalDate(System.currentTimeMillis());
+        LocalDate todayDate = DcagUtils.convertEpochToSytemLocalDate(System.currentTimeMillis());
 
-        List<UserTask> todayTasks = userTasks.stream().filter(e -> e.completionTime().equals(todayDate.atStartOfDay())
+        List<UserTask> todayTasks = userTasks.stream().filter(e -> DcagUtils.convertLocalDateToSystemLocalDate(e.completionTime()).equals(todayDate.atStartOfDay())
                 || e.completionTime().isAfter(todayDate.atStartOfDay())).toList();
 
         double todayEarning = todayTasks.stream().mapToDouble(e -> e.task().price()).sum();
@@ -199,7 +199,7 @@ public class UserTaskService {
                     .todayCompletedTasks((long) todayTasks.size()).todayEarnings(todayEarning);
         } else {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
-                    .completedTaskCount(0L).totalEarning(0.0);
+                    .completedTaskCount(0L).totalEarning(0.0).todayEarnings(0.0).todayCompletedTasks(0L);
         }
         return summaryResponseBuilder.build();
     }

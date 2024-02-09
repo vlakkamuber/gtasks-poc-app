@@ -4,10 +4,7 @@ import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Supplier;
 
@@ -25,6 +22,17 @@ public class DcagUtils {
     public static LocalDate convertEpochToLocalDate(Long epoch) {
         Instant instant = Instant.ofEpochMilli(epoch);
         return instant.atZone(ZoneOffset.UTC).toLocalDate();
+    }
+
+    public static LocalDate convertEpochToSytemLocalDate(Long epoch) {
+        Instant instant = Instant.ofEpochMilli(epoch);
+        return instant.atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public static LocalDateTime convertLocalDateToSystemLocalDate(LocalDateTime localDateTime) {
+        ZonedDateTime zonedUTC = localDateTime.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.systemDefault());
+        return zonedIST.toLocalDateTime();
     }
 
     public static  long convertLocalDateTimeToEpoch(LocalDateTime dateTime) {
