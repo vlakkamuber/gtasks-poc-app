@@ -6,7 +6,7 @@ SELECT COALESCE(UE.id, ""), COALESCE(UE.user_id, ""), COALESCE(UE.session_id, ""
 FROM `dcag-db`.`user_events` UE
 JOIN  `dcag-db`.`users` U on UE.user_id = U.ID
 WHERE U.user_type = 'DRIVER'
-ORDER BY UE.create_time DESC
+ORDER BY 9 DESC;
 
 
 -- User Result
@@ -24,7 +24,7 @@ WHERE user_type = 'DRIVER';
 SELECT 'id', 'name', 'task_type', 'max_number_of_users', 'input', 'status', 'city', 'lang', 'currency', 'price', 'create_time', 'last_updated_time', 'due_time', 'start_time', 'is_available', 'task_category'
 UNION ALL
 SELECT COALESCE(id, ""), COALESCE(name, ""), COALESCE(task_type, ""), COALESCE(max_number_of_users, ""), COALESCE(input, ""), COALESCE(status, ""), COALESCE(city, ""), COALESCE(lang, ""), COALESCE(currency, ""), COALESCE(price, ""), COALESCE(convert_tz(create_time,'+00:00','+05:30'), ""), COALESCE(convert_tz(last_updated_time,'+00:00','+05:30'), ""), COALESCE(convert_tz(due_time,'+00:00','+05:30'), ""), COALESCE(convert_tz(start_time,'+00:00','+05:30'), ""), COALESCE(is_available, ""), COALESCE(task_category, "")
-FROM `dcag-db`.`tasks`
+FROM `dcag-db`.`tasks`;
 
 
 -- UserIssues Resuly
@@ -35,7 +35,7 @@ SELECT COALESCE(UI.id, ""), COALESCE(UI.user_id, ""), COALESCE(UI.task_type, "")
 FROM `dcag-db`.`user_issues` UI
 JOIN  `dcag-db`.`users` U on UI.user_id = U.ID
 WHERE U.user_type = 'DRIVER'
-ORDER BY UI.create_time DESC;
+ORDER BY 6 DESC;
 
 
 -- UserTasks Result
@@ -43,7 +43,34 @@ ORDER BY UI.create_time DESC;
 
 SELECT 'id', 'user_id', 'task_id', 'status', 'use_input_as_output', 'output', 'output_desc', 'start_time', 'completion_time', 'last_updated_time'
 UNION ALL
-SELECT COALESCE(UT.id, ""), COALESCE(UT.user_id, ""), COALESCE(UT.task_id, ""), COALESCE(UT.status, ""), COALESCE(UT.use_input_as_output, ""), COALESCE(UT.output, ""), COALESCE(UT.output_desc, ""), COALESCE(convert_tz(UT.start_time,'+00:00','+05:30'), ""), COALESCE(convert_tz(UT.completion_time,'+00:00','+05:30'), ""), COALESCE(convert_tz(UI.last_updated_time,'+00:00','+05:30'), "")
-FROM `dcag-db`.`user_tasks` UT on UT.user_id = U.ID
+SELECT COALESCE(UT.id, ""), COALESCE(UT.user_id, ""), COALESCE(UT.task_id, ""), COALESCE(UT.status, ""), COALESCE(UT.use_input_as_output, ""), COALESCE(UT.output, ""), COALESCE(UT.output_desc, ""), COALESCE(convert_tz(UT.start_time,'+00:00','+05:30'), ""), COALESCE(convert_tz(UT.completion_time,'+00:00','+05:30'), ""), COALESCE(convert_tz(UT.last_updated_time,'+00:00','+05:30'), "")
+FROM `dcag-db`.`user_tasks` UT
+JOIN  `dcag-db`.`users` U on UT.user_id = U.ID
 WHERE U.user_type = 'DRIVER'
-ORDER BY UT.create_time DESC;
+ORDER BY 10 DESC;
+
+
+-- UserTask Status
+
+SELECT 'user_id','phone_number','task_type','status','city_name','start_time (IST)'
+UNION ALL
+select COALESCE(UT.user_id, ''), COALESCE(U.phone_number, ''), COALESCE(T.task_type, ''),COALESCE(UT.status, ''),COALESCE(U.city_name, ''),COALESCE(convert_tz(UT.start_time,'+00:00','+05:30'), '')
+FROM `dcag-db`.`user_tasks` UT
+JOIN `dcag-db`.`tasks` T ON UT.task_id = T.id
+JOIN  `dcag-db`.`users` U on UT.user_id = U.ID
+where U.user_type = 'DRIVER'
+order by 6 desc;
+
+
+-- UserTask Output
+
+SELECT 'id', 'user_id', 'task_id', 'task_type', 'output', 'last_updated_time (IST)'
+UNION ALL
+SELECT UT.id, UT.user_id, UT.task_id, T.task_type, COALESCE(UT.output, ""), COALESCE(convert_tz(UT.last_updated_time,'+00:00','+05:30'), "")
+FROM `dcag-db`.`user_tasks` UT
+JOIN `dcag-db`.`tasks` T ON UT.task_id = T.id
+JOIN  `dcag-db`.`users` U on UT.user_id = U.ID
+WHERE UT.status = 'COMPLETED'
+AND T.task_type = 'RECEIPT_DIGITIZATION'
+AND U.user_type = 'DRIVER'
+ORDER BY 6 desc;
