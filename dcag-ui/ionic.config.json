@@ -1,5 +1,5 @@
 {
-  "name": "gtasks-app-poc",
+  "name": "app-collections",
   "integrations": {
     "capacitor": {}
   },

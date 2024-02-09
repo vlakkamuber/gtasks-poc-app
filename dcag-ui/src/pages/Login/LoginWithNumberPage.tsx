@@ -9,6 +9,7 @@ import NavigationBar from './NavigationBar';
 import { Toast, KIND } from 'baseui/toast';
 import { HeadingSmall, ParagraphXSmall } from 'baseui/typography';
 import useAnalytics from '../../hooks/useAnanlytics';
+import { useCategory } from '../../context/TaskCategoryContext';
 
 type Props = {
   setSendOtpResponse: Dispatch<SetStateAction<string>>;
@@ -18,6 +19,7 @@ type Props = {
 
 const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist }: Props) => {
   const { t } = useTranslation();
+  const { location, setLocation } = useCategory();
   const [selectedCountry, setSelectedCountry] = useState(COUNTRY_OPTIONS[0]);
   const [phone, setPhone] = useState('');
   const [isValidPhone, setIsValidPhone] = useState(true);
@@ -65,6 +67,14 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
         logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: success` });
         setIsNextDisabled(true);
         setIsUserExist(true);
+        if(res.cityName){
+          localStorage.setItem("location",res.cityName)
+          setLocation(res.cityName);
+        }else{
+          localStorage.setItem("location","OTHER")
+          setLocation("OTHER");
+        }
+        
         sendOtp(phone);
       } else {
         logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: failed` });

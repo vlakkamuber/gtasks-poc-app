@@ -34,7 +34,8 @@ import {
   taskCategoriesToShow,
   TasksOrder,
   TASK_RATE,
-  ANALYTICS_PAGE
+  ANALYTICS_PAGE,
+  TaskOrderByLocation,
 } from '../constants/constant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
@@ -57,7 +58,7 @@ const Tasks: React.FC = () => {
   const [showLoading, setShowLoading] = useState(false);
   const history = useHistory();
   const { user } = useUserAuth();
-  const { selectedCategory } = useCategory();
+  const { selectedCategory,location } = useCategory();
   const [isImageUploadAvailable, setIsImageUploadAvailable] = useState(false);
   const [finalTasks, setFinalTasks] = useState([]);
   const [todayEarnings, setTodayEarnings] = useState(0);
@@ -115,13 +116,12 @@ const Tasks: React.FC = () => {
       setIsImageUploadAvailable(isImageUploadAvailable);
 
       const finalTaskList = [...filteredMyTasks, ...availableTasks];
-
       setFinalTasks(finalTaskList);
       // Temporary - this filter should be removed in the future;
       const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
         ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
         : finalTaskList;
-      const orderedTasks = orderTasksByType(result, TasksOrder);
+      const orderedTasks = orderTasksByType(result, TaskOrderByLocation[location]);
       setAvailableCount(orderedTasks.length);
       setTasks(groupBy(orderedTasks, 'taskType'));
     } catch (error) {
@@ -237,7 +237,7 @@ const Tasks: React.FC = () => {
     const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
       ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
       : finalTaskList;
-    const orderedTasks = orderTasksByType(result, TasksOrder);
+    const orderedTasks = orderTasksByType(result, TaskOrderByLocation[location]);
 
     setAvailableCount(orderedTasks.length);
     setTasks(groupBy(orderedTasks, 'taskType'));
