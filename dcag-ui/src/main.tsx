@@ -17,9 +17,7 @@ root.render(
     <CategoryProvider>
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
-      {/* <LanguageProvider> */}
        <App/>
-       {/* </LanguageProvider> */}
       </BaseProvider>
     </StyletronProvider>
     </CategoryProvider>
