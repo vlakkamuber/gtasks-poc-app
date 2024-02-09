@@ -521,14 +521,10 @@ select {
   position: absolute;
   right: 30px;
   padding: 10px;
-  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.fullscreen-button:hover {
-  background-color: #f0f0f0;
+  color:#000;
 }
 .task-count-rate{
   display: flex;
