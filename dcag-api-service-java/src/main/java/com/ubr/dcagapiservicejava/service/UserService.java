@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.ubr.dcagapiservicejava.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static java.util.stream.Collectors.toList;
@@ -147,9 +148,15 @@ public class UserService {
     public Long saveUserSurvey(String userId, UserSurveyDTO userSurveyDTO) throws JsonProcessingException {
 
         if(userRepository.findById(userId).isPresent()) {
-            UserSurvey userSurvey = userSurveyRepository.save(new UserSurvey().user(new User().id(userId))
-                    .status(userSurveyDTO.status()).survey(objectMapper.writeValueAsString(userSurveyDTO.survey()))
-                    .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
+
+            Optional<UserSurvey> userSurveyOptional = userSurveyRepository.findByUserId(userId);
+
+            UserSurvey userSurvey = userSurveyOptional.orElseGet(UserSurvey::new);
+
+            userSurvey.user(new User().id(userId)).status(userSurveyDTO.status()).survey(objectMapper.writeValueAsString(userSurveyDTO.survey()))
+                    .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+
+            userSurvey = userSurveyRepository.save(userSurvey);
             log.info("Saved Survey for user - {}",userId);
             return userSurvey.id();
         }else {

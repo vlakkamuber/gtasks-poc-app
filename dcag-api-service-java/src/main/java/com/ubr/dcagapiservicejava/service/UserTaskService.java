@@ -2,9 +2,11 @@ package com.ubr.dcagapiservicejava.service;
 
 import com.ubr.dcagapiservicejava.domain.Task;
 import com.ubr.dcagapiservicejava.domain.User;
+import com.ubr.dcagapiservicejava.domain.UserSurvey;
 import com.ubr.dcagapiservicejava.domain.UserTask;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
+import com.ubr.dcagapiservicejava.domain.enums.UserSurveyStatus;
 import com.ubr.dcagapiservicejava.domain.enums.UserTaskStatus;
 import com.ubr.dcagapiservicejava.dto.UserTaskDTO;
 import com.ubr.dcagapiservicejava.dto.UserTaskResponse;
@@ -12,6 +14,7 @@ import com.ubr.dcagapiservicejava.dto.UserTaskSummaryResponse;
 import com.ubr.dcagapiservicejava.error.TaskException;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
+import com.ubr.dcagapiservicejava.repository.UserSurveyRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
@@ -41,6 +44,9 @@ public class UserTaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private UserSurveyRepository userSurveyRepository;
 
     public UserTaskResponse createUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
 
@@ -181,6 +187,14 @@ public class UserTaskService {
 
     public UserTaskSummaryResponse getUserTasksSummary(String userId) {
 
+
+        Optional<UserSurvey> userSurvey = userSurveyRepository.findByUserId(userId);
+
+        UserSurveyStatus status = null;
+        if(userSurvey.isPresent()){
+            status = userSurvey.get().status();
+        }
+
         List<UserTask> userTasks = userTasksRepository.findByUserIdAndStatus(userId, UserTaskStatus.COMPLETED);
 
         double totalEarning = userTasks.stream().mapToDouble(e -> e.task().price()).sum();
@@ -196,10 +210,12 @@ public class UserTaskService {
         if (!userTasks.isEmpty()) {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount((long) userTasks.size()).totalEarning(totalEarning)
-                    .todayCompletedTasks((long) todayTasks.size()).todayEarnings(todayEarning);
+                    .todayCompletedTasks((long) todayTasks.size()).todayEarnings(todayEarning)
+                    .surveyStatus(status);
         } else {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
-                    .completedTaskCount(0L).totalEarning(0.0).todayEarnings(0.0).todayCompletedTasks(0L);
+                    .completedTaskCount(0L).totalEarning(0.0).todayEarnings(0.0).todayCompletedTasks(0L)
+                    .surveyStatus(status);
         }
         return summaryResponseBuilder.build();
     }

@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.dto;
 
+import com.ubr.dcagapiservicejava.domain.enums.UserSurveyStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,6 @@ public class UserTaskSummaryResponse {
     private Long todayCompletedTasks;
 
     private Double todayEarnings;
+
+    private UserSurveyStatus surveyStatus;
 }
