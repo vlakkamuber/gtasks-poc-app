@@ -78,7 +78,10 @@ export default function QuestionnaireTaskCategory() {
     if (selectedTask && selectedTask.taskType === 'RECEIPT_DIGITIZATION') {
       if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'yes') {
         const questionsData = questionnaireData[selectedTask.taskType];
-        setQuestions(questionsData);
+        setQuestions(questionsData.filter((question) => question.showIfReadable));
+      } else if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'no') {
+        const questionsData = questionnaireData[selectedTask.taskType];
+        setQuestions(questionsData.filter((question) => question.showIfUnreadable));
       } else {
         const questionsData = questionnaireData[selectedTask.taskType];
         setQuestions([questionsData[0]]);
@@ -265,64 +268,63 @@ export default function QuestionnaireTaskCategory() {
               )}
               <HeadingXSmall>{t('dcag.tasks.heading.label.task_questionnaire')}</HeadingXSmall>
               <Block className="question-container">
-              {questions.map((item) => (
-                <Question
-                  key={item.id}
-                  question={item}
-                  value={formState[item.questionId]}
-                  onChange={(questionId, value) => {
-                    setFormState((state) => ({ ...state, [questionId]: value }));
-                  }}
-                  isCompleted={selectedTask.status === 'COMPLETED' ? true : false}
-                  logEvent={handleLogEvent}
-                />
-              ))}
-               {selectedTask.status !== 'COMPLETED' && (
-                <LabelSmall>
-                  <span style={{ color: theme.colors.contentNegative }}>*</span>{' '}
-                  {t('dcag.tasks.text.required_questions')}
-                </LabelSmall>
-              )}
-              {selectedTask.status !== 'COMPLETED' && (
-                <ButtonDock
-                  primaryAction={
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={!isFormValid() || selectedTask.status === 'COMPLETED'}>
-                      {t('dcag.home.btn.submit.label')}
-                    </Button>
-                  }
-                  dismissiveAction={
-                    <>
+                {questions.map((item) => (
+                  <Question
+                    key={item.id}
+                    question={item}
+                    value={formState[item.questionId]}
+                    onChange={(questionId, value) => {
+                      setFormState((state) => ({ ...state, [questionId]: value }));
+                    }}
+                    isCompleted={selectedTask.status === 'COMPLETED' ? true : false}
+                    logEvent={handleLogEvent}
+                  />
+                ))}
+                {selectedTask.status !== 'COMPLETED' && (
+                  <LabelSmall>
+                    <span style={{ color: theme.colors.contentNegative }}>*</span>{' '}
+                    {t('dcag.tasks.text.required_questions')}
+                  </LabelSmall>
+                )}
+                {selectedTask.status !== 'COMPLETED' && (
+                  <ButtonDock
+                    primaryAction={
                       <Button
-                        kind={KIND.tertiary}
-                        id="cancel-task"
-                        colors={{ color: '#E11900', backgroundColor: 'transparent' }}
-                        onClick={onClickCancel}>
-                        {t(`dcag.home.btn.cancel.label`)}
+                        onClick={handleSubmit}
+                        disabled={!isFormValid() || selectedTask.status === 'COMPLETED'}>
+                        {t('dcag.home.btn.submit.label')}
                       </Button>
-                      <IonAlert
-                        header={t('dcag.tasks.cancelAlert.Header')}
-                        message={t('dcag.tasks.cancelAlert')}
-                        trigger="cancel-task"
-                        buttons={[
-                          {
-                            text: t('dcag.tasks.cancelAlert.No'),
-                            role: 'cancel',
-                            handler: closeCancelModal
-                          },
-                          {
-                            text: t('dcag.tasks.cancelAlert.Yes'),
-                            role: 'confirm',
-                            handler: handleCancel
-                          }
-                        ]}></IonAlert>
-                    </>
-                  }
-                />
-              )}
-</Block>
-             
+                    }
+                    dismissiveAction={
+                      <>
+                        <Button
+                          kind={KIND.tertiary}
+                          id="cancel-task"
+                          colors={{ color: '#E11900', backgroundColor: 'transparent' }}
+                          onClick={onClickCancel}>
+                          {t(`dcag.home.btn.cancel.label`)}
+                        </Button>
+                        <IonAlert
+                          header={t('dcag.tasks.cancelAlert.Header')}
+                          message={t('dcag.tasks.cancelAlert')}
+                          trigger="cancel-task"
+                          buttons={[
+                            {
+                              text: t('dcag.tasks.cancelAlert.No'),
+                              role: 'cancel',
+                              handler: closeCancelModal
+                            },
+                            {
+                              text: t('dcag.tasks.cancelAlert.Yes'),
+                              role: 'confirm',
+                              handler: handleCancel
+                            }
+                          ]}></IonAlert>
+                      </>
+                    }
+                  />
+                )}
+              </Block>
             </div>
           </>
         )}
