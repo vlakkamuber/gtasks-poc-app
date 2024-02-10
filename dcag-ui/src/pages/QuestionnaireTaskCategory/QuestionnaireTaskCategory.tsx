@@ -249,7 +249,9 @@ export default function QuestionnaireTaskCategory() {
               </HeadingXSmall>
               {/* <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg> */}
               <Block className="receipt-container">
-                <ZoomedImage imageUrl={selectedTask.inputUrl}></ZoomedImage>
+                <ZoomedImage
+                  imageUrl={selectedTask.inputUrl}
+                  taskId={selectedTask.taskId}></ZoomedImage>
               </Block>
               {selectedTask.taskType == 'LOCALIZATION_QUALITY' && (
                 <ParagraphSmall>
