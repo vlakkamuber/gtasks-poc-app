@@ -19,6 +19,7 @@ import ZoomedImage from './components/ZoomedImage';
 import { showPayout } from '../../utils/Settings';
 import useAnalytics from '../../hooks/useAnanlytics';
 import { capitalizeFirstLetter } from '../../utils/mapTeluguDigitsToNumeric';
+import Banner from '../../components/Banner';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -32,6 +33,8 @@ export default function QuestionnaireTaskCategory() {
   const [showLoading, setShowLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [present, dismiss] = useIonLoading();
+  const [isBannerVisible, setIsBannerVisible] = useState(false);
+
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const getTaskDetail = async () => {
     let taskId = params.id;
@@ -72,6 +75,21 @@ export default function QuestionnaireTaskCategory() {
       }
     }
   }, [selectedTask]);
+
+  useEffect(() => {
+    if (selectedTask) {
+      const { taskType } = selectedTask;
+      const taskTypes = localStorage.getItem('bannerShownForTaskTypes') ?? '[]';
+      const taskTypesArray = JSON.parse(taskTypes);
+      if(taskTypesArray.find((task: string) => task === taskType)) {
+        setIsBannerVisible(false);
+      } else {
+        setIsBannerVisible(true);
+        taskTypesArray.push(taskType);
+        localStorage.setItem('bannerShownForTaskTypes', JSON.stringify(taskTypesArray));
+      }
+    }
+  }, [selectedTask])
 
   useEffect(() => {
     console.log(selectedTask, formState);
@@ -201,6 +219,7 @@ export default function QuestionnaireTaskCategory() {
   return (
     <IonPage>
       <IonContent className="ion-padding custom-scroll" fullscreen>
+        <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible} />
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         <div className="fixed-header" style={{ zIndex: '22222222' }}>
           <Block className="p-16 fixed-header-home-content ">
