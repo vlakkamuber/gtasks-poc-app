@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, SIZE, ROLE } from 'baseui/modal';
 import { KIND as ButtonKind } from "baseui/button";
 import {ParagraphSmall} from 'baseui/typography';
@@ -21,6 +21,14 @@ const SurveyModal = ({ isOpen, onClose }) => {
   const [formState,setFormState] = useState({})
   const [showToast, setShowToast] = useState(false);
 
+  useEffect(()=>{
+    const updatedFormState = {};
+    questions.forEach((item) => {
+      updatedFormState[item.questionId] =  '';
+    });
+    setFormState(updatedFormState);
+  },[])
+
   const assignSurveyToCompleted = (formDataForSubmission) => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
@@ -42,11 +50,15 @@ const SurveyModal = ({ isOpen, onClose }) => {
       });
   };
   const assignSurveyToSkipped = () => {
+    const formDataForSubmission = Object.keys(formState).map((questionId) => ({
+      question:questionId,
+      answer: ""
+    }));
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .assignSurveyToSkipped({
         userId,
-        body: { status: 'SKIPPED' },
+        body: { status: 'SKIPPED',survey: formDataForSubmission },
         user
       })
       .then((result) => {
@@ -60,6 +72,14 @@ const SurveyModal = ({ isOpen, onClose }) => {
         console.error('Error fetching task data:', error);
       });
   };
+  const isFormValid = () => {
+    for (const question of questions) {
+      if (!formState[question.questionId]) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const onSaveSurvey = (e) => {
     e.preventDefault();
@@ -68,7 +88,6 @@ const SurveyModal = ({ isOpen, onClose }) => {
       question:questionId,
       answer: formState[questionId]
     }));
-    console.log(formDataForSubmission)
     assignSurveyToCompleted(formDataForSubmission)
   };
 
@@ -119,7 +138,7 @@ const SurveyModal = ({ isOpen, onClose }) => {
                     }
                   }}
                   primaryAction={
-                    <Button onClick={(e) => onSaveSurvey(e)}>
+                    <Button onClick={(e) => onSaveSurvey(e)} disabled={!isFormValid()}>
                       {t(`dcag.home.btn.submit.label`)}
                     </Button>
                   }

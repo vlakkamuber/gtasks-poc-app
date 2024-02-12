@@ -56,9 +56,15 @@ export default function Question({
               required={required}
               onChange={handleRadioClick}
               name={questionId}
-              align={ALIGN.horizontal}>
+              align={ALIGN.vertical}>
               {options.map((option) => (
-                <Radio key={option.value} value={option.value} disabled={isDisabled}>
+                <Radio key={option.value} value={option.value} disabled={isDisabled} overrides={{
+                  Root: {
+                    style: {
+                      color: '#808080 !important',
+                    },
+                  },
+                }}>
                   {t(option.label)}
                 </Radio>
               ))}
