@@ -393,10 +393,10 @@ label {
   right: 0;
 }
 .receipt-container {
-  height: 50vh;
+  height: 40vh;
 }
 ion-content.custom-scroll {
-  height: 100vh;
+  height: 100vh !important;
   --overflow: hidden !important;
 }
 .transform-component-module_wrapper__SPB86 {
