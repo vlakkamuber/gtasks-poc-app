@@ -236,5 +236,7 @@
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.IMAGE_NOT_CLEAR":"Image not clear",
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.IMAGE_IS_CUT":"Image is cut",
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.FADED_CURSHED":"Faded/Crushed",
-  "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.POOR_LIGHTING":"Poor lighting"
+  "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.POOR_LIGHTING":"Poor lighting",
+  "dcag.tasks.IMAGE_LABELLING.CHENNAI_HYD.title":"Image Questions",
+  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"Menu Questions"
 }

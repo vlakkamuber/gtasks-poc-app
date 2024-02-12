@@ -86,31 +86,51 @@ const taskCategoriesData = [
     timeUnit: 'dcag.home.card.duration.seconds'
   }
 ];
+
+const reshuffleTaskCategories = (tasks,order)=>{
+  const tasksByType = {};
+  order.forEach((type) => {
+    tasksByType[type] = [];
+  });
+  tasks.forEach((task) => {
+    if (tasksByType.hasOwnProperty(task.id)) {
+      tasksByType[task.id].push(task);
+    } else {
+      console.warn(`Unknown task type: ${task.taskType}`);
+    }
+  });
+  const orderedTasks = order.reduce((accumulator, id) => {
+    return accumulator.concat(tasksByType[id]);
+  }, []);
+
+  return orderedTasks;
+}
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
-  const [taskCategories,setTaskCategories] = useState(taskCategoriesData)
-
   const { selectedCategory, setSelectedCategory, location } = useCategory();
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
+  const [taskCategories,setTaskCategories] = useState((location==="DELHI" || location==="PUNE" ? reshuffleTaskCategories(taskCategoriesData,['IMAGE_LABELLING', 'MENU_PHOTO_REVIEW', 'LOCALIZATION_QUALITY', 'RECEIPT_DIGITIZATION', 'RECORD_AUDIO']) : taskCategoriesData))
+
+  
 
   useEffect(() => {
     logEvent({ actions: '' });
-    // Update task categories based on location
-    // if (location === 'OTHER' || location === 'OTHER') {
-    //   const updatedCategories = taskCategories.map(category => {
-    //     if (category.id === 'IMAGE_LABELLING' || category.id === 'MENU_PHOTO_REVIEW') {
-    //       return {
-    //         ...category,
-    //         id: category.id === 'IMAGE_LABELLING' ? 'IMAGE_QUESTIONS' : 'MENU_QUESTIONS',
-    //         title: t(`dcag.home.taskHub.${category.id}.title`),
-    //         show: true
-    //       };
-    //     }
-    //     return category;
-    //   });
-    //   setTaskCategories(updatedCategories);
-    // }
+    //Update task categories based on location
+    if (location === 'CHENNAI' || location === 'HYDERABAD') {
+      const updatedCategories = taskCategories.map(category => {
+        if (category.id === 'IMAGE_LABELLING' || category.id === 'MENU_PHOTO_REVIEW') {
+          return {
+            ...category,
+            id: category.id === 'IMAGE_LABELLING' ? 'IMAGE_QUESTIONS' : 'MENU_QUESTIONS',
+            title: t(`dcag.home.taskHub.${category.id}.title`),
+            show: true
+          };
+        }
+        return category;
+      });
+      setTaskCategories(updatedCategories);
+    }
   }, []);
 
   const handleTaskCategory = (category) => {

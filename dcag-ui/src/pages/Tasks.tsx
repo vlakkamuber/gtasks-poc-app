@@ -132,7 +132,7 @@ const Tasks: React.FC = () => {
       const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
         ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
         : finalTaskList;
-      const orderedTasks = orderTasksByType(result, TaskOrderByLocation[location]);
+      const orderedTasks = orderTasksByType(result, TaskOrderByLocation[location] || TaskOrderByLocation["OTHER"]);
       setAvailableCount(orderedTasks.length);
       setTasks(groupBy(orderedTasks, 'taskType'));
     } catch (error) {
@@ -249,7 +249,7 @@ const Tasks: React.FC = () => {
     const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
       ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
       : finalTaskList;
-    const orderedTasks = orderTasksByType(result, TaskOrderByLocation[location]);
+    const orderedTasks = orderTasksByType(result,  TaskOrderByLocation[location] || TaskOrderByLocation["OTHER"]);
 
     setAvailableCount(orderedTasks.length);
     setTasks(groupBy(orderedTasks, 'taskType'));
@@ -376,7 +376,7 @@ const Tasks: React.FC = () => {
                               alignItems: 'center'
                             }}>
                             <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                              {t(`dcag.tasks.${key}.title`)}
+                            {((location === 'HYDERABAD' || location === 'CHENNAI') && (key==="IMAGE_LABELLING" || key==="MENU_PHOTO_REVIEW" ))? t(`dcag.tasks.${key}.CHENNAI_HYD.title`): t(`dcag.tasks.${key}.title`)}
                             </h1>
                             {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}

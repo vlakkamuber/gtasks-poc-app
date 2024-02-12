@@ -20,6 +20,7 @@ import { showPayout } from '../../utils/Settings';
 import useAnalytics from '../../hooks/useAnanlytics';
 import { capitalizeFirstLetter } from '../../utils/mapTeluguDigitsToNumeric';
 import Banner from '../../components/Banner';
+import { useCategory } from '../../context/TaskCategoryContext';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -34,6 +35,7 @@ export default function QuestionnaireTaskCategory() {
   const [questions, setQuestions] = useState([]);
   const [present, dismiss] = useIonLoading();
   // const [isBannerVisible, setIsBannerVisible] = useState(false);
+  const {location } = useCategory();
 
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const getTaskDetail = async () => {
@@ -264,7 +266,7 @@ export default function QuestionnaireTaskCategory() {
                 </p>
               )}
               <HeadingXSmall>
-                {t(`dcag.home.taskHub.${selectedTask.taskType}.title`)}{' '}
+              {((location === 'HYDERABAD' || location === 'CHENNAI') && (selectedTask.taskType==="IMAGE_LABELLING" || selectedTask.taskType==="MENU_PHOTO_REVIEW" ))? t(`dcag.tasks.${selectedTask.taskType}.CHENNAI_HYD.title`): t(`dcag.tasks.${selectedTask.taskType}.title`)}
               </HeadingXSmall>
               {/* <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg> */}
               <Block className="receipt-container">

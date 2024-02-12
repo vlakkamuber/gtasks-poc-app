@@ -33,6 +33,8 @@
   "dcag.home.taskHub.MENU_PHOTO_REVIEW.subtitle": "फ़ोटो देखें और इसके बारे में जवाब दें",
   "dcag.home.taskHub.MENU_QUESTIONS.title": "मेनू सवाल",
   "dcag.home.taskHub.IMAGE_QUESTIONS.title": "फ़ोटो सवाल",
+  "dcag.home.taskHub.IMAGE_QUESTIONS.subtitle": "फ़ोटो देखें और इसके बारे में जवाब दें",
+  "dcag.home.taskHub.MENU_QUESTIONS.subtitle": "फ़ोटो देखें और इसके बारे में जवाब दें",
   "dcag.home.page.heading": "होम",
   "dcag.home.bottomTabs.home": "होम",
   "dcag.home.bottomTabs.tasks": "काम",
@@ -234,5 +236,7 @@
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.IMAGE_NOT_CLEAR":"फ़ोटो साफ नहीं है ",
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.IMAGE_IS_CUT":"फ़ोटो कटी हुई है t",
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.FADED_CURSHED":"फ़ोटो धुँधली/मुड़ी-तुड़ी हुई है ",
-  "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.POOR_LIGHTING":"फ़ोटो पर ठीक से रोशनी नहीं है "
+  "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.POOR_LIGHTING":"फ़ोटो पर ठीक से रोशनी नहीं है ",
+  "dcag.tasks.IMAGE_LABELLING.CHENNAI_HYD.title":"मेनू सवाल",
+  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"फ़ोटो सवाल"
 }
