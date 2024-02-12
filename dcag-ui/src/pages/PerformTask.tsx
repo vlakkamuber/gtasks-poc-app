@@ -53,7 +53,7 @@ const PerformTask: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [useInput, setUseInput] = useState(null);
-  // const [isBannerVisible, setIsBannerVisible] = useState(false);
+  const [isBannerVisible, setIsBannerVisible] = useState(false);
   //const [imageOutput,setImageOutput] = useState("")
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
@@ -100,20 +100,20 @@ const PerformTask: React.FC = () => {
     }
   }, [submitted, audioChunks, useInput, selectedTask]);
 
-  // useEffect(() => {
-  //   if (selectedTask) {
-  //     const { taskType } = selectedTask;
-  //     const taskTypes = localStorage.getItem('trainingBannerShownForTasksTypes') ?? '[]';
-  //     const taskTypesArray = JSON.parse(taskTypes);
-  //     if(taskTypesArray.find((task: string) => task === taskType)) {
-  //       setIsBannerVisible(false);
-  //     } else {
-  //       setIsBannerVisible(true);
-  //       taskTypesArray.push(taskType);
-  //       localStorage.setItem('trainingBannerShownForTasksTypes', JSON.stringify(taskTypesArray));
-  //     }
-  //   }
-  // }, [selectedTask])
+  useEffect(() => {
+    if (selectedTask) {
+      const { taskType } = selectedTask;
+      const taskTypes = localStorage.getItem('trainingBannerShownForTasksTypes') ?? '[]';
+      const taskTypesArray = JSON.parse(taskTypes);
+      if(taskTypesArray.find((task: string) => task === taskType)) {
+        setIsBannerVisible(false);
+      } else {
+        setIsBannerVisible(true);
+        taskTypesArray.push(taskType);
+        localStorage.setItem('trainingBannerShownForTasksTypes', JSON.stringify(taskTypesArray));
+      }
+    }
+  }, [selectedTask])
 
   const startRecording = async () => {
     logEvent({
@@ -292,7 +292,7 @@ const PerformTask: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {/* <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible} /> */}
+        <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible}  taskType={selectedTask?.taskType || ''} />
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         {selectedTask ? (
           <>

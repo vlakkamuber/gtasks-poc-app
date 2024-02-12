@@ -80,7 +80,15 @@ export const ANALYTICS_PAGE = {
   navigation_bar: 'navigation_bar'
 };
 
-export const LANGUAGE_CODE_MAPPER = {
+export const TASK_TYPE_TO_TRAINING_VIDEO_MAPPER: Record<string, string> = {
+  RECEIPT_DIGITIZATION: 'receipt_digitization',
+  IMAGE_LABELLING: 'image_labelling',
+  LOCALIZATION_QUALITY: 'localization_quality',
+  MENU_PHOTO_REVIEW: 'menu_photo_review',
+  RECORD_AUDIO: 'record_audio',
+}
+
+export const LANGUAGE_CODE_MAPPER: Record<string, string> = {
   en: 'english',
   ts: 'telugu',
   hn: 'hindi'

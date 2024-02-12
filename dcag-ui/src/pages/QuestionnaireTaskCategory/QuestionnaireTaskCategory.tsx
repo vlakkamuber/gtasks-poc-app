@@ -34,8 +34,8 @@ export default function QuestionnaireTaskCategory() {
   const [showLoading, setShowLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [present, dismiss] = useIonLoading();
-  // const [isBannerVisible, setIsBannerVisible] = useState(false);
   const {location } = useCategory();
+  const [isBannerVisible, setIsBannerVisible] = useState(false);
 
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const getTaskDetail = async () => {
@@ -78,20 +78,20 @@ export default function QuestionnaireTaskCategory() {
     }
   }, [selectedTask]);
 
-  // useEffect(() => {
-  //   if (selectedTask) {
-  //     const { taskType } = selectedTask;
-  //     const taskTypes = localStorage.getItem('trainingBannerShownForTasksTypes') ?? '[]';
-  //     const taskTypesArray = JSON.parse(taskTypes);
-  //     if(taskTypesArray.find((task: string) => task === taskType)) {
-  //       setIsBannerVisible(false);
-  //     } else {
-  //       setIsBannerVisible(true);
-  //       taskTypesArray.push(taskType);
-  //       localStorage.setItem('trainingBannerShownForTasksTypes', JSON.stringify(taskTypesArray));
-  //     }
-  //   }
-  // }, [selectedTask])
+  useEffect(() => {
+    if (selectedTask) {
+      const { taskType } = selectedTask;
+      const taskTypes = localStorage.getItem('trainingBannerShownForTasksTypes') ?? '[]';
+      const taskTypesArray = JSON.parse(taskTypes);
+      if(taskTypesArray.find((task: string) => task === taskType)) {
+        setIsBannerVisible(false);
+      } else {
+        setIsBannerVisible(true);
+        taskTypesArray.push(taskType);
+        localStorage.setItem('trainingBannerShownForTasksTypes', JSON.stringify(taskTypesArray));
+      }
+    }
+  }, [selectedTask])
 
   useEffect(() => {
     console.log(selectedTask, formState);
@@ -221,7 +221,7 @@ export default function QuestionnaireTaskCategory() {
   return (
     <IonPage>
       <IonContent className="ion-padding custom-scroll" fullscreen>
-        {/* <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible} /> */}
+        <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible} taskType={selectedTask?.taskType || ''} />
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         <div className="fixed-header" style={{ zIndex: '22222222' }}>
           <Block className="p-16 fixed-header-home-content ">

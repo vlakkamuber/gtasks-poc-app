@@ -244,10 +244,11 @@ const apiService = {
     });
     return response;
   },
-  async getTrainingsDoc({ user, language = '' }: { user: any; language?: string }) {
+  async getTrainingsDoc({ user, language = '', name = '' }: { user: any; language?: string; name?: string }) {
     const queryParams = new URLSearchParams({
       type: 'training',
-      language
+      language,
+      name
     });
     const endpoint = `docs?${queryParams}`;
     const headers = getHeaders({ user });

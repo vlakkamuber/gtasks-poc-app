@@ -238,5 +238,6 @@
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.FADED_CURSHED":"Faded/Crushed",
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.POOR_LIGHTING":"Poor lighting",
   "dcag.tasks.IMAGE_LABELLING.CHENNAI_HYD.title":"Image Questions",
-  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"Menu Questions"
+  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"Menu Questions",
+  "dcag.tasks.TRAINING_MODAL.title": "View training videos before performing the tasks"
 }
