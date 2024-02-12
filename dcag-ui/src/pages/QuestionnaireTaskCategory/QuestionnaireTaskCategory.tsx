@@ -79,14 +79,14 @@ export default function QuestionnaireTaskCategory() {
   useEffect(() => {
     if (selectedTask) {
       const { taskType } = selectedTask;
-      const taskTypes = localStorage.getItem('bannerShownForTaskTypes') ?? '[]';
+      const taskTypes = localStorage.getItem('trainingBannerShownForTasksTypes') ?? '[]';
       const taskTypesArray = JSON.parse(taskTypes);
       if(taskTypesArray.find((task: string) => task === taskType)) {
         setIsBannerVisible(false);
       } else {
         setIsBannerVisible(true);
         taskTypesArray.push(taskType);
-        localStorage.setItem('bannerShownForTaskTypes', JSON.stringify(taskTypesArray));
+        localStorage.setItem('trainingBannerShownForTasksTypes', JSON.stringify(taskTypesArray));
       }
     }
   }, [selectedTask])
