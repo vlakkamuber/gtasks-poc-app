@@ -530,6 +530,11 @@ paths:
           required: false
           type: string
           description: "Language of Doc"
+        - name: name
+          in: query
+          required: false
+          type: string
+          description: "Name of Doc"
       responses:
         '200':
           description: A successful response
