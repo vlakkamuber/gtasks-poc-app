@@ -30,6 +30,7 @@ import { useUserAuth } from '../context/UserAuthContext';
 import { ANALYTICS_PAGE, LOADER_MESSAGE } from '../constants/constant';
 import { showPayout } from '../utils/Settings';
 import useAnalytics from '../hooks/useAnanlytics';
+import Banner from '../components/Banner';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -52,6 +53,7 @@ const PerformTask: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [useInput, setUseInput] = useState(null);
+  const [isBannerVisible, setIsBannerVisible] = useState(false);
   //const [imageOutput,setImageOutput] = useState("")
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
@@ -97,6 +99,21 @@ const PerformTask: React.FC = () => {
       setIsSubmitDisabled(isDisabled);
     }
   }, [submitted, audioChunks, useInput, selectedTask]);
+
+  useEffect(() => {
+    if (selectedTask) {
+      const { taskType } = selectedTask;
+      const taskTypes = localStorage.getItem('bannerShownForTaskTypes') ?? '[]';
+      const taskTypesArray = JSON.parse(taskTypes);
+      if(taskTypesArray.find((task: string) => task === taskType)) {
+        setIsBannerVisible(false);
+      } else {
+        setIsBannerVisible(true);
+        taskTypesArray.push(taskType);
+        localStorage.setItem('bannerShownForTaskTypes', JSON.stringify(taskTypesArray));
+      }
+    }
+  }, [selectedTask])
 
   const startRecording = async () => {
     logEvent({
@@ -275,6 +292,7 @@ const PerformTask: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible} />
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         {selectedTask ? (
           <>

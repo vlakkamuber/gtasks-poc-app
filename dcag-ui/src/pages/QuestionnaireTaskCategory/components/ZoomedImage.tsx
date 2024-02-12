@@ -1,11 +1,15 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
 
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import useAnalytics from '../../../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../../../constants/constant';
 
-const ZoomableImage = ({imageUrl}) => {
+const ZoomableImage = ({ imageUrl, taskId }) => {
   const [scale, setScale] = useState(1);
   const { t } = useTranslation();
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const [isFullscreen, setIsFullscreen] = useState(false);
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -17,26 +21,29 @@ const ZoomableImage = ({imageUrl}) => {
       <div className="fullscreen-container">
         <div className="fullscreen-image">
           <img src={imageUrl} alt="a kitten" />
-          <button onClick={toggleFullscreen} className="close-button">
+          <Button onClick={toggleFullscreen} shape={SHAPE.pill} kind={KIND.secondary}>
             {t(`dcag.tasks.closeBtn.label`)}
-          </button>
+          </Button>
+          {/* <button  className="close-button">
+
+          </button> */}
         </div>
       </div>
     );
   }
   return (
-      <TransformWrapper
-        initialScale={minScale}
-        minScale={minScale}
-        maxScale={maxScale}
-        onZoom={(ref) => {
-          setScale(ref.state.scale);
-        }}
-        style={{width:'100%',height:'100%'}}
-      >
-        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-          <React.Fragment>
-            {/* <div className="tools">
+    <TransformWrapper
+      initialScale={minScale}
+      minScale={minScale}
+      maxScale={maxScale}
+      onZoom={(ref) => {
+        logEvent({ actions: 'zoom', properties: taskId });
+        setScale(ref.state.scale);
+      }}
+      style={{ width: '100%', height: '100%' }}>
+      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <React.Fragment>
+          {/* <div className="tools">
               <button disabled={scale >= maxScale} onClick={() => zoomIn()}>
                 +
               </button>
@@ -44,16 +51,21 @@ const ZoomableImage = ({imageUrl}) => {
                 -
               </button>
             </div> */}
-            <TransformComponent>
-              <img src={imageUrl} alt="a kitten"  style={{width:'100%',height:'100%'}}/>
-            </TransformComponent>
-            <button onClick={toggleFullscreen} className="fullscreen-button">
+          <TransformComponent>
+            <img src={imageUrl} alt="a kitten" style={{ width: '100%', height: '100%' }} />
+          </TransformComponent>
+          <Button
+            onClick={toggleFullscreen}
+            className="fullscreen-button"
+            size={SIZE.compact}
+            shape={SHAPE.pill}
+            kind={KIND.secondary}>
             {t('dcag.tasks.text.fullscreen')}
-                </button>
-          </React.Fragment>
-        )}
-      </TransformWrapper>
-    );
+          </Button>
+        </React.Fragment>
+      )}
+    </TransformWrapper>
+  );
 };
 
 export default ZoomableImage;

@@ -393,7 +393,6 @@ label {
   right: 0;
 }
 .receipt-container {
-  height: 212px;
   background: #eeee;
 }
 .transform-component-module_wrapper__SPB86 {
@@ -522,18 +521,21 @@ select {
   position: absolute;
   right: 30px;
   padding: 10px;
-  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.fullscreen-button:hover {
-  background-color: #f0f0f0;
+  color:#000;
 }
 .task-count-rate{
   display: flex;
   flex-direction: column;
+}
+.question-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 80vh); /* Adjust as needed */
+}
+ion-content.custom-scroll {
+  --overflow: hidden !important;
 }
 
 

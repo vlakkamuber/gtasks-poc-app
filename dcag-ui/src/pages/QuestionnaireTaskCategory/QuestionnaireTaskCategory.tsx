@@ -19,6 +19,7 @@ import ZoomedImage from './components/ZoomedImage';
 import { showPayout } from '../../utils/Settings';
 import useAnalytics from '../../hooks/useAnanlytics';
 import { capitalizeFirstLetter } from '../../utils/mapTeluguDigitsToNumeric';
+import Banner from '../../components/Banner';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -32,6 +33,8 @@ export default function QuestionnaireTaskCategory() {
   const [showLoading, setShowLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [present, dismiss] = useIonLoading();
+  const [isBannerVisible, setIsBannerVisible] = useState(false);
+
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const getTaskDetail = async () => {
     let taskId = params.id;
@@ -74,11 +77,29 @@ export default function QuestionnaireTaskCategory() {
   }, [selectedTask]);
 
   useEffect(() => {
+    if (selectedTask) {
+      const { taskType } = selectedTask;
+      const taskTypes = localStorage.getItem('bannerShownForTaskTypes') ?? '[]';
+      const taskTypesArray = JSON.parse(taskTypes);
+      if(taskTypesArray.find((task: string) => task === taskType)) {
+        setIsBannerVisible(false);
+      } else {
+        setIsBannerVisible(true);
+        taskTypesArray.push(taskType);
+        localStorage.setItem('bannerShownForTaskTypes', JSON.stringify(taskTypesArray));
+      }
+    }
+  }, [selectedTask])
+
+  useEffect(() => {
     console.log(selectedTask, formState);
     if (selectedTask && selectedTask.taskType === 'RECEIPT_DIGITIZATION') {
       if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'yes') {
         const questionsData = questionnaireData[selectedTask.taskType];
-        setQuestions(questionsData);
+        setQuestions(questionsData.filter((question) => question.showIfReadable));
+      } else if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'no') {
+        const questionsData = questionnaireData[selectedTask.taskType];
+        setQuestions(questionsData.filter((question) => question.showIfUnreadable));
       } else {
         const questionsData = questionnaireData[selectedTask.taskType];
         setQuestions([questionsData[0]]);
@@ -197,7 +218,8 @@ export default function QuestionnaireTaskCategory() {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding" fullscreen>
+      <IonContent className="ion-padding custom-scroll" fullscreen>
+        <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible} />
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         <div className="fixed-header" style={{ zIndex: '22222222' }}>
           <Block className="p-16 fixed-header-home-content ">
@@ -246,7 +268,9 @@ export default function QuestionnaireTaskCategory() {
               </HeadingXSmall>
               {/* <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg> */}
               <Block className="receipt-container">
-                <ZoomedImage imageUrl={selectedTask.inputUrl}></ZoomedImage>
+                <ZoomedImage
+                  imageUrl={selectedTask.inputUrl}
+                  taskId={selectedTask.taskId}></ZoomedImage>
               </Block>
               {selectedTask.taskType == 'LOCALIZATION_QUALITY' && (
                 <ParagraphSmall>
@@ -264,62 +288,64 @@ export default function QuestionnaireTaskCategory() {
                 </ParagraphSmall>
               )}
               <HeadingXSmall>{t('dcag.tasks.heading.label.task_questionnaire')}</HeadingXSmall>
-              {questions.map((item) => (
-                <Question
-                  key={item.id}
-                  question={item}
-                  value={formState[item.questionId]}
-                  onChange={(questionId, value) => {
-                    setFormState((state) => ({ ...state, [questionId]: value }));
-                  }}
-                  isCompleted={selectedTask.status === 'COMPLETED' ? true : false}
-                  logEvent={handleLogEvent}
-                />
-              ))}
-              {selectedTask.status !== 'COMPLETED' && (
-                <LabelSmall>
-                  <span style={{ color: theme.colors.contentNegative }}>*</span>{' '}
-                  {t('dcag.tasks.text.required_questions')}
-                </LabelSmall>
-              )}
-              {selectedTask.status !== 'COMPLETED' && (
-                <ButtonDock
-                  primaryAction={
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={!isFormValid() || selectedTask.status === 'COMPLETED'}>
-                      {t('dcag.home.btn.submit.label')}
-                    </Button>
-                  }
-                  dismissiveAction={
-                    <>
+              <Block className="question-container">
+                {questions.map((item) => (
+                  <Question
+                    key={item.id}
+                    question={item}
+                    value={formState[item.questionId]}
+                    onChange={(questionId, value) => {
+                      setFormState((state) => ({ ...state, [questionId]: value }));
+                    }}
+                    isCompleted={selectedTask.status === 'COMPLETED' ? true : false}
+                    logEvent={handleLogEvent}
+                  />
+                ))}
+                {selectedTask.status !== 'COMPLETED' && (
+                  <LabelSmall>
+                    <span style={{ color: theme.colors.contentNegative }}>*</span>{' '}
+                    {t('dcag.tasks.text.required_questions')}
+                  </LabelSmall>
+                )}
+                {selectedTask.status !== 'COMPLETED' && (
+                  <ButtonDock
+                    primaryAction={
                       <Button
-                        kind={KIND.tertiary}
-                        id="cancel-task"
-                        colors={{ color: '#E11900', backgroundColor: 'transparent' }}
-                        onClick={onClickCancel}>
-                        {t(`dcag.home.btn.cancel.label`)}
+                        onClick={handleSubmit}
+                        disabled={!isFormValid() || selectedTask.status === 'COMPLETED'}>
+                        {t('dcag.home.btn.submit.label')}
                       </Button>
-                      <IonAlert
-                        header={t('dcag.tasks.cancelAlert.Header')}
-                        message={t('dcag.tasks.cancelAlert')}
-                        trigger="cancel-task"
-                        buttons={[
-                          {
-                            text: t('dcag.tasks.cancelAlert.No'),
-                            role: 'cancel',
-                            handler: closeCancelModal
-                          },
-                          {
-                            text: t('dcag.tasks.cancelAlert.Yes'),
-                            role: 'confirm',
-                            handler: handleCancel
-                          }
-                        ]}></IonAlert>
-                    </>
-                  }
-                />
-              )}
+                    }
+                    dismissiveAction={
+                      <>
+                        <Button
+                          kind={KIND.tertiary}
+                          id="cancel-task"
+                          colors={{ color: '#E11900', backgroundColor: 'transparent' }}
+                          onClick={onClickCancel}>
+                          {t(`dcag.home.btn.cancel.label`)}
+                        </Button>
+                        <IonAlert
+                          header={t('dcag.tasks.cancelAlert.Header')}
+                          message={t('dcag.tasks.cancelAlert')}
+                          trigger="cancel-task"
+                          buttons={[
+                            {
+                              text: t('dcag.tasks.cancelAlert.No'),
+                              role: 'cancel',
+                              handler: closeCancelModal
+                            },
+                            {
+                              text: t('dcag.tasks.cancelAlert.Yes'),
+                              role: 'confirm',
+                              handler: handleCancel
+                            }
+                          ]}></IonAlert>
+                      </>
+                    }
+                  />
+                )}
+              </Block>
             </div>
           </>
         )}

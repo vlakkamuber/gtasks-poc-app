@@ -20,6 +20,7 @@
     "rules": {
         "prettier/prettier": 0,
         "@typescript-eslint/return-await": 0,
+        "@typescript-eslint/no-confusing-void-expression": 0,
         "@typescript-eslint/strict-boolean-expressions": 0
     }
 }
