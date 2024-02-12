@@ -238,5 +238,6 @@
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.FADED_CURSHED":"ఫోటో అస్పష్టంగా ఉంది/నలిపివేయబడింది",
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.POOR_LIGHTING":"ఫోటో పై వెలుతురు సరిగ్గాలేదు",
   "dcag.tasks.IMAGE_LABELLING.CHENNAI_HYD.title":"ఫోటో  లేబులింగ్",
-  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"ఫోటో ప్రశ్నలు"
+  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"ఫోటో ప్రశ్నలు",
+  "dcag.tasks.TRAINING_MODAL.title": "పనులను కొనసాగించటానికి ముందు శిక్షణ వీడియోలను చూడండి"
 }
