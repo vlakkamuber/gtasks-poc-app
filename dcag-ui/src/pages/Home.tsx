@@ -13,6 +13,8 @@ import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, TASK_RATE } from '../constants/constant';
 import { useEffect, useState } from 'react';
+import apiService from './apiService';
+import { useUserAuth } from '../context/UserAuthContext';
 
 const taskCategoriesData = [
   {
@@ -108,14 +110,24 @@ const reshuffleTaskCategories = (tasks,order)=>{
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { selectedCategory, setSelectedCategory, location } = useCategory();
+  const { selectedCategory, setSelectedCategory, location,setLocation } = useCategory();
+  const { user } = useUserAuth();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
   const [taskCategories,setTaskCategories] = useState((location==="DELHI" || location==="PUNE" ? reshuffleTaskCategories(taskCategoriesData,['IMAGE_LABELLING', 'MENU_PHOTO_REVIEW', 'LOCALIZATION_QUALITY', 'RECEIPT_DIGITIZATION', 'RECORD_AUDIO']) : taskCategoriesData))
 
   
+  const getUserByPhoneNumber = async()=>{
+    const storedLocation = localStorage.getItem("location");
+    if(storedLocation === "null" || !storedLocation){
+      let userResponse  = await apiService.verifyPhoneNumber(user.phoneNumber);
+      localStorage.setItem("location",userResponse.cityName);
+      setLocation(userResponse.cityName)
+    }
+  }
 
   useEffect(() => {
     logEvent({ actions: '' });
+    getUserByPhoneNumber();
     //Update task categories based on location
     if (location === 'CHENNAI' || location === 'HYDERABAD') {
       const updatedCategories = taskCategories.map(category => {
