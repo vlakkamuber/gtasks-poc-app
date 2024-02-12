@@ -276,21 +276,6 @@ export default function QuestionnaireTaskCategory() {
                   imageUrl={selectedTask.inputUrl}
                   taskId={selectedTask.taskId}></ZoomedImage>
               </Block>
-              {selectedTask.taskType == 'LOCALIZATION_QUALITY' && (
-                <ParagraphSmall>
-                  {t('dcag.questionnaire.instruction')}
-                  <Block display="flex">
-                    <ul>
-                      <li>{t('dcag.questionnaire.option.strongly_agree')}</li>
-                      <li>{t('dcag.questionnaire.option.agree')}</li>
-                    </ul>
-                    <ul>
-                      <li>{t('dcag.questionnaire.option.disagree')}</li>
-                      <li>{t('dcag.questionnaire.option.strongly_disagree')}</li>
-                    </ul>
-                  </Block>
-                </ParagraphSmall>
-              )}
               <HeadingXSmall>{t('dcag.tasks.heading.label.task_questionnaire')}</HeadingXSmall>
               <Block className="question-container">
                 {questions.map((item) => (
