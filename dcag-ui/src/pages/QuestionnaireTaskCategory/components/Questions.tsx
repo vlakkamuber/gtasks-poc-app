@@ -56,8 +56,7 @@ export default function Question({
               disabled={isDisabled}
               required={required}
               onChange={handleRadioClick}
-              name={questionId}
-              align={ALIGN.horizontal}>
+              name={questionId}>
               {options.map((option) => (
                 <Radio key={option.value} value={option.value} disabled={isDisabled}>
                   {t(option.label)}
