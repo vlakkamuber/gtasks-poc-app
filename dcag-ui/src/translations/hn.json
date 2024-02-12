@@ -238,5 +238,6 @@
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.FADED_CURSHED":"फ़ोटो धुँधली/मुड़ी-तुड़ी हुई है ",
   "dcag.tasks.SURVEY_QUESTIONNAIRE.q7.answer.POOR_LIGHTING":"फ़ोटो पर ठीक से रोशनी नहीं है ",
   "dcag.tasks.IMAGE_LABELLING.CHENNAI_HYD.title":"मेनू सवाल",
-  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"फ़ोटो सवाल"
+  "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title":"फ़ोटो सवाल",
+  "dcag.tasks.TRAINING_MODAL.title": "कार्य करने से पहले प्रशिक्षण वीडियो देखें"
 }
