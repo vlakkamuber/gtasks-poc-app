@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
-
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import useAnalytics from '../../../hooks/useAnanlytics';
 import { ANALYTICS_PAGE } from '../../../constants/constant';
@@ -54,14 +53,14 @@ const ZoomableImage = ({ imageUrl, taskId }) => {
           <TransformComponent>
             <img src={imageUrl} alt="a kitten" style={{ width: '100%', height: '100%' }} />
           </TransformComponent>
-          <Button
+          {/* <Button
             onClick={toggleFullscreen}
             className="fullscreen-button"
             size={SIZE.compact}
             shape={SHAPE.pill}
             kind={KIND.secondary}>
             {t('dcag.tasks.text.fullscreen')}
-          </Button>
+          </Button> */}
         </React.Fragment>
       )}
     </TransformWrapper>

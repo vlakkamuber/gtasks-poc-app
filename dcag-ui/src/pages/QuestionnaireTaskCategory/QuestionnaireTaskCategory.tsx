@@ -237,7 +237,9 @@ export default function QuestionnaireTaskCategory() {
               }}>
               <ArrowLeft size={32} />
             </Button>
-            <LabelMedium>{t(`dcag.tasks.page.heading`)}</LabelMedium>
+            {selectedTask && <LabelMedium>{`${capitalizeFirstLetter(t('dcag.home.text.task'))} #${selectedTask.taskId}`}</LabelMedium>}
+            {selectedTask && <LabelMedium> <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}::</span>{' '}
+                  <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span></LabelMedium>}
             <Button
               kind={KIND.tertiary}
               overrides={{
@@ -253,21 +255,21 @@ export default function QuestionnaireTaskCategory() {
         </div>
         {selectedTask && (
           <>
-            <div className="px-16">
+            <div className="">
               <div className="fixed-header-buffer"></div>
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
-              <HeadingXSmall style={{ padding: 0, margin: 0 }}>
+              {/* <HeadingXSmall style={{ padding: 0, margin: 0 }}>
                 {`${capitalizeFirstLetter(t('dcag.home.text.task'))} #${selectedTask.taskId}`}
-              </HeadingXSmall>
-              {showPayout && (
+              </HeadingXSmall> */}
+              {/* {showPayout && (
                 <p className="no-padding-margin">
                   <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}::</span>{' '}
                   <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
                 </p>
-              )}
-              <HeadingXSmall>
+              )}*/}
+              <HeadingXSmall style={{marginTop:'0px'}}>
               {((location === 'HYDERABAD' || location === 'CHENNAI') && (selectedTask.taskType==="IMAGE_LABELLING" || selectedTask.taskType==="MENU_PHOTO_REVIEW" ))? t(`dcag.tasks.${selectedTask.taskType}.CHENNAI_HYD.title`): t(`dcag.tasks.${selectedTask.taskType}.title`)}
-              </HeadingXSmall>
+              </HeadingXSmall> 
               {/* <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg> */}
               <Block className="receipt-container">
                 <ZoomedImage
