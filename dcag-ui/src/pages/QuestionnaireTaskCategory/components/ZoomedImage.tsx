@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import useAnalytics from '../../../hooks/useAnanlytics';
 import { ANALYTICS_PAGE } from '../../../constants/constant';
+import { debounce } from '../../../utils/mapTeluguDigitsToNumeric';
+import useDebounce from '../../../hooks/useDebounce';
 
 const ZoomableImage = ({ imageUrl, taskId }) => {
   const [scale, setScale] = useState(1);
@@ -13,8 +15,10 @@ const ZoomableImage = ({ imageUrl, taskId }) => {
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
   };
+
   const minScale = 1;
   const maxScale = 10;
+  const logZoom = useDebounce(logEvent, 500);
   if (isFullscreen) {
     return (
       <div className="fullscreen-container">
@@ -36,7 +40,8 @@ const ZoomableImage = ({ imageUrl, taskId }) => {
       minScale={minScale}
       maxScale={maxScale}
       onZoom={(ref) => {
-        logEvent({ actions: 'zoom', properties: taskId });
+        const actions = ref.state.scale > scale ? 'zoomin' : 'zoomout';
+        logZoom({ actions, properties: taskId });
         setScale(ref.state.scale);
       }}
       style={{ width: '100%', height: '100%' }}>
