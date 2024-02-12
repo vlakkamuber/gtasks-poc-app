@@ -21,7 +21,7 @@ public class DocService {
     @Autowired
     GCPUtils gcpUtils;
 
-    public DocResponse getDocsUrl(String type, String language) {
+    public DocResponse getDocsUrl(String type, String language, String name) {
 
     log.info("Fetching - {} video for language - {}",type,language);
     if(type.equals("training")){
@@ -29,10 +29,12 @@ public class DocService {
         List<DocDetailsResponse> docDetailsResponses = new ArrayList<>();
 
         for(String fileName : fileNames) {
-            DocDetailsResponse.DocDetailsResponseBuilder docDetailsResponseBuilder = DocDetailsResponse.builder()
-                    .name(fileName).type("video").url(gcpUtils.signTrainingVideoUrl(language + "/"+fileName+".mp4"));
+            if(name.equals("all") || fileName.equals(name)) {
+                DocDetailsResponse.DocDetailsResponseBuilder docDetailsResponseBuilder = DocDetailsResponse.builder()
+                        .name(fileName).type("video").url(gcpUtils.signTrainingVideoUrl(language + "/" + fileName + ".mp4"));
 
-            docDetailsResponses.add(docDetailsResponseBuilder.build());
+                docDetailsResponses.add(docDetailsResponseBuilder.build());
+            }
         }
 
         return DocResponse.builder()
