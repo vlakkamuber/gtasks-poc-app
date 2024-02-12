@@ -117,12 +117,9 @@ const Home: React.FC = () => {
 
   
   const getUserByPhoneNumber = async()=>{
-    const storedLocation = localStorage.getItem("location");
-    if(storedLocation === "null" || !storedLocation){
       let userResponse  = await apiService.verifyPhoneNumber(user.phoneNumber);
       localStorage.setItem("location",userResponse.cityName);
       setLocation(userResponse.cityName)
-    }
   }
 
   useEffect(() => {
