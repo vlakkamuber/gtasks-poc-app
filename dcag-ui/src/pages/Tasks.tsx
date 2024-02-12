@@ -64,7 +64,8 @@ const Tasks: React.FC = () => {
   const [finalTasks, setFinalTasks] = useState([]);
   const [todayEarnings, setTodayEarnings] = useState(0);
   const [css, theme] = useStyletron();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+  const [taskSummary,setTaskSummary] = useState(null)
 
   const openModal = () => {
     setIsOpen(true);
@@ -153,6 +154,7 @@ const Tasks: React.FC = () => {
         setTodayCount(result.todayCompletedTasks);
         setTotalEarned(result.totalEarning);
         setTodayEarnings(result.todayEarnings);
+        setTaskSummary(result)
         if (result.todayEarnings < 200) {
           getAvailableTasks();
         } else {
@@ -279,7 +281,7 @@ const Tasks: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start" style={{ '--padding-bottom': '77px' }}>
-      {completedCount > 10 && (
+      {((completedCount > 100 && !taskSummary?.surveyStatus) &&
         <SurveyModal isOpen={isOpen} onClose={closeModal} />
       )}
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />

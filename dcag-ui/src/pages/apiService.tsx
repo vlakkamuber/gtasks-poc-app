@@ -253,6 +253,32 @@ const apiService = {
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
+  },
+  async assignSurveyToCompleted({ userId, body, user }: { userId: string; body: any; user: any }) {
+    const endpoint = `users/${userId}/survey`;
+    const headers = getHeaders({ user });
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    return response;
+  },
+  async assignSurveyToSkipped({ userId, body, user }: { userId: string; body: any; user: any }) {
+    const endpoint = `users/${userId}/survey`;
+    const headers = getHeaders({ user });
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    return response;
   }
 };
 
