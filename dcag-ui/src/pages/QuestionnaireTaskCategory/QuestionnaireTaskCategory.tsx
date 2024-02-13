@@ -34,8 +34,9 @@ export default function QuestionnaireTaskCategory() {
   const [showLoading, setShowLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [present, dismiss] = useIonLoading();
-  const {location } = useCategory();
+  const { location } = useCategory();
   const [isBannerVisible, setIsBannerVisible] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const getTaskDetail = async () => {
@@ -83,7 +84,7 @@ export default function QuestionnaireTaskCategory() {
       const { taskType } = selectedTask;
       const taskTypes = localStorage.getItem('trainingBannerShownForTasksTypes') ?? '[]';
       const taskTypesArray = JSON.parse(taskTypes);
-      if(taskTypesArray.find((task: string) => task === taskType)) {
+      if (taskTypesArray.find((task: string) => task === taskType)) {
         setIsBannerVisible(false);
       } else {
         setIsBannerVisible(true);
@@ -91,7 +92,7 @@ export default function QuestionnaireTaskCategory() {
         localStorage.setItem('trainingBannerShownForTasksTypes', JSON.stringify(taskTypesArray));
       }
     }
-  }, [selectedTask])
+  }, [selectedTask]);
 
   useEffect(() => {
     console.log(selectedTask, formState);
@@ -220,61 +221,58 @@ export default function QuestionnaireTaskCategory() {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding custom-scroll" fullscreen>
-        <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible} taskType={selectedTask?.taskType || ''} />
+      <IonContent fullscreen>
+        <Banner
+          isOpen={isBannerVisible}
+          setIsOpen={setIsBannerVisible}
+          taskType={selectedTask?.taskType || ''}
+        />
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
-        <div className="fixed-header" style={{ zIndex: '22222222' }}>
-          <Block className="p-16 fixed-header-home-content ">
-            <Button
-              kind={KIND.tertiary}
-              onClick={goBack}
-              overrides={{
-                BaseButton: {
-                  style: () => ({
-                    padding: '0px'
-                  })
-                }
-              }}>
-              <ArrowLeft size={32} />
-            </Button>
-            {selectedTask && <LabelMedium>{`${capitalizeFirstLetter(t('dcag.home.text.task'))} #${selectedTask.taskId}`}</LabelMedium>}
-            {selectedTask && <LabelMedium> <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}::</span>{' '}
-                  <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span></LabelMedium>}
-            <Button
-              kind={KIND.tertiary}
-              overrides={{
-                BaseButton: {
-                  style: () => ({
-                    padding: '0px'
-                  })
-                }
-              }}>
-              {/* <LabelSmall>Help</LabelSmall> */}
-            </Button>
-          </Block>
-        </div>
         {selectedTask && (
           <>
-            <div className="">
-              <div className="fixed-header-buffer" style={{height:'48px'}}></div>
-              {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
-              {/* <HeadingXSmall style={{ padding: 0, margin: 0 }}>
-                {`${capitalizeFirstLetter(t('dcag.home.text.task'))} #${selectedTask.taskId}`}
-              </HeadingXSmall> */}
-              {/* {showPayout && (
-                <p className="no-padding-margin">
-                  <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}::</span>{' '}
-                  <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
-                </p>
-              )}*/}
-              {/* <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg> */}
-              <Block className="receipt-container">
+            <div className="task-container">
+              {!isFullscreen && (
+                <Block className="task-header">
+                  <Button
+                    kind={KIND.tertiary}
+                    onClick={goBack}
+                    overrides={{
+                      BaseButton: {
+                        style: () => ({
+                          padding: '0px'
+                        })
+                      }
+                    }}>
+                    <ArrowLeft size={32} />
+                  </Button>
+                  {selectedTask && (
+                    <LabelMedium>{`${capitalizeFirstLetter(t('dcag.home.text.task'))} #${selectedTask.taskId}`}</LabelMedium>
+                  )}
+                  {selectedTask && (
+                    <LabelMedium>
+                      <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}:</span>{' '}
+                      <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
+                    </LabelMedium>
+                  )}
+                </Block>
+              )}
+              {/* <div className="fixed-header-buffer" style={{ height: '48px' }}></div> */}
+              <Block
+                className="receipt-container"
+                style={{ height: isFullscreen ? '70vh' : '40vh' }}>
                 <ZoomedImage
                   imageUrl={selectedTask.inputUrl}
-                  taskId={selectedTask.taskId} location={location} taskType={selectedTask.taskType}></ZoomedImage>
+                  taskId={selectedTask.taskId}
+                  location={location}
+                  taskType={selectedTask.taskType}
+                  isFullscreen={isFullscreen}
+                  setIsFullscreen={setIsFullscreen}></ZoomedImage>
               </Block>
-              <HeadingXSmall>{t('dcag.tasks.heading.label.task_questionnaire')}</HeadingXSmall>
-              <Block className="question-container">
+
+              <Block className="question-container p-16">
+                <HeadingXSmall className="p-0 m-0">
+                  {t('dcag.tasks.heading.label.task_questionnaire')}
+                </HeadingXSmall>
                 {questions.map((item) => (
                   <Question
                     key={item.id}

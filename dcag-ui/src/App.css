@@ -16,7 +16,7 @@
   margin-right: 0px;
 }
 .m-0 {
-  padding: 0px;
+  margin: 0px;
 }
 .mt-4 {
   margin-top: 4px;
@@ -38,6 +38,9 @@
 }
 .mb-32 {
   margin-bottom: 32px;
+}
+.p-8 {
+  padding: 8px;
 }
 .p-16 {
   padding: 16px;
@@ -393,8 +396,9 @@ label {
   right: 0;
 }
 .receipt-container {
-  height: 50vh;
+  height: 40vh;
   position: relative;
+  border-bottom: 2px solid #6b6b6b;
 }
 ion-content.custom-scroll {
   height: 100% !important;
@@ -409,16 +413,23 @@ ion-content.custom-scroll {
   height: 100%;
   object-fit: contain;
 }
-.task-type-overlay{
+.task-type-overlay {
   position: absolute;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  color: #f1f1f1; 
-  width: 100%; 
+  color: #f1f1f1;
+  width: 100%;
   z-index: 999999999;
   max-width: 100%;
   width: 100%;
   text-align: center;
+}
+.image-icon-overlay {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: transparent;
+  z-index: 999999999;
 }
 .fixed-header {
   position: fixed;
@@ -546,9 +557,26 @@ select {
   display: flex;
   flex-direction: column;
 }
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+}
+.task-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 .question-container {
   overflow-y: scroll;
-  height: 30vh;
+  /* height: 30vh; */
+  flex-grow: 1;
+}
+.zoom-icon-container {
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 50%;
 }
 
 @media only screen and (min-width: 992px) {
