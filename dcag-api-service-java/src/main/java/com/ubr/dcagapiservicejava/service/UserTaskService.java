@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -201,8 +202,17 @@ public class UserTaskService {
 
         LocalDate todayDate = DcagUtils.convertEpochToSytemLocalDate(System.currentTimeMillis());
 
-        List<UserTask> todayTasks = userTasks.stream().filter(e -> DcagUtils.convertLocalDateToSystemLocalDate(e.completionTime()).equals(todayDate.atStartOfDay())
-                || DcagUtils.convertLocalDateToSystemLocalDate(e.completionTime()).isAfter(todayDate.atStartOfDay())).toList();
+        log.info("Today's date is - {}",todayDate);
+
+        List<UserTask> todayTasks = userTasks.stream().filter(e -> {
+            LocalDateTime completionDate = DcagUtils.convertLocalDateToSystemLocalDate(e.completionTime());
+            if(completionDate.equals(todayDate.atStartOfDay()) || completionDate.isAfter(todayDate.atStartOfDay())){
+                log.info("Completion date is - {} for task - {}",completionDate, e.task().id());
+                return true;
+            }else {
+                return false;
+            }
+        }).toList();
 
         double todayEarning = todayTasks.stream().mapToDouble(e -> e.task().price()).sum();
 
