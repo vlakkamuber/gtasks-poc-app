@@ -14,6 +14,9 @@ import java.util.function.Supplier;
  */
 public class DcagUtils {
 
+
+    private static final String INDIAN_TIMEZONE = "Asia/Kolkata";
+
     public static LocalDateTime convertEpochToLocalDateTime(Long epoch) {
         Instant instant = Instant.ofEpochMilli(epoch);
         return instant.atZone(ZoneOffset.UTC).toLocalDateTime();
@@ -26,12 +29,12 @@ public class DcagUtils {
 
     public static LocalDate convertEpochToSytemLocalDate(Long epoch) {
         Instant instant = Instant.ofEpochMilli(epoch);
-        return instant.atZone(ZoneId.systemDefault()).toLocalDate();
+        return instant.atZone(ZoneId.of(INDIAN_TIMEZONE)).toLocalDate();
     }
 
     public static LocalDateTime convertLocalDateToSystemLocalDate(LocalDateTime localDateTime) {
         ZonedDateTime zonedUTC = localDateTime.atZone(ZoneId.of("UTC"));
-        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.systemDefault());
+        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of(INDIAN_TIMEZONE));
         return zonedIST.toLocalDateTime();
     }
 
