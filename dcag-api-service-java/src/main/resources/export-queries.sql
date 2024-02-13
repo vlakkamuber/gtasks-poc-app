@@ -74,3 +74,93 @@ WHERE UT.status = 'COMPLETED'
 AND T.task_type = 'RECEIPT_DIGITIZATION'
 AND U.user_type = 'DRIVER'
 ORDER BY 6 desc;
+
+
+============================
+
+-- No of drivers logged in
+SELECT count(DISTINCT ue.user_id) as 'No of logged in drivers'
+FROM user_events ue
+         JOIN users u ON ue.user_id = u.id
+WHERE u.user_type = 'DRIVER';
+
+-- No of logged in Drivers City wise
+SELECT u.city_name as 'City', COUNT(DISTINCT ue.user_id) as 'No of logged in drivers'
+FROM users u
+         JOIN user_events ue ON u.id = ue.user_id
+WHERE u.user_type = 'DRIVER'
+GROUP BY u.city_name;
+
+-- No of tasks completed
+select count(*) from user_tasks
+where user_id in (select id from users where user_type='DRIVER')
+  and status='COMPLETED';
+
+-- No of task completed by city
+SELECT u.city_name as 'City', COUNT(*) AS 'No of tasks Completed'
+FROM user_tasks ut
+         JOIN users u ON ut.user_id = u.id
+WHERE u.user_type = 'DRIVER' and ut.status = 'COMPLETED'
+GROUP BY u.city_name;
+
+-- No of tasks cancelled
+select count(*) from user_tasks
+where user_id in (select id from users where user_type='DRIVER')
+  and status='CANCELLED';
+
+-- Cacnelled tasks by task type
+SELECT t.task_type ' Task Type', COUNT(*) AS 'Cancelled Tasks'
+FROM user_tasks ut
+         JOIN users u ON ut.user_id = u.id
+         JOIN tasks t ON ut.task_id = t.id
+WHERE u.user_type = 'DRIVER' AND ut.status = 'CANCELLED'
+GROUP BY t.task_type;
+
+-- Training videos accessed
+SELECT ue.properties, COUNT(DISTINCT ue.user_id) AS user_count
+FROM user_events ue
+         JOIN users u ON ue.user_id = u.id
+WHERE ue.actions = 'click_video_play'
+  AND ue.page = 'training_page'
+  AND u.user_type = 'DRIVER'
+GROUP BY ue.properties;
+
+-- No of users worked on each task type
+SELECT
+    t.task_type AS 'Task Type',
+        COUNT(DISTINCT ut.user_id) AS 'Number of Users Completed'
+FROM
+    user_tasks ut
+        JOIN
+    tasks t ON ut.task_id = t.id
+        JOIN
+    users u ON ut.user_id = u.id
+WHERE
+        u.user_type = 'DRIVER'
+  AND ut.status = 'COMPLETED'
+GROUP BY
+    t.task_type;
+
+-- Users switched the app language to Hindi
+select ue.user_id, u.first_name, u.city_name, u.preferred_lang, u.native_lang, ue.properties as 'App Language', ue.create_time
+from user_events ue  join users u on ue.user_id =u.id
+where ue.page='account_page' and ue.properties='hindi' and
+u.user_type='DRIVER' order by ue.create_time;
+
+
+-- Total earnings (price of completed task) by  task type
+
+SELECT
+    t.task_type AS 'Task Type',
+        ROUND(SUM(t.price), 2) AS 'Total Earnings (INR)'
+FROM
+    user_tasks ut
+        JOIN
+    tasks t ON ut.task_id = t.id
+        JOIN
+    users u ON ut.user_id = u.id
+WHERE
+        u.user_type = 'DRIVER'
+  AND ut.status = 'COMPLETED'
+GROUP BY
+    t.task_type;
