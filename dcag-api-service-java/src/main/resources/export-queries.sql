@@ -52,14 +52,14 @@ ORDER BY 10 DESC;
 
 -- UserTask Status
 
-SELECT 'user_id','phone_number','task_type','status','city_name','start_time (IST)'
+SELECT 'user_id','task_type','status','city_name','start_time (IST)','phone_number'
 UNION ALL
-select COALESCE(UT.user_id, ''), COALESCE(U.phone_number, ''), COALESCE(T.task_type, ''),COALESCE(UT.status, ''),COALESCE(U.city_name, ''),COALESCE(convert_tz(UT.start_time,'+00:00','+05:30'), '')
+select COALESCE(UT.user_id, ''), COALESCE(T.task_type, ''),COALESCE(UT.status, ''),COALESCE(U.city_name, ''),COALESCE(convert_tz(UT.start_time,'+00:00','+05:30'), ''), COALESCE(U.phone_number, '')
 FROM `dcag-db`.`user_tasks` UT
 JOIN `dcag-db`.`tasks` T ON UT.task_id = T.id
 JOIN  `dcag-db`.`users` U on UT.user_id = U.ID
 where U.user_type = 'DRIVER'
-order by 6 desc;
+order by 5 desc;
 
 
 -- UserTask Output
