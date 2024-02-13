@@ -86,7 +86,11 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
       } catch (err) {
         logEvent({ actions: 'login_failed', properties: err.message });
         dismiss();
-        setError(err.message);
+        if (err.code === "auth/code-expired" || err.code === "auth/invalid-verification-code") {
+          setError("Invalid verification code");
+        } else {
+          setError(err.message);
+        }
       }
     }
     verify();
