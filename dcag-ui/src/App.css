@@ -422,7 +422,7 @@ ion-content.custom-scroll {
   z-index: 999999999;
   max-width: 100%;
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 .image-icon-overlay {
   position: absolute;
