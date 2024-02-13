@@ -7,7 +7,7 @@ import { ANALYTICS_PAGE } from '../../../constants/constant';
 import { debounce } from '../../../utils/mapTeluguDigitsToNumeric';
 import useDebounce from '../../../hooks/useDebounce';
 
-const ZoomableImage = ({ imageUrl, taskId }) => {
+const ZoomableImage = ({ imageUrl, taskId,location,taskType }) => {
   const [scale, setScale] = useState(1);
   const { t } = useTranslation();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
@@ -55,6 +55,9 @@ const ZoomableImage = ({ imageUrl, taskId }) => {
                 -
               </button>
             </div> */}
+              <div className="task-type-overlay">
+                <p style={{margin: '6px',fontWeight: '600'}}> {((location === 'HYDERABAD' || location === 'CHENNAI') && (taskType==="IMAGE_LABELLING" || taskType==="MENU_PHOTO_REVIEW" ))? t(`dcag.tasks.${taskType}.CHENNAI_HYD.title`): t(`dcag.tasks.${taskType}.title`)}</p>
+                </div>
           <TransformComponent>
             <img src={imageUrl} alt="a kitten" style={{ width: '100%', height: '100%' }} />
           </TransformComponent>

@@ -256,7 +256,7 @@ export default function QuestionnaireTaskCategory() {
         {selectedTask && (
           <>
             <div className="">
-              <div className="fixed-header-buffer"></div>
+              <div className="fixed-header-buffer" style={{height:'48px'}}></div>
               {/* <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} /> */}
               {/* <HeadingXSmall style={{ padding: 0, margin: 0 }}>
                 {`${capitalizeFirstLetter(t('dcag.home.text.task'))} #${selectedTask.taskId}`}
@@ -267,14 +267,11 @@ export default function QuestionnaireTaskCategory() {
                   <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
                 </p>
               )}*/}
-              <HeadingXSmall style={{marginTop:'0px'}}>
-              {((location === 'HYDERABAD' || location === 'CHENNAI') && (selectedTask.taskType==="IMAGE_LABELLING" || selectedTask.taskType==="MENU_PHOTO_REVIEW" ))? t(`dcag.tasks.${selectedTask.taskType}.CHENNAI_HYD.title`): t(`dcag.tasks.${selectedTask.taskType}.title`)}
-              </HeadingXSmall> 
               {/* <IonImg src={selectedTask.inputUrl} alt={selectedTask.input} className='receipt-container'></IonImg> */}
               <Block className="receipt-container">
                 <ZoomedImage
                   imageUrl={selectedTask.inputUrl}
-                  taskId={selectedTask.taskId}></ZoomedImage>
+                  taskId={selectedTask.taskId} location={location} taskType={selectedTask.taskType}></ZoomedImage>
               </Block>
               <HeadingXSmall>{t('dcag.tasks.heading.label.task_questionnaire')}</HeadingXSmall>
               <Block className="question-container">
