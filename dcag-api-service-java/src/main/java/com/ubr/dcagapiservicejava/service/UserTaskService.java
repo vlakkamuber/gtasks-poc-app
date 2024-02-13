@@ -202,7 +202,7 @@ public class UserTaskService {
         LocalDate todayDate = DcagUtils.convertEpochToSytemLocalDate(System.currentTimeMillis());
 
         List<UserTask> todayTasks = userTasks.stream().filter(e -> DcagUtils.convertLocalDateToSystemLocalDate(e.completionTime()).equals(todayDate.atStartOfDay())
-                || e.completionTime().isAfter(todayDate.atStartOfDay())).toList();
+                || DcagUtils.convertLocalDateToSystemLocalDate(e.completionTime()).isAfter(todayDate.atStartOfDay())).toList();
 
         double todayEarning = todayTasks.stream().mapToDouble(e -> e.task().price()).sum();
 
