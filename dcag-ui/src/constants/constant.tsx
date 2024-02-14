@@ -55,10 +55,31 @@ export const TasksOrder = [
   'MENU_PHOTO_REVIEW'
 ];
 export const TaskOrderByLocation = {
-  "DELHI":['IMAGE_LABELLING','MENU_PHOTO_REVIEW','LOCALIZATION_QUALITY','RECEIPT_DIGITIZATION','RECORD_AUDIO'],
-  "PUNE":['IMAGE_LABELLING','MENU_PHOTO_REVIEW','LOCALIZATION_QUALITY','RECEIPT_DIGITIZATION','RECORD_AUDIO'],
-  "OTHER":['RECORD_AUDIO','IMAGE_TO_TEXT','UPLOAD_IMAGE','TEXT_TO_AUDIO','RECEIPT_DIGITIZATION','LOCALIZATION_QUALITY','IMAGE_LABELLING','MENU_PHOTO_REVIEW']
-}
+  DELHI: [
+    'IMAGE_LABELLING',
+    'MENU_PHOTO_REVIEW',
+    'LOCALIZATION_QUALITY',
+    'RECEIPT_DIGITIZATION',
+    'RECORD_AUDIO'
+  ],
+  PUNE: [
+    'IMAGE_LABELLING',
+    'MENU_PHOTO_REVIEW',
+    'LOCALIZATION_QUALITY',
+    'RECEIPT_DIGITIZATION',
+    'RECORD_AUDIO'
+  ],
+  OTHER: [
+    'RECORD_AUDIO',
+    'IMAGE_TO_TEXT',
+    'UPLOAD_IMAGE',
+    'TEXT_TO_AUDIO',
+    'RECEIPT_DIGITIZATION',
+    'LOCALIZATION_QUALITY',
+    'IMAGE_LABELLING',
+    'MENU_PHOTO_REVIEW'
+  ]
+};
 
 export const TASK_RATE = {
   RECORD_AUDIO: 0.8,
@@ -85,11 +106,84 @@ export const TASK_TYPE_TO_TRAINING_VIDEO_MAPPER: Record<string, string> = {
   IMAGE_LABELLING: 'image_labelling',
   LOCALIZATION_QUALITY: 'localization_quality',
   MENU_PHOTO_REVIEW: 'menu_photo_review',
-  RECORD_AUDIO: 'record_audio',
-}
+  RECORD_AUDIO: 'record_audio'
+};
 
 export const LANGUAGE_CODE_MAPPER: Record<string, string> = {
   en: 'english',
   ts: 'telugu',
   hn: 'hindi'
 };
+
+export const TASK_CATEGORIES_DATA = [
+  {
+    id: 'RECORD_AUDIO',
+    imageSrc: 'assets/record_audio.png',
+    title: 'Record Audio',
+    subtitle: 'Read text, validate pronunciation and record correct audio',
+    show: true,
+    rate: TASK_RATE['RECORD_AUDIO'],
+    duration: '30',
+    timeUnit: 'dcag.home.card.duration.seconds'
+  },
+  {
+    id: 'DESCRIBE_IMAGE',
+    imageSrc: 'assets/audio_to_audio.png',
+    title: 'Describe Image',
+    subtitle: 'View the location image and provide description about the image.',
+    show: false,
+    rate: TASK_RATE['DESCRIBE_IMAGE'],
+    duration: '15',
+    timeUnit: 'dcag.home.card.duration.minutes'
+  },
+  {
+    id: 'UPLOAD_IMAGE',
+    imageSrc: 'assets/text_to_audio.png',
+    title: 'Upload Image',
+    subtitle: 'upload a location image and provide description about the image.',
+    show: false,
+    rate: TASK_RATE['UPLOAD_IMAGE'],
+    duration: '15',
+    timeUnit: 'dcag.home.card.duration.minutes'
+  },
+  {
+    id: 'RECEIPT_DIGITIZATION',
+    imageSrc: 'assets/receipt_digitization.png',
+    title: 'Receipt Digitization',
+    subtitle: 'View the receipt image and provide answer about the image.',
+    show: true,
+    rate: TASK_RATE['RECEIPT_DIGITIZATION'],
+    duration: '45',
+    timeUnit: 'dcag.home.card.duration.seconds'
+  },
+  {
+    id: 'LOCALIZATION_QUALITY',
+    imageSrc: 'assets/language_quality.png',
+    title: 'Localization Quality',
+    subtitle: 'View the receipt image and provide answer about the image.',
+    show: true,
+    rate: TASK_RATE['LOCALIZATION_QUALITY'],
+    duration: '1',
+    timeUnit: 'dcag.home.card.duration.minutes'
+  },
+  {
+    id: 'IMAGE_LABELLING',
+    imageSrc: 'assets/Image_labelling.png',
+    title: 'Image Labelling',
+    subtitle: 'View the image  and provide answer about the image.',
+    show: true,
+    rate: TASK_RATE['IMAGE_LABELLING'],
+    duration: '20',
+    timeUnit: 'dcag.home.card.duration.seconds'
+  },
+  {
+    id: 'MENU_PHOTO_REVIEW',
+    imageSrc: 'assets/men_review.png',
+    title: 'Menu Photo Review',
+    subtitle: 'View the image  and provide answer about the image.',
+    show: true,
+    rate: TASK_RATE['MENU_PHOTO_REVIEW'],
+    duration: '20',
+    timeUnit: 'dcag.home.card.duration.seconds'
+  }
+];

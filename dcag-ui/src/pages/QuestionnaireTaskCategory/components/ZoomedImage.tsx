@@ -7,12 +7,17 @@ import { ANALYTICS_PAGE } from '../../../constants/constant';
 import { debounce } from '../../../utils/mapTeluguDigitsToNumeric';
 import useDebounce from '../../../hooks/useDebounce';
 import FullScreenIcon from './FullScreenIcon';
+import CanvasImage from './zoomableImage';
 
 const ZoomableImage = ({ imageUrl, taskId, location, taskType, isFullscreen, setIsFullscreen }) => {
   const [scale, setScale] = useState(1);
   const { t } = useTranslation();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const toggleFullscreen = () => {
+    logEvent({
+      actions: isFullscreen ? 'click_close_full_screen' : 'click_open_full_screen',
+      properties: taskId
+    });
     setIsFullscreen(!isFullscreen);
   };
 

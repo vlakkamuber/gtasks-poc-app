@@ -36,6 +36,7 @@ import {
   TASK_RATE,
   ANALYTICS_PAGE,
   TaskOrderByLocation,
+  TASK_CATEGORIES_DATA
 } from '../constants/constant';
 import { useUserAuth } from '../context/UserAuthContext';
 import { useCategory } from '../context/TaskCategoryContext';
@@ -46,6 +47,7 @@ import useAnalytics from '../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
 
 import SurveyModal from './SurveyQuestions/SurveyModal';
+import { ParagraphSmall } from 'baseui/typography';
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
@@ -59,13 +61,14 @@ const Tasks: React.FC = () => {
   const [showLoading, setShowLoading] = useState(false);
   const history = useHistory();
   const { user } = useUserAuth();
-  const { selectedCategory,location } = useCategory();
+  const { selectedCategory, location } = useCategory();
   const [isImageUploadAvailable, setIsImageUploadAvailable] = useState(false);
   const [finalTasks, setFinalTasks] = useState([]);
   const [todayEarnings, setTodayEarnings] = useState(0);
   const [css, theme] = useStyletron();
   const [isOpen, setIsOpen] = useState(true);
-  const [taskSummary,setTaskSummary] = useState(null)
+  const [taskSummary, setTaskSummary] = useState(null);
+  const selectedTaskType = TASK_CATEGORIES_DATA.find((item) => item.id === selectedCategory);
 
   const openModal = () => {
     setIsOpen(true);
@@ -132,7 +135,10 @@ const Tasks: React.FC = () => {
       const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
         ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
         : finalTaskList;
-      const orderedTasks = orderTasksByType(result, TaskOrderByLocation[location] || TaskOrderByLocation["OTHER"]);
+      const orderedTasks = orderTasksByType(
+        result,
+        TaskOrderByLocation[location] || TaskOrderByLocation['OTHER']
+      );
       setAvailableCount(orderedTasks.length);
       setTasks(groupBy(orderedTasks, 'taskType'));
     } catch (error) {
@@ -154,7 +160,7 @@ const Tasks: React.FC = () => {
         setTodayCount(result.todayCompletedTasks);
         setTotalEarned(result.totalEarning);
         setTodayEarnings(result.todayEarnings);
-        setTaskSummary(result)
+        setTaskSummary(result);
         if (result.todayEarnings < 200) {
           getAvailableTasks();
         } else {
@@ -249,7 +255,10 @@ const Tasks: React.FC = () => {
     const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
       ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
       : finalTaskList;
-    const orderedTasks = orderTasksByType(result,  TaskOrderByLocation[location] || TaskOrderByLocation["OTHER"]);
+    const orderedTasks = orderTasksByType(
+      result,
+      TaskOrderByLocation[location] || TaskOrderByLocation['OTHER']
+    );
 
     setAvailableCount(orderedTasks.length);
     setTasks(groupBy(orderedTasks, 'taskType'));
@@ -281,9 +290,9 @@ const Tasks: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start" style={{ '--padding-bottom': '77px' }}>
-      {((completedCount > 100 && !taskSummary?.surveyStatus) &&
-        <SurveyModal isOpen={isOpen} onClose={closeModal} />
-      )}
+        {completedCount > 100 && !taskSummary?.surveyStatus && (
+          <SurveyModal isOpen={isOpen} onClose={closeModal} />
+        )}
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         {showPayout && (
           <div className="tasks-info" style={{ marginTop: '30px' }}>
@@ -376,7 +385,10 @@ const Tasks: React.FC = () => {
                               alignItems: 'center'
                             }}>
                             <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                            {((location === 'HYDERABAD' || location === 'CHENNAI') && (key==="IMAGE_LABELLING" || key==="MENU_PHOTO_REVIEW" ))? t(`dcag.tasks.${key}.CHENNAI_HYD.title`): t(`dcag.tasks.${key}.title`)}
+                              {(location === 'HYDERABAD' || location === 'CHENNAI') &&
+                              (key === 'IMAGE_LABELLING' || key === 'MENU_PHOTO_REVIEW')
+                                ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
+                                : t(`dcag.tasks.${key}.title`)}
                             </h1>
                             {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
@@ -384,9 +396,20 @@ const Tasks: React.FC = () => {
                           </div>
 
                           <p style={{ margin: '0' }}>
-                            <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
+                            {availableCount === 0 ? (
+                              <small>
+                                {completedCount > 0
+                                  ? t('dcag.tasks.text.all_task_completed')
+                                  : t('dcag.tasks.text.no_more_task')}{' '}
+                                {selectedTaskType?.title}.{' '}
+                                {t('dcag.tasks.text.continue_other_task')}
+                              </small>
+                            ) : (
+                              <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
+                            )}
                           </p>
                         </div>
+
                         {tasks[key].map((task, index) => {
                           return (
                             <React.Fragment key={task.id}>
