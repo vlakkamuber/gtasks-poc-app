@@ -48,6 +48,46 @@ import { useStyletron } from 'baseui';
 
 import SurveyModal from './SurveyQuestions/SurveyModal';
 import { ParagraphSmall } from 'baseui/typography';
+
+const TaskTypeHeader = ({
+  taskType: key,
+  location,
+  availableCount,
+  completedCount,
+  selectedTaskType,
+  loading
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div className="ion-padding">
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+        <h1 style={{ margin: '0', marginBottom: '-4px' }}>
+          {(location === 'HYDERABAD' || location === 'CHENNAI') &&
+          (key === 'IMAGE_LABELLING' || key === 'MENU_PHOTO_REVIEW')
+            ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
+            : t(`dcag.tasks.${key}.title`)}
+        </h1>
+      </div>
+      <p style={{ margin: '0' }}>
+        <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
+      </p>
+      {availableCount === 0 && !loading && (
+        <ParagraphSmall>
+          {completedCount > 0
+            ? t('dcag.tasks.text.all_task_completed')
+            : t('dcag.tasks.text.no_more_task')}{' '}
+          {selectedTaskType?.title}. {t('dcag.tasks.text.continue_other_task')}
+        </ParagraphSmall>
+      )}
+    </div>
+  );
+};
+
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
@@ -283,9 +323,6 @@ const Tasks: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          {/* <IonButtons slot="start">
-            <IonIcon onClick={goBack} icon={arrowBack} />
-          </IonButtons> */}
           <IonTitle>{t(`dcag.tasks.page.heading`)}</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -369,6 +406,14 @@ const Tasks: React.FC = () => {
         </IonSegment>
         {selectedSegment === 'available_task' && (
           <React.Fragment>
+            <TaskTypeHeader
+              taskType={selectedCategory}
+              location={location}
+              completedCount={completedCount}
+              availableCount={availableCount}
+              selectedTaskType={selectedTaskType}
+              loading={showLoading}
+            />
             {todayEarnings > 200 ? (
               <AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!" />
             ) : (
@@ -377,39 +422,6 @@ const Tasks: React.FC = () => {
                   {Object.keys(tasks).map((key, index) => {
                     return (
                       <React.Fragment key={index}>
-                        <div className="ion-padding">
-                          <div
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center'
-                            }}>
-                            <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                              {(location === 'HYDERABAD' || location === 'CHENNAI') &&
-                              (key === 'IMAGE_LABELLING' || key === 'MENU_PHOTO_REVIEW')
-                                ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
-                                : t(`dcag.tasks.${key}.title`)}
-                            </h1>
-                            {/* <span style={{ color: "#467ff4" }}>
-                          {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                        </span> */}
-                          </div>
-
-                          <p style={{ margin: '0' }}>
-                            {availableCount === 0 ? (
-                              <small>
-                                {completedCount > 0
-                                  ? t('dcag.tasks.text.all_task_completed')
-                                  : t('dcag.tasks.text.no_more_task')}{' '}
-                                {selectedTaskType?.title}.{' '}
-                                {t('dcag.tasks.text.continue_other_task')}
-                              </small>
-                            ) : (
-                              <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
-                            )}
-                          </p>
-                        </div>
-
                         {tasks[key].map((task, index) => {
                           return (
                             <React.Fragment key={task.id}>
@@ -450,7 +462,6 @@ const Tasks: React.FC = () => {
                                     </Button>
                                   )}
                                 </IonItem>
-                                {/* Add more IonItem elements as needed */}
                               </IonList>
                             </React.Fragment>
                           );
@@ -485,9 +496,6 @@ const Tasks: React.FC = () => {
                         <h1 style={{ margin: '0', marginBottom: '-4px' }}>
                           {t(`dcag.tasks.UPLOAD_IMAGE.title`)}
                         </h1>
-                        {/* <span style={{ color: "#467ff4" }}>
-                            {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                          </span> */}
                       </div>
 
                       <p style={{ margin: '0' }}>
