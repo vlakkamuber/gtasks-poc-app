@@ -20,7 +20,7 @@ const Banner: React.FC<{
   taskType: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ isOpen, setIsOpen, taskType }) => {
-  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.training });
+  const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const [trainingDoc, setTrainingDoc] = useState<{ docs: [TrainingDoc] }>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { t } = useTranslation();
