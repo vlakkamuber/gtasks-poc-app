@@ -70,7 +70,12 @@ const ZoomableImage = ({ imageUrl, taskId, location, taskType, isFullscreen, set
             </div>
           </div>
           <TransformComponent>
-            <img src={imageUrl} alt="task image" style={{ width: '100%', height: '100%' }} />
+            {/* <img src={imageUrl} alt="task image" style={{ width: '100%', height: '100%' }} /> */}
+            <CanvasImage
+              imageUrl={'assets/audio_to_audio.png'}
+              canvasWidth={300}
+              canvasHeight={400}
+            />
           </TransformComponent>
         </React.Fragment>
       )}
