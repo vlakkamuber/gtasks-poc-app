@@ -34,6 +34,7 @@ const LanguageSwitcher: React.FC = () => {
       <IonSelectOption value="en">English</IonSelectOption>
       <IonSelectOption value="ts">తెలుగు</IonSelectOption>
       <IonSelectOption value="hn">हिंदी</IonSelectOption>
+      <IonSelectOption value="ta">தமிழ்</IonSelectOption>
     </IonSelect>
   );
 };

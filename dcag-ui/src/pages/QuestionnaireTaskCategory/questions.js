@@ -1,4 +1,4 @@
-function generateQuestionId(description) {
+export function generateQuestionId(description) {
   const cleanedDescription = description
     .toLowerCase()
     .replace(/[^a-z0-9 ]/g, '')

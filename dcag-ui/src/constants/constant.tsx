@@ -112,7 +112,8 @@ export const TASK_TYPE_TO_TRAINING_VIDEO_MAPPER: Record<string, string> = {
 export const LANGUAGE_CODE_MAPPER: Record<string, string> = {
   en: 'english',
   ts: 'telugu',
-  hn: 'hindi'
+  hn: 'hindi',
+  ta: 'tamil',
 };
 
 export const TASK_CATEGORIES_DATA = [

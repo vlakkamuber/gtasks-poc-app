@@ -30,6 +30,7 @@ import { useUserAuth } from '../context/UserAuthContext';
 import { ANALYTICS_PAGE, LOADER_MESSAGE } from '../constants/constant';
 import { showPayout } from '../utils/Settings';
 import useAnalytics from '../hooks/useAnanlytics';
+import { generateQuestionId } from '../pages/QuestionnaireTaskCategory/questions';
 import Banner from '../components/Banner';
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
@@ -53,6 +54,7 @@ const PerformTask: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [useInput, setUseInput] = useState(null);
+  const [isPronunciationLocal, setIsPronunciationLocal] = useState(null);
   const [isBannerVisible, setIsBannerVisible] = useState(false);
   //const [imageOutput,setImageOutput] = useState("")
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
@@ -90,15 +92,19 @@ const PerformTask: React.FC = () => {
         isDisabled =
           selectedTask.status === 'COMPLETED' || selectedTask.output === null || submitted;
       } else if (selectedTask.taskType === 'RECORD_AUDIO') {
-        if (useInput === true) {
+        if (useInput === null || isPronunciationLocal === null) {
+          isDisabled = true;
+        } else if (useInput === true && isPronunciationLocal === true) {
           isDisabled = selectedTask.status === 'COMPLETED' || submitted;
         } else {
-          isDisabled = audioChunks.length === 0 || submitted || audioChunks.length === 0;
+          isDisabled =
+            submitted ||
+            audioChunks.length === 0;
         }
       }
       setIsSubmitDisabled(isDisabled);
     }
-  }, [submitted, audioChunks, useInput, selectedTask]);
+  }, [submitted, audioChunks, useInput, isPronunciationLocal, selectedTask]);
 
   useEffect(() => {
     if (selectedTask) {
@@ -182,6 +188,19 @@ const PerformTask: React.FC = () => {
       });
   };
 
+  const generateOutput = () => {
+    return JSON.stringify([
+      {
+        questionId: generateQuestionId('dcag.tasks.performTask.inputAudio.confirm'),
+        answer: useInput ? 'yes' : 'no'
+      },
+      {
+        questionId: generateQuestionId('dcag.tasks.performTask.inputAudioLocal.confirm'),
+        answer: isPronunciationLocal ? 'yes' : 'no'
+      }
+    ]);
+  };
+
   const saveAudioToAPI = async (e) => {
     logEvent({
       actions: 'click_submit',
@@ -190,8 +209,16 @@ const PerformTask: React.FC = () => {
     });
     e.preventDefault();
     setSubmitted(true);
-    if (useInput === true && selectedTask.taskType === 'RECORD_AUDIO') {
-      assignTaskToCompleted(selectedTask.taskId, { useInput: true, status: 'COMPLETED' });
+    if (
+      useInput === true &&
+      isPronunciationLocal === true &&
+      selectedTask.taskType === 'RECORD_AUDIO'
+    ) {
+      assignTaskToCompleted(selectedTask.taskId, {
+        useInput: true,
+        status: 'COMPLETED',
+        output: generateOutput()
+      });
     } else if (selectedTask.taskType === 'IMAGE_TO_TEXT') {
       assignTaskToCompleted(selectedTask.taskId, {
         output: selectedTask.output,
@@ -203,7 +230,11 @@ const PerformTask: React.FC = () => {
         .saveAudioBlobToStorage({ uploadUrl: selectedTask.uploadUrl, audioBlob, user })
         .then((result) => {
           console.log('Audio saved to the API.');
-          assignTaskToCompleted(selectedTask.taskId, { useInput: false, status: 'COMPLETED' });
+          assignTaskToCompleted(selectedTask.taskId, {
+            useInput: false,
+            status: 'COMPLETED',
+            output: generateOutput()
+          });
           //history.push("/dashboard/tasks/completed");
         })
         .catch((error) => {
@@ -273,6 +304,32 @@ const PerformTask: React.FC = () => {
     setUseInput(e.currentTarget.value === 'true');
   };
 
+  const onLocalPronunciationRadioChange = (e) => {
+    const question = t(`dcag.tasks.performTask.inputAudioLocal.confirm`);
+    const value =
+      e.currentTarget.value === 'true'
+        ? t(`dcag.tasks.performTask.inputAudioLocal.confirm.yes`)
+        : t(`dcag.tasks.performTask.inputAudioLocal.confirm.yes`);
+    logEvent({
+      actions: 'click_radio_button',
+      properties: selectedTask.taskId,
+      otherDetails: JSON.stringify({
+        question,
+        value,
+        taskType: selectedTask.taskType
+      })
+    });
+    setSelectedTask({
+      ...selectedTask,
+      output: {
+        ...selectedTask.output,
+        questionId: generateQuestionId('dcag.tasks.performTask.inputAudioLocal.confirm'),
+        answer: e.currentTarget.value === 'true' ? 'yes' : 'no'
+      }
+    });
+    setIsPronunciationLocal(e.currentTarget.value === 'true');
+  };
+
   const handleClickCancel = () => {
     logEvent({
       actions: 'click_start_cancel',
@@ -292,7 +349,11 @@ const PerformTask: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <Banner isOpen={isBannerVisible} setIsOpen={setIsBannerVisible}  taskType={selectedTask?.taskType || ''} />
+        <Banner
+          isOpen={isBannerVisible}
+          setIsOpen={setIsBannerVisible}
+          taskType={selectedTask?.taskType || ''}
+        />
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         {selectedTask ? (
           <>
@@ -381,70 +442,107 @@ const PerformTask: React.FC = () => {
                 </div>
               )}
               {selectedTask.taskType === 'RECORD_AUDIO' && (
-                <div>
-                  <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
-                  <RadioGroup
-                    value={selectedTask.status === 'COMPLETED' ? selectedTask.useInput : useInput}
-                    onChange={onRadioChange}
-                    name="number"
-                    align={ALIGN.horizontal}
-                    disabled={selectedTask.status === 'COMPLETED'}>
-                    <Radio value={true}>{t(`dcag.tasks.performTask.inputAudio.confirm.yes`)}</Radio>
-                    <Radio value={false}>{t(`dcag.tasks.performTask.inputAudio.confirm.no`)}</Radio>
-                  </RadioGroup>
-                </div>
+                <>
+                  <div>
+                    <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
+                    <RadioGroup
+                      value={selectedTask.status === 'COMPLETED' ? selectedTask.useInput : useInput}
+                      onChange={onRadioChange}
+                      name="number"
+                      align={ALIGN.horizontal}
+                      disabled={selectedTask.status === 'COMPLETED'}>
+                      <Radio value={true}>
+                        {t(`dcag.tasks.performTask.inputAudio.confirm.yes`)}
+                      </Radio>
+                      <Radio value={false}>
+                        {t(`dcag.tasks.performTask.inputAudio.confirm.no`)}
+                      </Radio>
+                    </RadioGroup>
+                  </div>
+                  <div>
+                    <h5>{t(`dcag.tasks.performTask.inputAudioLocal.confirm`)}</h5>
+                    <RadioGroup
+                      value={
+                        selectedTask.status === 'COMPLETED'
+                          ? JSON.parse(selectedTask.output).find(
+                              (question) =>
+                                question.questionId === 'dcagtasksperformtaskinputaudiolocalconfirm'
+                            ).answer === 'yes'
+                          : isPronunciationLocal
+                      }
+                      onChange={onLocalPronunciationRadioChange}
+                      name="number"
+                      align={ALIGN.horizontal}
+                      disabled={selectedTask.status === 'COMPLETED'}>
+                      <Radio value={true}>
+                        {t(`dcag.tasks.performTask.inputAudioLocal.confirm.yes`)}
+                      </Radio>
+                      <Radio value={false}>
+                        {t(`dcag.tasks.performTask.inputAudioLocal.confirm.no`)}
+                      </Radio>
+                    </RadioGroup>
+                  </div>
+                </>
               )}
 
               {selectedTask.status === 'IN_PROGRESS' &&
-                useInput === false &&
+                (useInput === false || isPronunciationLocal === false) &&
                 selectedTask.taskType !== 'IMAGE_TO_TEXT' && (
                   <IonLabel className="label-with-margin" style={{ marginTop: '20px' }}>
                     {t(`dcag.tasks.performTask.recordAudio.label`)}
                   </IonLabel>
                 )}
-              {selectedTask.useInput === false && selectedTask.taskType !== 'IMAGE_TO_TEXT' && (
-                <div style={{ marginTop: '10px' }}>
-                  {audioChunks.length > 0 && (
-                    <AudioPlayer
-                      audioSrc={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/mpeg' }))}
-                      onPause={onPause}
-                      onPlay={onPlay}
-                    />
-                  )}
-                  {selectedTask.status === 'COMPLETED' && selectedTask.useInput === false && (
-                    <div>
-                      <h5>{t(`dcag.tasks.performTask.output.label`)}</h5>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: '',
-                          alignItems: 'center',
-                          marginBottom: '5px'
-                        }}>
-                        <IonRadio
-                          color="primary" // Set the checkbox color to "primary"
-                          slot="start" // Position the checkbox on the left
-                          checked={true}
-                          class="black-circle-checkbox"></IonRadio>
-                        <div
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            width: '80vw'
-                          }}>
-                          <AudioPlayer
-                            audioSrc={selectedTask.outputUrl}
-                            onPause={onPause}
-                            onPlay={onPlay}
-                          />
+              {(selectedTask.useInput === false ||
+                // updated selectedTask
+                isPronunciationLocal === false) &&
+                selectedTask.taskType !== 'IMAGE_TO_TEXT' && (
+                  <div style={{ marginTop: '10px' }}>
+                    {audioChunks.length > 0 && (
+                      <AudioPlayer
+                        audioSrc={URL.createObjectURL(
+                          new Blob(audioChunks, { type: 'audio/mpeg' })
+                        )}
+                        onPause={onPause}
+                        onPlay={onPlay}
+                      />
+                    )}
+                    {selectedTask.status === 'COMPLETED' &&
+                      (selectedTask.useInput === false ||
+                        // updated selectedTask
+                        selectedTask.isPronunciationLocal === false) && (
+                        <div>
+                          <h5>{t(`dcag.tasks.performTask.output.label`)}</h5>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: '',
+                              alignItems: 'center',
+                              marginBottom: '5px'
+                            }}>
+                            <IonRadio
+                              color="primary" // Set the checkbox color to "primary"
+                              slot="start" // Position the checkbox on the left
+                              checked={true}
+                              class="black-circle-checkbox"></IonRadio>
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                width: '80vw'
+                              }}>
+                              <AudioPlayer
+                                audioSrc={selectedTask.outputUrl}
+                                onPause={onPause}
+                                onPlay={onPlay}
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                      )}
+                  </div>
+                )}
               {selectedTask.status === 'IN_PROGRESS' &&
-                useInput === false &&
+                (useInput === false || isPronunciationLocal === false) &&
                 selectedTask.taskType !== 'IMAGE_TO_TEXT' && (
                   <div style={{ width: '100%', marginTop: '10px' }}>
                     {isRecording ? (
