@@ -10,15 +10,24 @@ const CanvasImage = ({ imageUrl, canvasWidth, canvasHeight }) => {
 
     image.onload = () => {
       const aspectRatio = image.width / image.height;
-      const newWidth = canvasContainer.offsetWidth;
-      const newHeight = newWidth / aspectRatio;
+      const containerAspectRatio = canvasWidth / canvasHeight;
 
-      image.style.width = newWidth + 'px';
-      image.style.height = newHeight + 'px';
-
-      if (newHeight < canvasContainer.offsetHeight) {
-        const offset = (canvasContainer.offsetHeight - newHeight) / 2;
-        image.style.marginTop = offset + 'px';
+      if (aspectRatio > containerAspectRatio) {
+        // Image is wider, scale based on width
+        const scaleFactor = canvasWidth / image.width;
+        image.style.width = '100%';
+        image.style.height = 'auto';
+        canvasContainer.style.overflow = 'visible'; // Allow overflow to display entire image
+        canvasContainer.style.height = 'auto';
+        canvasContainer.style.width = 'auto';
+      } else {
+        // Image is taller, scale based on height
+        const scaleFactor = canvasHeight / image.height;
+        image.style.width = 'auto';
+        image.style.height = '30vh';
+        canvasContainer.style.overflow = 'visible'; // Allow overflow to display entire image
+        canvasContainer.style.width = 'auto';
+        canvasContainer.style.height = 'auto';
       }
 
       canvasContainer.appendChild(image);
@@ -35,7 +44,7 @@ const CanvasImage = ({ imageUrl, canvasWidth, canvasHeight }) => {
         height: canvasHeight + 'px',
         border: '1px solid #ccc',
         backgroundColor: '#f0f0f0',
-        margin: '0 auto'
+        margin: '0 auto',
       }}
     />
   );

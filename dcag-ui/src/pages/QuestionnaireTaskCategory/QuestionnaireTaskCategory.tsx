@@ -48,11 +48,12 @@ export default function QuestionnaireTaskCategory() {
         setShowLoading(false);
         setSelectedTask(result);
         const questionsData = questionnaireData[result.taskType];
-        if (result.taskType === 'RECEIPT_DIGITIZATION') {
-          setQuestions([questionsData[0]]);
-        } else {
-          setQuestions(questionsData);
-        }
+        setQuestions(questionsData);
+        // if (result.taskType === 'RECEIPT_DIGITIZATION') {
+        //   setQuestions([questionsData[0]]);
+        // } else {
+        //   setQuestions(questionsData);
+        // }
       })
       .catch((error) => {
         setShowLoading(false);
@@ -94,21 +95,21 @@ export default function QuestionnaireTaskCategory() {
     }
   }, [selectedTask]);
 
-  useEffect(() => {
-    console.log(selectedTask, formState);
-    if (selectedTask && selectedTask.taskType === 'RECEIPT_DIGITIZATION') {
-      if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'yes') {
-        const questionsData = questionnaireData[selectedTask.taskType];
-        setQuestions(questionsData.filter((question) => question.showIfReadable));
-      } else if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'no') {
-        const questionsData = questionnaireData[selectedTask.taskType];
-        setQuestions(questionsData.filter((question) => question.showIfUnreadable));
-      } else {
-        const questionsData = questionnaireData[selectedTask.taskType];
-        setQuestions([questionsData[0]]);
-      }
-    }
-  }, [selectedTask, formState]);
+  // useEffect(() => {
+  //   console.log(selectedTask, formState);
+  //   if (selectedTask && selectedTask.taskType === 'RECEIPT_DIGITIZATION') {
+  //     if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'yes') {
+  //       const questionsData = questionnaireData[selectedTask.taskType];
+  //       setQuestions(questionsData.filter((question) => question.showIfReadable));
+  //     } else if (formState && formState['dcagtasksreceiptdigitizationq1'] === 'no') {
+  //       const questionsData = questionnaireData[selectedTask.taskType];
+  //       setQuestions(questionsData.filter((question) => question.showIfUnreadable));
+  //     } else {
+  //       const questionsData = questionnaireData[selectedTask.taskType];
+  //       setQuestions([questionsData[0]]);
+  //     }
+  //   }
+  // }, [selectedTask, formState]);
 
   useEffect(() => {
     setShowLoading(true);
@@ -259,7 +260,7 @@ export default function QuestionnaireTaskCategory() {
               {/* <div className="fixed-header-buffer" style={{ height: '48px' }}></div> */}
               <Block
                 className="receipt-container"
-                style={{ height: isFullscreen ? '70vh' : '40vh' }}>
+                >
                 <ZoomedImage
                   imageUrl={selectedTask.inputUrl}
                   taskId={selectedTask.taskId}

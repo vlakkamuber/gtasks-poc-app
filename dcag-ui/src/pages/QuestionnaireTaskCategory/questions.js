@@ -9,19 +9,19 @@ export function generateQuestionId(description) {
 
 export const questionnaireData = {
   RECEIPT_DIGITIZATION: [
-    {
-      questionId: 'IS_THE_RECIEPT_AVAILABLE',
-      id: 3,
-      description: 'dcag.tasks.RECEIPT_DIGITIZATION.q1',
-      type: 'RADIO',
-      required: true,
-      options: [
-        { value: 'yes', label: 'dcag.tasks.imageDigitization.questions.option.label.readable' },
-        { value: 'no', label: 'dcag.tasks.imageDigitization.questions.option.label.nonreadable' }
-      ],
-      showIfReadable: true,
-      showIfUnreadable: true
-    },
+    // {
+    //   questionId: 'IS_THE_RECIEPT_AVAILABLE',
+    //   id: 3,
+    //   description: 'dcag.tasks.RECEIPT_DIGITIZATION.q1',
+    //   type: 'RADIO',
+    //   required: true,
+    //   options: [
+    //     { value: 'yes', label: 'dcag.tasks.imageDigitization.questions.option.label.readable' },
+    //     { value: 'no', label: 'dcag.tasks.imageDigitization.questions.option.label.nonreadable' }
+    //   ],
+    //   showIfReadable: true,
+    //   showIfUnreadable: true
+    // },
     {
       id: 1,
       questionId: 'RECEIPT_ID',
@@ -29,8 +29,8 @@ export const questionnaireData = {
       type: 'TEXT',
       required: true,
       options: '',
-      showIfReadable: true,
-      showIfUnreadable: false
+      // showIfReadable: true,
+      // showIfUnreadable: false
     },
     {
       id: 2,
@@ -39,8 +39,8 @@ export const questionnaireData = {
       type: 'TEXT',
       required: true,
       options: '',
-      showIfReadable: true,
-      showIfUnreadable: false
+      // showIfReadable: true,
+      // showIfUnreadable: false
     },
     {
       id: 4,
@@ -49,25 +49,25 @@ export const questionnaireData = {
       type: 'TEXT',
       required: true,
       options: '',
-      showIfReadable: true,
-      showIfUnreadable: false
+      // showIfReadable: true,
+      // showIfUnreadable: false
     },
-    {
-      id: 5,
-      questionId: 'PLEASE_SPECIFY_THE_REASON',
-      description: 'dcag.tasks.RECEIPT_DIGITIZATION.q5',
-      type: 'RADIO',
-      required: true,
-      options: [
-        { value: 'Not a receipt image', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option1' },
-        { value: 'Image not clear', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option2' },
-        { value: 'Image is cut', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option3' },
-        { value: 'Faded/Crushed', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option4' },
-        { value: 'Poor lighting', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option5' }
-      ],
-      showIfReadable: false,
-      showIfUnreadable: true
-    }
+    // {
+    //   id: 5,
+    //   questionId: 'PLEASE_SPECIFY_THE_REASON',
+    //   description: 'dcag.tasks.RECEIPT_DIGITIZATION.q5',
+    //   type: 'RADIO',
+    //   required: true,
+    //   options: [
+    //     { value: 'Not a receipt image', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option1' },
+    //     { value: 'Image not clear', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option2' },
+    //     { value: 'Image is cut', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option3' },
+    //     { value: 'Faded/Crushed', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option4' },
+    //     { value: 'Poor lighting', label: 'dcag.tasks.RECEIPT_DIGITIZATION.q5.option5' }
+    //   ],
+    //   showIfReadable: false,
+    //   showIfUnreadable: true
+    // }
   ],
   LOCALIZATION_QUALITY: [
     {

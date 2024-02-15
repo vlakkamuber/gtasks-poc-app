@@ -70,7 +70,13 @@ const ZoomableImage = ({ imageUrl, taskId, location, taskType, isFullscreen, set
             </div>
           </div>
           <TransformComponent>
-            <img src={imageUrl} alt="task image" style={{ width: '100%', height: '100%' }} />
+            <img src={imageUrl} alt="task image" style={{ width: '100%', height: isFullscreen ? "70vh" : '30vh' }} />
+            {/* <CanvasImage
+              imageUrl={imageUrl}
+              canvasWidth={300}
+              canvasHeight={400}
+              style={{ width: '100%', height: '100%' }}
+            /> */}
           </TransformComponent>
         </React.Fragment>
       )}

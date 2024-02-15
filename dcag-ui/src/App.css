@@ -396,16 +396,22 @@ label {
   right: 0;
 }
 .receipt-container {
-  height: 40vh;
+  /* height: 40vh; */
   position: relative;
+  display: flex;
+  justify-content: center;
   border-bottom: 2px solid #6b6b6b;
+  background-color: #f0f0f0;
 }
 ion-content.custom-scroll {
   height: 100% !important;
   --overflow: hidden !important;
 }
 .transform-component-module_wrapper__SPB86 {
-  height: 100% !important;
+  height: 100% !important
+}
+.transform-component-module_wrapper__SPB86 {
+  overflow: hidden !important; /* Override the overflow property to make content visible */
 }
 .receipt-container img {
   display: block;
