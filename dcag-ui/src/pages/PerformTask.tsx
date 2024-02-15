@@ -446,7 +446,10 @@ const PerformTask: React.FC = () => {
                   <div>
                     <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
                     <RadioGroup
-                      value={selectedTask.status === 'COMPLETED' ? selectedTask.useInput : useInput}
+                      value={selectedTask.status === 'COMPLETED' ? JSON.parse(selectedTask.output).find(
+                        (question) =>
+                          question.questionId === 'dcagtasksperformtaskinputaudioconfirm'
+                      ).answer === 'yes' : useInput}
                       onChange={onRadioChange}
                       name="number"
                       align={ALIGN.horizontal}
