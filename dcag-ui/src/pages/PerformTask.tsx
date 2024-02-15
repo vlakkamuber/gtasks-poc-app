@@ -291,7 +291,7 @@ const PerformTask: React.FC = () => {
     const value =
       e.currentTarget.value === 'true'
         ? t(`dcag.tasks.performTask.inputAudio.confirm.yes`)
-        : t(`dcag.tasks.performTask.inputAudio.confirm.yes`);
+        : t(`dcag.tasks.performTask.inputAudio.confirm.no`);
     logEvent({
       actions: 'click_radio_button',
       properties: selectedTask.taskId,
@@ -309,7 +309,7 @@ const PerformTask: React.FC = () => {
     const value =
       e.currentTarget.value === 'true'
         ? t(`dcag.tasks.performTask.inputAudioLocal.confirm.yes`)
-        : t(`dcag.tasks.performTask.inputAudioLocal.confirm.yes`);
+        : t(`dcag.tasks.performTask.inputAudioLocal.confirm.no`);
     logEvent({
       actions: 'click_radio_button',
       properties: selectedTask.taskId,
