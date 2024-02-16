@@ -16,7 +16,7 @@ import { questionnaireData } from './questions';
 import { useTranslation } from 'react-i18next';
 import { HeadingXSmall, LabelSmall } from 'baseui/typography';
 import { ButtonDock } from 'baseui/button-dock';
-import { Button, KIND } from 'baseui/button';
+import { Button, KIND, SHAPE } from 'baseui/button';
 import { useStyletron } from 'baseui';
 import apiService from '../apiService';
 import { useHistory, useParams } from 'react-router-dom';
@@ -292,13 +292,21 @@ export default function QuestionnaireTaskCategory() {
                   {selectedTask?.taskType === 'RECEIPT_DIGITIZATION' && (
                     <>
                       <Button
+                        kind={KIND.primary}
+                        shape={SHAPE.pill}
                         onClick={() => {
+                          logEvent({
+                            actions: 'click_open_instructions',
+                            properties: selectedTask.taskId,
+                            otherDetails: selectedTask.taskType
+                          });
                           setIsInstructionsOpen(true);
                         }}>
                         <ListFilled />
-                        &nbsp;Instruction
+                        &nbsp;{t('dcag.tasks.INSTRUCTIONS_BUTTON.title')}
                       </Button>
                       <InstructionsModal
+                        taskType={selectedTask?.taskType}
                         isOpen={isInstructionsOpen}
                         setIsOpen={setIsInstructionsOpen}
                       />

@@ -4,14 +4,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-import i1 from '../images/1.jpeg'
-import i2 from '../images/2.jpeg'
-import i3 from '../images/3.jpeg'
+import i1 from '../images/1.jpeg';
+import i2 from '../images/2.jpeg';
+import i3 from '../images/3.jpeg';
+import { HeadingXSmall } from 'baseui/typography';
+import { useTranslation } from 'react-i18next';
 
 const InstructionsModal: React.FC<{
   isOpen: boolean;
+  taskType?: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ isOpen, setIsOpen }) => {
+}> = ({ isOpen, setIsOpen, taskType }) => {
+  const { t } = useTranslation();
   return (
     <Modal
       onClose={() => setIsOpen(false)}
@@ -37,7 +41,11 @@ const InstructionsModal: React.FC<{
           }
         }
       }}>
-      <ModalHeader style={{ display: 'flex', justifyContent: 'center' }}></ModalHeader>
+      <ModalHeader style={{ display: 'flex', justifyContent: 'center' }}>
+        <HeadingXSmall>
+          {`${t(`dcag.home.taskHub.${taskType}.title`)} - ${t('dcag.tasks.INSTRUCTIONS_BUTTON.title')}`}
+        </HeadingXSmall>
+      </ModalHeader>
       <ModalBody>
         <Swiper
           modules={[Navigation]}
@@ -45,7 +53,7 @@ const InstructionsModal: React.FC<{
           onSlideChange={() => console.log('slide change')}
           onSwiper={(swiper) => console.log(swiper)}>
           <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={i1} style={{ height: '50vh' }}/>
+            <img src={i1} style={{ height: '50vh' }} />
           </SwiperSlide>
           <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
             <img src={i2} style={{ height: '50vh' }} />

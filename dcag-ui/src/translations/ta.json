@@ -243,6 +243,7 @@
   "dcag.tasks.IMAGE_LABELLING.CHENNAI_HYD.title": "பட கேள்விகள்",
   "dcag.tasks.MENU_PHOTO_REVIEW.CHENNAI_HYD.title": "மெனு கேள்விகள்",
   "dcag.tasks.TRAINING_MODAL.title": "பணிகளைச் செய்வதற்கு முன் பயிற்சி வீடியோக்களைக் காண்க",
+  "dcag.tasks.INSTRUCTIONS_BUTTON.title": "அறிவுறுத்தல்",
   "dcag.tasks.text.all_task_completed": "கீழ் உள்ள அனைத்து பணிகளையும் முடித்துவிட்டீர்கள்",
   "dcag.tasks.text.continue_other_task": "மற்ற பணிகளில் தொடர்ந்து பணியாற்றுங்கள்.",
   "dcag.tasks.text.no_more_task": "இதன் கீழ் உங்களுக்கு எந்த பணிகளும் இல்லை"
