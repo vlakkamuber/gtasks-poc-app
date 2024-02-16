@@ -31,4 +31,17 @@ gcloud api-gateway gateways update dcag-gateway --api=dcag-api --location=asia-n
 `gcloud storage buckets  describe gs://dcag-tasks-output/`
 `gcloud storage buckets  describe gs://dcag-tasks-input/`
 
+### Update metadata of output bucket 
+```
+nano setmeta.sh
+
+for object in $(gsutil ls gs://dcag-tasks-output/audio/); do
+    gsutil setmeta -h "Content-Type:audio/mpeg" "$object"
+done
+
+chmod +x setmeta.sh
+
+./setmeta.sh
+```
+
 
