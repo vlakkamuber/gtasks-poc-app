@@ -5,7 +5,8 @@ import com.ubr.dcagapiservicejava.domain.Task;
 import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
-import com.ubr.dcagapiservicejava.dto.*;
+import com.ubr.dcagapiservicejava.dto.TaskDTO;
+import com.ubr.dcagapiservicejava.dto.TaskResponse;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
 import com.ubr.dcagapiservicejava.repository.UserRepository;
@@ -28,7 +29,7 @@ import static java.util.stream.Collectors.toList;
 public class TaskService {
 
 
-    Map<String,List<String>> userCityTaskMap = new HashMap<>();
+    Map<String, List<String>> userCityTaskMap = new HashMap<>();
 
     public final static Integer MILLISECOND = 1000;
 
@@ -49,13 +50,13 @@ public class TaskService {
 
 
     @PostConstruct
-    public void init(){
-        userCityTaskMap.put("HYDERABAD",List.of("HYDERABAD"));
-        userCityTaskMap.put("DELHI",List.of("DELHI","FARIDABAD","JALANDHAR"));
-        userCityTaskMap.put("MUMBAI",List.of("MUMBAI","NAGPUR"));
-        userCityTaskMap.put("PUNE",List.of("PUNE","NAGPUR"));
-        userCityTaskMap.put("CHENNAI",List.of("CHENNAI","COIMBATORE"));
-        userCityTaskMap.put("BENGALURU",List.of("BENGALURU","MYSORE","UDUPI"));
+    public void init() {
+        userCityTaskMap.put("HYDERABAD", List.of("HYDERABAD"));
+        userCityTaskMap.put("DELHI", List.of("DELHI", "FARIDABAD", "JALANDHAR"));
+        userCityTaskMap.put("MUMBAI", List.of("MUMBAI", "NAGPUR"));
+        userCityTaskMap.put("PUNE", List.of("PUNE", "NAGPUR"));
+        userCityTaskMap.put("CHENNAI", List.of("CHENNAI", "COIMBATORE"));
+        userCityTaskMap.put("BENGALURU", List.of("BENGALURU", "MYSORE", "UDUPI"));
 
     }
 
@@ -79,12 +80,12 @@ public class TaskService {
                 .status(TaskStatus.NEW)
                 .currency(taskDTO.currency())
                 .price(taskDTO.price())
-                .maxNoOfUsers(taskDTO.taskType()!= null && taskDTO.taskType().equals(TaskType.UPLOAD_IMAGE) ? 1L : taskDTO.maxNoOfUsers())
+                .maxNoOfUsers(taskDTO.taskType() != null && taskDTO.taskType().equals(TaskType.UPLOAD_IMAGE) ? 1L : taskDTO.maxNoOfUsers())
                 .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                 .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                 .dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
-        log.info("Task is created - {}",taskDTO.name());
+        log.info("Task is created - {}", taskDTO.name());
         return taskToTaskResponse(savedTask);
     }
 
@@ -129,7 +130,7 @@ public class TaskService {
 
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
 
-        log.info("Update Task start - {}",taskDTO.name());
+        log.info("Update Task start - {}", taskDTO.name());
         Task task = new Task()
                 .name(taskDTO.name())
                 .taskType(taskDTO.taskType())
@@ -164,7 +165,7 @@ public class TaskService {
 
     public void delete(Long taskId) {
 
-        log.info("Delete Task start - {}",taskId);
+        log.info("Delete Task start - {}", taskId);
 
         taskRepository.findById(taskId)
                 .ifPresentOrElse(taskRepository::delete,
@@ -181,19 +182,19 @@ public class TaskService {
 
         List<String> languages = new ArrayList<>();
 
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
             languages.add(user.preferredLanguage());
             languages.add(user.nativeLanguage());
             cities = userCityTaskMap.get(user.cityName());
         }
-        if(type!=TaskType.RECORD_AUDIO){
+        if (type != TaskType.RECORD_AUDIO) {
             cities = null;
         }
-        if(type!=TaskType.LOCALIZATION_QUALITY){
+        if (type != TaskType.LOCALIZATION_QUALITY) {
             languages = null;
         }
-        return taskRepository.findAvailableTasks(available,userId, type, limit, (cities==null || cities.isEmpty())  ? null : cities, (languages==null || languages.isEmpty())  ? null : languages).stream()
+        return taskRepository.findAvailableTasks(available, userId, type, limit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
                 .collect(toList());

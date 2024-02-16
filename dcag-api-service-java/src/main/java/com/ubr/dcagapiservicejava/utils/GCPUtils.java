@@ -12,36 +12,36 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class GCPUtils {
 
-        @Value("${spring.cloud.gcp.project-id}")
-        String projectId;
+    @Value("${spring.cloud.gcp.project-id}")
+    String projectId;
 
-        public String signTaskInputImageUrl(String fileName) throws StorageException {
-            return generateV4GetObjectSignedUrl("dcag-tasks-input", "image/" + fileName);
-        }
+    public String signTaskInputImageUrl(String fileName) throws StorageException {
+        return generateV4GetObjectSignedUrl("dcag-tasks-input", "image/" + fileName);
+    }
 
-        public String signTaskInputAudioUrl(String fileName) throws StorageException {
-            return generateV4GetObjectSignedUrl("dcag-tasks-input", "audio/" + fileName);
-        }
+    public String signTaskInputAudioUrl(String fileName) throws StorageException {
+        return generateV4GetObjectSignedUrl("dcag-tasks-input", "audio/" + fileName);
+    }
 
-        public String signTaskOutputAudioUrl(String fileName) throws StorageException {
-            return generateV4GetObjectSignedUrl("dcag-tasks-output", "audio/" + fileName);
-        }
+    public String signTaskOutputAudioUrl(String fileName) throws StorageException {
+        return generateV4GetObjectSignedUrl("dcag-tasks-output", "audio/" + fileName);
+    }
 
-        public String signTaskUploadAudioUrl(String fileName) throws StorageException {
-            return generateV4PutObjectSignedUrl("dcag-tasks-output", "audio/" + fileName);
-        }
+    public String signTaskUploadAudioUrl(String fileName) throws StorageException {
+        return generateV4PutObjectSignedUrl("dcag-tasks-output", "audio/" + fileName);
+    }
 
-        public String signTaskUploadImageUrl(String fileName) throws StorageException {
-            return generateV4PutObjectSignedUrl("dcag-tasks-output", "image/" + fileName);
-        }
+    public String signTaskUploadImageUrl(String fileName) throws StorageException {
+        return generateV4PutObjectSignedUrl("dcag-tasks-output", "image/" + fileName);
+    }
 
-        public String signTaskOutputImageUrl(String fileName) throws StorageException {
-            return generateV4GetObjectSignedUrl("dcag-tasks-output", "image/" + fileName);
-        }
+    public String signTaskOutputImageUrl(String fileName) throws StorageException {
+        return generateV4GetObjectSignedUrl("dcag-tasks-output", "image/" + fileName);
+    }
 
-        public String signTrainingVideoUrl(String fileName) throws StorageException {
-            return generateV4GetObjectSignedUrl("dcag-training", fileName);
-        }
+    public String signTrainingVideoUrl(String fileName) throws StorageException {
+        return generateV4GetObjectSignedUrl("dcag-training", fileName);
+    }
 
     public Blob getRecordAudioCSVFile(String fileName) throws StorageException {
         return getBlobFile("dcag-tasks-source", "record_audio/" + fileName);
@@ -67,19 +67,19 @@ public class GCPUtils {
 
         Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 
-        return storage.get(bucketName,objectName);
+        return storage.get(bucketName, objectName);
     }
 
     /**
-         * Signing a URL requires Credentials which implement ServiceAccountSigner. These can be set
-         * explicitly using the Storage.SignUrlOption.signWith(ServiceAccountSigner) option. If you don't,
-         * you could also pass a service account signer to StorageOptions, i.e.
-         * StorageOptions().newBuilder().setCredentials(ServiceAccountSignerCredentials). In this example,
-         * neither of these options are used, which means the following code only works when the
-         * credentials are defined via the environment variable GOOGLE_APPLICATION_CREDENTIALS, and those
-         * credentials are authorized to sign a URL. See the documentation for Storage.signUrl for more
-         * details.
-         */
+     * Signing a URL requires Credentials which implement ServiceAccountSigner. These can be set
+     * explicitly using the Storage.SignUrlOption.signWith(ServiceAccountSigner) option. If you don't,
+     * you could also pass a service account signer to StorageOptions, i.e.
+     * StorageOptions().newBuilder().setCredentials(ServiceAccountSignerCredentials). In this example,
+     * neither of these options are used, which means the following code only works when the
+     * credentials are defined via the environment variable GOOGLE_APPLICATION_CREDENTIALS, and those
+     * credentials are authorized to sign a URL. See the documentation for Storage.signUrl for more
+     * details.
+     */
     public String generateV4GetObjectSignedUrl(String bucketName, String objectName) throws StorageException {
 //        objectName = "audio/"+ objectName;
 
@@ -89,7 +89,7 @@ public class GCPUtils {
         BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, objectName)).build();
 
         URL url =
-                storage.signUrl(blobInfo, bucketName.equals("dcag-training") ? 24*60 : 15, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+                storage.signUrl(blobInfo, bucketName.equals("dcag-training") ? 24 * 60 : 15, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
 
         System.out.println("Generated GET signed URL:" + url);
         return url.toString();

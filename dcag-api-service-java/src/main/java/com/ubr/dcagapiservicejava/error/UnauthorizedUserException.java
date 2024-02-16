@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UnauthorizedUserException extends RuntimeException {
 
     private String message;
+
     public UnauthorizedUserException(String message) {
         super(message);
         this.message = message;

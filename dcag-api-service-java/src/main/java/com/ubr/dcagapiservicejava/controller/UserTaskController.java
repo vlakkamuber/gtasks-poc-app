@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/users/{userId}/tasks")
 public class UserTaskController {
-    
+
     @Autowired
     private UserTaskService userTaskService;
 
@@ -29,7 +29,7 @@ public class UserTaskController {
     @PutMapping(value = "/{taskId}", consumes = "application/json")
     ResponseEntity<UserTaskResponse> updateUserTask(@PathVariable String userId, @PathVariable Long taskId, @RequestBody UserTaskDTO userTaskDTO) {
 
-        if(userTaskDTO.status().equals(UserTaskStatus.CANCELLED)){
+        if (userTaskDTO.status().equals(UserTaskStatus.CANCELLED)) {
             return ResponseEntity.ok(userTaskService.cancelUserTask(userId, taskId, userTaskDTO));
         }
 
@@ -46,7 +46,7 @@ public class UserTaskController {
     @CrossOrigin
     @GetMapping(value = "/{taskId}", produces = "application/json")
     ResponseEntity<UserTaskResponse> findUserTaskById(@PathVariable String userId, @PathVariable Long taskId) {
-        return ResponseEntity.ok(userTaskService.findUserTaskById(userId,taskId));
+        return ResponseEntity.ok(userTaskService.findUserTaskById(userId, taskId));
     }
 
     @CrossOrigin
@@ -66,6 +66,6 @@ public class UserTaskController {
     @CrossOrigin
     @GetMapping(value = "/{taskId}/uploadUrl", produces = "application/json")
     ResponseEntity<String> getUploadURL(@PathVariable String userId, @PathVariable Long taskId, @RequestParam String fileName) {
-        return ResponseEntity.ok(userTaskService.getUploadURL(userId,taskId, fileName));
+        return ResponseEntity.ok(userTaskService.getUploadURL(userId, taskId, fileName));
     }
 }

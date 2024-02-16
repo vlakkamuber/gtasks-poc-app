@@ -9,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder
@@ -25,7 +23,7 @@ public class TaskResponse {
     private String city;
     private String input;
     private TaskStatus status;
-    private long  maxNoOfUsers;
+    private long maxNoOfUsers;
     private String currency;
     private Double price;
     private String inputUrl;

@@ -3,6 +3,7 @@ package com.ubr.dcagapiservicejava.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ubr.dcagapiservicejava.domain.User;
 import com.ubr.dcagapiservicejava.domain.UserEvents;
 import com.ubr.dcagapiservicejava.domain.UserIssue;
 import com.ubr.dcagapiservicejava.domain.UserSurvey;
@@ -16,7 +17,6 @@ import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ubr.dcagapiservicejava.domain.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +61,7 @@ public class UserService {
                 .preferredLanguage(userDTO.preferredLanguage())
                 .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
 
-        log.info("User creation started - {}",userDTO.userId());
+        log.info("User creation started - {}", userDTO.userId());
         return new UserResponse(userRepository.save(user));
     }
 
@@ -80,7 +80,7 @@ public class UserService {
                 .lastName(userDTO.lastName())
                 .userType(userDTO.userType())
                 .phoneNumber(userDTO.phoneNumber());
-        log.info("User update started - {}",userDTO.userId());
+        log.info("User update started - {}", userDTO.userId());
         return userRepository
                 .findById(userId)
                 .map(existingUser -> userRepository.save(userToSave.cityName(existingUser.cityName())
@@ -92,7 +92,7 @@ public class UserService {
     }
 
     public void delete(String userId) {
-        log.info("User delete started - {}",userId);
+        log.info("User delete started - {}", userId);
         userRepository.findById(userId)
                 .ifPresentOrElse(userRepository::delete,
                         () -> {
@@ -113,24 +113,24 @@ public class UserService {
 
     public Long saveUserIssue(String userId, UserIssueDTO userIssueDTO) {
 
-        if(userRepository.findById(userId).isPresent()) {
+        if (userRepository.findById(userId).isPresent()) {
 
             UserIssue issue = userIssueRepository.save(new UserIssue().user(new User().id(userId))
                     .taskType(userIssueDTO.type()).description(userIssueDTO.description())
                     .summary(userIssueDTO.summary())
                     .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
 
-            log.info("User issue submitted - {}",userId);
+            log.info("User issue submitted - {}", userId);
 
             return issue.id();
-        }else {
+        } else {
             throw new UserNotFoundException("User not found: " + userId);
         }
     }
 
     public Long saveUserEvents(String userId, UserEventsDTO userEventsDTO) {
 
-        if(userRepository.findById(userId).isPresent()) {
+        if (userRepository.findById(userId).isPresent()) {
 
             UserEvents userEvents = userEventsRepository.save(new UserEvents().user(new User().id(userId))
                     .sessionId(userEventsDTO.sessionId()).page(userEventsDTO.page())
@@ -138,16 +138,16 @@ public class UserService {
                     .city(userEventsDTO.city()).otherDetails(userEventsDTO.otherDetails())
                     .userAgent(userEventsDTO.userAgent())
                     .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())));
-            log.info("Saved User Events for user - {}",userId);
+            log.info("Saved User Events for user - {}", userId);
             return userEvents.id();
-        }else {
+        } else {
             throw new UserNotFoundException("User not found: " + userId);
         }
     }
 
     public Long saveUserSurvey(String userId, UserSurveyDTO userSurveyDTO) throws JsonProcessingException {
 
-        if(userRepository.findById(userId).isPresent()) {
+        if (userRepository.findById(userId).isPresent()) {
 
             Optional<UserSurvey> userSurveyOptional = userSurveyRepository.findByUserId(userId);
 
@@ -157,9 +157,9 @@ public class UserService {
                     .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
 
             userSurvey = userSurveyRepository.save(userSurvey);
-            log.info("Saved Survey for user - {}",userId);
+            log.info("Saved Survey for user - {}", userId);
             return userSurvey.id();
-        }else {
+        } else {
             throw new UserNotFoundException("User not found: " + userId);
         }
 

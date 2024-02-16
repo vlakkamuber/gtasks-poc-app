@@ -4,8 +4,6 @@ import com.ubr.dcagapiservicejava.domain.enums.TaskCategory;
 import com.ubr.dcagapiservicejava.domain.enums.TaskStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 
-import java.time.LocalDateTime;
-
 public record TaskDTO(
 
         String name,

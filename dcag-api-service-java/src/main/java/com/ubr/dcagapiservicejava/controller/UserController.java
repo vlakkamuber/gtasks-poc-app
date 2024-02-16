@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-//import reactor.core.publisher.Flux;
-
-//import javax.validation.Valid; // TODO: validation
 
 import java.net.URI;
 import java.util.List;
@@ -74,7 +71,7 @@ public class UserController {
 
     @PostMapping("/{userId}/issues")
     ResponseEntity<?> saveUserIssue(@PathVariable String userId, @RequestBody UserIssueDTO userIssueDTO) {
-       Long savedId =  userService.saveUserIssue(userId,userIssueDTO);
+        Long savedId = userService.saveUserIssue(userId, userIssueDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}") //UriComponentsBuilder.fromPath("/{id}")
@@ -87,7 +84,7 @@ public class UserController {
 
     @PostMapping("/{userId}/analytics/events")
     ResponseEntity<?> saveUserEvents(@PathVariable String userId, @RequestBody UserEventsDTO userEventsDTO) {
-        Long savedId =  userService.saveUserEvents(userId,userEventsDTO);
+        Long savedId = userService.saveUserEvents(userId, userEventsDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}") //UriComponentsBuilder.fromPath("/{id}")
@@ -100,7 +97,7 @@ public class UserController {
 
     @PostMapping("/{userId}/survey")
     ResponseEntity<?> saveUserSurvey(@PathVariable String userId, @RequestBody UserSurveyDTO userSurveyDTO) throws JsonProcessingException {
-        Long savedId =  userService.saveUserSurvey(userId,userSurveyDTO);
+        Long savedId = userService.saveUserSurvey(userId, userSurveyDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}") //UriComponentsBuilder.fromPath("/{id}")

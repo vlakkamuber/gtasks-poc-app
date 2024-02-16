@@ -5,7 +5,10 @@ import com.ubr.dcagapiservicejava.dto.IngestTaskResponse;
 import com.ubr.dcagapiservicejava.service.IngestTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -17,7 +20,7 @@ public class TaskIngestionController {
     @Autowired
     IngestTaskService ingestTaskService;
 
-    @PostMapping(value = "/ingest-tasks",consumes = "application/json")
+    @PostMapping(value = "/ingest-tasks", consumes = "application/json")
     ResponseEntity<?> ingestTasks(@RequestBody IngestTaskDTO ingestTaskDTO) throws IOException {
 
         IngestTaskResponse ingestTaskResponse = ingestTaskService.ingestTasks(ingestTaskDTO);

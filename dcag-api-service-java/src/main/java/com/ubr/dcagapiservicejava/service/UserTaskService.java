@@ -64,7 +64,7 @@ public class UserTaskService {
         if (task.isPresent()) {
 
             if (userIdAndTaskId.isPresent()) {
-                if(!userIdAndTaskId.get().status().equals(UserTaskStatus.CANCELLED)) {
+                if (!userIdAndTaskId.get().status().equals(UserTaskStatus.CANCELLED)) {
                     throw new TaskNotFoundException(String.format("User - %s for task - %s already exist: ", userId, task.get().name()));
                 }
             }
@@ -72,11 +72,11 @@ public class UserTaskService {
             if (userTaskList.isEmpty() || task.get().isAvailable()) {
                 UserTaskStatus status = userTaskDTO.status();
                 UserTask userTask = new UserTask()
-                            .user(new User().id(userId))
-                            .task(new Task().id(taskId))
-                            .status(status)
-                            .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
-                            .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+                        .user(new User().id(userId))
+                        .task(new Task().id(taskId))
+                        .status(status)
+                        .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
+                        .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                 userTask = userTasksRepository.save(userTask);
                 log.info("User - {} In progress task - {} created", userId, taskId);
                 updateTaskStatus(taskId);
@@ -192,7 +192,7 @@ public class UserTaskService {
         Optional<UserSurvey> userSurvey = userSurveyRepository.findByUserId(userId);
 
         UserSurveyStatus status = null;
-        if(userSurvey.isPresent()){
+        if (userSurvey.isPresent()) {
             status = userSurvey.get().status();
         }
 
@@ -238,9 +238,9 @@ public class UserTaskService {
 
             completedCount = userTaskList.stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
 
-            if(totalCount==0){
+            if (totalCount == 0) {
                 status = TaskStatus.NEW;
-            }else if (completedCount == 0) {
+            } else if (completedCount == 0) {
                 status = TaskStatus.IN_PROGRESS;
             } else if (task.maxNoOfUsers() == completedCount) {
                 status = TaskStatus.COMPLETED;

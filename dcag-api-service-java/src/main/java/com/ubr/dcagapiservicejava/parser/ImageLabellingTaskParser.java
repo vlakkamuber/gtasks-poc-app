@@ -23,7 +23,7 @@ import java.util.Set;
 
 @Slf4j
 @Component
-public class ImageLabellingTaskParser implements TaskParser{
+public class ImageLabellingTaskParser implements TaskParser {
 
 
     @Value("${task_currency}")
@@ -40,13 +40,13 @@ public class ImageLabellingTaskParser implements TaskParser{
 
     @Override
     public TaskParserResponse parseTaskFile(IngestTaskDTO ingestTaskDTO) throws FileNotFoundException {
-        log.info("Parsing Image Labelling Task File:" + ingestTaskDTO.file()+ " for task type:" + ingestTaskDTO.taskType().name() + " started");
+        log.info("Parsing Image Labelling Task File:" + ingestTaskDTO.file() + " for task type:" + ingestTaskDTO.taskType().name() + " started");
 
         Blob blobFile = gcpUtils.getImageLabellingCSVFile(ingestTaskDTO.file());
         log.info("Blob found: " + blobFile);
 
         Set<Task> taskList = new HashSet<>();
-        int totalCount=0,successCount=0,errorCount=0;
+        int totalCount = 0, successCount = 0, errorCount = 0;
 
         if (blobFile != null) {
             try (Reader reader = new BufferedReader(new InputStreamReader(Channels.newInputStream(blobFile.reader())))) {
@@ -70,8 +70,8 @@ public class ImageLabellingTaskParser implements TaskParser{
 
                         taskList.add(task);
                         successCount++;
-                    }catch (Exception e){
-                        log.error("Exception occurred while parsing csv",e);
+                    } catch (Exception e) {
+                        log.error("Exception occurred while parsing csv", e);
                         errorCount++;
                     }
                 }
@@ -81,7 +81,7 @@ public class ImageLabellingTaskParser implements TaskParser{
             }
         } else {
             throw new FileNotFoundException("File Not found");
-        };
+        }
 
         return TaskParserResponse.builder().taskSet(taskList).totalCount(totalCount)
                 .successCount(successCount).errorCount(errorCount).build();

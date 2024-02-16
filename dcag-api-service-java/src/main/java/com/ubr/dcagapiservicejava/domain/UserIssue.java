@@ -1,6 +1,5 @@
 package com.ubr.dcagapiservicejava.domain;
 
-import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +22,7 @@ public class UserIssue implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name = "task_type")

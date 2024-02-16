@@ -21,4 +21,5 @@ public record UserDTO(
         String preferredLanguage,
 
         String nativeLanguage
-){}
+) {
+}

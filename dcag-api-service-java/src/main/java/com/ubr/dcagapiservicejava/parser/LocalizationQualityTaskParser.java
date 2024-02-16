@@ -23,7 +23,7 @@ import java.util.Set;
 
 @Slf4j
 @Component
-public class LocalizationQualityTaskParser implements TaskParser{
+public class LocalizationQualityTaskParser implements TaskParser {
     @Value("${task_currency}")
     String taskCurrency;
 
@@ -38,14 +38,14 @@ public class LocalizationQualityTaskParser implements TaskParser{
 
     @Override
     public TaskParserResponse parseTaskFile(IngestTaskDTO ingestTaskDTO) throws FileNotFoundException {
-        log.info("Parsing Localization Quality Task File:" + ingestTaskDTO.file()+ " for task type:" + ingestTaskDTO.taskType().name() + " started");
+        log.info("Parsing Localization Quality Task File:" + ingestTaskDTO.file() + " for task type:" + ingestTaskDTO.taskType().name() + " started");
 
         Blob blobFile = gcpUtils.getLocalizationCSVFile(ingestTaskDTO.file());
         log.info("Blob found: " + blobFile);
 
         Set<Task> taskList = new HashSet<>();
 
-        int totalCount=0,successCount=0,errorCount=0;
+        int totalCount = 0, successCount = 0, errorCount = 0;
 
         if (blobFile != null) {
             try (Reader reader = new BufferedReader(new InputStreamReader(Channels.newInputStream(blobFile.reader())))) {
@@ -69,8 +69,8 @@ public class LocalizationQualityTaskParser implements TaskParser{
                                 .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                         taskList.add(task);
                         successCount++;
-                    }catch (Exception e){
-                        log.error("Exception occurred while parsing csv",e);
+                    } catch (Exception e) {
+                        log.error("Exception occurred while parsing csv", e);
                         errorCount++;
                     }
                 }
@@ -80,7 +80,7 @@ public class LocalizationQualityTaskParser implements TaskParser{
             }
         } else {
             throw new FileNotFoundException("File Not found");
-        };
+        }
 
         return TaskParserResponse.builder().taskSet(taskList).totalCount(totalCount)
                 .successCount(successCount).errorCount(errorCount).build();

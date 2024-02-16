@@ -23,7 +23,7 @@ import java.util.Set;
 
 @Slf4j
 @Component
-public class MenuPhotoReviewTaskParser implements TaskParser{
+public class MenuPhotoReviewTaskParser implements TaskParser {
     @Value("${task_currency}")
     String taskCurrency;
 
@@ -41,7 +41,7 @@ public class MenuPhotoReviewTaskParser implements TaskParser{
         Blob blobFile = gcpUtils.getMenuPhotoReviewCSVFile(ingestTaskDTO.file() + ".csv");
         Set<Task> taskList = new HashSet<>();
 
-        int totalCount=0,successCount=0,errorCount=0;
+        int totalCount = 0, successCount = 0, errorCount = 0;
 
         if (blobFile != null) {
             try (Reader reader = new BufferedReader(new InputStreamReader(Channels.newInputStream(blobFile.reader())))) {
@@ -64,8 +64,8 @@ public class MenuPhotoReviewTaskParser implements TaskParser{
                                 .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                         taskList.add(task);
                         successCount++;
-                    }catch (Exception e){
-                        log.error("Exception occurred while parsing csv",e);
+                    } catch (Exception e) {
+                        log.error("Exception occurred while parsing csv", e);
                         errorCount++;
                     }
                 }
@@ -75,7 +75,7 @@ public class MenuPhotoReviewTaskParser implements TaskParser{
             }
         } else {
             throw new FileNotFoundException("File Not found");
-        };
+        }
 
         return TaskParserResponse.builder().taskSet(taskList).totalCount(totalCount)
                 .successCount(successCount).errorCount(errorCount).build();

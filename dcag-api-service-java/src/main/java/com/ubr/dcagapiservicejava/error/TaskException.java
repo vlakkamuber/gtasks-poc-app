@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class TaskException extends RuntimeException {
 
     private String message;
+
     public TaskException(String message) {
         super(message);
         this.message = message;

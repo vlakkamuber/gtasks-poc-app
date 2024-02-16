@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 
 /**
  * Common util functions
- *
  */
 public class DcagUtils {
 
@@ -38,7 +37,7 @@ public class DcagUtils {
         return zonedIST.toLocalDateTime();
     }
 
-    public static  long convertLocalDateTimeToEpoch(LocalDateTime dateTime) {
+    public static long convertLocalDateTimeToEpoch(LocalDateTime dateTime) {
         return dateTime.toEpochSecond(ZoneOffset.UTC);
     }
 

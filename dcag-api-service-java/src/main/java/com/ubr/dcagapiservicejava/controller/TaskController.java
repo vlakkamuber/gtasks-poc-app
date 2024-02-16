@@ -26,9 +26,7 @@ public class TaskController {
 //    }
 
     @GetMapping(produces = "application/json")
-    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false, defaultValue = "true") Boolean available,
-                                                          @RequestParam(required = false, defaultValue = "RECORD_AUDIO") TaskType taskType,
-                                                          @RequestParam(required = false, defaultValue = "test") String userId) {
+    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false, defaultValue = "true") Boolean available, @RequestParam(required = false, defaultValue = "RECORD_AUDIO") TaskType taskType, @RequestParam(required = false, defaultValue = "test") String userId) {
         return ResponseEntity.ok(taskService.findAvailableTasks(available, userId, taskType));
     }
 
@@ -42,14 +40,10 @@ public class TaskController {
     ResponseEntity<TaskResponse> create(/*@Valid*/ @RequestBody TaskDTO taskDTO) {
         TaskResponse savedTask = taskService.create(taskDTO);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}") //UriComponentsBuilder.fromPath("/{id}")
-                .buildAndExpand(savedTask.getId())
-                .toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}") //UriComponentsBuilder.fromPath("/{id}")
+                .buildAndExpand(savedTask.getId()).toUri();
 
-        return ResponseEntity
-                .created(location)
-                .body(savedTask);
+        return ResponseEntity.created(location).body(savedTask);
     }
 
     @PutMapping(value = "/{taskId}", produces = "application/json")
