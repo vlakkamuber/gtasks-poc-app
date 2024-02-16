@@ -38,6 +38,7 @@
     "react-zoom-pan-pinch": "^3.4.2",
     "styletron-engine-atomic": "^1.6.2",
     "styletron-react": "^6.1.1",
+    "swiper": "^11.0.6",
     "uuid": "^9.0.1",
     "wavesurfer.js": "^7.4.2"
   },

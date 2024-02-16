@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonPage, IonImg, IonToast, useIonLoading, IonAlert } from '@ionic/react';
+import {
+  IonContent,
+  IonPage,
+  IonImg,
+  IonFab,
+  IonToast,
+  useIonLoading,
+  IonAlert
+} from '@ionic/react';
 import Question from './components/Questions';
 import { Block } from 'baseui/block';
 import { ArrowLeft } from 'baseui/icon';
@@ -21,6 +29,8 @@ import useAnalytics from '../../hooks/useAnanlytics';
 import { capitalizeFirstLetter } from '../../utils/mapTeluguDigitsToNumeric';
 import Banner from '../../components/Banner';
 import { useCategory } from '../../context/TaskCategoryContext';
+import { ListFilled } from '@uber/icons';
+import InstructionsModal from '../../components/InstructionsModal';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();
@@ -37,6 +47,7 @@ export default function QuestionnaireTaskCategory() {
   const { location } = useCategory();
   const [isBannerVisible, setIsBannerVisible] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);
 
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.tasks });
   const getTaskDetail = async () => {
@@ -258,9 +269,7 @@ export default function QuestionnaireTaskCategory() {
                 </Block>
               )}
               {/* <div className="fixed-header-buffer" style={{ height: '48px' }}></div> */}
-              <Block
-                className="receipt-container"
-                >
+              <Block className="receipt-container">
                 <ZoomedImage
                   imageUrl={selectedTask.inputUrl}
                   taskId={selectedTask.taskId}
@@ -271,8 +280,30 @@ export default function QuestionnaireTaskCategory() {
               </Block>
 
               <Block className="question-container p-16">
-                <HeadingXSmall className="p-0 m-0">
+                <HeadingXSmall
+                  className="p-0 m-0"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}>
                   {t('dcag.tasks.heading.label.task_questionnaire')}
+
+                  {selectedTask?.taskType === 'RECEIPT_DIGITIZATION' && (
+                    <>
+                      <Button
+                        onClick={() => {
+                          setIsInstructionsOpen(true);
+                        }}>
+                        <ListFilled />
+                        &nbsp;Instruction
+                      </Button>
+                      <InstructionsModal
+                        isOpen={isInstructionsOpen}
+                        setIsOpen={setIsInstructionsOpen}
+                      />
+                    </>
+                  )}
                 </HeadingXSmall>
                 {questions.map((item) => (
                   <Question
