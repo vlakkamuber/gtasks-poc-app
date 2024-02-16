@@ -45,7 +45,9 @@ import ErrorView from '../components/ErrorView';
 import { Button, SIZE, SHAPE } from 'baseui/button';
 import useAnalytics from '../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
-
+import Card from './Tasks/components/Card';
+import PersonMultipleFilled from '@uber/icons/person-multiple-filled';
+import MoneyFilled from '@uber/icons/money-filled';
 import SurveyModal from './SurveyQuestions/SurveyModal';
 import { ParagraphSmall } from 'baseui/typography';
 const Tasks: React.FC = () => {
@@ -296,39 +298,24 @@ const Tasks: React.FC = () => {
         <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
         {showPayout && (
           <div className="tasks-info" style={{ marginTop: '30px' }}>
-            <div className="task-detail">
-              <div style={{ color: '#5e5e5e' }}>
-                <IonIcon icon={people} /> {t(`dcag.tasks.page.completedTask.label`)}
-              </div>
-              <div style={{ fontSize: '1.7rem' }}>
-                {completedCount}
-                <span
-                  style={{
-                    ...theme.typography.ParagraphMedium,
-                    color: theme.colors.contentSecondary
-                  }}>
-                  {' '}
-                  ({todayCount} {t('dcag.tasks.text.today')})
-                </span>
-              </div>
-            </div>
-            <div className="vertical-bar" style={{ borderLeft: '2px solid #ddd' }}></div>
-            <div className="task-count">
-              <div style={{ color: '#5e5e5e' }}>
-                <IonIcon icon={business} /> {t(`dcag.tasks.page.youEarned.label`)}
-              </div>
-              <div style={{ fontSize: '1.7rem' }} className="task-count-rate">
-                ₹{to2DecimalPlaces(totalEarned)}
-                <span
-                  style={{
-                    ...theme.typography.ParagraphMedium,
-                    color: theme.colors.contentSecondary
-                  }}>
-                  {' '}
-                  (₹{to2DecimalPlaces(todayEarnings)} {t('dcag.tasks.text.today')})
-                </span>
-              </div>
-            </div>
+            <Card
+              className="task-detail"
+              icon={people}
+              TitleIcon={() => <PersonMultipleFilled size={16} color='#276EF1' style={{ marginRight: 8}} />}
+              bgColor='#EFF4FE'
+              label={t(`dcag.tasks.page.completedTask.label`)}
+              count={completedCount}
+              todayCount={todayCount}
+            />
+            <Card
+              className="task-count"
+              icon={business}
+              TitleIcon={() => <MoneyFilled size={16} color="#0E8345" style={{ marginRight: 8}} />}
+              bgColor='#EAF6ED'
+              label={t(`dcag.tasks.page.youEarned.label`)}
+              count={`₹${to2DecimalPlaces(totalEarned)}`}
+              todayCount={`₹${to2DecimalPlaces(todayEarnings)}`}
+            />
           </div>
         )}
         <IonSegment

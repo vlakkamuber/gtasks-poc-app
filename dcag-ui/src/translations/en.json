@@ -195,7 +195,7 @@
   "dcag.home.text.task": "task",
   "dcag.home.card.duration.seconds": "Seconds",
   "dcag.home.card.duration.minutes": "Minutes",
-  "dcag.tasks.text.today": "today",
+  "dcag.tasks.text.today": "Today",
   "dcag.tasks.imageDigitization.questions.option.label.readable": "Readable",
   "dcag.tasks.imageDigitization.questions.option.label.nonreadable": "Non-Readable",
   "dcag.tasks.text.required_questions": "Required question",

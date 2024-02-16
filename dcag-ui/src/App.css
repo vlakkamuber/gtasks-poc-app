@@ -73,10 +73,12 @@
 }
 
 .tasks-info {
-  display: flex;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: auto auto;
   flex-direction: row;
-  justify-content: space-around;
   margin-top: 29px;
+  margin-right: 10px;
   font-size: 1.3rem;
 }
 .task-detail {
