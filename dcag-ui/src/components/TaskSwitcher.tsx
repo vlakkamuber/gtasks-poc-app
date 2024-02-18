@@ -39,7 +39,7 @@ const taskObj = {
 }
 const TaskSwitcher: React.FC = () => {
   const { selectedCategory, setSelectedCategory} = useCategory();
-  const [value, setValue] = React.useState({label:"Switch Task",id:selectedCategory});
+  const [value, setValue] = React.useState({label:"Change Task",id:selectedCategory});
   const handleChange = (params) => {
     const category = params[0].id;
     localStorage.setItem('selectedCategory', category);
@@ -50,7 +50,7 @@ const TaskSwitcher: React.FC = () => {
   const defaultCategory = localStorage.getItem('selectedCategory') || 'ALL';
   useEffect(() => {
     setSelectedCategory(defaultCategory);
-    setValue({label:"Switch Task",id:defaultCategory})
+    setValue({label:"Change Task",id:defaultCategory})
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
@@ -59,9 +59,8 @@ const TaskSwitcher: React.FC = () => {
       size={SIZE.compact}
       shape={SHAPE.pill}
       clearable={false}
-      value={[value]}
-      placeholder="Switch Task"
-      onClose= {() => setValue([])}
+      placeholder={<span style={{ color: '#000' }}>Change Task</span>}
+      onClose={() => setValue({ label: "Switch Task", id: selectedCategory })} 
       onChange={params => handleChange(params.value)}
     />
   );
