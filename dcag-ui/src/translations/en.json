@@ -246,5 +246,6 @@
   "dcag.tasks.INSTRUCTIONS_BUTTON.title": "Instruction",
   "dcag.tasks.text.all_task_completed": "You have completed all the tasks under",
   "dcag.tasks.text.continue_other_task": "Please continue working on other tasks.",
-  "dcag.tasks.text.no_more_task": "You have no tasks under"
+  "dcag.tasks.text.no_more_task": "You have no tasks under",
+  "dcag.tasks.changeTask.label":"Change Task"
 }

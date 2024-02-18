@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useCategory } from '../context/TaskCategoryContext';
 import { Select } from "baseui/select";
 import {SHAPE,SIZE} from 'baseui/button'
+import { useTranslation } from 'react-i18next';
 export const TASK_CATEGORIES_DATA = [
   {
     id: 'ALL',
@@ -39,18 +40,19 @@ const taskObj = {
 }
 const TaskSwitcher: React.FC = () => {
   const { selectedCategory, setSelectedCategory} = useCategory();
-  const [value, setValue] = React.useState({label:"Change Task",id:selectedCategory});
+  const { t } = useTranslation();
+  const [value, setValue] = React.useState({label:taskObj.selectedCategory,id:selectedCategory});
   const handleChange = (params) => {
     const category = params[0].id;
     localStorage.setItem('selectedCategory', category);
     setSelectedCategory(category);
-    setValue({label:"Switch Task",id:category})
+    setValue({label:taskObj.category,id:category})
   };
   // Set the default language to English if not found in local storage
   const defaultCategory = localStorage.getItem('selectedCategory') || 'ALL';
   useEffect(() => {
     setSelectedCategory(defaultCategory);
-    setValue({label:"Change Task",id:defaultCategory})
+    setValue({label:taskObj.defaultCategory,id:defaultCategory})
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
@@ -59,9 +61,28 @@ const TaskSwitcher: React.FC = () => {
       size={SIZE.compact}
       shape={SHAPE.pill}
       clearable={false}
-      placeholder={<span style={{ color: '#000' }}>Change Task</span>}
-      onClose={() => setValue({ label: "Switch Task", id: selectedCategory })} 
+      placeholder={<span style={{ color: '#000' }}>{t(`dcag.tasks.changeTask.label`)}</span>} 
       onChange={params => handleChange(params.value)}
+      overrides={{
+        SelectArrow: {
+          style: ({ $theme }) => ({
+            borderRadius: '20px',
+          }),
+        },
+        ControlContainer: {
+          style: ({ $theme }) => ({
+            borderRadius: '20px',
+          }),
+        },
+        DropdownListItem: {
+          style: ({ $theme }) => ({
+            borderTopLeftRadius: '20px', 
+            borderTopRightRadius: '20px', 
+            borderBottomLeftRadius: '20px', 
+            borderBottomRightRadius: '20px', 
+          }),
+        },
+      }}
     />
   );
 };
