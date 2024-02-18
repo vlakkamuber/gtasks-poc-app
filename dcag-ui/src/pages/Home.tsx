@@ -15,6 +15,7 @@ import { ANALYTICS_PAGE, TASK_CATEGORIES_DATA, TASK_RATE } from '../constants/co
 import { useEffect, useState } from 'react';
 import apiService from './apiService';
 import { useUserAuth } from '../context/UserAuthContext';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const reshuffleTaskCategories = (tasks, order) => {
   const tasksByType = {};
@@ -155,6 +156,7 @@ const Home: React.FC = () => {
                   })
                 }
               }}>
+                <LanguageSwitcher/>
               {/* <LabelSmall>Help</LabelSmall> */}
             </Button>
           </Block>

@@ -12,9 +12,10 @@ import {
   IonList,
   IonItem,
   IonButton,
-  IonBadge
+  IonBadge,
+  IonButtons
 } from '@ionic/react';
-import { people, business } from 'ionicons/icons';
+import { people, business,arrowBack } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
@@ -50,6 +51,8 @@ import PersonMultipleFilled from '@uber/icons/person-multiple-filled';
 import MoneyFilled from '@uber/icons/money-filled';
 import SurveyModal from './SurveyQuestions/SurveyModal';
 import { ParagraphSmall } from 'baseui/typography';
+import LanguageSwitcher from './LanguageSwitcher';
+import TaskSwitcher from '../components/TaskSwitcher';
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
@@ -179,6 +182,10 @@ const Tasks: React.FC = () => {
     setShowLoading(true);
     getTaskSummary();
   }, []);
+  useEffect(()=>{
+    setShowLoading(true);
+    getTaskSummary();
+  },[selectedCategory])
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
@@ -285,10 +292,15 @@ const Tasks: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          {/* <IonButtons slot="start">
+          <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
-          </IonButtons> */}
-          <IonTitle>{t(`dcag.tasks.page.heading`)}</IonTitle>
+          </IonButtons>
+          <div style={{display:'flex',padding:'8px'}}>
+          <IonTitle style={{ width:'80%' }}>{t(`dcag.tasks.page.heading`)}</IonTitle>
+          <div style={{width:'40%'}}>
+          <LanguageSwitcher />
+          </div>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding-start" style={{ '--padding-bottom': '77px' }}>
@@ -377,6 +389,7 @@ const Tasks: React.FC = () => {
                                 ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
                                 : t(`dcag.tasks.${key}.title`)}
                             </h1>
+                            <span><TaskSwitcher/></span>
                             {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
                         </span> */}

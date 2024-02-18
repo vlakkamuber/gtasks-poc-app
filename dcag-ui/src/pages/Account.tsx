@@ -63,7 +63,12 @@ const Account: React.FC = () => {
             <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
-          <IonTitle>{t(`dcag.account.page.heading`)}</IonTitle>
+          <div style={{display:'flex',padding:'8px'}}>
+          <IonTitle style={{ width:'80%' }}>{t(`dcag.account.page.heading`)}</IonTitle>
+          <div style={{width:'40%'}}>
+            <LanguageSwitcher/>
+          </div>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent style={{ padding: '10px' }}>

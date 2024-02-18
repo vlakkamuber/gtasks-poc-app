@@ -24,6 +24,7 @@ import apiService from './apiService';
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, LANGUAGE_CODE_MAPPER } from '../constants/constant';
 import { snakeCaseToNormal } from '../utils/mapTeluguDigitsToNumeric';
+import LanguageSwitcher from './LanguageSwitcher';
 const Training: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -68,7 +69,12 @@ const Training: React.FC = () => {
             <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
-          <IonTitle>{t(`dcag.home.training.page.heading`)}</IonTitle>
+          <div style={{display:'flex',padding:'8px'}}>
+          <IonTitle style={{ width:'80%' }}>{t(`dcag.home.training.page.heading`)}</IonTitle>
+          <div style={{width:'40%'}}>
+            <LanguageSwitcher/>
+          </div>
+          </div>
         </IonToolbar>
       </IonHeader>
       {trainingDoc && (
