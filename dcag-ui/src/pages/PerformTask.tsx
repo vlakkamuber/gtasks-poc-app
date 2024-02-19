@@ -365,7 +365,7 @@ const PerformTask: React.FC = () => {
                 justifyContent: 'center',
                 flexDirection: 'column',
                 padding: '10px',
-                margin: '20px'
+                margin: '20px 20px 0px'
               }}>
               <h2 className="no-padding-margin" style={{ marginBottom: '8px' }}>
                 {selectedTask.taskName}
@@ -439,7 +439,9 @@ const PerformTask: React.FC = () => {
               {(selectedTask.taskType === 'RECORD_AUDIO' ||
                 selectedTask.taskType === 'RECORD_AUDIO') && (
                 <div>
-                  <h5>{t(`dcag.tasks.performTask.input.label`)}</h5>
+                  <div style={{ marginBottom: 10 }}>
+                  <IonLabel className='label-with-margin'>{t(`dcag.tasks.performTask.input.label`)}</IonLabel>
+                  </div>
                   <AudioPlayer audioSrc={selectedTask.inputUrl} onPause={onPause} onPlay={onPlay} />
                 </div>
               )}
@@ -549,7 +551,7 @@ const PerformTask: React.FC = () => {
               {selectedTask.status === 'IN_PROGRESS' &&
                 (useInput === false || isPronunciationLocal === false) &&
                 selectedTask.taskType !== 'IMAGE_TO_TEXT' && (
-                  <div style={{ width: '100%', marginTop: '10px' }}>
+                  <div style={{ width: '100%' }}>
                     {isRecording ? (
                       <div
                         style={{
