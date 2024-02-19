@@ -1,6 +1,7 @@
 package com.ubr.dcagapiservicejava.dto;
 
 import com.ubr.dcagapiservicejava.domain.User;
+import com.ubr.dcagapiservicejava.domain.enums.UserStatus;
 import com.ubr.dcagapiservicejava.domain.enums.UserType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -21,7 +22,9 @@ public record UserResponse(
 
         String nativeLanguage,
 
-        UserType userType
+        UserType userType,
+
+        UserStatus status
 
 ) {
 
@@ -34,6 +37,7 @@ public record UserResponse(
                 user.cityName(),
                 user.preferredLanguage(),
                 user.nativeLanguage(),
-                user.userType());
+                user.userType(),
+                user.status());
     }
 }

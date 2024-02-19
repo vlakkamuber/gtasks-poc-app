@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.domain;
 
+import com.ubr.dcagapiservicejava.domain.enums.UserStatus;
 import com.ubr.dcagapiservicejava.domain.enums.UserType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
     private UserType userType;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     @Column(name = "phone_number")
     private String phoneNumber;

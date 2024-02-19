@@ -8,6 +8,7 @@ CREATE TABLE users
     city_name    VARCHAR(255),
     phone_number VARCHAR(255),
     user_type    VARCHAR(255),
+    status    VARCHAR(255),
     preferred_lang VARCHAR(255),
     native_lang   VARCHAR(255),
     create_time   TIMESTAMP,
