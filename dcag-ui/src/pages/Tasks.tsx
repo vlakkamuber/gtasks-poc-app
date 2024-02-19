@@ -308,7 +308,8 @@ const Tasks: React.FC = () => {
           </div>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding-start" style={{ '--padding-bottom': '77px' }}>
+      <IonContent style={{ '--padding-bottom': '77px' }}>
+        <div style={{ padding: 10 }}>
         {completedCount > 100 && !taskSummary?.surveyStatus && (
           <SurveyModal isOpen={isOpen} onClose={closeModal} />
         )}
@@ -435,7 +436,7 @@ const Tasks: React.FC = () => {
                         {tasks[key].map((task, index) => {
                           return (
                             <React.Fragment key={task.id}>
-                              <IonList>
+                              <IonList style={{ marginBottom: 1 }}>
                                 <IonItem>
                                   <IonLabel>
                                     <h2>
@@ -516,7 +517,7 @@ const Tasks: React.FC = () => {
                         <small>{t(`dcag.tasks.UPLOAD_IMAGE.taskDesc`)}.</small>
                       </p>
                     </div>
-                    <IonList>
+                    <IonList style={{ marginBottom: 1 }}>
                       <IonItem>
                         <IonLabel>
                           <span style={{ display: 'flex' }}>
@@ -547,6 +548,7 @@ const Tasks: React.FC = () => {
             <MyTasks />
           </React.Fragment>
         )}
+        </div>
       </IonContent>
     </IonPage>
   );

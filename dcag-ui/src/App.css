@@ -87,7 +87,6 @@ ion-tab-button {
   grid-template-columns: auto auto;
   flex-direction: row;
   margin-top: 29px;
-  margin-right: 10px;
   font-size: 1.3rem;
 }
 .task-detail {
