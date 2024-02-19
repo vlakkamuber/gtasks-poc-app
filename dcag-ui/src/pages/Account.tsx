@@ -63,11 +63,11 @@ const Account: React.FC = () => {
             <IonIcon onClick={goBack} icon={arrowBack} />
             {/* <IonButton onClick={goBack}>Back</IonButton> */}
           </IonButtons>
-          <div style={{display:'flex',padding:'8px',justifyContent:'end'}}>
-          <IonTitle style={{ width:'80%' }}>{t(`dcag.account.page.heading`)}</IonTitle>
-          <div style={{width:'40%'}}>
-            <LanguageSwitcher/>
-          </div>
+          <div style={{ display: 'flex', padding: '8px', justifyContent: 'end' }}>
+            <IonTitle style={{ width: '80%' }}>{t(`dcag.account.page.heading`)}</IonTitle>
+            <div style={{ width: '40%' }}>
+              <LanguageSwitcher />
+            </div>
           </div>
         </IonToolbar>
       </IonHeader>
@@ -130,9 +130,11 @@ const Account: React.FC = () => {
             <IonIcon icon={logOutIcon} slot="start" />
             <IonLabel>{t(`dcag.account.page.link.logout`)}</IonLabel>
           </IonItem>
-          <IonItem>
+          {/* The below commented code should not be deleted.
+          It may be uncommented and used in future when we remove the language switcher from the header */}
+          {/* <IonItem>
             <IonLabel>App Language</IonLabel> <LanguageSwitcher />
-          </IonItem>
+          </IonItem> */}
         </IonList>
       </IonContent>
     </IonPage>

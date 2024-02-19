@@ -15,7 +15,7 @@ const languageObj = {
   ta: 'தமிழ்'
 };
 
-const LanguageSwitcher: React.FC<{ page: string }> = ({ page }) => {
+const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
   const { i18n } = useTranslation();
   const [value, setValue] = React.useState([{ label: 'English', id: 'en' }]);
   const { language, setLanguage } = useLanguage();

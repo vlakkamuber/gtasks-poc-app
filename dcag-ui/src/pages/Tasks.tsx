@@ -371,18 +371,19 @@ const Tasks: React.FC = () => {
           </IonSegmentButton>
           {/* Add more segments as needed */}
         </IonSegment>
-        {!availableCount && (
-          <div>
-            <ParagraphSmall>
-              {completedCount
-                ? t('dcag.tasks.text.all_task_completed')
-                : t('dcag.tasks.text.no_more_task')}{' '}
-              {selectedCategoryTitle} {t('dcag.tasks.text.continue_other_task')}
-            </ParagraphSmall>
-          </div>
-        )}
+
         {selectedSegment === 'available_task' && (
           <React.Fragment>
+            {!availableCount && !showLoading && (
+              <div>
+                <ParagraphSmall>
+                  {completedCount
+                    ? t('dcag.tasks.text.all_task_completed')
+                    : t('dcag.tasks.text.no_more_task')}{' '}
+                  {selectedCategoryTitle} {t('dcag.tasks.text.continue_other_task')}
+                </ParagraphSmall>
+              </div>
+            )}
             {todayEarnings > 200 ? (
               <AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!" />
             ) : (
