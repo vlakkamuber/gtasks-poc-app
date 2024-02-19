@@ -4,7 +4,7 @@
   box-sizing: border-box;
 } */
 ion-tab-button {
-  --color: #A6A6A6;
+  --color: #a6a6a6;
   --color-selected: #000000;
 }
 
@@ -62,6 +62,10 @@ ion-tab-button {
 }
 .pt-0 {
   padding-top: 0px;
+}
+
+.bg-white {
+  background-color: #fff;
 }
 
 .otp-input {
@@ -415,7 +419,7 @@ ion-content.custom-scroll {
   --overflow: hidden !important;
 }
 .transform-component-module_wrapper__SPB86 {
-  height: 100% !important
+  height: 100% !important;
 }
 .transform-component-module_wrapper__SPB86 {
   overflow: hidden !important; /* Override the overflow property to make content visible */

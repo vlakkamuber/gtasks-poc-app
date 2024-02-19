@@ -15,7 +15,7 @@ const Login = () => {
   }, []);
 
   return (
-    <IonPage className="p-16">
+    <IonPage className="p-16 bg-white">
       {isOtpSent ? (
         <OtpVerificationPage sendOtpResponse={sendOtpResponse} isUserExist={isUserExist} />
       ) : (
