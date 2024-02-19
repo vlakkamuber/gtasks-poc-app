@@ -295,7 +295,7 @@ const Tasks: React.FC = () => {
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
           </IonButtons>
-          <div style={{display:'flex',padding:'8px'}}>
+          <div style={{display:'flex',padding:'8px',justifyContent:'end'}}>
           <IonTitle style={{ width:'80%' }}>{t(`dcag.tasks.page.heading`)}</IonTitle>
           <div style={{width:'40%'}}>
           <LanguageSwitcher />
@@ -389,7 +389,7 @@ const Tasks: React.FC = () => {
                                 ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
                                 : t(`dcag.tasks.${key}.title`)}
                             </h1>
-                            <span><TaskSwitcher/></span>
+                            {selectedCategory!=='ALL' &&<span><TaskSwitcher/></span>}
                             {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
                         </span> */}

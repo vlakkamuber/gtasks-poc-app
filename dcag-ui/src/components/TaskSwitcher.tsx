@@ -8,10 +8,6 @@ import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, LANGUAGE_CODE_MAPPER } from '../constants/constant';
 export const TASK_CATEGORIES_DATA = [
   {
-    id: 'ALL',
-    label: 'All',
-  },
-  {
     id: 'RECORD_AUDIO',
     label: 'Record Audio',
   },
@@ -33,7 +29,6 @@ export const TASK_CATEGORIES_DATA = [
   },
 ];
 const taskObj = {
-  "ALL":'All',
   "MENU_PHOTO_REVIEW":'Menu Photo Review',
   "IMAGE_LABELLING":"Image Labelling",
   "LOCALIZATION_QUALITY":'Localization Quality',
