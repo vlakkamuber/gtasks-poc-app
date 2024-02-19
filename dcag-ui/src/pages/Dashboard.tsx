@@ -106,7 +106,6 @@ const Dashboard: React.FC = ({ content }) => {
         </IonTabBar>
       </IonTabs>
       </>)}
-     
     </>
   );
 };

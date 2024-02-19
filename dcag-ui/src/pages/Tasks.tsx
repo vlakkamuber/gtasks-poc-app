@@ -53,6 +53,8 @@ import SurveyModal from './SurveyQuestions/SurveyModal';
 import { ParagraphSmall } from 'baseui/typography';
 import LanguageSwitcher from './LanguageSwitcher';
 import TaskSwitcher from '../components/TaskSwitcher';
+import { TagFilled } from '@uber/icons';
+
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
@@ -448,7 +450,7 @@ const Tasks: React.FC = () => {
                                     )}
                                     {showPayout && (
                                       <p>
-                                        {t('dcag.home.taskHub.rate')}: ₹
+                                        <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹
                                         {to2DecimalPlaces(TASK_RATE[key])}
                                       </p>
                                     )}
@@ -520,7 +522,7 @@ const Tasks: React.FC = () => {
                           <span style={{ display: 'flex' }}>
                             <h2>Default Task</h2>
                           </span>
-                          {showPayout && <p>{t('dcag.home.taskHub.rate')}: $2</p>}
+                          {showPayout && <p><TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> $2</p>}
                         </IonLabel>
                         <IonButton
                           slot="end"

@@ -28,6 +28,7 @@ import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
 import { useUserAuth } from '../context/UserAuthContext';
 import { showPayout } from '../utils/Settings';
 import useAnalytics from '../hooks/useAnanlytics';
+import { TagFilled } from '@uber/icons';
 
 const ImageUploadTask: React.FC = () => {
   const [value, setValue] = useState('');
@@ -195,7 +196,9 @@ const ImageUploadTask: React.FC = () => {
               </p> */}
               {showPayout && (
                 <p className="no-padding-margin">
-                  <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}::</span>{' '}
+                  <span style={{ fontSize: '0.9rem' }}>
+                    <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹
+                  </span>{' '}
                   <span style={{ fontWeight: '600' }}>${selectedTask.price}</span>
                 </p>
               )}

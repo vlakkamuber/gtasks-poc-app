@@ -29,7 +29,7 @@ import useAnalytics from '../../hooks/useAnanlytics';
 import { capitalizeFirstLetter } from '../../utils/mapTeluguDigitsToNumeric';
 import Banner from '../../components/Banner';
 import { useCategory } from '../../context/TaskCategoryContext';
-import { ListFilled } from '@uber/icons';
+import { ListFilled, TagFilled } from '@uber/icons';
 import InstructionsModal from '../../components/InstructionsModal';
 
 export default function QuestionnaireTaskCategory() {
@@ -262,7 +262,9 @@ export default function QuestionnaireTaskCategory() {
                   )}
                   {selectedTask && (
                     <LabelMedium>
-                      <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}:</span>{' '}
+                      <span style={{ fontSize: '0.9rem' }}>
+                        <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} />
+                      </span>{' '}
                       <span style={{ fontWeight: '600' }}>₹{selectedTask.price}</span>
                     </LabelMedium>
                   )}

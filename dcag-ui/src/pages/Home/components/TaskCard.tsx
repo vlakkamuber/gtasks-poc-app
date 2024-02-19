@@ -14,10 +14,12 @@ const TaskCard: React.FC = ({ category, handleTaskCategory }) => {
       <Card
         overrides={{ Root: { style: { marginBottom: '32px' } } }}
         title={t(`dcag.home.taskHub.${category.id}.title`)}>
-        <StyledThumbnail style={{ borderRadius: 10 }} src={category.imageSrc} />
-        <StyledBody style={{ color: '#6b6b6b' }}>
-          {t(`dcag.home.taskHub.${category.id}.subtitle`)}
-        </StyledBody>
+        <div style={{ display: 'flex', alignItems: "center" }}>
+          <StyledBody style={{ color: '#6b6b6b' }}>
+            {t(`dcag.home.taskHub.${category.id}.subtitle`)}
+          </StyledBody>
+          <StyledThumbnail style={{ borderRadius: 10 }} src={category.imageSrc} />
+        </div>
         <div style={{ display: 'flex', marginBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹

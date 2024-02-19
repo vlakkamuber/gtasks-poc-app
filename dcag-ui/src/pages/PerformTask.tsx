@@ -32,6 +32,8 @@ import { showPayout } from '../utils/Settings';
 import useAnalytics from '../hooks/useAnanlytics';
 import { generateQuestionId } from '../pages/QuestionnaireTaskCategory/questions';
 import Banner from '../components/Banner';
+import { TagFilled } from '@uber/icons';
+
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -376,7 +378,7 @@ const PerformTask: React.FC = () => {
               </p> */}
               {showPayout && (
                 <p className="no-padding-margin">
-                  <span style={{ fontSize: '0.9rem' }}>{t('dcag.home.taskHub.rate')}::</span>{' '}
+                  <span style={{ fontSize: '0.9rem' }}><TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹</span>{' '}
                   <span style={{ fontWeight: '600' }}>₹{to2DecimalPlaces(selectedTask.price)}</span>
                 </p>
               )}
