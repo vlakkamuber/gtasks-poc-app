@@ -193,7 +193,7 @@
   "dcag.tasks.cancelAlert.No": "No",
   "dcag.tasks.cancelAlert.Yes": "Yes",
   "dcag.home.text.task": "task",
-  "dcag.home.card.duration.seconds": "Seconds",
+  "dcag.home.card.duration.seconds": "sec",
   "dcag.home.card.duration.minutes": "Minutes",
   "dcag.tasks.text.today": "Today",
   "dcag.tasks.imageDigitization.questions.option.label.readable": "Readable",

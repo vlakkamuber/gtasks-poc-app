@@ -6,16 +6,16 @@ import { useCategory } from '../context/TaskCategoryContext';
 import { ArrowRight, ArrowLeft } from 'baseui/icon';
 
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
-import { Card, StyledBody, StyledThumbnail } from 'baseui/card';
 import { Block } from 'baseui/block';
 import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
 
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, TASK_CATEGORIES_DATA, TASK_RATE } from '../constants/constant';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import apiService from './apiService';
 import { useUserAuth } from '../context/UserAuthContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import TaskCard from './Home/components/TaskCard';
 
 const reshuffleTaskCategories = (tasks, order) => {
   const tasksByType = {};
@@ -103,29 +103,7 @@ const Home: React.FC = () => {
     return taskCategories.map(
       (category) =>
         category.show && (
-          <div
-            key={category.id}
-            onClick={() => handleTaskCategory(category.id)}
-            className="clickable-cursor task-category-wrapper">
-            <Card
-              overrides={{ Root: { style: { marginBottom: '32px' } } }}
-              title={t(`dcag.home.taskHub.${category.id}.title`)}>
-              <StyledThumbnail src={category.imageSrc} />
-              <StyledBody style={{ color: '#6b6b6b' }}>
-                {t(`dcag.home.taskHub.${category.id}.subtitle`)}
-              </StyledBody>
-              <div>
-                <p style={{ marginBottom: '0px' }}>
-                  {t('dcag.home.taskHub.rate')}: ₹
-                  {(Math.round(category.rate * 100) / 100).toFixed(2)}/{t('dcag.home.text.task')}
-                </p>
-                <p style={{ marginTop: '0px' }}>
-                  {t('dcag.home.taskHub.duration')}: {category.duration} {t(category.timeUnit)}/
-                  {t('dcag.home.text.task')}
-                </p>
-              </div>
-            </Card>
-          </div>
+          <TaskCard key={category.id} category={category} handleTaskCategory={handleTaskCategory} />
         )
     );
   };
