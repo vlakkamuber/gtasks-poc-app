@@ -15,7 +15,7 @@ import {
   IonBadge,
   IonButtons
 } from '@ionic/react';
-import { people, business,arrowBack } from 'ionicons/icons';
+import { people, business, arrowBack } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
@@ -182,10 +182,10 @@ const Tasks: React.FC = () => {
     setShowLoading(true);
     getTaskSummary();
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     setShowLoading(true);
     getTaskSummary();
-  },[selectedCategory])
+  }, [selectedCategory]);
 
   const goBack = () => {
     history.goBack(); // This function navigates back to the previous page
@@ -274,6 +274,9 @@ const Tasks: React.FC = () => {
     setShowLoading(false);
   };
   const taskLabel = capitalizeFirstLetter(t('dcag.home.text.task'));
+  const selectedCategoryTitle = TASK_CATEGORIES_DATA.find(
+    (item) => item.id === selectedCategory
+  )?.title;
   if (isError) {
     return (
       <IonPage>
@@ -295,11 +298,11 @@ const Tasks: React.FC = () => {
           <IonButtons slot="start">
             <IonIcon onClick={goBack} icon={arrowBack} />
           </IonButtons>
-          <div style={{display:'flex',padding:'8px',justifyContent:'end'}}>
-          <IonTitle style={{ width:'80%' }}>{t(`dcag.tasks.page.heading`)}</IonTitle>
-          <div style={{width:'40%'}}>
-          <LanguageSwitcher />
-          </div>
+          <div style={{ display: 'flex', padding: '8px', justifyContent: 'end' }}>
+            <IonTitle style={{ width: '80%' }}>{t(`dcag.tasks.page.heading`)}</IonTitle>
+            <div style={{ width: '40%' }}>
+              <LanguageSwitcher />
+            </div>
           </div>
         </IonToolbar>
       </IonHeader>
@@ -313,8 +316,10 @@ const Tasks: React.FC = () => {
             <Card
               className="task-detail"
               icon={people}
-              TitleIcon={() => <PersonMultipleFilled size={16} color='#276EF1' style={{ marginRight: 8}} />}
-              bgColor='#EFF4FE'
+              TitleIcon={() => (
+                <PersonMultipleFilled size={16} color="#276EF1" style={{ marginRight: 8 }} />
+              )}
+              bgColor="#EFF4FE"
               label={t(`dcag.tasks.page.completedTask.label`)}
               count={completedCount}
               todayCount={todayCount}
@@ -322,8 +327,8 @@ const Tasks: React.FC = () => {
             <Card
               className="task-count"
               icon={business}
-              TitleIcon={() => <MoneyFilled size={16} color="#0E8345" style={{ marginRight: 8}} />}
-              bgColor='#EAF6ED'
+              TitleIcon={() => <MoneyFilled size={16} color="#0E8345" style={{ marginRight: 8 }} />}
+              bgColor="#EAF6ED"
               label={t(`dcag.tasks.page.youEarned.label`)}
               count={`₹${to2DecimalPlaces(totalEarned)}`}
               todayCount={`₹${to2DecimalPlaces(todayEarnings)}`}
@@ -366,6 +371,16 @@ const Tasks: React.FC = () => {
           </IonSegmentButton>
           {/* Add more segments as needed */}
         </IonSegment>
+        {!availableCount && (
+          <div>
+            <ParagraphSmall>
+              {completedCount
+                ? t('dcag.tasks.text.all_task_completed')
+                : t('dcag.tasks.text.no_more_task')}{' '}
+              {selectedCategoryTitle} {t('dcag.tasks.text.continue_other_task')}
+            </ParagraphSmall>
+          </div>
+        )}
         {selectedSegment === 'available_task' && (
           <React.Fragment>
             {todayEarnings > 200 ? (
@@ -389,7 +404,11 @@ const Tasks: React.FC = () => {
                                 ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
                                 : t(`dcag.tasks.${key}.title`)}
                             </h1>
-                            {selectedCategory!=='ALL' &&<span><TaskSwitcher/></span>}
+                            {selectedCategory !== 'ALL' && (
+                              <span>
+                                <TaskSwitcher />
+                              </span>
+                            )}
                             {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}
                         </span> */}
