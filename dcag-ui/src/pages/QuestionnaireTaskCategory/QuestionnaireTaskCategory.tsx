@@ -16,7 +16,7 @@ import { questionnaireData } from './questions';
 import { useTranslation } from 'react-i18next';
 import { HeadingXSmall, LabelSmall } from 'baseui/typography';
 import { ButtonDock } from 'baseui/button-dock';
-import { Button, KIND, SHAPE } from 'baseui/button';
+import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
 import { useStyletron } from 'baseui';
 import apiService from '../apiService';
 import { useHistory, useParams } from 'react-router-dom';
@@ -296,6 +296,7 @@ export default function QuestionnaireTaskCategory() {
                       <Button
                         kind={KIND.primary}
                         shape={SHAPE.pill}
+                        size={SIZE.compact}
                         onClick={() => {
                           logEvent({
                             actions: 'click_open_instructions',
