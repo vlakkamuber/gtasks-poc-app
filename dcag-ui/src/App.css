@@ -3,6 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 } */
+ion-tab-button {
+  --color: #A6A6A6;
+  --color-selected: #000000;
+}
+
 .mb-0 {
   margin-bottom: 0px;
 }
