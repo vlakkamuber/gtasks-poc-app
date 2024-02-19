@@ -61,7 +61,10 @@ const TaskSwitcher: React.FC = () => {
 
   return (
     <Select
-      options={TASK_CATEGORIES_DATA}
+    options={TASK_CATEGORIES_DATA.map(option => ({
+      ...option,
+      label: t(`dcag.home.taskHub.${option.id}.title`),
+    }))}
       size={SIZE.compact}
       shape={SHAPE.pill}
       clearable={false}
