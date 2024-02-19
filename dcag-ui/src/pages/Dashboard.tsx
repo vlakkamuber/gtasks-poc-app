@@ -17,6 +17,8 @@ import { useUserAuth } from '../context/UserAuthContext';
 import { useHistory, useLocation } from 'react-router-dom';
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE } from '../constants/constant';
+import apiService from './apiService';
+import AlertInfoCard from '../components/AlertInfoCard';
 
 const Dashboard: React.FC = ({ content }) => {
   const { t } = useTranslation();
@@ -25,6 +27,10 @@ const Dashboard: React.FC = ({ content }) => {
   const history = useHistory();
   const location = useLocation();
   const [showFab, setShowFab] = useState(true);
+  const [isAccountDisabled,setIsAccountDisabled] = useState(false)
+  useEffect(()=>{
+    getUserByPhoneNumber();
+  },[])
   useEffect(() => {
     if (user) {
       localStorage.setItem('loggedInUser', JSON.stringify(user.uid));
@@ -42,8 +48,14 @@ const Dashboard: React.FC = ({ content }) => {
   const recordAnalytics = (properties: string) => {
     logEvent({ actions: `click_${properties}` });
   };
+  const getUserByPhoneNumber = async () => {
+    let userResponse = await apiService.verifyPhoneNumber(user.phoneNumber);
+    setIsAccountDisabled(userResponse?.status==="DISABLED" ? true:false)
+  };
   return (
+
     <>
+      {isAccountDisabled ? (<><AlertInfoCard message="Thanks for being a part of our test phase for the app. We've finished the test now. Hope you enjoyed using it! We'll let you know when we are ready to start again."/></>) :(<>
       {showFab && (
         <IonFab className="report-issue-fab" onClick={() => goToReportBug()}>
           <IonFabButton className="outline-fab-button">
@@ -93,6 +105,8 @@ const Dashboard: React.FC = ({ content }) => {
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
+      </>)}
+     
     </>
   );
 };

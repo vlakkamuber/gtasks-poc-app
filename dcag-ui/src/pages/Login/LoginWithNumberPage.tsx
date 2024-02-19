@@ -10,6 +10,7 @@ import { Toast, KIND } from 'baseui/toast';
 import { HeadingSmall, ParagraphXSmall } from 'baseui/typography';
 import useAnalytics from '../../hooks/useAnanlytics';
 import { useCategory } from '../../context/TaskCategoryContext';
+import AlertInfoCard from '../../components/AlertInfoCard';
 
 type Props = {
   setSendOtpResponse: Dispatch<SetStateAction<string>>;
@@ -28,6 +29,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
   const history = useHistory();
   const [error, setError] = useState('');
   const [isNextDisabled, setIsNextDisabled] = useState(false);
+  const [isAccountDisabled,setIsAccountDisabled] = useState(false)
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.login });
 
   const sendOtp = async (phone: string) => {
@@ -64,18 +66,22 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
       const res = await apiService.verifyPhoneNumber('+91' + phone);
       dismiss();
       if (res.id) {
-        logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: success` });
-        setIsNextDisabled(true);
-        setIsUserExist(true);
-        if(res.cityName){
-          localStorage.setItem("location",res.cityName)
-          setLocation(res.cityName);
+        if(res.status==="DISABLED"){
+          setIsAccountDisabled(true)
         }else{
-          localStorage.setItem("location","OTHER")
-          setLocation("OTHER");
+          logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: success` });
+          setIsNextDisabled(true);
+          setIsUserExist(true);
+          if(res.cityName){
+            localStorage.setItem("location",res.cityName)
+            setLocation(res.cityName);
+          }else{
+            localStorage.setItem("location","OTHER")
+            setLocation("OTHER");
+          }
+          sendOtp(phone);
         }
         
-        sendOtp(phone);
       } else {
         logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: failed` });
         // setIsUserExist(false);
@@ -95,6 +101,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
 
   return (
     <IonContent className="p-16">
+      {isAccountDisabled ? (<><AlertInfoCard message="Thanks for being a part of our test phase for the app. We've finished the test now. Hope you enjoyed using it! We'll let you know when we are ready to start again."/></>) : (<>
       <HeadingSmall>{t(`dcag.home.otp.mobilenumber.label`)}</HeadingSmall>
       <div className="phone-select-container">
         <IonSelect
@@ -129,6 +136,8 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
         onClickNext={validatePhoneAndSendOtp}
         isNextDisabled={isNextDisabled || phone.length !== 10}
       />
+      </>)}
+      
     </IonContent>
   );
 };
