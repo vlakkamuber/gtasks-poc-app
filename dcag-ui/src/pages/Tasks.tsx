@@ -301,7 +301,7 @@ const Tasks: React.FC = () => {
           <div style={{ display: 'flex', padding: '8px', justifyContent: 'end' }}>
             <IonTitle style={{ width: '80%' }}>{t(`dcag.tasks.page.heading`)}</IonTitle>
             <div style={{ width: '40%' }}>
-              <LanguageSwitcher />
+              <LanguageSwitcher page={ANALYTICS_PAGE.tasks} />
             </div>
           </div>
         </IonToolbar>

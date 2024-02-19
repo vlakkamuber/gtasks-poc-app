@@ -134,7 +134,7 @@ const Home: React.FC = () => {
                   })
                 }
               }}>
-                <LanguageSwitcher/>
+              <LanguageSwitcher page={ANALYTICS_PAGE.home} />
               {/* <LabelSmall>Help</LabelSmall> */}
             </Button>
           </Block>
