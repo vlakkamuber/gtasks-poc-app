@@ -270,7 +270,6 @@ export default function QuestionnaireTaskCategory() {
                   )}
                 </Block>
               )}
-              {/* <div className="fixed-header-buffer" style={{ height: '48px' }}></div> */}
               <Block className="receipt-container">
                 <ZoomedImage
                   imageUrl={selectedTask.inputUrl}
