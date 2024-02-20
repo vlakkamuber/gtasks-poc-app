@@ -83,7 +83,6 @@ const App: React.FC = () => (
           )}
           exact
         />
-         
         <Route
           path="/dashboard/account"
           render={() => (

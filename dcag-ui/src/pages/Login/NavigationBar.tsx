@@ -19,7 +19,7 @@ const NavigationBar = ({ onClickNext, onClickPrevious, isNextDisabled }: Props) 
       </Button>
       <Button
         shape={SHAPE.pill}
-        kind={KIND.secondary}
+        kind={KIND.primary}
         onClick={onClickNext}
         disabled={isNextDisabled}
         size={SIZE.mini}
@@ -30,7 +30,9 @@ const NavigationBar = ({ onClickNext, onClickPrevious, isNextDisabled }: Props) 
             })
           }
         }}>
-        <LabelMedium>{t(`dcag.home.verifyotp.nextBtn.label`)}</LabelMedium>
+        <LabelMedium color={isNextDisabled ? 'black' : 'white'}>
+          {t(`dcag.home.verifyotp.nextBtn.label`)}
+        </LabelMedium>
         <ArrowRight size={36} />
       </Button>
     </div>

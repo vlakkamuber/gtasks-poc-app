@@ -14,6 +14,7 @@ import apiService from '../pages/apiService';
 import { useUserAuth } from '../context/UserAuthContext';
 import type { TrainingDoc } from '../types/training-types';
 import { useTranslation } from 'react-i18next';
+import { Close } from 'baseui/modal/styled-components';
 
 const Banner: React.FC<{
   isOpen: boolean;
@@ -62,7 +63,7 @@ const Banner: React.FC<{
       onClose={() => setIsOpen(false)}
       isOpen={isOpen}
       animate
-      autoFocus
+      autoFocus={false}
       size={SIZE.default}
       role={ROLE.alertdialog}
       overrides={{
@@ -71,7 +72,7 @@ const Banner: React.FC<{
             borderRadius: 0
           })
         },
-        Close: { component: null },
+        Close: { component: Close },
         Dialog: {
           style: {
             borderTopLeftRadius: '0px',
