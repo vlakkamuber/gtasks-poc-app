@@ -409,9 +409,9 @@ const Tasks: React.FC = () => {
                                 : t(`dcag.tasks.${key}.title`)}
                             </h1>
                             {selectedCategory !== 'ALL' && (
-                              <span>
+                              <div style={{width:'60%'}}>
                                 <TaskSwitcher />
-                              </span>
+                              </div>
                             )}
                             {/* <span style={{ color: "#467ff4" }}>
                           {tasks[key].length} {t(`dcag.home.btn.new.label`)}

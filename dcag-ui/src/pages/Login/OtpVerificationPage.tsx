@@ -10,16 +10,20 @@ import NavigationBar from './NavigationBar';
 import { Toast, KIND as TOAST_KIND } from 'baseui/toast';
 import apiService from '../apiService';
 import useAnalytics from '../../hooks/useAnanlytics';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 type Props = {
   sendOtpResponse: any;
   isUserExist: any;
+  setSendOtpResponse: any;
+  setIsOtpSent: any;
 };
 
-const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
+const OtpVerificationPage = ({ sendOtpResponse, isUserExist,setSendOtpResponse,setIsOtpSent }: Props) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const { t } = useTranslation();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.login });
+  const { setUpRecaptha } = useUserAuth();
   const inputRefs = [
     useRef(null),
     useRef(null),
@@ -101,6 +105,23 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
     history.push('/login');
   };
 
+  const resendOtp = async () => {
+    let phone = localStorage.getItem('phone')
+    try {
+      logEvent({ actions: 'otp_requested', properties: phone });
+      const response = await setUpRecaptha('+91' + phone);
+      logEvent({ actions: 'otp_request_success', properties: phone });
+      setSendOtpResponse(response);
+      setIsOtpSent(true);
+    } catch (err) {
+      logEvent({
+        actions: 'otp_request_failed',
+        properties: `phone:${phone},error:${err.message}`
+      });
+      setError(err.message);
+    }
+  }
+
   return (
     <IonContent>
       <p>{t(`dcag.home.verifyotp.label`)}:</p>
@@ -120,7 +141,8 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist }: Props) => {
         ))}
       </div>
       <Block marginBottom="scale300" />
-      <Button kind={KIND.secondary} shape={SHAPE.pill}>
+      <div id="recaptcha-container"></div>
+      <Button kind={KIND.secondary} shape={SHAPE.pill} onClick={resendOtp}>
         {t(`dcag.home.verifyotp.resend.label`)}
       </Button>
       {error && <Toast kind={TOAST_KIND.negative}>{error}</Toast>}
