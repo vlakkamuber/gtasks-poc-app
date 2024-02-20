@@ -34,6 +34,7 @@ import { generateQuestionId } from '../pages/QuestionnaireTaskCategory/questions
 import Banner from '../components/Banner';
 import { TagFilled } from '@uber/icons';
 import PageHeader from './PageHeader';
+import { LabelMedium } from 'baseui/typography';
 
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
@@ -442,9 +443,9 @@ const PerformTask: React.FC = () => {
                 </div>
               )}
               {selectedTask.taskType === 'RECORD_AUDIO' && (
-                <>
+                <div style={{ marginTop: 20 }}>
                   <div>
-                    <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
+                    <LabelMedium>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</LabelMedium>
                     <RadioGroup
                       value={
                         selectedTask.status === 'COMPLETED'
@@ -466,8 +467,8 @@ const PerformTask: React.FC = () => {
                       </Radio>
                     </RadioGroup>
                   </div>
-                  <div>
-                    <h5>{t(`dcag.tasks.performTask.inputAudioLocal.confirm`)}</h5>
+                  <div style={{ marginTop: 10 }}>
+                    <LabelMedium>{t(`dcag.tasks.performTask.inputAudioLocal.confirm`)}</LabelMedium>
                     <RadioGroup
                       value={
                         selectedTask.status === 'COMPLETED'
@@ -489,7 +490,7 @@ const PerformTask: React.FC = () => {
                       </Radio>
                     </RadioGroup>
                   </div>
-                </>
+                </div>
               )}
 
               {selectedTask.status === 'IN_PROGRESS' &&
