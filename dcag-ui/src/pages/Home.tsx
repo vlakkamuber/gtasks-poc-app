@@ -16,6 +16,7 @@ import apiService from './apiService';
 import { useUserAuth } from '../context/UserAuthContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import TaskCard from './Home/components/TaskCard';
+import PageHeader from './PageHeader';
 
 const reshuffleTaskCategories = (tasks, order) => {
   const tasksByType = {};
@@ -110,37 +111,12 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
-        <div className="fixed-header">
-          <Block className="p-16 fixed-header-home-content ">
-            <Button
-              kind={KIND.tertiary}
-              onClick={goBack}
-              overrides={{
-                BaseButton: {
-                  style: () => ({
-                    padding: '0px'
-                  })
-                }
-              }}>
-              <ArrowLeft size={32} />
-            </Button>
-            <LabelMedium>{t(`dcag.home.bottomTabs.home`)}</LabelMedium>
-            <Button
-              kind={KIND.tertiary}
-              overrides={{
-                BaseButton: {
-                  style: () => ({
-                    padding: '0px'
-                  })
-                }
-              }}>
-              <LanguageSwitcher page={ANALYTICS_PAGE.home} />
-              {/* <LabelSmall>Help</LabelSmall> */}
-            </Button>
-          </Block>
-        </div>
         <div className="p-16">
-          <div className="fixed-header-buffer"></div>
+          <PageHeader
+            page={ANALYTICS_PAGE.home}
+            title={t('dcag.home.bottomTabs.home')}
+            showBackButton={false}
+          />
           <div className="fixed-header-home-content">
             <div>
               <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>

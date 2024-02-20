@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../context/UserAuthContext';
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE } from '../constants/constant';
+import PageHeader from './PageHeader';
 
 const ReportBug: React.FC = () => {
   const { t } = useTranslation();
@@ -119,14 +120,7 @@ const ReportBug: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonIcon onClick={goBack} icon={arrowBack} className="clickable-cursor" />
-          </IonButtons>
-          <IonTitle>{t('dcag.pages.reportAnIssue.title')}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <PageHeader page={ANALYTICS_PAGE.report_bug} title={t('dcag.pages.reportAnIssue.title')} />
       <IonContent>
         <>
           <div
@@ -138,14 +132,10 @@ const ReportBug: React.FC = () => {
               margin: '20px',
               marginTop: '1px'
             }}>
-            <p>
-              {t('dcag.pages.reportAnIssue.paragraph1')}{' '}
-            </p>
-            <p>
-              {t('dcag.pages.reportAnIssue.paragraph2')}
-            </p>
+            <p>{t('dcag.pages.reportAnIssue.paragraph1')} </p>
+            <p>{t('dcag.pages.reportAnIssue.paragraph2')}</p>
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
-            {t('dcag.pages.reportAnIssue.taskType.label')}
+              {t('dcag.pages.reportAnIssue.taskType.label')}
             </IonLabel>
             {/* <Select
               style={{ marginTop: '10px' }}
@@ -173,11 +163,13 @@ const ReportBug: React.FC = () => {
                 {t('dcag.pages.reportAnIssue.taskType.options.default')}
               </option>
               {taskTypes.map((item) => (
-                <option value={item.id}>{t(`dcag.pages.reportAnIssue.taskType.options.${item.id}`)}</option>
+                <option value={item.id}>
+                  {t(`dcag.pages.reportAnIssue.taskType.options.${item.id}`)}
+                </option>
               ))}
             </select>
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
-            {t('dcag.pages.reportAnIssue.summary.label')}
+              {t('dcag.pages.reportAnIssue.summary.label')}
             </IonLabel>
             <Input
               value={summary}
@@ -193,7 +185,7 @@ const ReportBug: React.FC = () => {
               onChange={(e) => setSummary(e.target.value)}
             />
             <IonLabel className="label-with-margin" style={{ marginTop: '10px' }}>
-            {t('dcag.pages.reportAnIssue.details.label')}
+              {t('dcag.pages.reportAnIssue.details.label')}
             </IonLabel>
             <Textarea
               value={description}

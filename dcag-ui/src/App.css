@@ -455,6 +455,7 @@ ion-content.custom-scroll {
   height: 64px;
   background-color: #fff;
   border-bottom: 2px solid rgb(226, 226, 226);
+  z-index: 1000;
 }
 .fixed-header-buffer {
   height: 64px;

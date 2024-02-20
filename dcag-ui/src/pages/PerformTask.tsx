@@ -33,6 +33,7 @@ import useAnalytics from '../hooks/useAnanlytics';
 import { generateQuestionId } from '../pages/QuestionnaireTaskCategory/questions';
 import Banner from '../components/Banner';
 import { TagFilled } from '@uber/icons';
+import PageHeader from './PageHeader';
 
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
@@ -99,9 +100,7 @@ const PerformTask: React.FC = () => {
         } else if (useInput === true && isPronunciationLocal === true) {
           isDisabled = selectedTask.status === 'COMPLETED' || submitted;
         } else {
-          isDisabled =
-            submitted ||
-            audioChunks.length === 0;
+          isDisabled = submitted || audioChunks.length === 0;
         }
       }
       setIsSubmitDisabled(isDisabled);
@@ -113,7 +112,7 @@ const PerformTask: React.FC = () => {
       const { taskType } = selectedTask;
       const taskTypes = localStorage.getItem('trainingBannerShownForTasksTypes') ?? '[]';
       const taskTypesArray = JSON.parse(taskTypes);
-      if(taskTypesArray.find((task: string) => task === taskType)) {
+      if (taskTypesArray.find((task: string) => task === taskType)) {
         setIsBannerVisible(false);
       } else {
         setIsBannerVisible(true);
@@ -121,7 +120,7 @@ const PerformTask: React.FC = () => {
         localStorage.setItem('trainingBannerShownForTasksTypes', JSON.stringify(taskTypesArray));
       }
     }
-  }, [selectedTask])
+  }, [selectedTask]);
 
   const startRecording = async () => {
     logEvent({
@@ -138,7 +137,7 @@ const PerformTask: React.FC = () => {
 
       recorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          setAudioChunks(audioChunks => ([...audioChunks, event.data]));
+          setAudioChunks((audioChunks) => [...audioChunks, event.data]);
         }
       };
 
@@ -342,15 +341,8 @@ const PerformTask: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonIcon onClick={goBack} icon={arrowBack} className="clickable-cursor" />
-          </IonButtons>
-          <IonTitle>{t(`dcag.tasks.page.heading`)}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
+        <PageHeader page={ANALYTICS_PAGE.tasks} title={t(`dcag.tasks.page.heading`)} />
         <Banner
           isOpen={isBannerVisible}
           setIsOpen={setIsBannerVisible}
@@ -365,7 +357,7 @@ const PerformTask: React.FC = () => {
                 justifyContent: 'center',
                 flexDirection: 'column',
                 padding: '10px',
-                margin: '20px 20px 0px'
+                margin: '8px 20px 0px'
               }}>
               <h2 className="no-padding-margin" style={{ marginBottom: '8px' }}>
                 {selectedTask.taskName}
@@ -378,7 +370,9 @@ const PerformTask: React.FC = () => {
               </p> */}
               {showPayout && (
                 <p className="no-padding-margin">
-                  <span style={{ fontSize: '0.9rem' }}><TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹</span>{' '}
+                  <span style={{ fontSize: '0.9rem' }}>
+                    <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹
+                  </span>{' '}
                   <span style={{ fontWeight: '600' }}>₹{to2DecimalPlaces(selectedTask.price)}</span>
                 </p>
               )}
@@ -440,7 +434,9 @@ const PerformTask: React.FC = () => {
                 selectedTask.taskType === 'RECORD_AUDIO') && (
                 <div>
                   <div style={{ marginBottom: 10 }}>
-                  <IonLabel className='label-with-margin'>{t(`dcag.tasks.performTask.input.label`)}</IonLabel>
+                    <IonLabel className="label-with-margin">
+                      {t(`dcag.tasks.performTask.input.label`)}
+                    </IonLabel>
                   </div>
                   <AudioPlayer audioSrc={selectedTask.inputUrl} onPause={onPause} onPlay={onPlay} />
                 </div>
@@ -450,10 +446,14 @@ const PerformTask: React.FC = () => {
                   <div>
                     <h5>{t(`dcag.tasks.performTask.inputAudio.confirm`)}</h5>
                     <RadioGroup
-                      value={selectedTask.status === 'COMPLETED' ? JSON.parse(selectedTask.output).find(
-                        (question) =>
-                          question.questionId === 'dcagtasksperformtaskinputaudioconfirm'
-                      ).answer === 'yes' : useInput}
+                      value={
+                        selectedTask.status === 'COMPLETED'
+                          ? JSON.parse(selectedTask.output).find(
+                              (question) =>
+                                question.questionId === 'dcagtasksperformtaskinputaudioconfirm'
+                            ).answer === 'yes'
+                          : useInput
+                      }
                       onChange={onRadioChange}
                       name="number"
                       align={ALIGN.horizontal}

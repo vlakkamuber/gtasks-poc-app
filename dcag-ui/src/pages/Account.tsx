@@ -32,6 +32,7 @@ import { useUserAuth } from '../context/UserAuthContext';
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE } from '../constants/constant';
 import { useEffect } from 'react';
+import PageHeader from './PageHeader';
 const Account: React.FC = () => {
   const { t } = useTranslation();
   const { logOut: firebaseLogOut } = useUserAuth();
@@ -57,21 +58,8 @@ const Account: React.FC = () => {
   };
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonIcon onClick={goBack} icon={arrowBack} />
-            {/* <IonButton onClick={goBack}>Back</IonButton> */}
-          </IonButtons>
-          <div style={{ display: 'flex', padding: '8px', justifyContent: 'end' }}>
-            <IonTitle style={{ width: '80%' }}>{t(`dcag.account.page.heading`)}</IonTitle>
-            <div style={{ width: '40%' }}>
-              <LanguageSwitcher />
-            </div>
-          </div>
-        </IonToolbar>
-      </IonHeader>
       <IonContent style={{ padding: '10px' }}>
+        <PageHeader page={ANALYTICS_PAGE.account} title={t(`dcag.account.page.heading`)} />
         {/* <div className="ion-padding" style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'20px'}}>
           <div style={{paddingLeft:'20px'}}>
           <h2>Evan Rob</h2>

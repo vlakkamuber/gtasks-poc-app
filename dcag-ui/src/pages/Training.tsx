@@ -25,6 +25,7 @@ import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, LANGUAGE_CODE_MAPPER } from '../constants/constant';
 import { snakeCaseToNormal } from '../utils/mapTeluguDigitsToNumeric';
 import LanguageSwitcher from './LanguageSwitcher';
+import PageHeader from './PageHeader';
 const Training: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -63,20 +64,7 @@ const Training: React.FC = () => {
   };
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonIcon onClick={goBack} icon={arrowBack} />
-            {/* <IonButton onClick={goBack}>Back</IonButton> */}
-          </IonButtons>
-          <div style={{ display: 'flex', padding: '8px', justifyContent: 'end' }}>
-            <IonTitle style={{ width: '80%' }}>{t(`dcag.home.training.page.heading`)}</IonTitle>
-            <div style={{ width: '40%' }}>
-              <LanguageSwitcher page={ANALYTICS_PAGE.training} />
-            </div>
-          </div>
-        </IonToolbar>
-      </IonHeader>
+      <PageHeader page={ANALYTICS_PAGE.training} title={t(`dcag.home.training.page.heading`)} />
       {trainingDoc && (
         <IonContent fullscreen>
           <div style={{ padding: '10px' }}>
