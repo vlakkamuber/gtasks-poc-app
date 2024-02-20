@@ -371,7 +371,7 @@ const PerformTask: React.FC = () => {
               {showPayout && (
                 <p className="no-padding-margin">
                   <span style={{ fontSize: '0.9rem' }}>
-                    <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹
+                    <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} />
                   </span>{' '}
                   <span style={{ fontWeight: '600' }}>₹{to2DecimalPlaces(selectedTask.price)}</span>
                 </p>
