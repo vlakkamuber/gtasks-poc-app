@@ -47,6 +47,7 @@ CREATE TABLE user_tasks
     task_id         BIGINT       NOT NULL,
     status          VARCHAR(255) NOT NULL,
     output          TEXT,
+    output_file_type VARCHAR(255),
     use_input_as_output boolean default false,
     output_desc     TEXT,
     start_time      TIMESTAMP,
