@@ -19,6 +19,7 @@ public class UserTaskResponse {
     private TaskType taskType;
     private String input;
     private String output;
+    private String outputFileType;
     private String outputDesc;
     private UserTaskStatus status;
     private String currency;

@@ -123,6 +123,7 @@ public class UserTaskService {
                     userTask.status(status)
                             .useInputAsOutput(userTaskDTO.useInput() != null && userTaskDTO.useInput())
                             .output(userTaskDTO.output())
+                            .outputFileType(userTaskDTO.outputFileType())
                             .outputDesc(userTaskDTO.outputDesc())
                             .completionTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                             .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
@@ -284,6 +285,7 @@ public class UserTaskService {
                 .taskType(taskType)
                 .input(task.input())
                 .output(userTask.output())
+                .outputFileType(userTask.outputFileType())
                 .outputDesc(userTask.outputDesc())
                 .currency(task.currency())
                 .price(task.price())
@@ -325,8 +327,7 @@ public class UserTaskService {
         }
 
         if (taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.RECORD_AUDIO)) {
-            String fileNameSuffix = taskType.equals(TaskType.TEXT_TO_AUDIO) ? ".mp3" : "";
-            String outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + fileNameSuffix;
+            String outputFilename = getOutputFileName(userTask, task, taskType);
 
             if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
                 String uploadUrl = gcpUtils.signTaskUploadAudioUrl(outputFilename);
@@ -338,6 +339,21 @@ public class UserTaskService {
                 userTaskResponse.setOutputUrl(outputUrl);
             }
         }
+    }
+
+    private static String getOutputFileName(UserTask userTask, Task task, TaskType taskType) {
+        String outputFilename = null;
+        if(taskType.equals(TaskType.TEXT_TO_AUDIO)){
+           outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + ".mp3";
+        }
+
+        if(taskType.equals(TaskType.RECORD_AUDIO)){
+
+            String fileType = userTask.outputFileType() == null ? ".mp3" : "." + userTask.outputFileType();
+
+            outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input().split("\\.")[0] + fileType;
+        }
+        return outputFilename;
     }
 
     public void deleteUserTask(String userId, Long taskId) {

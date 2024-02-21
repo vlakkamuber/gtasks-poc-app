@@ -10,6 +10,8 @@ public record UserTaskDTO(
 
         String output,
 
+        String outputFileType,
+
         String outputDesc,
 
         Boolean useInput

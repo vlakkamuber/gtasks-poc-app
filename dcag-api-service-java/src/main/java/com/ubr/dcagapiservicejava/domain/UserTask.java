@@ -43,6 +43,9 @@ public class UserTask implements Serializable {
 
     private String output;
 
+    @Column(name = "output_file_type")
+    private String outputFileType;
+
     @Column(name = "output_desc")
     private String outputDesc;
 
