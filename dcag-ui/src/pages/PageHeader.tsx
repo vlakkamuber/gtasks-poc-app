@@ -7,7 +7,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import useAnalytics from '../hooks/useAnanlytics';
 import { useHistory } from 'react-router';
 
-const PageHeader = ({ title, page, showBackButton = true }) => {
+const PageHeader = ({ title, page, showBackButton = true, showLanguageSwitcher = true }) => {
   const logEvent = useAnalytics({ page });
   const history = useHistory();
   const goBack = () => {
@@ -42,7 +42,11 @@ const PageHeader = ({ title, page, showBackButton = true }) => {
                 })
               }
             }}>
-            <LanguageSwitcher page={page} />
+            {showLanguageSwitcher ? (
+              <LanguageSwitcher page={page} />
+            ) : (
+              <div style={{ width: '32px' }} />
+            )}
           </Button>
         </Block>
       </div>

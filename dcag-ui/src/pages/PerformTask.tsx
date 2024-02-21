@@ -343,7 +343,11 @@ const PerformTask: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
-        <PageHeader page={ANALYTICS_PAGE.tasks} title={t(`dcag.tasks.page.heading`)} />
+        <PageHeader
+          page={ANALYTICS_PAGE.tasks}
+          title={t(`dcag.tasks.page.heading`)}
+          showLanguageSwitcher={false}
+        />
         <Banner
           isOpen={isBannerVisible}
           setIsOpen={setIsBannerVisible}

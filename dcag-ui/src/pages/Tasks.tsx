@@ -50,7 +50,7 @@ import Card from './Tasks/components/Card';
 import PersonMultipleFilled from '@uber/icons/person-multiple-filled';
 import MoneyFilled from '@uber/icons/money-filled';
 import SurveyModal from './SurveyQuestions/SurveyModal';
-import { ParagraphSmall } from 'baseui/typography';
+import { LabelSmall, ParagraphSmall } from 'baseui/typography';
 import LanguageSwitcher from './LanguageSwitcher';
 import TaskSwitcher from '../components/TaskSwitcher';
 import { TagFilled } from '@uber/icons';
@@ -343,8 +343,7 @@ const Tasks: React.FC = () => {
               }>
               <div className="mytask-segment-content">
                 <div className="mytask-segment-text">
-                  {' '}
-                  {t(`dcag.tasks.tabs.availableTask.label`)}{' '}
+                  <LabelSmall>{t(`dcag.tasks.tabs.availableTask.label`)}</LabelSmall>
                 </div>
               </div>
             </IonSegmentButton>
@@ -357,7 +356,9 @@ const Tasks: React.FC = () => {
               }>
               {' '}
               <div className="mytask-segment-content">
-                <div className="mytask-segment-text"> {t(`dcag.tasks.tabs.myTask.label`)} </div>
+                <div className="mytask-segment-text">
+                  <LabelSmall>{t(`dcag.tasks.tabs.myTask.label`)} </LabelSmall>
+                </div>
                 {completedCount > 0 && (
                   <IonBadge className="mytask-segmnet-badge">{completedCount}</IonBadge>
                 )}
