@@ -247,6 +247,11 @@
   "dcag.tasks.text.all_task_completed": "கீழ் உள்ள அனைத்து பணிகளையும் முடித்துவிட்டீர்கள்",
   "dcag.tasks.text.continue_other_task": "மற்ற பணிகளில் தொடர்ந்து பணியாற்றுங்கள்.",
   "dcag.tasks.text.no_more_task": "இதன் கீழ் உங்களுக்கு எந்த பணிகளும் இல்லை",
-  "dcag.tasks.changeTask.label":"பணியை மாற்றவும்",
-  "dcag.home.taskHub.ALL.title":"எல்லா"
+  "dcag.tasks.changeTask.label": "பணியை மாற்றவும்",
+  "dcag.home.taskHub.ALL.title": "எல்லா",
+  "dcag.tasks.cancle_task_modal.heading": "Are you sure you want cancel this task",
+  "dcag.tasks.cancle_task_modal.message": "If you cancel this you will not be earning",
+  "dcag.tasks.cancle_task_modal.message.for_task": "for this task",
+  "dcag.tasks.cancle_task_modal.confirm_no": "Continue working on task",
+  "dcag.tasks.cancle_task_modal.confirm_yes": "Cancel this task"
 }

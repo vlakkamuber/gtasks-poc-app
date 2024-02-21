@@ -34,7 +34,10 @@ import { generateQuestionId } from '../pages/QuestionnaireTaskCategory/questions
 import Banner from '../components/Banner';
 import { TagFilled } from '@uber/icons';
 import PageHeader from './PageHeader';
-import { LabelMedium } from 'baseui/typography';
+import { HeadingMedium, LabelMedium, ParagraphMedium } from 'baseui/typography';
+import { Modal, ModalBody, ModalButton, ModalFooter, ModalHeader } from 'baseui/modal';
+import CancleTaskIcon from './CancleTaskModal/CancleTaskIcon';
+import CancleTaskModal from './CancleTaskModal';
 
 const PerformTask: React.FC = () => {
   const { t } = useTranslation();
@@ -62,6 +65,7 @@ const PerformTask: React.FC = () => {
   const [isBannerVisible, setIsBannerVisible] = useState(false);
   //const [imageOutput,setImageOutput] = useState("")
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const [isCancleModalOpen, setIsCancleModalOpen] = useState(false);
 
   const getTaskDetail = async () => {
     let taskId = params.id;
@@ -270,6 +274,7 @@ const PerformTask: React.FC = () => {
       properties: selectedTask.taskId,
       otherDetails: selectedTask.tastType
     });
+    setIsCancleModalOpen(false);
   };
 
   const onPlay = () => {
@@ -338,6 +343,7 @@ const PerformTask: React.FC = () => {
       properties: selectedTask.taskId,
       otherDetails: selectedTask.taskType
     });
+    setIsCancleModalOpen(true);
   };
 
   return (
@@ -631,22 +637,13 @@ const PerformTask: React.FC = () => {
                         colors={{ color: '#E11900', backgroundColor: 'transparent' }}>
                         {t(`dcag.home.btn.cancel.label`)}
                       </Button>
-                      <IonAlert
-                        header={t('dcag.tasks.cancelAlert.Header')}
-                        message={t('dcag.tasks.cancelAlert')}
-                        trigger="cancel-task"
-                        buttons={[
-                          {
-                            text: t('dcag.tasks.cancelAlert.No'),
-                            role: 'cancel',
-                            handler: closeCancelModal
-                          },
-                          {
-                            text: t('dcag.tasks.cancelAlert.Yes'),
-                            role: 'confirm',
-                            handler: stopWork
-                          }
-                        ]}></IonAlert>
+                      <CancleTaskModal
+                        closeCancelModal={closeCancelModal}
+                        stopWork={stopWork}
+                        price={to2DecimalPlaces(selectedTask.price)}
+                        isCancleModalOpen={isCancleModalOpen}
+                        setIsCancleModalOpen={setIsCancleModalOpen}
+                      />
                     </>
                   }
                 />
