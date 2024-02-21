@@ -61,6 +61,10 @@ const TaskSwitcher: React.FC = () => {
     setValue({ label: taskObj.defaultCategory, id: defaultCategory });
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
+  const customAlertOptions = {
+    header: 'Change Tasks'
+  };
+
   return (
     <IonSelect
       style={{
@@ -71,6 +75,7 @@ const TaskSwitcher: React.FC = () => {
       }}
       compareWith={() => false}
       placeholder={t(`dcag.tasks.changeTask.label`)}
+      interfaceOptions={customAlertOptions}
       onIonChange={handleChange}>
       {TASK_CATEGORIES_DATA.map((option) => ({
         ...option,

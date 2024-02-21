@@ -59,6 +59,10 @@ const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
     return o1.id === o2.id;
   };
 
+  const customAlertOptions = {
+    header: 'App Language'
+  };
+
   return (
     <IonSelect
       style={{
@@ -70,7 +74,8 @@ const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
       value={value}
       placeholder="Select Language"
       compareWith={compareWith}
-      onIonChange={handleChange}>
+      onIonChange={handleChange}
+      interfaceOptions={customAlertOptions}>
       {options.map((option) => (
         <IonSelectOption key={option.id} value={option}>
           {option.label}
