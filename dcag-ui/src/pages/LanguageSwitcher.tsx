@@ -61,6 +61,12 @@ const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
 
   return (
     <IonSelect
+      style={{
+        background: 'rgb(246, 246, 246)',
+        paddingLeft: 20,
+        paddingRight: 20,
+        borderRadius: 25
+      }}
       value={value}
       placeholder="Select Language"
       compareWith={compareWith}

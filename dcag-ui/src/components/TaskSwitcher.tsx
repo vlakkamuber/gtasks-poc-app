@@ -3,7 +3,7 @@ import { useCategory } from '../context/TaskCategoryContext';
 import { useTranslation } from 'react-i18next';
 import useAnalytics from '../hooks/useAnanlytics';
 import { ANALYTICS_PAGE } from '../constants/constant';
-import {  IonSelect, IonSelectOption } from '@ionic/react';
+import { IonSelect, IonSelectOption } from '@ionic/react';
 
 export const TASK_CATEGORIES_DATA = [
   {
@@ -63,7 +63,12 @@ const TaskSwitcher: React.FC = () => {
 
   return (
     <IonSelect
-      style={{ background: 'rgb(246, 246, 246)',  paddingLeft: 10, paddingRight: 10, borderRadius: 25 }}
+      style={{
+        background: 'rgb(246, 246, 246)',
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 25
+      }}
       compareWith={() => false}
       placeholder={t(`dcag.tasks.changeTask.label`)}
       onIonChange={handleChange}>
