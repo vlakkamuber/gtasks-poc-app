@@ -62,7 +62,7 @@ const TaskSwitcher: React.FC = () => {
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   const customAlertOptions = {
-    header: 'Change Tasks'
+    header: t('dcag.tasks.changeTask.label')
   };
 
   return (
