@@ -245,6 +245,7 @@
   "dcag.tasks.text.no_more_task": "You have no tasks under",
   "dcag.tasks.changeTask.label": "టాస్క్ మార్చండి",
   "dcag.home.taskHub.ALL.title": "పనులన్నింటినీ",
+  "dcag.settings.app_language.label": "భాష",
   "dcag.tasks.cancle_task_modal.heading": "Are you sure you want cancel this task",
   "dcag.tasks.cancle_task_modal.message": "If you cancel this you will not be earning",
   "dcag.tasks.cancle_task_modal.message.for_task": "for this task",

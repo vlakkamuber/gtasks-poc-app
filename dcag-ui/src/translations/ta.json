@@ -249,6 +249,7 @@
   "dcag.tasks.text.no_more_task": "இதன் கீழ் உங்களுக்கு எந்த பணிகளும் இல்லை",
   "dcag.tasks.changeTask.label": "பணியை மாற்றவும்",
   "dcag.home.taskHub.ALL.title": "எல்லா",
+  "dcag.settings.app_language.label": "மொழி",
   "dcag.tasks.cancle_task_modal.heading": "Are you sure you want cancel this task",
   "dcag.tasks.cancle_task_modal.message": "If you cancel this you will not be earning",
   "dcag.tasks.cancle_task_modal.message.for_task": "for this task",

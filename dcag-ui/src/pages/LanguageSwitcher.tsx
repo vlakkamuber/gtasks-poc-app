@@ -33,7 +33,7 @@ const options = [
 ];
 
 const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [value, setValue] = React.useState([{ label: 'English', id: 'en' }]);
   const { language, setLanguage } = useLanguage();
   const logEvent = useAnalytics({ page: page || ANALYTICS_PAGE.account });
@@ -60,7 +60,7 @@ const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
   };
 
   const customAlertOptions = {
-    header: 'App Language'
+    header: t('dcag.settings.app_language.label')
   };
 
   return (
