@@ -6,6 +6,5 @@ spring:
 #      firestore:
 #        database-id: dcag
 #        credentials:
-#          location: classpath:anz-driver-ops-ritu-f53a0fa0d07e.json
 
 
