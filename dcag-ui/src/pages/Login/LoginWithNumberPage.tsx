@@ -36,7 +36,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
     try {
       logEvent({ actions: 'otp_requested', properties: phone });
       present(LOADER_MESSAGE);
-      const response = await setUpRecaptha('+91' + phone);
+      const response = await setUpRecaptha(selectedCountry.phoneCode + phone);
       logEvent({ actions: 'otp_request_success', properties: phone });
       dismiss();
       setSendOtpResponse(response);
@@ -52,9 +52,16 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
     }
   };
 
+  const handleCountryChange = (e) => {
+    const selectedValue = e.target.value;
+    const selectedCountry = COUNTRY_OPTIONS.find(country => country.value === selectedValue);
+    setSelectedCountry(selectedCountry);
+    localStorage.setItem("countryCode",selectedCountry?.phoneCode)
+  };
+
   const validatePhoneAndSendOtp = async () => {
     setIsValidPhone(true);
-    let phoneRegex = /^[6789]\d{9}$/;
+    const phoneRegex = /^(\+1|91)?[6789]\d{9}$/;
     setError('');
     if (!phoneRegex.test(phone)) {
       setIsValidPhone(false);
@@ -63,7 +70,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
     try {
       present(LOADER_MESSAGE);
       logEvent({ actions: 'phone_number_entered', properties: phone });
-      const res = await apiService.verifyPhoneNumber('+91' + phone);
+      const res = await apiService.verifyPhoneNumber(selectedCountry.phoneCode + phone);
       dismiss();
       if (res.id) {
         if (res.status === 'DISABLED') {
@@ -110,9 +117,10 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
           <div className="phone-select-container">
             <IonSelect
               placeholder={selectedCountry.flag}
-              disabled={true}
+              disabled={false}
               className="country-select-box"
               value={selectedCountry.flag}
+              onIonChange={handleCountryChange}
               style={{ height: '5vh', minHeight: 'unset', paddingeft: '9px' }}>
               {COUNTRY_OPTIONS.map(function (country) {
                 return (

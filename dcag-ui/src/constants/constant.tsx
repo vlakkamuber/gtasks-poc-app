@@ -7,9 +7,8 @@ export const LOADER_MESSAGE = {
 
 export const COUNTRY_OPTIONS = [
   { value: 'in', label: 'India', flag: '🇮🇳', phoneCode: '+91' },
-  { value: 'us', label: 'United States', flag: '🇺🇸' },
-  { value: 'ca', label: 'Canada', flag: '🇨🇦' }
-  // Add more countries as needed
+  { value: 'us', label: 'United States', flag: '🇺🇸' ,phoneCode: '+1'},
+
 ];
 
 export const TEXT_TO_AUDIO_TASK_TYPE = 'TEXT_TO_AUDIO';

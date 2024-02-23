@@ -114,7 +114,8 @@ const OtpVerificationPage = ({
     let phone = localStorage.getItem('phone');
     try {
       logEvent({ actions: 'otp_requested', properties: phone });
-      const response = await setUpRecaptha('+91' + phone);
+      let countryCode = localStorage.getItem("countryCode")
+      const response = await setUpRecaptha(countryCode ? countryCode+phone : '91' + phone);
       logEvent({ actions: 'otp_request_success', properties: phone });
       setSendOtpResponse(response);
       setIsOtpSent(true);
