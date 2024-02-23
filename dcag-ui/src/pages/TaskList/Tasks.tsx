@@ -27,7 +27,7 @@ import {
   to2DecimalPlaces,
   capitalizeFirstLetter
 } from '../../utils';
-import LoadingComponent from '../../components/Loader';
+import TasksSkeleton from './TasksSkeleton';
 import {
   FILTER_OUT_TEXT_TO_AUDIO_TASK,
   TEXT_TO_AUDIO_TASK_TYPE,
@@ -302,7 +302,6 @@ const Tasks: React.FC = () => {
           {completedCount > 100 && !taskSummary?.surveyStatus && (
             <SurveyModal isOpen={isOpen} onClose={closeModal} />
           )}
-          <LoadingComponent showLoading={showLoading} onHide={() => setShowLoading(false)} />
           {showPayout && (
             <div className="tasks-info" style={{ marginTop: '8px' }}>
               <Card
@@ -425,7 +424,7 @@ const Tasks: React.FC = () => {
                             </p>
                           </div>
 
-                          {tasks[key].map((task, index) => {
+                          {showLoading ? <TasksSkeleton /> : tasks[key].map((task, index) => {
                             return (
                               <React.Fragment key={task.id}>
                                 <IonList style={{ marginBottom: 1 }}>
