@@ -26,13 +26,13 @@ import {
   help,
   warningSharp
 } from 'ionicons/icons';
-import LanguageSwitcher from './LanguageSwitcher';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
-import { useUserAuth } from '../context/UserAuthContext';
-import useAnalytics from '../hooks/useAnanlytics';
-import { ANALYTICS_PAGE } from '../constants/constant';
+import { useUserAuth } from '../../context/UserAuthContext';
+import useAnalytics from '../../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../../constants/constant';
 import { useEffect } from 'react';
-import PageHeader from './PageHeader';
+import PageHeader from '../../components/PageHeader';
 const Account: React.FC = () => {
   const { t } = useTranslation();
   const { logOut: firebaseLogOut } = useUserAuth();

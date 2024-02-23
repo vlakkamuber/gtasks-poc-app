@@ -19,15 +19,15 @@ import { people, business, arrowBack } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
-import apiService from './apiService';
+import apiService from '../../BE-services/apiService';
 import {
   filterTaskWithType,
   filterTaskWithSelectedCategory,
   orderTasksByType,
   to2DecimalPlaces,
   capitalizeFirstLetter
-} from '../utils/mapTeluguDigitsToNumeric';
-import LoadingComponent from '../components/Loader';
+} from '../../utils';
+import LoadingComponent from '../../components/Loader';
 import {
   FILTER_OUT_TEXT_TO_AUDIO_TASK,
   TEXT_TO_AUDIO_TASK_TYPE,
@@ -38,23 +38,23 @@ import {
   ANALYTICS_PAGE,
   TaskOrderByLocation,
   TASK_CATEGORIES_DATA
-} from '../constants/constant';
-import { useUserAuth } from '../context/UserAuthContext';
-import { useCategory } from '../context/TaskCategoryContext';
-import { showPayout } from '../utils/Settings';
-import ErrorView from '../components/ErrorView';
+} from '../../constants/constant';
+import { useUserAuth } from '../../context/UserAuthContext';
+import { useCategory } from '../../context/TaskCategoryContext';
+import { showPayout } from '../../constants/flags';
+import ErrorView from '../../components/ErrorView';
 import { Button, SIZE, SHAPE } from 'baseui/button';
-import useAnalytics from '../hooks/useAnanlytics';
+import useAnalytics from '../../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
-import Card from './Tasks/components/Card';
+import Card from './Card';
 import PersonMultipleFilled from '@uber/icons/person-multiple-filled';
 import MoneyFilled from '@uber/icons/money-filled';
-import SurveyModal from './SurveyQuestions/SurveyModal';
+import SurveyModal from './SurveyModal';
 import { LabelSmall, ParagraphSmall } from 'baseui/typography';
-import LanguageSwitcher from './LanguageSwitcher';
-import TaskSwitcher from '../components/TaskSwitcher';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
+import TaskSwitcher from './TaskSwitcher';
 import { TagFilled } from '@uber/icons';
-import PageHeader from './PageHeader';
+import PageHeader from '../../components/PageHeader';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();

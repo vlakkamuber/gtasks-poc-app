@@ -2,13 +2,13 @@ import { IonContent, useIonLoading } from '@ionic/react';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { mapTeluguDigitsToNumeric } from '../../utils/mapTeluguDigitsToNumeric';
+import { mapTeluguDigitsToNumeric } from '../../utils';
 import { ANALYTICS_PAGE, LOADER_MESSAGE } from '../../constants/constant';
 import { Block } from 'baseui/block';
 import { Button, KIND, SHAPE } from 'baseui/button';
 import NavigationBar from './NavigationBar';
 import { Toast, KIND as TOAST_KIND } from 'baseui/toast';
-import apiService from '../apiService';
+import apiService from '../../BE-services/apiService';
 import useAnalytics from '../../hooks/useAnanlytics';
 import { useUserAuth } from '../../context/UserAuthContext';
 
@@ -19,7 +19,12 @@ type Props = {
   setIsOtpSent: any;
 };
 
-const OtpVerificationPage = ({ sendOtpResponse, isUserExist,setSendOtpResponse,setIsOtpSent }: Props) => {
+const OtpVerificationPage = ({
+  sendOtpResponse,
+  isUserExist,
+  setSendOtpResponse,
+  setIsOtpSent
+}: Props) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const { t } = useTranslation();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.login });
@@ -90,8 +95,8 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist,setSendOtpResponse,s
       } catch (err) {
         logEvent({ actions: 'login_failed', properties: err.message });
         dismiss();
-        if (err.code === "auth/code-expired" || err.code === "auth/invalid-verification-code") {
-          setError("Invalid verification code");
+        if (err.code === 'auth/code-expired' || err.code === 'auth/invalid-verification-code') {
+          setError('Invalid verification code');
         } else {
           setError(err.message);
         }
@@ -106,7 +111,7 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist,setSendOtpResponse,s
   };
 
   const resendOtp = async () => {
-    let phone = localStorage.getItem('phone')
+    let phone = localStorage.getItem('phone');
     try {
       logEvent({ actions: 'otp_requested', properties: phone });
       const response = await setUpRecaptha('+91' + phone);
@@ -120,7 +125,7 @@ const OtpVerificationPage = ({ sendOtpResponse, isUserExist,setSendOtpResponse,s
       });
       setError(err.message);
     }
-  }
+  };
 
   return (
     <IonContent>

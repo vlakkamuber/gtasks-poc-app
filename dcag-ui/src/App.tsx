@@ -24,20 +24,20 @@ import './theme/variables.css';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
-import Home from './pages/Home';
-import Training from './pages/Training';
-import Account from './pages/Account';
-import Tasks from './pages/Tasks';
+import Home from './pages/Home/Home';
+import Training from './pages/Training/Training';
+import Account from './pages/Account/Account';
+import Tasks from './pages/TaskList/Tasks';
 import './App.css';
-import HomeScreen from './pages/HomeScreen';
-import Completed from './pages/Completed';
-import PerformTask from './pages/PerformTask';
-import ImageUploadTask from './pages/ImageUploadTask';
-import Help from './pages/Help';
+import HomeScreen from './pages/Welcome/HomeScreen';
+import Completed from './pages/TaskExecutor/Completed';
+import PerformTask from './pages/TaskExecutor/PerformTask';
+import ImageUploadTask from './pages/TaskExecutor/ImageUploadTask';
+import Help from './pages/Help/Help';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import RequireAuth from './components/RequireAuth';
-import ReportBug from './pages/ReportBug';
-import QuestionnaireTaskCategory from './pages/QuestionnaireTaskCategory/QuestionnaireTaskCategory';
+import ReportBug from './pages/ReportBug/ReportBug';
+import QuestionnaireTaskCategory from './pages/TaskExecutor/QuestionnaireTaskCategory';
 
 setupIonicReact();
 

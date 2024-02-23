@@ -11,10 +11,10 @@ import { useHistory } from 'react-router-dom';
 import { Button, KIND, SHAPE } from 'baseui/button';
 import { Block } from 'baseui/block';
 import { ArrowLeft, ArrowRight } from 'baseui/icon';
-import { useUserAuth } from '../context/UserAuthContext';
+import { useUserAuth } from '../../context/UserAuthContext';
 import { useTranslation } from 'react-i18next';
-import { mapTeluguDigitsToNumeric } from '../utils/mapTeluguDigitsToNumeric.js';
-import apiService from './apiService';
+import { mapTeluguDigitsToNumeric } from '../../utils/index.js';
+import apiService from '../../BE-services/apiService';
 
 const Login = () => {
   const [phone, setPhone] = useState('');

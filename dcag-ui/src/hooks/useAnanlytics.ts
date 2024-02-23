@@ -1,6 +1,6 @@
 import { useUserAuth } from '../context/UserAuthContext';
-import apiService from '../pages/apiService';
-import getSessionId from '../utils/getSessionId';
+import apiService from '../BE-services/apiService';
+import { getSessionId } from '../utils';
 
 type useAnalyticsArgsType = {
   page: string;

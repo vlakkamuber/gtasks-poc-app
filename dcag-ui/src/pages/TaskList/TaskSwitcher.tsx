@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useCategory } from '../context/TaskCategoryContext';
+import { useCategory } from '../../context/TaskCategoryContext';
 import { useTranslation } from 'react-i18next';
-import useAnalytics from '../hooks/useAnanlytics';
-import { ANALYTICS_PAGE } from '../constants/constant';
+import useAnalytics from '../../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../../constants/constant';
 import { IonSelect, IonSelectOption } from '@ionic/react';
 
 export const TASK_CATEGORIES_DATA = [

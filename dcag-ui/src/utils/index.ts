@@ -93,3 +93,13 @@ export function to2DecimalPlaces(num: number) {
 export function capitalizeFirstLetter(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
+
+export function getSessionId(userId: string): string {
+  let sessionId = sessionStorage.getItem('sessionId');
+  if (!sessionId) {
+    sessionId = userId + Date.now();
+    sessionStorage.setItem('sessionId', sessionId);
+  }
+
+  return sessionId;
+}

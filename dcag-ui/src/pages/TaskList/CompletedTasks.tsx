@@ -3,21 +3,30 @@ import { useHistory } from 'react-router-dom';
 import { chevronForward } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import apiService from './apiService';
-import { filterTaskWithType, formatDate,filterTaskWithStatus, orderTasksByType } from '../utils/mapTeluguDigitsToNumeric';
-import LoadingComponent from '../components/Loader';
-import { FILTER_OUT_TEXT_TO_AUDIO_TASK, TEXT_TO_AUDIO_TASK_TYPE, TaskOrderByLocation } from '../constants/constant';
+import apiService from '../../BE-services/apiService';
+import {
+  filterTaskWithType,
+  formatDate,
+  filterTaskWithStatus,
+  orderTasksByType
+} from '../../utils';
+import LoadingComponent from '../../components/Loader';
+import {
+  FILTER_OUT_TEXT_TO_AUDIO_TASK,
+  TEXT_TO_AUDIO_TASK_TYPE,
+  TaskOrderByLocation
+} from '../../constants/constant';
 import MyTaskCard from './MyTaskCard';
 import MyTaskCardList from './MyTaskCardList';
-import { useUserAuth } from '../context/UserAuthContext';
-import { useCategory } from '../context/TaskCategoryContext';
+import { useUserAuth } from '../../context/UserAuthContext';
+import { useCategory } from '../../context/TaskCategoryContext';
 
 const CompletedTasks: React.FC = () => {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const { user } = useUserAuth();
-  const { selectedCategory,location } = useCategory();
+  const { selectedCategory, location } = useCategory();
 
   const history = useHistory();
   function groupBy(array, key) {
@@ -36,7 +45,7 @@ const CompletedTasks: React.FC = () => {
   const getMyTasksList = () => {
     let userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
-      .getMyTasksList({ userId, user,status:'COMPLETED' })
+      .getMyTasksList({ userId, user, status: 'COMPLETED' })
       .then((res) => {
         setShowLoading(false);
 
@@ -44,7 +53,10 @@ const CompletedTasks: React.FC = () => {
         const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
           ? filterTaskWithType(res, TEXT_TO_AUDIO_TASK_TYPE)
           : res;
-          const orderedTasks = orderTasksByType(result,  TaskOrderByLocation[location] || TaskOrderByLocation["OTHER"]);
+        const orderedTasks = orderTasksByType(
+          result,
+          TaskOrderByLocation[location] || TaskOrderByLocation['OTHER']
+        );
         setTasks(groupBy(orderedTasks, 'taskType'));
       })
       .catch((error) => {
@@ -80,7 +92,10 @@ const CompletedTasks: React.FC = () => {
                   alignItems: 'center'
                 }}>
                 <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                {((location === 'HYDERABAD' || location === 'CHENNAI') && (key==="IMAGE_LABELLING" || key==="MENU_PHOTO_REVIEW" )) ? t(`dcag.tasks.${key.replace(/\s+/g, '')}.CHENNAI_HYD.title`): t(`dcag.tasks.${key.replace(/\s+/g, '')}.title`)}
+                  {(location === 'HYDERABAD' || location === 'CHENNAI') &&
+                  (key === 'IMAGE_LABELLING' || key === 'MENU_PHOTO_REVIEW')
+                    ? t(`dcag.tasks.${key.replace(/\s+/g, '')}.CHENNAI_HYD.title`)
+                    : t(`dcag.tasks.${key.replace(/\s+/g, '')}.title`)}
                 </h1>
                 {/* <span>View all</span> */}
               </div>

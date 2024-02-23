@@ -22,12 +22,12 @@ import { Button, KIND } from 'baseui/button';
 import { Textarea } from 'baseui/textarea';
 import { Input } from 'baseui/input';
 import { useTranslation } from 'react-i18next';
-import apiService from './apiService';
-import LoadingComponent from '../components/Loader';
-import { formatDate } from '../utils/mapTeluguDigitsToNumeric';
-import { useUserAuth } from '../context/UserAuthContext';
-import { showPayout } from '../utils/Settings';
-import useAnalytics from '../hooks/useAnanlytics';
+import apiService from '../../BE-services/apiService';
+import LoadingComponent from '../../components/Loader';
+import { formatDate } from '../../utils';
+import { useUserAuth } from '../../context/UserAuthContext';
+import { showPayout } from '../../constants/flags';
+import useAnalytics from '../../hooks/useAnanlytics';
 import { TagFilled } from '@uber/icons';
 
 const ImageUploadTask: React.FC = () => {

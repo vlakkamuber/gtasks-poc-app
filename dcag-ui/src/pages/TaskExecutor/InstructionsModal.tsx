@@ -4,9 +4,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-import i1 from '../images/1.jpeg';
-import i2 from '../images/2.jpeg';
-import i3 from '../images/3.jpeg';
 import { HeadingXSmall } from 'baseui/typography';
 import { useTranslation } from 'react-i18next';
 
@@ -53,13 +50,13 @@ const InstructionsModal: React.FC<{
           onSlideChange={() => console.log('slide change')}
           onSwiper={(swiper) => console.log(swiper)}>
           <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={i1} style={{ height: '50vh' }} />
+            <img src={'assets/1.jpeg'} style={{ height: '50vh' }} />
           </SwiperSlide>
           <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={i2} style={{ height: '50vh' }} />
+            <img src={'assets/2.jpeg'} style={{ height: '50vh' }} />
           </SwiperSlide>
           <SwiperSlide style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={i3} style={{ height: '50vh' }} />
+            <img src={'assets/3.jpeg'} style={{ height: '50vh' }} />
           </SwiperSlide>
         </Swiper>
       </ModalBody>

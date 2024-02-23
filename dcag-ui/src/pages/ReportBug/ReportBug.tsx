@@ -19,12 +19,12 @@ import { Textarea } from 'baseui/textarea';
 import { Input } from 'baseui/input';
 import { Select } from 'baseui/select';
 
-import apiService from './apiService';
+import apiService from '../../BE-services/apiService';
 import { useTranslation } from 'react-i18next';
-import { useUserAuth } from '../context/UserAuthContext';
-import useAnalytics from '../hooks/useAnanlytics';
-import { ANALYTICS_PAGE } from '../constants/constant';
-import PageHeader from './PageHeader';
+import { useUserAuth } from '../../context/UserAuthContext';
+import useAnalytics from '../../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../../constants/constant';
+import PageHeader from '../../components/PageHeader';
 
 const ReportBug: React.FC = () => {
   const { t } = useTranslation();

@@ -8,29 +8,30 @@ import {
   useIonLoading,
   IonAlert
 } from '@ionic/react';
-import Question from './components/Questions';
+import Question from './Questions';
 import { Block } from 'baseui/block';
 import { ArrowLeft } from 'baseui/icon';
 import { LabelMedium, ParagraphSmall } from 'baseui/typography';
-import { questionnaireData } from './questions';
+
 import { useTranslation } from 'react-i18next';
 import { HeadingXSmall, LabelSmall } from 'baseui/typography';
 import { ButtonDock } from 'baseui/button-dock';
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
 import { useStyletron } from 'baseui';
-import apiService from '../apiService';
+import apiService from '../../BE-services/apiService';
 import { useHistory, useParams } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { ANALYTICS_PAGE, LOADER_MESSAGE } from '../../constants/constant';
 import LoadingComponent from '../../components/Loader';
-import ZoomedImage from './components/ZoomedImage';
-import { showPayout } from '../../utils/Settings';
+import ZoomedImage from './ZoomedImage';
+import { showPayout } from '../../constants/flags';
 import useAnalytics from '../../hooks/useAnanlytics';
-import { capitalizeFirstLetter } from '../../utils/mapTeluguDigitsToNumeric';
-import Banner from '../../components/Banner';
+import { capitalizeFirstLetter } from '../../utils';
+import Banner from './Banner';
 import { useCategory } from '../../context/TaskCategoryContext';
 import { ListFilled, TagFilled } from '@uber/icons';
-import InstructionsModal from '../../components/InstructionsModal';
+import InstructionsModal from './InstructionsModal';
+import { questionnaireData } from './constants/questions';
 
 export default function QuestionnaireTaskCategory() {
   const { user } = useUserAuth();

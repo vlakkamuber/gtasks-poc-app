@@ -2,10 +2,10 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-import useAnalytics from '../../../hooks/useAnanlytics';
-import { ANALYTICS_PAGE } from '../../../constants/constant';
-import { debounce } from '../../../utils/mapTeluguDigitsToNumeric';
-import useDebounce from '../../../hooks/useDebounce';
+import useAnalytics from '../../hooks/useAnanlytics';
+import { ANALYTICS_PAGE } from '../../constants/constant';
+import { debounce } from '../../utils';
+import useDebounce from '../../hooks/useDebounce';
 import FullScreenIcon from './FullScreenIcon';
 import CanvasImage from './zoomableImage';
 
@@ -70,7 +70,11 @@ const ZoomableImage = ({ imageUrl, taskId, location, taskType, isFullscreen, set
             </div>
           </div>
           <TransformComponent>
-            <img src={imageUrl} alt="task image" style={{ width: '100%', height: isFullscreen ? "70vh" : '30vh' }} />
+            <img
+              src={imageUrl}
+              alt="task image"
+              style={{ width: '100%', height: isFullscreen ? '70vh' : '30vh' }}
+            />
             {/* <CanvasImage
               imageUrl={imageUrl}
               canvasWidth={300}

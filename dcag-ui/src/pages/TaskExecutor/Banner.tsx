@@ -3,16 +3,16 @@ import { Modal, ModalHeader, ModalBody, SIZE, ROLE } from 'baseui/modal';
 import { HeadingXSmall } from 'baseui/typography';
 import CircleIFilled from '@uber/icons/circle-i-filled';
 import { IonCard, IonCardHeader, IonCardTitle, IonSpinner } from '@ionic/react';
-import { snakeCaseToNormal } from '../utils/mapTeluguDigitsToNumeric';
-import useAnalytics from '../hooks/useAnanlytics';
+import { snakeCaseToNormal } from '../../utils';
+import useAnalytics from '../../hooks/useAnanlytics';
 import {
   ANALYTICS_PAGE,
   LANGUAGE_CODE_MAPPER,
   TASK_TYPE_TO_TRAINING_VIDEO_MAPPER
-} from '../constants/constant';
-import apiService from '../pages/apiService';
-import { useUserAuth } from '../context/UserAuthContext';
-import type { TrainingDoc } from '../types/training-types';
+} from '../../constants/constant';
+import apiService from '../../BE-services/apiService';
+import { useUserAuth } from '../../context/UserAuthContext';
+import type { TrainingDoc } from '../../types/training-types';
 import { useTranslation } from 'react-i18next';
 import { Close } from 'baseui/modal/styled-components';
 

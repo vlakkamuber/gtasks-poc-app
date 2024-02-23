@@ -2,21 +2,21 @@ import { IonContent, IonPage } from '@ionic/react';
 
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategory } from '../context/TaskCategoryContext';
+import { useCategory } from '../../context/TaskCategoryContext';
 import { ArrowRight, ArrowLeft } from 'baseui/icon';
 
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
 import { Block } from 'baseui/block';
 import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
 
-import useAnalytics from '../hooks/useAnanlytics';
-import { ANALYTICS_PAGE, TASK_CATEGORIES_DATA, TASK_RATE } from '../constants/constant';
+import useAnalytics from '../../hooks/useAnanlytics';
+import { ANALYTICS_PAGE, TASK_CATEGORIES_DATA, TASK_RATE } from '../../constants/constant';
 import React, { useEffect, useState } from 'react';
-import apiService from './apiService';
-import { useUserAuth } from '../context/UserAuthContext';
-import LanguageSwitcher from './LanguageSwitcher';
-import TaskCard from './Home/components/TaskCard';
-import PageHeader from './PageHeader';
+import apiService from '../../BE-services/apiService';
+import { useUserAuth } from '../../context/UserAuthContext';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
+import TaskCard from './TaskCard';
+import PageHeader from '../../components/PageHeader';
 
 const reshuffleTaskCategories = (tasks, order) => {
   const tasksByType = {};
