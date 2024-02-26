@@ -7,7 +7,7 @@ import TasksSkeleton from '../TasksSkeleton';
 import LoadMoreButton from './LoadMoreButton';
 import ImageUploadTasksList from './ImageUploadTasksList';
 import { useTranslation } from 'react-i18next';
-import type { Task } from '../../../types/tasks-types';
+import type { Task, goToPerformTaskFunctionType, loadMoreFunctionType } from '../../../types/tasks-types';
 import { TASK_CATEGORIES_DATA } from '../../../constants/constant';
 
 const AvailableTasksSegment: React.FC<{
@@ -19,9 +19,9 @@ const AvailableTasksSegment: React.FC<{
   selectedCategory: string;
   todayEarnings: number;
   showPayout: boolean;
-  goToPerformTask: () => void;
-  goToPerformResumeWork: () => void;
-  loadMore: () => void;
+  goToPerformTask: goToPerformTaskFunctionType;
+  goToPerformResumeWork: goToPerformTaskFunctionType;
+  loadMore: loadMoreFunctionType;
   goToUploadImageTask: () => void;
   taskCategoriesToShow: Record<string, boolean>;
   isImageUploadAvailable: boolean;

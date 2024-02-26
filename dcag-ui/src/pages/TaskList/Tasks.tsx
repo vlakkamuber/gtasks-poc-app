@@ -13,18 +13,14 @@ import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
 import apiService from '../../BE-services/apiService';
-import {
-  filterTaskWithType,
-  filterTaskWithSelectedCategory,
-  orderTasksByType,
-} from '../../utils';
+import { filterTaskWithType, filterTaskWithSelectedCategory, orderTasksByType } from '../../utils';
 import {
   FILTER_OUT_TEXT_TO_AUDIO_TASK,
   TEXT_TO_AUDIO_TASK_TYPE,
   taskTypeMapperRoute,
   taskCategoriesToShow,
   ANALYTICS_PAGE,
-  TaskOrderByLocation,
+  TaskOrderByLocation
 } from '../../constants/constant';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { useCategory } from '../../context/TaskCategoryContext';
@@ -37,11 +33,12 @@ import { LabelSmall } from 'baseui/typography';
 import PageHeader from '../../components/PageHeader';
 import AvailableTasksSegment from './components/AvailableTasksSegment';
 import PayoutCards from './components/PayoutCards';
+import type { goToPerformTaskFunctionType } from '../../types/tasks-types';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState({});
   const [isError, setIsError] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
   const [todayCount, setTodayCount] = useState(0);
@@ -58,10 +55,6 @@ const Tasks: React.FC = () => {
   const [css, theme] = useStyletron();
   const [isOpen, setIsOpen] = useState(true);
   const [taskSummary, setTaskSummary] = useState(null);
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
 
   const closeModal = () => {
     setIsOpen(false);
@@ -188,7 +181,7 @@ const Tasks: React.FC = () => {
       });
   };
 
-  const goToPerformTask = async (e, task) => {
+  const goToPerformTask: goToPerformTaskFunctionType = (e, task) => {
     logEvent({
       actions: 'click_start_work',
       properties: task.id
@@ -196,7 +189,7 @@ const Tasks: React.FC = () => {
     assignTask(task);
   };
 
-  const goToPerformResumeWork = (e, task) => {
+  const goToPerformResumeWork: goToPerformTaskFunctionType = (e, task) => {
     logEvent({
       actions: 'click_resume_work',
       properties: task.id
