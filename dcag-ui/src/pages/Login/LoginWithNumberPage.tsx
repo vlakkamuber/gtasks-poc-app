@@ -125,7 +125,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
               {COUNTRY_OPTIONS.map(function (country) {
                 return (
                   <IonSelectOption key={country.value} value={country.value}>
-                    {country.flag}
+                    {country.flag} {country.value}
                   </IonSelectOption>
                 );
               })}
