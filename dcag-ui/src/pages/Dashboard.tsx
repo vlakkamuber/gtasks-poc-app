@@ -1,6 +1,6 @@
 // src/pages/Dashboard.tsx
 import React, { useState, useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import {
   IonTabs,
   IonTabBar,
@@ -70,13 +70,15 @@ const Dashboard: React.FC = ({ content }) => {
 
           <IonTabs>
             <IonRouterOutlet>
-              <Redirect exact from="/dashboard" to="/dashboard/home" />
-              <Route path="/dashboard/home" render={() => <>{content}</>} forceRefresh={true} />
-              <Route path="/dashboard/training" render={() => <>{content}</>} />
-              <Route path="/dashboard/tasks" render={() => <>{content}</>} forceRefresh={true} />
-              <Route path="/dashboard/account" render={() => <>{content}</>} />
-              <Route path="/dashboard/issue" render={() => <>{content}</>} />
-              <Route path="/dashboard/help" render={() => <>{content}</>} />
+              <Switch>
+                <Redirect exact from="/dashboard" to="/dashboard/home" />
+                <Route path="/dashboard/home" render={() => <>{content}</>} forceRefresh={true} />
+                <Route path="/dashboard/training" render={() => <>{content}</>} />
+                <Route path="/dashboard/tasks" render={() => <>{content}</>} forceRefresh={true} />
+                <Route path="/dashboard/account" render={() => <>{content}</>} />
+                <Route path="/dashboard/issue" render={() => <>{content}</>} />
+                <Route path="/dashboard/help" render={() => <>{content}</>} />
+              </Switch>
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
