@@ -7,8 +7,7 @@ export const LOADER_MESSAGE = {
 
 export const COUNTRY_OPTIONS = [
   { value: 'in', label: 'India', flag: '🇮🇳', phoneCode: '+91' },
-  { value: 'us', label: 'United States', flag: '🇺🇸' ,phoneCode: '+1'},
-
+  { value: 'us', label: 'United States', flag: '🇺🇸', phoneCode: '+1' }
 ];
 
 export const TEXT_TO_AUDIO_TASK_TYPE = 'TEXT_TO_AUDIO';
@@ -112,7 +111,7 @@ export const LANGUAGE_CODE_MAPPER: Record<string, string> = {
   en: 'english',
   ts: 'telugu',
   hn: 'hindi',
-  ta: 'tamil',
+  ta: 'tamil'
 };
 
 export const TASK_CATEGORIES_DATA = [
@@ -168,7 +167,7 @@ export const TASK_CATEGORIES_DATA = [
   },
   {
     id: 'IMAGE_LABELLING',
-    imageSrc: 'assets/Image_labelling.png',
+    imageSrc: 'assets/image_labelling.png',
     title: 'Image Labelling',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
@@ -178,7 +177,7 @@ export const TASK_CATEGORIES_DATA = [
   },
   {
     id: 'MENU_PHOTO_REVIEW',
-    imageSrc: 'assets/men_review.png',
+    imageSrc: 'assets/menu_review.png',
     title: 'Menu Photo Review',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,

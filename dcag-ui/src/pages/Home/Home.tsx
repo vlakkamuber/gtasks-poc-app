@@ -17,6 +17,7 @@ import { useUserAuth } from '../../context/UserAuthContext';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import TaskCard from './TaskCard';
 import PageHeader from '../../components/PageHeader';
+import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
 
 const reshuffleTaskCategories = (tasks, order) => {
   const tasksByType = {};
@@ -104,7 +105,13 @@ const Home: React.FC = () => {
     return taskCategories.map(
       (category) =>
         category.show && (
-          <TaskCard key={category.id} category={category} handleTaskCategory={handleTaskCategory} />
+          <FlexGridItem>
+            <TaskCard
+              key={category.id}
+              category={category}
+              handleTaskCategory={handleTaskCategory}
+            />
+          </FlexGridItem>
         )
     );
   };
@@ -132,7 +139,14 @@ const Home: React.FC = () => {
           <ParagraphMedium className="mt-4 mb-32">
             {t(`dcag.home.taskHub.subtitle`)}
           </ParagraphMedium>
-          <div className="mt-16 mb-0">{renderTaskCards()}</div>
+          <div className="mt-16 mb-0">
+            <FlexGrid
+              flexGridColumnCount={2}
+              flexGridColumnGap="scale800"
+              flexGridRowGap="scale300">
+              {renderTaskCards()}
+            </FlexGrid>
+          </div>
         </div>
       </IonContent>
     </IonPage>
