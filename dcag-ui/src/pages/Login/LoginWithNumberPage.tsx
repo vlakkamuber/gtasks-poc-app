@@ -119,7 +119,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
               placeholder={selectedCountry.flag}
               disabled={false}
               className="country-select-box"
-              value={selectedCountry.flag}
+              value={selectedCountry.value}
               onIonChange={handleCountryChange}
               style={{ height: '5vh', minHeight: 'unset', paddingeft: '9px' }}>
               {COUNTRY_OPTIONS.map(function (country) {
