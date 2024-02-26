@@ -63,10 +63,10 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
     setIsValidPhone(true);
     const phoneRegex = /^(\+1|91)?[6789]\d{9}$/;
     setError('');
-    if (!phoneRegex.test(phone)) {
-      setIsValidPhone(false);
-      return setError('Please enter a valid phone number!');
-    }
+    // if (!phoneRegex.test(phone)) {
+    //   setIsValidPhone(false);
+    //   return setError('Please enter a valid phone number!');
+    // }
     try {
       present(LOADER_MESSAGE);
       logEvent({ actions: 'phone_number_entered', properties: phone });
@@ -137,7 +137,7 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-          {isValidPhone ? null : <p style={{ color: 'red' }}>Invalid phone number.</p>}
+          {/* {isValidPhone ? null : <p style={{ color: 'red' }}>Invalid phone number.</p>} */}
           {error && <Toast kind={KIND.negative}>{error}</Toast>}
           <ParagraphXSmall color="contentTertiary">
             {t(`dcag.home.otp.mobilenumber.helptext`)}
