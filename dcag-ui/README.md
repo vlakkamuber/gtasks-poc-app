@@ -19,6 +19,8 @@ firebase use anz-driver-ops-ritu
 ````
 ionic build --prod
 firebase deploy --project anz-driver-ops-ritu
+firebase deploy --only hosting:staging-anz-driver-ops-ritu --project anz-driver-ops-ritu
+firebase deploy --only hosting:anz-driver-ops-ritu --project anz-driver-ops-ritu
 ````
 ### Build APK
 OPEN  vi ~/.gradle/init.gradle file then add below line
