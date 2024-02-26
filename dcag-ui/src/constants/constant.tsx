@@ -81,7 +81,7 @@ export const TaskOrderByLocation = {
   ]
 };
 
-export const TASK_RATE = {
+export const TASK_RATE: Record<string, number> = {
   RECORD_AUDIO: 0.8,
   DESCRIBE_IMAGE: 2,
   UPLOAD_IMAGE: 2,

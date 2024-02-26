@@ -4,7 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { IonButton, IonItem, IonLabel, IonList } from '@ionic/react';
 import { TagFilled } from '@uber/icons';
 
-const ImageUploadTasksList: React.FC = ({ selectedCategory, showPayout, goToUploadImageTask }) => {
+const ImageUploadTasksList: React.FC<{
+  selectedCategory: string;
+  showPayout: boolean;
+  goToUploadImageTask: () => void;
+}> = ({ selectedCategory, showPayout, goToUploadImageTask }) => {
   const { t } = useTranslation();
   return (
     <>

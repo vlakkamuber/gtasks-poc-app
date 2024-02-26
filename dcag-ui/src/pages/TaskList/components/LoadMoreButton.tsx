@@ -1,7 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const LoadMoreButton: React.FC = ({ loadMore, taskKey: key }) => {
+const LoadMoreButton: React.FC<{ loadMore: (key: string) => void; taskKey: string }> = ({
+  loadMore,
+  taskKey: key
+}) => {
   const { t } = useTranslation();
   return (
     <div style={{ display: 'flex', justifyContent: 'right', cursor: 'pointer' }}>

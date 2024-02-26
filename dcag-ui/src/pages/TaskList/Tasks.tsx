@@ -37,12 +37,8 @@ import useAnalytics from '../../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
 import SurveyModal from './SurveyModal';
 import { LabelSmall } from 'baseui/typography';
-import TaskSwitcher from './TaskSwitcher';
 import PageHeader from '../../components/PageHeader';
-import NoTasksAvailable from './components/NoTasksAvailable';
-import TaskListRow from './components/TaskListRow';
-import LoadMoreButton from './components/LoadMoreButton';
-import ImageUploadTasksList from './components/ImageUploadTasksList';
+import AvailableTasksSegment from './components/AvailableTasksSegment';
 import PayoutCards from './components/PayoutCards';
 
 const Tasks: React.FC = () => {
@@ -265,7 +261,6 @@ const Tasks: React.FC = () => {
     setTasks(groupBy(orderedTasks, 'taskType'));
     setShowLoading(false);
   };
-  const taskLabel = capitalizeFirstLetter(t('dcag.home.text.task'));
   const selectedCategoryTitle = TASK_CATEGORIES_DATA.find(
     (item) => item.id === selectedCategory
   )?.title;
@@ -338,92 +333,24 @@ const Tasks: React.FC = () => {
           </IonSegment>
 
           {selectedSegment === 'available_task' && (
-            <React.Fragment>
-              {!availableCount && !showLoading && (
-                <NoTasksAvailable
-                  completedCount={completedCount}
-                  selectedCategoryTitle={selectedCategoryTitle}
-                />
-              )}
-              {todayEarnings > 200 ? (
-                <AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!" />
-              ) : (
-                <>
-                  <React.Fragment>
-                    {Object.keys(tasks).map((key, index) => {
-                      return (
-                        <React.Fragment key={index}>
-                          <div className="ion-padding">
-                            <div
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                              }}>
-                              <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                                {(location === 'HYDERABAD' || location === 'CHENNAI') &&
-                                (key === 'IMAGE_LABELLING' || key === 'MENU_PHOTO_REVIEW')
-                                  ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
-                                  : t(`dcag.tasks.${key}.title`)}
-                              </h1>
-                              {selectedCategory !== 'ALL' && (
-                                <span>
-                                  <TaskSwitcher />
-                                </span>
-                              )}
-                              {/* <span style={{ color: "#467ff4" }}>
-                          {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                        </span> */}
-                            </div>
-
-                            <p style={{ margin: '0' }}>
-                              {availableCount === 0 ? (
-                                <small>
-                                  {completedCount > 0
-                                    ? t('dcag.tasks.text.all_task_completed')
-                                    : t('dcag.tasks.text.no_more_task')}{' '}
-                                  {selectedTaskType?.title}.{' '}
-                                  {t('dcag.tasks.text.continue_other_task')}
-                                </small>
-                              ) : (
-                                <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
-                              )}
-                            </p>
-                          </div>
-
-                          {showLoading ? (
-                            <TasksSkeleton />
-                          ) : (
-                            tasks[key].map((task, index) => {
-                              return (
-                                <TaskListRow
-                                  key={index}
-                                  task={task}
-                                  showPayout={showPayout}
-                                  taskKey={key}
-                                  taskLabel={taskLabel}
-                                  goToPerformTask={goToPerformTask}
-                                  goToPerformResumeWork={goToPerformResumeWork}
-                                />
-                              );
-                            })
-                          )}
-                          <LoadMoreButton loadMore={loadMore} taskKey={key} />
-                        </React.Fragment>
-                      );
-                    })}
-                  </React.Fragment>
-                  {taskCategoriesToShow.UPLOAD_IMAGE === true &&
-                    isImageUploadAvailable === false && (
-                      <ImageUploadTasksList
-                        selectedCategory={selectedCategory}
-                        showPayout={showPayout}
-                        goToUploadImageTas={goToUploadImageTask}
-                      />
-                    )}
-                </>
-              )}
-            </React.Fragment>
+            <AvailableTasksSegment
+              tasks={tasks}
+              location={location}
+              availableCount={availableCount}
+              showLoading={showLoading}
+              completedCount={completedCount}
+              selectedCategory={selectedCategory}
+              selectedCategoryTitle={selectedCategoryTitle}
+              selectedTaskType={selectedTaskType}
+              todayEarnings={todayEarnings}
+              showPayout={showPayout}
+              goToPerformTask={goToPerformTask}
+              goToPerformResumeWork={goToPerformResumeWork}
+              loadMore={loadMore}
+              goToUploadImageTask={goToUploadImageTask}
+              taskCategoriesToShow={taskCategoriesToShow}
+              isImageUploadAvailable={isImageUploadAvailable}
+            />
           )}
 
           {selectedSegment === 'my_tasks' && (

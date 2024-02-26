@@ -1,20 +1,21 @@
 import React from 'react';
 import { IonItem, IonLabel, IonList } from '@ionic/react';
 import { TagFilled } from '@uber/icons';
-import { to2DecimalPlaces } from '../../../utils';
+import { capitalizeFirstLetter, to2DecimalPlaces } from '../../../utils';
 import { Button, SHAPE, SIZE } from 'baseui/button';
 import { TASK_RATE } from '../../../constants/constant';
 import { useTranslation } from 'react-i18next';
+import type { Task } from '../../../types/tasks-types';
 
-const TaskListRow: React.FC = ({
-  task,
-  taskKey: key,
-  taskLabel,
-  showPayout,
-  goToPerformTask,
-  goToPerformResumeWork
-}) => {
+const TaskListRow: React.FC<{
+  task: Task;
+  taskKey: string;
+  showPayout: boolean;
+  goToPerformTask: (arg1: any, arg2: Task) => void;
+  goToPerformResumeWork: (arg1: any, arg2: Task) => void;
+}> = ({ task, taskKey: key, showPayout, goToPerformTask, goToPerformResumeWork }) => {
   const { t } = useTranslation();
+  const taskLabel = capitalizeFirstLetter(t('dcag.home.text.task'));
 
   return (
     <React.Fragment key={task.id}>

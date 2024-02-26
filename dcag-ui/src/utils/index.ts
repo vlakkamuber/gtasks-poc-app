@@ -86,7 +86,7 @@ export const snakeCaseToNormal = (snakeCaseString) => {
   return words.join(' ');
 };
 
-export function to2DecimalPlaces(num: number) {
+export function to2DecimalPlaces(num: number): string {
   return (Math.round(num * 100) / 100).toFixed(2);
 }
 
