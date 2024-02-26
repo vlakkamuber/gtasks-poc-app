@@ -2,7 +2,7 @@ import React from 'react';
 import { ParagraphSmall } from 'baseui/typography';
 import { useTranslation } from 'react-i18next';
 
-const NoTasksAvailable: React.FC<{ completedCount: number; selectedCategoryTitle: string }> = ({
+const NoTasksAvailable: React.FC<{ completedCount: number; selectedCategoryTitle?: string }> = ({
   completedCount,
   selectedCategoryTitle
 }) => {

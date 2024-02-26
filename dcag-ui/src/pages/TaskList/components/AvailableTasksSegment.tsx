@@ -8,23 +8,22 @@ import LoadMoreButton from './LoadMoreButton';
 import ImageUploadTasksList from './ImageUploadTasksList';
 import { useTranslation } from 'react-i18next';
 import type { Task } from '../../../types/tasks-types';
+import { TASK_CATEGORIES_DATA } from '../../../constants/constant';
 
 const AvailableTasksSegment: React.FC<{
-  tasks: Task[];
+  tasks: Record<string, Task[]>;
   availableCount: number;
   location: string;
   showLoading: boolean;
   completedCount: number;
   selectedCategory: string;
-  selectedCategoryTitle: string;
-  selectedTaskType: Task;
   todayEarnings: number;
   showPayout: boolean;
   goToPerformTask: () => void;
   goToPerformResumeWork: () => void;
   loadMore: () => void;
   goToUploadImageTask: () => void;
-  taskCategoriesToShow: string[];
+  taskCategoriesToShow: Record<string, boolean>;
   isImageUploadAvailable: boolean;
 }> = ({
   tasks,
@@ -33,8 +32,6 @@ const AvailableTasksSegment: React.FC<{
   showLoading,
   completedCount,
   selectedCategory,
-  selectedCategoryTitle,
-  selectedTaskType,
   todayEarnings,
   showPayout,
   goToPerformTask,
@@ -45,6 +42,12 @@ const AvailableTasksSegment: React.FC<{
   isImageUploadAvailable
 }) => {
   const { t } = useTranslation();
+
+  const selectedCategoryTitle = TASK_CATEGORIES_DATA.find(
+    (item) => item.id === selectedCategory
+  )?.title;
+
+  const selectedTaskType = TASK_CATEGORIES_DATA.find((item) => item.id === selectedCategory);
 
   return (
     <React.Fragment>
@@ -120,7 +123,7 @@ const AvailableTasksSegment: React.FC<{
               );
             })}
           </React.Fragment>
-          {taskCategoriesToShow.UPLOAD_IMAGE === true && isImageUploadAvailable === false && (
+          {taskCategoriesToShow.UPLOAD_IMAGE && !isImageUploadAvailable && (
             <ImageUploadTasksList
               selectedCategory={selectedCategory}
               showPayout={showPayout}

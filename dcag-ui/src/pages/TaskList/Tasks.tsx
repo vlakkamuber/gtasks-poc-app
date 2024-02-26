@@ -17,9 +17,7 @@ import {
   filterTaskWithType,
   filterTaskWithSelectedCategory,
   orderTasksByType,
-  capitalizeFirstLetter
 } from '../../utils';
-import TasksSkeleton from './TasksSkeleton';
 import {
   FILTER_OUT_TEXT_TO_AUDIO_TASK,
   TEXT_TO_AUDIO_TASK_TYPE,
@@ -27,7 +25,6 @@ import {
   taskCategoriesToShow,
   ANALYTICS_PAGE,
   TaskOrderByLocation,
-  TASK_CATEGORIES_DATA
 } from '../../constants/constant';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { useCategory } from '../../context/TaskCategoryContext';
@@ -61,7 +58,6 @@ const Tasks: React.FC = () => {
   const [css, theme] = useStyletron();
   const [isOpen, setIsOpen] = useState(true);
   const [taskSummary, setTaskSummary] = useState(null);
-  const selectedTaskType = TASK_CATEGORIES_DATA.find((item) => item.id === selectedCategory);
 
   const openModal = () => {
     setIsOpen(true);
@@ -261,9 +257,6 @@ const Tasks: React.FC = () => {
     setTasks(groupBy(orderedTasks, 'taskType'));
     setShowLoading(false);
   };
-  const selectedCategoryTitle = TASK_CATEGORIES_DATA.find(
-    (item) => item.id === selectedCategory
-  )?.title;
   if (isError) {
     return (
       <IonPage>
@@ -340,8 +333,6 @@ const Tasks: React.FC = () => {
               showLoading={showLoading}
               completedCount={completedCount}
               selectedCategory={selectedCategory}
-              selectedCategoryTitle={selectedCategoryTitle}
-              selectedTaskType={selectedTaskType}
               todayEarnings={todayEarnings}
               showPayout={showPayout}
               goToPerformTask={goToPerformTask}
