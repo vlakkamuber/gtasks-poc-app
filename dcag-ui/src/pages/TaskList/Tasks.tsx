@@ -55,6 +55,8 @@ import LanguageSwitcher from '../../components/LanguageSwitcher';
 import TaskSwitcher from './TaskSwitcher';
 import { TagFilled } from '@uber/icons';
 import PageHeader from '../../components/PageHeader';
+import NoTasksAvailable from './components/NoTasksAvailable';
+import TaskListRow from './components/TaskListRow';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -369,14 +371,10 @@ const Tasks: React.FC = () => {
           {selectedSegment === 'available_task' && (
             <React.Fragment>
               {!availableCount && !showLoading && (
-                <div>
-                  <ParagraphSmall>
-                    {completedCount
-                      ? t('dcag.tasks.text.all_task_completed')
-                      : t('dcag.tasks.text.no_more_task')}{' '}
-                    {selectedCategoryTitle} {t('dcag.tasks.text.continue_other_task')}
-                  </ParagraphSmall>
-                </div>
+                <NoTasksAvailable
+                  completedCount={completedCount}
+                  selectedCategoryTitle={selectedCategoryTitle}
+                />
               )}
               {todayEarnings > 200 ? (
                 <AlertInfoCard message="You reached the daily earning limit of Rs.200! Please continue tomorrow!" />
@@ -424,51 +422,23 @@ const Tasks: React.FC = () => {
                             </p>
                           </div>
 
-                          {showLoading ? <TasksSkeleton /> : tasks[key].map((task, index) => {
-                            return (
-                              <React.Fragment key={task.id}>
-                                <IonList style={{ marginBottom: 1 }}>
-                                  <IonItem>
-                                    <IonLabel>
-                                      <h2>
-                                        {task.status === 'IN_PROGRESS'
-                                          ? `${taskLabel} #${task.taskId}`
-                                          : `${taskLabel} #${task.id}`}
-                                      </h2>
-                                      {task.userId && task.status === 'IN_PROGRESS' && (
-                                        <p style={{ color: '#276ef1' }}>
-                                          {t(`dcag.home.taskHub.status.${task.status}`)}
-                                        </p>
-                                      )}
-                                      {showPayout && (
-                                        <p>
-                                          <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} />{' '}
-                                          ₹{to2DecimalPlaces(TASK_RATE[key])}
-                                        </p>
-                                      )}
-                                    </IonLabel>
-                                    {!task.userId && (
-                                      <Button
-                                        onClick={(e) => goToPerformTask(e, task)}
-                                        size={SIZE.compact}
-                                        shape={SHAPE.pill}>
-                                        {t(`dcag.home.btn.startWork.label`)}
-                                      </Button>
-                                    )}
-                                    {task.userId && task.status === 'IN_PROGRESS' && (
-                                      <Button
-                                        onClick={(e) => goToPerformResumeWork(e, task)}
-                                        size={SIZE.compact}
-                                        shape={SHAPE.pill}>
-                                        {t(`dcag.home.btn.resumeWork.label`)}
-                                      </Button>
-                                    )}
-                                  </IonItem>
-                                  {/* Add more IonItem elements as needed */}
-                                </IonList>
-                              </React.Fragment>
-                            );
-                          })}
+                          {showLoading ? (
+                            <TasksSkeleton />
+                          ) : (
+                            tasks[key].map((task, index) => {
+                              return (
+                                <TaskListRow
+                                  task={task}
+                                  showPayout={showPayout}
+                                  task={task}
+                                  taskKey={key}
+                                  taskLabel={taskLabel}
+                                  goToPerformTask={goToPerformTask}
+                                  goToPerformResumeWork={goToPerformResumeWork}
+                                />
+                              );
+                            })
+                          )}
                           <div
                             style={{ display: 'flex', justifyContent: 'right', cursor: 'pointer' }}>
                             <span
