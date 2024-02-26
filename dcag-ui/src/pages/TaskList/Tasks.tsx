@@ -7,15 +7,8 @@ import {
   IonToolbar,
   IonSegment,
   IonSegmentButton,
-  IonIcon,
-  IonLabel,
-  IonList,
-  IonItem,
-  IonButton,
-  IonBadge,
-  IonButtons
+  IonBadge
 } from '@ionic/react';
-import { people, business, arrowBack } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +17,6 @@ import {
   filterTaskWithType,
   filterTaskWithSelectedCategory,
   orderTasksByType,
-  to2DecimalPlaces,
   capitalizeFirstLetter
 } from '../../utils';
 import TasksSkeleton from './TasksSkeleton';
@@ -33,8 +25,6 @@ import {
   TEXT_TO_AUDIO_TASK_TYPE,
   taskTypeMapperRoute,
   taskCategoriesToShow,
-  TasksOrder,
-  TASK_RATE,
   ANALYTICS_PAGE,
   TaskOrderByLocation,
   TASK_CATEGORIES_DATA
@@ -43,20 +33,17 @@ import { useUserAuth } from '../../context/UserAuthContext';
 import { useCategory } from '../../context/TaskCategoryContext';
 import { showPayout } from '../../constants/flags';
 import ErrorView from '../../components/ErrorView';
-import { Button, SIZE, SHAPE } from 'baseui/button';
 import useAnalytics from '../../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
-import Card from './Card';
-import PersonMultipleFilled from '@uber/icons/person-multiple-filled';
-import MoneyFilled from '@uber/icons/money-filled';
 import SurveyModal from './SurveyModal';
-import { LabelSmall, ParagraphSmall } from 'baseui/typography';
-import LanguageSwitcher from '../../components/LanguageSwitcher';
+import { LabelSmall } from 'baseui/typography';
 import TaskSwitcher from './TaskSwitcher';
-import { TagFilled } from '@uber/icons';
 import PageHeader from '../../components/PageHeader';
 import NoTasksAvailable from './components/NoTasksAvailable';
 import TaskListRow from './components/TaskListRow';
+import LoadMoreButton from './components/LoadMoreButton';
+import ImageUploadTasksList from './components/ImageUploadTasksList';
+import PayoutCards from './components/PayoutCards';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
@@ -305,30 +292,12 @@ const Tasks: React.FC = () => {
             <SurveyModal isOpen={isOpen} onClose={closeModal} />
           )}
           {showPayout && (
-            <div className="tasks-info" style={{ marginTop: '8px' }}>
-              <Card
-                className="task-detail"
-                icon={people}
-                TitleIcon={() => (
-                  <PersonMultipleFilled size={16} color="#276EF1" style={{ marginRight: 8 }} />
-                )}
-                bgColor="#EFF4FE"
-                label={t(`dcag.tasks.page.completedTask.label`)}
-                count={completedCount}
-                todayCount={todayCount}
-              />
-              <Card
-                className="task-count"
-                icon={business}
-                TitleIcon={() => (
-                  <MoneyFilled size={16} color="#0E8345" style={{ marginRight: 8 }} />
-                )}
-                bgColor="#EAF6ED"
-                label={t(`dcag.tasks.page.youEarned.label`)}
-                count={`₹${to2DecimalPlaces(totalEarned)}`}
-                todayCount={`₹${to2DecimalPlaces(todayEarnings)}`}
-              />
-            </div>
+            <PayoutCards
+              todayCount={todayCount}
+              completedCount={completedCount}
+              todayEarnings={todayEarnings}
+              totalEarned={totalEarned}
+            />
           )}
           <IonSegment
             color="default"
@@ -428,9 +397,9 @@ const Tasks: React.FC = () => {
                             tasks[key].map((task, index) => {
                               return (
                                 <TaskListRow
+                                  key={index}
                                   task={task}
                                   showPayout={showPayout}
-                                  task={task}
                                   taskKey={key}
                                   taskLabel={taskLabel}
                                   goToPerformTask={goToPerformTask}
@@ -439,75 +408,18 @@ const Tasks: React.FC = () => {
                               );
                             })
                           )}
-                          <div
-                            style={{ display: 'flex', justifyContent: 'right', cursor: 'pointer' }}>
-                            <span
-                              style={{
-                                fontSize: '1rem',
-                                fontWeight: 'normal',
-                                marginRight: '12px',
-                                textDecoration: 'underline',
-                                color: '#0000EE'
-                              }}
-                              onClick={() => loadMore(key)}>
-                              {t(`dcag.home.btn.loadMore.label`)}
-                            </span>
-                          </div>
+                          <LoadMoreButton loadMore={loadMore} taskKey={key} />
                         </React.Fragment>
                       );
                     })}
                   </React.Fragment>
                   {taskCategoriesToShow.UPLOAD_IMAGE === true &&
                     isImageUploadAvailable === false && (
-                      <>
-                        <div className="ion-padding">
-                          <div
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center'
-                            }}>
-                            <h1 style={{ margin: '0', marginBottom: '-4px' }}>
-                              {t(`dcag.tasks.UPLOAD_IMAGE.title`)}
-                            </h1>
-                            {selectedCategory !== 'ALL' && (
-                              <div style={{ width: '60%' }}>
-                                <TaskSwitcher />
-                              </div>
-                            )}
-                            {/* <span style={{ color: "#467ff4" }}>
-                            {tasks[key].length} {t(`dcag.home.btn.new.label`)}
-                          </span> */}
-                          </div>
-
-                          <p style={{ margin: '0' }}>
-                            <small>{t(`dcag.tasks.UPLOAD_IMAGE.taskDesc`)}.</small>
-                          </p>
-                        </div>
-                        <IonList style={{ marginBottom: 1 }}>
-                          <IonItem>
-                            <IonLabel>
-                              <span style={{ display: 'flex' }}>
-                                <h2>Default Task</h2>
-                              </span>
-                              {showPayout && (
-                                <p>
-                                  <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> $2
-                                </p>
-                              )}
-                            </IonLabel>
-                            <IonButton
-                              slot="end"
-                              style={{
-                                '--background': 'black',
-                                '--border-radius': '10px'
-                              }}
-                              onClick={() => goToUploadImageTask()}>
-                              {t(`dcag.home.btn.startWork.label`)}
-                            </IonButton>
-                          </IonItem>
-                        </IonList>
-                      </>
+                      <ImageUploadTasksList
+                        selectedCategory={selectedCategory}
+                        showPayout={showPayout}
+                        goToUploadImageTas={goToUploadImageTask}
+                      />
                     )}
                 </>
               )}
