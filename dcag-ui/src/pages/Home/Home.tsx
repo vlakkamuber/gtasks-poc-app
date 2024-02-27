@@ -20,6 +20,9 @@ import PageHeader from '../../components/PageHeader';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
 import EarningRingMessage from './EarningRingMessage';
 import { useStyletron } from 'baseui';
+import FlexBox from '../../components/FlexBox';
+import Box from '../../components/Box';
+import Page from '../../components/Page';
 
 const reshuffleTaskCategories = (tasks, order) => {
   const tasksByType = {};
@@ -106,66 +109,49 @@ const Home: React.FC = () => {
     history.goBack(); // This function navigates back to the previous page
   };
 
-  const renderTaskCards = () => {
-    return taskCategories.map(
-      (category) =>
-        category.show && (
-          <FlexGridItem>
-            <TaskCard
-              key={category.id}
-              category={category}
-              handleTaskCategory={handleTaskCategory}
-            />
-          </FlexGridItem>
-        )
-    );
-  };
-
   return (
     <IonPage>
       <IonContent fullscreen>
-        <div className="p-16">
+        <Page>
           <PageHeader
             page={ANALYTICS_PAGE.home}
             title={t('dcag.home.bottomTabs.home')}
             showBackButton={false}
           />
-          <Block
-            className={css({
-              marginBottom: $theme.sizing.scale600
-            })}>
+          <Box mb={$theme.sizing.scale600}>
             <EarningRingMessage />
-          </Block>
-
-          <Block
-            className={css({
-              display: 'flex',
-              justifyContent: 'space-between',
-              paddingBottom: '0px',
-              alignItems: 'center'
-            })}>
-            <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
-            <Button
-              kind={KIND.secondary}
-              onClick={() => handleTaskCategory('ALL')}
-              shape={SHAPE.pill}
-              size={SIZE.compact}>
-              <LabelSmall>{t(`dcag.home.taskHub.btn.viewAllTasks`)}</LabelSmall>
-            </Button>
-          </Block>
-
+          </Box>
+          <Box>
+            <FlexBox justifyContent="space-between" alignItems="center">
+              <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
+              <Button
+                kind={KIND.secondary}
+                onClick={() => handleTaskCategory('ALL')}
+                shape={SHAPE.pill}
+                size={SIZE.compact}>
+                <LabelSmall>{t(`dcag.home.taskHub.btn.viewAllTasks`)}</LabelSmall>
+              </Button>
+            </FlexBox>
+          </Box>
           <ParagraphMedium className="mt-4 mb-16">
             {t(`dcag.home.taskHub.subtitle`)}
           </ParagraphMedium>
-          <div className="mb-0">
-            <FlexGrid
-              flexGridColumnCount={2}
-              flexGridColumnGap="scale500"
-              flexGridRowGap="scale500">
-              {renderTaskCards()}
-            </FlexGrid>
-          </div>
-        </div>
+
+          <FlexGrid flexGridColumnCount={2} flexGridColumnGap="scale500" flexGridRowGap="scale500">
+            {taskCategories.map(
+              (category) =>
+                category.show && (
+                  <FlexGridItem>
+                    <TaskCard
+                      key={category.id}
+                      category={category}
+                      handleTaskCategory={handleTaskCategory}
+                    />
+                  </FlexGridItem>
+                )
+            )}
+          </FlexGrid>
+        </Page>
       </IonContent>
     </IonPage>
   );
