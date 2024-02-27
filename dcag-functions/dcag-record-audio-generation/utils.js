@@ -1,6 +1,5 @@
 var txtomp3 = require("text-to-mp3");
 const fs = require("fs");
-const tasks = require("./data2");
 
 Object.getPrototypeOf(txtomp3).attributes = {
   ie: "UTF-8",
@@ -9,9 +8,9 @@ Object.getPrototypeOf(txtomp3).attributes = {
   tl: "en-IN",
 };
 
-function textToMp3(task) {
-  txtomp3.getMp3(task.name, function (err, binaryStream) {
-    const fileName = formatName(task.name);
+function textToMp3(name) {
+  txtomp3.getMp3(name, function (err, binaryStream) {
+    const fileName = formatName(name);
 
     if (err) {
       console.log(err);
@@ -30,7 +29,21 @@ function formatName(inputName) {
   return lowercaseName;
 }
 
-function createSQLFile() {
+function createSQLFile(names) {
+  const sqlfile = "tasks.sql";
+  names.forEach((name) => {
+    fs.writeFile(
+      sqlfile,
+      `INSERT INTO tasks (name, task_type, max_number_of_users, input, status, currency, price, create_time, due_time) VALUES ('${name}', 'AUDIO_TO_AUDIO', 3, '${formatName(
+        name
+      )}.mp3', 'NEW', 'USD', 2.0, '2024-01-12 00:00:00', '2024-01-16 00:00:00');\n`,
+      { flag: "a+" },
+      (err) => {}
+    );
+  });
+}
+
+function createCSVFile(tasks) {
   const file = "tasks.csv";
   tasks.forEach((task) => {
     fs.writeFile(
@@ -41,5 +54,5 @@ function createSQLFile() {
     );
   });
 }
-tasks.forEach((task) => textToMp3(task));
-createSQLFile();
+
+module.exports = { textToMp3, formatName, createSQLFile, createCSVFile };
