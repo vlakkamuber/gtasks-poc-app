@@ -18,6 +18,8 @@ import LanguageSwitcher from '../../components/LanguageSwitcher';
 import TaskCard from './TaskCard';
 import PageHeader from '../../components/PageHeader';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
+import EarningRingMessage from './EarningRingMessage';
+import { useStyletron } from 'baseui';
 
 const reshuffleTaskCategories = (tasks, order) => {
   const tasksByType = {};
@@ -37,9 +39,11 @@ const reshuffleTaskCategories = (tasks, order) => {
 
   return orderedTasks;
 };
+
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const [css, $theme] = useStyletron();
   const { selectedCategory, setSelectedCategory, location, setLocation } = useCategory();
   const { user } = useUserAuth();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
@@ -101,6 +105,7 @@ const Home: React.FC = () => {
     logEvent({ actions: 'click_go_back' });
     history.goBack(); // This function navigates back to the previous page
   };
+
   const renderTaskCards = () => {
     return taskCategories.map(
       (category) =>
@@ -115,6 +120,7 @@ const Home: React.FC = () => {
         )
     );
   };
+
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -124,10 +130,21 @@ const Home: React.FC = () => {
             title={t('dcag.home.bottomTabs.home')}
             showBackButton={false}
           />
-          <div className="fixed-header-home-content">
-            <div>
-              <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
-            </div>
+          <Block
+            className={css({
+              marginBottom: $theme.sizing.scale600
+            })}>
+            <EarningRingMessage />
+          </Block>
+
+          <Block
+            className={css({
+              display: 'flex',
+              justifyContent: 'space-between',
+              paddingBottom: '0px',
+              alignItems: 'center'
+            })}>
+            <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
             <Button
               kind={KIND.secondary}
               onClick={() => handleTaskCategory('ALL')}
@@ -135,11 +152,12 @@ const Home: React.FC = () => {
               size={SIZE.compact}>
               <LabelSmall>{t(`dcag.home.taskHub.btn.viewAllTasks`)}</LabelSmall>
             </Button>
-          </div>
-          <ParagraphMedium className="mt-4 mb-32">
+          </Block>
+
+          <ParagraphMedium className="mt-4 mb-16">
             {t(`dcag.home.taskHub.subtitle`)}
           </ParagraphMedium>
-          <div className="mt-16 mb-0">
+          <div className="mb-0">
             <FlexGrid
               flexGridColumnCount={2}
               flexGridColumnGap="scale500"
