@@ -142,8 +142,8 @@ const Home: React.FC = () => {
           <div className="mt-16 mb-0">
             <FlexGrid
               flexGridColumnCount={2}
-              flexGridColumnGap="scale800"
-              flexGridRowGap="scale300">
+              flexGridColumnGap="scale500"
+              flexGridRowGap="scale500">
               {renderTaskCards()}
             </FlexGrid>
           </div>
