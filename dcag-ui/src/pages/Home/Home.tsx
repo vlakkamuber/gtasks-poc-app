@@ -3,18 +3,15 @@ import { IonContent, IonPage } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategory } from '../../context/TaskCategoryContext';
-import { ArrowRight, ArrowLeft } from 'baseui/icon';
 
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
-import { Block } from 'baseui/block';
-import { DisplayXSmall, ParagraphMedium, LabelSmall, LabelMedium } from 'baseui/typography';
+import { DisplayXSmall, ParagraphMedium, LabelSmall } from 'baseui/typography';
 
 import useAnalytics from '../../hooks/useAnanlytics';
-import { ANALYTICS_PAGE, TASK_CATEGORIES_DATA, TASK_RATE } from '../../constants/constant';
+import { ANALYTICS_PAGE, TASK_CATEGORIES_DATA, TasksOrder } from '../../constants/constant';
 import React, { useEffect, useState } from 'react';
 import apiService from '../../BE-services/apiService';
 import { useUserAuth } from '../../context/UserAuthContext';
-import LanguageSwitcher from '../../components/LanguageSwitcher';
 import TaskCard from './TaskCard';
 import PageHeader from '../../components/PageHeader';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
@@ -23,9 +20,12 @@ import { useStyletron } from 'baseui';
 import FlexBox from '../../components/FlexBox';
 import Box from '../../components/Box';
 import Page from '../../components/Page';
+import { TaskCategoryType, TaskTypesType } from '../../types/tasks-types';
+import useStyles from '../../hooks/useStyles';
+import { STYLE_PAGES } from '../../hooks/constants';
 
-const reshuffleTaskCategories = (tasks, order) => {
-  const tasksByType = {};
+const reshuffleTaskCategories = (tasks: TaskCategoryType[], order: TaskTypesType[]) => {
+  const tasksByType: { [key: string]: TaskCategoryType[] } = {};
   order.forEach((type) => {
     tasksByType[type] = [];
   });
@@ -33,7 +33,7 @@ const reshuffleTaskCategories = (tasks, order) => {
     if (tasksByType.hasOwnProperty(task.id)) {
       tasksByType[task.id].push(task);
     } else {
-      console.warn(`Unknown task type: ${task.taskType}`);
+      console.warn(`Unknown task type: ${task.title}`);
     }
   });
   const orderedTasks = order.reduce((accumulator, id) => {
@@ -46,11 +46,12 @@ const reshuffleTaskCategories = (tasks, order) => {
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const [css, $theme] = useStyletron();
-  const { selectedCategory, setSelectedCategory, location, setLocation } = useCategory();
+  const [_, $theme] = useStyletron();
+  const { taskHubSubTitleStyle } = useStyles(STYLE_PAGES.HOME);
+  const { setSelectedCategory, location, setLocation } = useCategory();
   const { user } = useUserAuth();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
-  const [taskCategories, setTaskCategories] = useState(
+  const [taskCategories, setTaskCategories] = useState<TaskCategoryType[]>(
     location === 'DELHI' || location === 'PUNE'
       ? reshuffleTaskCategories(TASK_CATEGORIES_DATA, [
           'IMAGE_LABELLING',
@@ -88,25 +89,20 @@ const Home: React.FC = () => {
     }
   }, []);
 
-  const handleTaskCategory = (category) => {
-    if (category === 'IMAGE_QUESTIONS') {
-      category = 'IMAGE_LABELLING';
-    } else if (category === 'MENU_QUESTIONS') {
-      category = 'MENU_PHOTO_REVIEW';
+  const handleTaskCategory = (categoryId: string) => {
+    if (categoryId === 'IMAGE_QUESTIONS') {
+      categoryId = 'IMAGE_LABELLING';
+    } else if (categoryId === 'MENU_QUESTIONS') {
+      categoryId = 'MENU_PHOTO_REVIEW';
     }
     logEvent({
-      actions: category === 'ALL' ? 'click_view_all_tasks' : 'click_banner',
-      properties: category
+      actions: categoryId === 'ALL' ? 'click_view_all_tasks' : 'click_banner',
+      properties: categoryId
     });
     // Set the selected category in localStorage
-    localStorage.setItem('selectedCategory', category);
-    setSelectedCategory(category);
+    localStorage.setItem('selectedCategory', categoryId);
+    setSelectedCategory(categoryId);
     history.push('/dashboard/tasks');
-  };
-
-  const goBack = () => {
-    logEvent({ actions: 'click_go_back' });
-    history.goBack(); // This function navigates back to the previous page
   };
 
   return (
@@ -121,22 +117,19 @@ const Home: React.FC = () => {
           <Box mb={$theme.sizing.scale600}>
             <EarningRingMessage />
           </Box>
-          <Box>
-            <FlexBox justifyContent="space-between" alignItems="center">
-              <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
-              <Button
-                kind={KIND.secondary}
-                onClick={() => handleTaskCategory('ALL')}
-                shape={SHAPE.pill}
-                size={SIZE.compact}>
-                <LabelSmall>{t(`dcag.home.taskHub.btn.viewAllTasks`)}</LabelSmall>
-              </Button>
-            </FlexBox>
-          </Box>
-          <ParagraphMedium className="mt-4 mb-16">
+          <FlexBox justifyContent="space-between" alignItems="center">
+            <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
+            <Button
+              kind={KIND.secondary}
+              onClick={() => handleTaskCategory('ALL')}
+              shape={SHAPE.pill}
+              size={SIZE.compact}>
+              <LabelSmall>{t(`dcag.home.taskHub.btn.viewAllTasks`)}</LabelSmall>
+            </Button>
+          </FlexBox>
+          <ParagraphMedium className={taskHubSubTitleStyle}>
             {t(`dcag.home.taskHub.subtitle`)}
           </ParagraphMedium>
-
           <FlexGrid flexGridColumnCount={2} flexGridColumnGap="scale500" flexGridRowGap="scale500">
             {taskCategories.map(
               (category) =>

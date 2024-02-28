@@ -1,3 +1,5 @@
+import { TaskCategoryType } from '../types/tasks-types';
+
 export const TEXT_TO_AUDIO = 'textToAudio';
 export const AUDIO_TO_AUDIO = 'audioToAudio';
 
@@ -8,8 +10,8 @@ export const LOADER_MESSAGE = {
 export const COUNTRY_OPTIONS = [
   { value: 'in', label: 'India', flag: '🇮🇳', phoneCode: '+91' },
   { value: 'us', label: 'United States', flag: '🇺🇸', phoneCode: '+1' },
-  {value: 'es',label: 'Spain',flag: '🇪🇸',phoneCode: '+34'},
-  {value: 'uk',label: 'United Kingdom',flag: '🇬🇧',phoneCode: '+44'}
+  { value: 'es', label: 'Spain', flag: '🇪🇸', phoneCode: '+34' },
+  { value: 'uk', label: 'United Kingdom', flag: '🇬🇧', phoneCode: '+44' }
 ];
 
 export const TEXT_TO_AUDIO_TASK_TYPE = 'TEXT_TO_AUDIO';
@@ -116,7 +118,7 @@ export const LANGUAGE_CODE_MAPPER: Record<string, string> = {
   ta: 'tamil'
 };
 
-export const TASK_CATEGORIES_DATA = [
+export const TASK_CATEGORIES_DATA: TaskCategoryType[] = [
   {
     id: 'RECORD_AUDIO',
     imageSrc: 'assets/record_audio.png',

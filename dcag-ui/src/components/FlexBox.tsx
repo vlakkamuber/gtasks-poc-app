@@ -3,7 +3,7 @@ import { Block } from 'baseui/block';
 import React, { ReactElement } from 'react';
 
 type Props = {
-  children: ReactElement[];
+  children: ReactElement | ReactElement[];
   alignItems?: string;
   alignContent?: string;
   flexDirection?: string;

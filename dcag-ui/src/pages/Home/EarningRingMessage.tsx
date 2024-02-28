@@ -5,13 +5,14 @@ import { useStyletron } from 'baseui';
 import { LabelLarge } from 'baseui/typography';
 import apiService from '../../BE-services/apiService';
 import { useUserAuth } from '../../context/UserAuthContext';
+import FlexBox from '../../components/FlexBox';
 
 type Props = {
   hide?: boolean;
 };
 
 const EarningRingMessage: React.FC<Props> = ({ hide = false }) => {
-  const [css, $theme] = useStyletron();
+  const [_, $theme] = useStyletron();
   const [totalEarning, setTotalEarning] = useState();
   const { user } = useUserAuth();
 
@@ -29,18 +30,13 @@ const EarningRingMessage: React.FC<Props> = ({ hide = false }) => {
   return (
     <>
       <MessageBox>
-        <Block
-          className={css({
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          })}>
+        <FlexBox justifyContent="space-between" alignItems="center">
           <Block>
             <LabelLarge>₹{totalEarning}</LabelLarge>
             <LabelLarge color={$theme.colors.contentSecondary}>Your Total Earnings</LabelLarge>
           </Block>
           <img src="/assets/money.png" />
-        </Block>
+        </FlexBox>
       </MessageBox>
     </>
   );
