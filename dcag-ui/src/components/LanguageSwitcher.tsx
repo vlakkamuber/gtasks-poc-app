@@ -90,7 +90,11 @@ const LanguageSwitcher: React.FC<{ page?: string; isOpen?: boolean }> = ({ page,
       interface='alert'
       placeholder="Select Language"
       compareWith={compareWith}
+      cancelText=''
       onIonChange={handleChange}
+      onIonDismiss={() => {
+        localStorage.setItem('hasOpenedLanguageSwitcher', 'YES');
+      }}
       interfaceOptions={customAlertOptions}>
       {options.map((option) => (
         <IonSelectOption key={option.id} value={option}>
