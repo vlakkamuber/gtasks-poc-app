@@ -58,6 +58,7 @@ const Home: React.FC = () => {
   const { setSelectedCategory, location, setLocation } = useCategory();
   const { user } = useUserAuth();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
+  const [isLanguageSwitcherOpen, setIsLanguageSwitcherOpen] = useState(false);
   const [taskCategories, setTaskCategories] = useState<TaskCategoryType[]>(
     location === 'DELHI' || location === 'PUNE'
       ? reshuffleTaskCategories(TASK_CATEGORIES_DATA, [
@@ -78,6 +79,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     logEvent({ actions: '' });
+    if (history?.location?.state?.from === '/login') {
+      setIsLanguageSwitcherOpen(true);
+    } else {
+      setIsLanguageSwitcherOpen(false);
+    }
     getUserByPhoneNumber();
     //Update task categories based on location
     if (location === 'CHENNAI' || location === 'HYDERABAD') {
@@ -119,6 +125,7 @@ const Home: React.FC = () => {
           <PageHeader
             page={ANALYTICS_PAGE.home}
             title={t(`dcag.home.taskHub.title`)}
+            isLanguageSwitcherOpen={isLanguageSwitcherOpen}
             showBackButton={false}
           />
           <Box mb={$theme.sizing.scale600}>

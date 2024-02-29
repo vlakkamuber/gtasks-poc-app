@@ -18,6 +18,7 @@ type Props = {
   page: string;
   showBackButton?: boolean;
   showLanguageSwitcher?: boolean;
+  isLanguageSwitcherOpen?: boolean;
   isHeaderFixed?: boolean;
 };
 
@@ -26,6 +27,7 @@ const PageHeader: React.FC<Props> = ({
   page,
   showBackButton = true,
   showLanguageSwitcher = true,
+  isLanguageSwitcherOpen = false,
   isHeaderFixed = true
 }) => {
   const logEvent = useAnalytics({ page });
@@ -55,7 +57,9 @@ const PageHeader: React.FC<Props> = ({
               </FlexBox>
             </HeadingLarge>
             <Button kind={KIND.tertiary} overrides={LANGUAGE_SWITCH_BUTTON_OVERRIDES}>
-              {showLanguageSwitcher && <LanguageSwitcher page={page} />}
+              {showLanguageSwitcher && (
+                <LanguageSwitcher page={page} isOpen={isLanguageSwitcherOpen} />
+              )}
             </Button>
           </FlexBox>
         </Box>

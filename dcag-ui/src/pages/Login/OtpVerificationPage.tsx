@@ -71,7 +71,7 @@ const OtpVerificationPage = ({
   const createUserInDB = async (uid, phoneNumber) => {
     await apiService.createUserInDB(uid, phoneNumber);
     dismiss();
-    history.push('/dashboard/home');
+    history.push('/dashboard/home', { from: history.location.pathname });
   };
 
   const verifyOtp = () => {
@@ -85,7 +85,7 @@ const OtpVerificationPage = ({
         let result = await sendOtpResponse.confirm(otpnumeric);
         logEvent({ actions: 'login_success' });
         dismiss();
-        history.push('/dashboard/home');
+        history.push('/dashboard/home', { from: history.location.pathname });
         // if (!isUserExist) {
         //   createUserInDB(result.user.uid, result.user.phoneNumber);
         // } else {

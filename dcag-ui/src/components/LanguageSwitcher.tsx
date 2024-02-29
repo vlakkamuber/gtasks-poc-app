@@ -1,5 +1,5 @@
 // LanguageSwitcher.tsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 // import { IonToggle } from '@ionic/react';
 import { IonSelect, IonSelectOption, IonLabel } from '@ionic/react';
 import { useTranslation } from 'react-i18next';
@@ -32,8 +32,9 @@ const options = [
   }
 ];
 
-const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
+const LanguageSwitcher: React.FC<{ page?: string; isOpen?: boolean }> = ({ page, isOpen }) => {
   const { t, i18n } = useTranslation();
+  const languageSwitcherRef = useRef<HTMLIonSelectElement | null>();
   const [value, setValue] = React.useState([{ label: 'English', id: 'en' }]);
   const { language, setLanguage } = useLanguage();
   const logEvent = useAnalytics({ page: page || ANALYTICS_PAGE.account });
@@ -46,6 +47,7 @@ const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
     setLanguage(selectedLanguage);
     i18n.changeLanguage(selectedLanguage);
     localStorage.setItem('selectedLanguage', selectedLanguage);
+    localStorage.setItem('hasOpenedLanguageSwitcher', 'YES');
     setValue([{ label: languageObj[selectedLanguage], id: selectedLanguage }]);
   };
   // Set the default language to English if not found in local storage
@@ -54,6 +56,15 @@ const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
     setLanguage(defaultLanguage);
     setValue([{ label: languageObj[defaultLanguage], id: defaultLanguage }]);
   }, []); // Empty dependency array ensures the effect runs only once on mount
+
+  useEffect(() => {
+    if (isOpen) {
+      const hasOpenedLanguageSwitcher = localStorage.getItem('hasOpenedLanguageSwitcher');
+      if (!hasOpenedLanguageSwitcher) {
+        languageSwitcherRef?.current?.open();
+      }
+    }
+  }, [isOpen]);
 
   const compareWith = (o1, o2) => {
     return o1.id === o2.id;
@@ -65,11 +76,17 @@ const LanguageSwitcher: React.FC<{ page?: string }> = ({ page }) => {
 
   return (
     <IonSelect
+      ref={(ref) => {
+        languageSwitcherRef.current = ref;
+      }}
       style={{
         background: 'rgb(246, 246, 246)',
         paddingLeft: 20,
         paddingRight: 20,
         borderRadius: 25
+      }}
+      onIonDismiss={() => {
+        localStorage.setItem('hasOpenedLanguageSwitcher', 'YES');
       }}
       value={value}
       placeholder="Select Language"
