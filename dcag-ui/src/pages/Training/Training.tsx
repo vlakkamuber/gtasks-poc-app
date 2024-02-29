@@ -25,7 +25,7 @@ import useAnalytics from '../../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, LANGUAGE_CODE_MAPPER } from '../../constants/constant';
 import { snakeCaseToNormal } from '../../utils';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from '../../components/PageHeader/PageHeader';
 const Training: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();

@@ -1,3 +1,4 @@
 export const STYLE_PAGES = {
-  HOME: 'home'
+  HOME: 'home',
+  PAGE_HEADER: 'pageHeader'
 };

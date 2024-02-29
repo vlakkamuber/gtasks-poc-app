@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../../context/UserAuthContext';
 import useAnalytics from '../../hooks/useAnanlytics';
 import { ANALYTICS_PAGE } from '../../constants/constant';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from '../../components/PageHeader/PageHeader';
 
 const ReportBug: React.FC = () => {
   const { t } = useTranslation();

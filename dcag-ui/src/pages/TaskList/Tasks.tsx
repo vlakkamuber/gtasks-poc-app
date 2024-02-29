@@ -30,7 +30,7 @@ import useAnalytics from '../../hooks/useAnanlytics';
 import { useStyletron } from 'baseui';
 import SurveyModal from './SurveyModal';
 import { LabelSmall } from 'baseui/typography';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from '../../components/PageHeader/PageHeader';
 import AvailableTasksSegment from './components/AvailableTasksSegment';
 import PayoutCards from './components/PayoutCards';
 import type { goToPerformTaskFunctionType } from '../../types/tasks-types';
@@ -267,8 +267,8 @@ const Tasks: React.FC = () => {
   return (
     <IonPage>
       <IonContent style={{ '--padding-bottom': '77px' }}>
+        <PageHeader page={ANALYTICS_PAGE.tasks} title={t(`dcag.tasks.page.heading`)} />
         <div style={{ padding: 10 }}>
-          <PageHeader page={ANALYTICS_PAGE.tasks} title={t(`dcag.tasks.page.heading`)} />
           {completedCount > 100 && !taskSummary?.surveyStatus && (
             <SurveyModal isOpen={isOpen} onClose={closeModal} />
           )}

@@ -33,7 +33,7 @@ import useAnalytics from '../../hooks/useAnanlytics';
 import { generateQuestionId } from './constants/questions';
 import Banner from './Banner';
 import { TagFilled } from '@uber/icons';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from '../../components/PageHeader/PageHeader';
 import { HeadingMedium, LabelMedium, ParagraphMedium } from 'baseui/typography';
 import { Modal, ModalBody, ModalButton, ModalFooter, ModalHeader } from 'baseui/modal';
 import CancleTaskIcon from './CancleTaskModal/CancleTaskIcon';

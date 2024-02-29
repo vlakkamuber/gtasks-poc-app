@@ -5,7 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useCategory } from '../../context/TaskCategoryContext';
 
 import { Button, KIND, SHAPE, SIZE } from 'baseui/button';
-import { DisplayXSmall, ParagraphMedium, LabelSmall } from 'baseui/typography';
+import {
+  DisplayXSmall,
+  ParagraphMedium,
+  LabelSmall,
+  HeadingXSmall,
+  ParagraphSmall
+} from 'baseui/typography';
 
 import useAnalytics from '../../hooks/useAnanlytics';
 import { ANALYTICS_PAGE, TASK_CATEGORIES_DATA, TasksOrder } from '../../constants/constant';
@@ -13,7 +19,7 @@ import React, { useEffect, useState } from 'react';
 import apiService from '../../BE-services/apiService';
 import { useUserAuth } from '../../context/UserAuthContext';
 import TaskCard from './TaskCard';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from '../../components/PageHeader/PageHeader';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
 import EarningRingMessage from './EarningRingMessage';
 import { useStyletron } from 'baseui';
@@ -23,6 +29,7 @@ import Page from '../../components/Page';
 import { TaskCategoryType, TaskTypesType } from '../../types/tasks-types';
 import useStyles from '../../hooks/useStyles';
 import { STYLE_PAGES } from '../../hooks/constants';
+import { Block } from 'baseui/block';
 
 const reshuffleTaskCategories = (tasks: TaskCategoryType[], order: TaskTypesType[]) => {
   const tasksByType: { [key: string]: TaskCategoryType[] } = {};
@@ -47,7 +54,7 @@ const Home: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const [_, $theme] = useStyletron();
-  const { taskHubSubTitleStyle } = useStyles(STYLE_PAGES.HOME);
+  const { taskHubSubTitleStyle, chooseTaskTypeLabel } = useStyles(STYLE_PAGES.HOME);
   const { setSelectedCategory, location, setLocation } = useCategory();
   const { user } = useUserAuth();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.home });
@@ -111,14 +118,21 @@ const Home: React.FC = () => {
         <Page>
           <PageHeader
             page={ANALYTICS_PAGE.home}
-            title={t('dcag.home.bottomTabs.home')}
+            title={t(`dcag.home.taskHub.title`)}
             showBackButton={false}
           />
           <Box mb={$theme.sizing.scale600}>
             <EarningRingMessage />
           </Box>
           <FlexBox justifyContent="space-between" alignItems="center">
-            <DisplayXSmall>{t(`dcag.home.taskHub.title`)}</DisplayXSmall>
+            <Block>
+              <HeadingXSmall className={chooseTaskTypeLabel}>
+                {t(`dcag.home.text.choose_task_type`)}
+              </HeadingXSmall>
+              <ParagraphSmall className={taskHubSubTitleStyle}>
+                {t(`dcag.home.text.take_more_task`)}
+              </ParagraphSmall>
+            </Block>
             <Button
               kind={KIND.secondary}
               onClick={() => handleTaskCategory('ALL')}
@@ -127,9 +141,7 @@ const Home: React.FC = () => {
               <LabelSmall>{t(`dcag.home.taskHub.btn.viewAllTasks`)}</LabelSmall>
             </Button>
           </FlexBox>
-          <ParagraphMedium className={taskHubSubTitleStyle}>
-            {t(`dcag.home.taskHub.subtitle`)}
-          </ParagraphMedium>
+
           <FlexGrid flexGridColumnCount={2} flexGridColumnGap="scale500" flexGridRowGap="scale500">
             {taskCategories.map(
               (category) =>

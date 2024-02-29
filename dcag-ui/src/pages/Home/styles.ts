@@ -24,7 +24,10 @@ export const getHomePageStyle = (css: CssType, $theme: Theme) => ({
     marginRight: $theme.sizing.scale100
   }),
   taskHubSubTitleStyle: css({
-    marginTop: $theme.sizing.scale100,
+    marginTop: 0,
     marginBottom: $theme.sizing.scale600
+  }),
+  chooseTaskTypeLabel: css({
+    margin: 0
   })
 });
