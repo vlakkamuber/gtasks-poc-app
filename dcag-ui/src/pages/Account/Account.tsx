@@ -1,32 +1,8 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonIcon,
-  IonBadge
-} from '@ionic/react';
+
 import { useHistory } from 'react-router-dom';
-import {
-  arrowBack,
-  person,
-  wallet,
-  settings,
-  logOut as logOutIcon,
-  star,
-  documentText,
-  card,
-  school,
-  lockClosed,
-  help,
-  warningSharp
-} from 'ionicons/icons';
-import LanguageSwitcher from '../../components/LanguageSwitcher';
+import { ListItem, ListItemLabel } from 'baseui/list';
+import { useStyletron } from 'baseui';
+import Page from '../../components/Page';
 import { useTranslation } from 'react-i18next';
 import { useUserAuth } from '../../context/UserAuthContext';
 import useAnalytics from '../../hooks/useAnanlytics';
@@ -34,6 +10,7 @@ import { ANALYTICS_PAGE } from '../../constants/constant';
 import { useEffect } from 'react';
 import PageHeader from '../../components/PageHeader';
 const Account: React.FC = () => {
+  const [css] = useStyletron();
   const { t } = useTranslation();
   const { logOut: firebaseLogOut } = useUserAuth();
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.account });
@@ -48,84 +25,37 @@ const Account: React.FC = () => {
     window.location.reload(true);
   };
   const history = useHistory();
-  const goBack = () => {
-    logEvent({ actions: 'click_go_back' });
-    history.goBack(); // This function navigates back to the previous page
-  };
   const goToReportBug = () => {
     logEvent({ actions: 'click_report_bug' });
     history.push('/dashboard/issue');
   };
+  const goToTrainingModule = ()=>{
+    logEvent({ actions: 'click_training_modules' })
+    history.push('/dashboard/training');
+  }
   return (
-    <IonPage>
-      <IonContent style={{ padding: '10px' }}>
+      <Page>
         <PageHeader page={ANALYTICS_PAGE.account} title={t(`dcag.account.page.heading`)} />
-        {/* <div className="ion-padding" style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'20px'}}>
-          <div style={{paddingLeft:'20px'}}>
-          <h2>Evan Rob</h2>
-          <IonBadge><IonIcon icon={star} style={{ fontSize: '1.2rem', color: 'white' }} /><span style={{fontSize:'1.2rem'}}>4.5</span></IonBadge>
-          </div>
-
-          <IonIcon icon={person} slot="start" style={{fontSize: '2rem'}}/>
-        </div> */}
-
-        <IonList style={{ padding: '20px' }}>
-          {/* <IonItem button className="no-border">
-            <IonIcon icon={informationCircle} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.myaccount`)}</IonLabel>
-          </IonItem>
-
-          <IonItem button className="no-border">
-          <IonIcon icon={documentText} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.documents`)}</IonLabel>
-          </IonItem>
-
-          <IonItem button className="no-border">
-          <IonIcon icon={card} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.payments`)}</IonLabel>
-          </IonItem>
-          <IonItem button className="no-border">
-            <IonIcon icon={wallet} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.earnings`)}</IonLabel>
-          </IonItem>
-          <IonItem button className="no-border">
-          <IonIcon icon={lockClosed} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.SecurityPrivacy`)}</IonLabel>
-          </IonItem>
-          <IonItem button className="no-border">
-          <IonIcon icon={settings} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.appSettings`)}</IonLabel>
-          </IonItem> */}
-          <IonItem
-            button
-            className="no-border clickable-cursor"
-            routerLink="/dashboard/training"
-            onClick={() => {
-              logEvent({ actions: 'click_training_modules' });
-            }}>
-            <IonIcon icon={school} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.trainingmodule`)}</IonLabel>
-          </IonItem>
-          <IonItem button className="no-border clickable-cursor" disabled={true}>
-            <IonIcon icon={help} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.help`)}</IonLabel>
-          </IonItem>
-          <IonItem onClick={() => goToReportBug()} button className="no-border clickable-cursor">
-            <IonIcon icon={warningSharp} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.reportBug`)}</IonLabel>
-          </IonItem>
-          <IonItem button className="no-border clickable-cursor" onClick={logOut}>
-            <IonIcon icon={logOutIcon} slot="start" />
-            <IonLabel>{t(`dcag.account.page.link.logout`)}</IonLabel>
-          </IonItem>
-          {/* The below commented code should not be deleted.
-          It may be uncommented and used in future when we remove the language switcher from the header */}
-          {/* <IonItem>
-            <IonLabel>App Language</IonLabel> <LanguageSwitcher />
-          </IonItem> */}
-        </IonList>
-      </IonContent>
-    </IonPage>
+        <ul
+          className={css({
+            width: '375px',
+            paddingLeft: 0,
+            paddingRight: 0
+          })}>
+          <ListItem onClick={() => goToTrainingModule()}>
+            <ListItemLabel>{t(`dcag.account.page.link.trainingmodule`)}</ListItemLabel>
+          </ListItem>
+          <ListItem >
+            <ListItemLabel disabled={true}>{t(`dcag.account.page.link.help`)}</ListItemLabel>
+          </ListItem>
+          <ListItem onClick={() => goToReportBug()}>
+            <ListItemLabel>{t(`dcag.account.page.link.reportBug`)}</ListItemLabel>
+          </ListItem>
+          <ListItem onClick={logOut}>
+            <ListItemLabel>{t(`dcag.account.page.link.logout`)}</ListItemLabel>
+          </ListItem>
+        </ul>
+        </Page>
   );
 };
 
