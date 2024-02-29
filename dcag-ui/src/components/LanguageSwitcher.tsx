@@ -71,7 +71,8 @@ const LanguageSwitcher: React.FC<{ page?: string; isOpen?: boolean }> = ({ page,
   };
 
   const customAlertOptions = {
-    header: t('dcag.settings.app_language.label')
+    header: t('dcag.settings.app_language.label'),
+    backdropDismiss: false
   };
 
   return (
@@ -85,10 +86,8 @@ const LanguageSwitcher: React.FC<{ page?: string; isOpen?: boolean }> = ({ page,
         paddingRight: 20,
         borderRadius: 25
       }}
-      onIonDismiss={() => {
-        localStorage.setItem('hasOpenedLanguageSwitcher', 'YES');
-      }}
       value={value}
+      interface='alert'
       placeholder="Select Language"
       compareWith={compareWith}
       onIonChange={handleChange}
