@@ -20,7 +20,11 @@ const Account: React.FC = () => {
     logEvent({ actions: 'click_logout' });
     await firebaseLogOut();
     history.push('/home');
+    const hasOpenedLanguageSwitcher = localStorage.getItem('hasOpenedLanguageSwitcher');
+    const selectedLanguage = localStorage.getItem('selectedLanguage');
     localStorage.clear();
+    localStorage.setItem('hasOpenedLanguageSwitcher', hasOpenedLanguageSwitcher ?? '');
+    localStorage.setItem('selectedLanguage', selectedLanguage ?? '');
     window.location.reload(true);
   };
   const history = useHistory();
