@@ -50,6 +50,9 @@ ion-tab-button {
 .p-16 {
   padding: 16px;
 }
+.p-32 {
+  padding: 32px;
+}
 .px-16 {
   padding-left: 16px;
   padding-right: 16px;
@@ -172,7 +175,6 @@ ion-tab-button {
   margin-top: 23px;
   border-radius: 10px;
   flex-basis: 22%;
-  font-size: 2rem;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -454,7 +456,7 @@ ion-content.custom-scroll {
   right: 0px;
   height: 64px;
   background-color: #fff;
-  border-bottom: 2px solid rgb(226, 226, 226);
+  /* border-bottom: 2px solid rgb(226, 226, 226); */
   z-index: 1000;
 }
 .fixed-header-buffer {

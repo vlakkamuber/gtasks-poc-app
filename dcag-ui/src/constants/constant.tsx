@@ -1,3 +1,5 @@
+import { TaskCategoryType } from '../types/tasks-types';
+
 export const TEXT_TO_AUDIO = 'textToAudio';
 export const AUDIO_TO_AUDIO = 'audioToAudio';
 
@@ -7,9 +9,9 @@ export const LOADER_MESSAGE = {
 
 export const COUNTRY_OPTIONS = [
   { value: 'in', label: 'India', flag: '🇮🇳', phoneCode: '+91' },
-  { value: 'us', label: 'United States', flag: '🇺🇸' },
-  { value: 'ca', label: 'Canada', flag: '🇨🇦' }
-  // Add more countries as needed
+  { value: 'us', label: 'United States', flag: '🇺🇸', phoneCode: '+1' },
+  { value: 'es', label: 'Spain', flag: '🇪🇸', phoneCode: '+34' },
+  { value: 'uk', label: 'United Kingdom', flag: '🇬🇧', phoneCode: '+44' }
 ];
 
 export const TEXT_TO_AUDIO_TASK_TYPE = 'TEXT_TO_AUDIO';
@@ -81,7 +83,7 @@ export const TaskOrderByLocation = {
   ]
 };
 
-export const TASK_RATE = {
+export const TASK_RATE: Record<string, number> = {
   RECORD_AUDIO: 0.8,
   DESCRIBE_IMAGE: 2,
   UPLOAD_IMAGE: 2,
@@ -113,10 +115,10 @@ export const LANGUAGE_CODE_MAPPER: Record<string, string> = {
   en: 'english',
   ts: 'telugu',
   hn: 'hindi',
-  ta: 'tamil',
+  ta: 'tamil'
 };
 
-export const TASK_CATEGORIES_DATA = [
+export const TASK_CATEGORIES_DATA: TaskCategoryType[] = [
   {
     id: 'RECORD_AUDIO',
     imageSrc: 'assets/record_audio.png',
@@ -169,7 +171,7 @@ export const TASK_CATEGORIES_DATA = [
   },
   {
     id: 'IMAGE_LABELLING',
-    imageSrc: 'assets/Image_labelling.png',
+    imageSrc: 'assets/image_labelling.png',
     title: 'Image Labelling',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,
@@ -179,7 +181,7 @@ export const TASK_CATEGORIES_DATA = [
   },
   {
     id: 'MENU_PHOTO_REVIEW',
-    imageSrc: 'assets/men_review.png',
+    imageSrc: 'assets/menu_review.png',
     title: 'Menu Photo Review',
     subtitle: 'View the image  and provide answer about the image.',
     show: true,

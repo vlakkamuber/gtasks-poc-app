@@ -4,7 +4,7 @@ import { ANALYTICS_PAGE, COUNTRY_OPTIONS, LOADER_MESSAGE } from '../../constants
 import { IonContent, IonSelect, IonSelectOption, useIonLoading } from '@ionic/react';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { useHistory } from 'react-router';
-import apiService from '../apiService';
+import apiService from '../../BE-services/apiService';
 import NavigationBar from './NavigationBar';
 import { Toast, KIND } from 'baseui/toast';
 import { HeadingSmall, ParagraphXSmall } from 'baseui/typography';
@@ -29,14 +29,14 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
   const history = useHistory();
   const [error, setError] = useState('');
   const [isNextDisabled, setIsNextDisabled] = useState(false);
-  const [isAccountDisabled,setIsAccountDisabled] = useState(false)
+  const [isAccountDisabled, setIsAccountDisabled] = useState(false);
   const logEvent = useAnalytics({ page: ANALYTICS_PAGE.login });
 
   const sendOtp = async (phone: string) => {
     try {
       logEvent({ actions: 'otp_requested', properties: phone });
       present(LOADER_MESSAGE);
-      const response = await setUpRecaptha('+91' + phone);
+      const response = await setUpRecaptha(selectedCountry.phoneCode + phone);
       logEvent({ actions: 'otp_request_success', properties: phone });
       dismiss();
       setSendOtpResponse(response);
@@ -52,36 +52,42 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
     }
   };
 
+  const handleCountryChange = (e) => {
+    const selectedValue = e.target.value;
+    const selectedCountry = COUNTRY_OPTIONS.find(country => country.value === selectedValue);
+    setSelectedCountry(selectedCountry);
+    localStorage.setItem("countryCode",selectedCountry?.phoneCode)
+  };
+
   const validatePhoneAndSendOtp = async () => {
     setIsValidPhone(true);
-    let phoneRegex = /^[6789]\d{9}$/;
+    const phoneRegex = /^(\+1|91)?[6789]\d{9}$/;
     setError('');
-    if (!phoneRegex.test(phone)) {
-      setIsValidPhone(false);
-      return setError('Please enter a valid phone number!');
-    }
+    // if (!phoneRegex.test(phone)) {
+    //   setIsValidPhone(false);
+    //   return setError('Please enter a valid phone number!');
+    // }
     try {
       present(LOADER_MESSAGE);
       logEvent({ actions: 'phone_number_entered', properties: phone });
-      const res = await apiService.verifyPhoneNumber('+91' + phone);
+      const res = await apiService.verifyPhoneNumber(selectedCountry.phoneCode + phone);
       dismiss();
       if (res.id) {
-        if(res.status==="DISABLED"){
-          setIsAccountDisabled(true)
-        }else{
+        if (res.status === 'DISABLED') {
+          setIsAccountDisabled(true);
+        } else {
           logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: success` });
           setIsNextDisabled(true);
           setIsUserExist(true);
-          if(res.cityName){
-            localStorage.setItem("location",res.cityName)
+          if (res.cityName) {
+            localStorage.setItem('location', res.cityName);
             setLocation(res.cityName);
-          }else{
-            localStorage.setItem("location","OTHER")
-            setLocation("OTHER");
+          } else {
+            localStorage.setItem('location', 'OTHER');
+            setLocation('OTHER');
           }
           sendOtp(phone);
         }
-        
       } else {
         logEvent({ actions: 'phone_number_exist', properties: `phone:${phone},status: failed` });
         // setIsUserExist(false);
@@ -101,43 +107,49 @@ const LoginWithNumberPage = ({ setSendOtpResponse, setIsOtpSent, setIsUserExist 
 
   return (
     <IonContent className="p-16">
-      {isAccountDisabled ? (<><AlertInfoCard message="Thanks for being a part of our test phase for the app. We've finished the test now. Hope you enjoyed using it! We'll let you know when we are ready to start again."/></>) : (<>
-      <HeadingSmall>{t(`dcag.home.otp.mobilenumber.label`)}</HeadingSmall>
-      <div className="phone-select-container">
-        <IonSelect
-          placeholder={selectedCountry.flag}
-          disabled={true}
-          className="country-select-box"
-          value={selectedCountry.flag}
-          style={{ height: '5vh', minHeight: 'unset', paddingeft: '9px' }}>
-          {COUNTRY_OPTIONS.map(function (country) {
-            return (
-              <IonSelectOption key={country.value} value={country.value}>
-                {country.flag}
-              </IonSelectOption>
-            );
-          })}
-        </IonSelect>
-        <input
-          type="text"
-          value={phone}
-          className="phone-input"
-          onChange={(e) => setPhone(e.target.value)}
-        />
-      </div>
-      {isValidPhone ? null : <p style={{ color: 'red' }}>Invalid phone number.</p>}
-      {error && <Toast kind={KIND.negative}>{error}</Toast>}
-      <ParagraphXSmall color="contentTertiary">
-        {t(`dcag.home.otp.mobilenumber.helptext`)}
-      </ParagraphXSmall>
-      <div id="recaptcha-container"></div>
-      <NavigationBar
-        onClickPrevious={goBack}
-        onClickNext={validatePhoneAndSendOtp}
-        isNextDisabled={isNextDisabled || phone.length !== 10}
-      />
-      </>)}
-      
+      {isAccountDisabled ? (
+        <>
+          <AlertInfoCard message="Thanks for being a part of our test phase for the app. We've finished the test now. Hope you enjoyed using it! We'll let you know when we are ready to start again." />
+        </>
+      ) : (
+        <>
+          <HeadingSmall>{t(`dcag.home.otp.mobilenumber.label`)}</HeadingSmall>
+          <div className="phone-select-container">
+            <IonSelect
+              placeholder={selectedCountry.flag}
+              disabled={false}
+              className="country-select-box"
+              value={selectedCountry.value}
+              onIonChange={handleCountryChange}
+              style={{ height: '5vh', minHeight: 'unset', paddingeft: '9px' }}>
+              {COUNTRY_OPTIONS.map(function (country) {
+                return (
+                  <IonSelectOption key={country.value} value={country.value}>
+                    {country.flag} {country.value}
+                  </IonSelectOption>
+                );
+              })}
+            </IonSelect>
+            <input
+              type="text"
+              value={phone}
+              className="phone-input"
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          {/* {isValidPhone ? null : <p style={{ color: 'red' }}>Invalid phone number.</p>} */}
+          {error && <Toast kind={KIND.negative}>{error}</Toast>}
+          <ParagraphXSmall color="contentTertiary">
+            {t(`dcag.home.otp.mobilenumber.helptext`)}
+          </ParagraphXSmall>
+          <div id="recaptcha-container"></div>
+          <NavigationBar
+            onClickPrevious={goBack}
+            onClickNext={validatePhoneAndSendOtp}
+            isNextDisabled={isNextDisabled || phone.length !== 10}
+          />
+        </>
+      )}
     </IonContent>
   );
 };

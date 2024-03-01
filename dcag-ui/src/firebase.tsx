@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+//authDomain: "anz-driver-ops-ritu.firebaseapp.com",
 const firebaseConfig = {
   apiKey: "AIzaSyBGZvZsd1iKguRJYO-0az8dQI0IjyEckRo",
   authDomain: "anz-driver-ops-ritu.firebaseapp.com",

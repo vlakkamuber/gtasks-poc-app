@@ -251,5 +251,7 @@
   "dcag.tasks.cancle_task_modal.message": "If you cancel this you will not be earning",
   "dcag.tasks.cancle_task_modal.message.for_task": "for this task",
   "dcag.tasks.cancle_task_modal.confirm_no": "Continue working on task",
-  "dcag.tasks.cancle_task_modal.confirm_yes": "Cancel this task"
+  "dcag.tasks.cancle_task_modal.confirm_yes": "Cancel this task",
+  "dcag.home.text.choose_task_type": "Choose task type",
+  "dcag.home.text.take_more_task": "Take on more tasks, earn more"
 }
