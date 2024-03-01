@@ -18,12 +18,13 @@ const EarningRingMessage: React.FC<Props> = ({ hide = false }) => {
 
   useEffect(() => {
     async function getTaskSummary() {
-      let userId = JSON.parse(localStorage.getItem('loggedInUser') || '');
-      const res = await apiService.getTaskSummary({ userId, user });
+      const res = await apiService.getTaskSummary({ userId: user.uid, user });
       setTotalEarning(res?.totalEarning);
     }
-    getTaskSummary();
-  }, []);
+    if (user) {
+      getTaskSummary();
+    }
+  }, [user]);
 
   if (hide) return null;
 
