@@ -1,33 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NoTasksAvailable from './NoTasksAvailable';
 import AlertInfoCard from '../../../components/AlertInfoCard';
 import TaskSwitcher from '../TaskSwitcher';
-import TaskListRow from './TaskListRow';
-import TasksSkeleton from '../TasksSkeleton';
-import LoadMoreButton from './LoadMoreButton';
+import TaskList from './TaskList';
 import ImageUploadTasksList from './ImageUploadTasksList';
 import { useTranslation } from 'react-i18next';
-import type { Task, goToPerformTaskFunctionType, loadMoreFunctionType } from '../../../types/tasks-types';
-import { TASK_CATEGORIES_DATA } from '../../../constants/constant';
+import type { Task, goToPerformTaskFunctionType } from '../../../types/tasks-types';
+import {
+  TASK_CATEGORIES_DATA,
+  TaskOrderByLocation,
+  taskCategoriesToShow
+} from '../../../constants/constant';
 
 const AvailableTasksSegment: React.FC<{
-  tasks: Record<string, Task[]>;
-  availableCount: number;
-  location: string;
+  myTasks: Task[];
+  location: keyof typeof TaskOrderByLocation;
   showLoading: boolean;
   completedCount: number;
-  selectedCategory: string;
+  selectedCategory: keyof typeof taskCategoriesToShow | 'ALL';
   todayEarnings: number;
   showPayout: boolean;
+  setIsError: React.Dispatch<React.SetStateAction<boolean>>;
   goToPerformTask: goToPerformTaskFunctionType;
   goToPerformResumeWork: goToPerformTaskFunctionType;
-  loadMore: loadMoreFunctionType;
   goToUploadImageTask: () => void;
-  taskCategoriesToShow: Record<string, boolean>;
   isImageUploadAvailable: boolean;
 }> = ({
-  tasks,
-  availableCount,
   location,
   showLoading,
   completedCount,
@@ -36,12 +34,15 @@ const AvailableTasksSegment: React.FC<{
   showPayout,
   goToPerformTask,
   goToPerformResumeWork,
-  loadMore,
+  setIsError,
+  myTasks,
   goToUploadImageTask,
-  taskCategoriesToShow,
   isImageUploadAvailable
 }) => {
   const { t } = useTranslation();
+  const [availableCountByCategory, setAvailableCountByCategory] = useState<Record<string, number>>(
+    {}
+  );
 
   const selectedCategoryTitle = TASK_CATEGORIES_DATA.find(
     (item) => item.id === selectedCategory
@@ -49,9 +50,15 @@ const AvailableTasksSegment: React.FC<{
 
   const selectedTaskType = TASK_CATEGORIES_DATA.find((item) => item.id === selectedCategory);
 
+  const taskCategories: Array<keyof typeof taskCategoriesToShow> = (
+    selectedCategory !== 'ALL'
+      ? [selectedCategory]
+      : TaskOrderByLocation[location] || TaskOrderByLocation.OTHER
+  ).filter((category: keyof typeof taskCategoriesToShow) => taskCategoriesToShow[category]);
+
   return (
     <React.Fragment>
-      {!availableCount && !showLoading && (
+      {availableCountByCategory[selectedCategory] === 0 && !showLoading && (
         <NoTasksAvailable
           completedCount={completedCount}
           selectedCategoryTitle={selectedCategoryTitle}
@@ -62,9 +69,9 @@ const AvailableTasksSegment: React.FC<{
       ) : (
         <>
           <React.Fragment>
-            {Object.keys(tasks).map((key, index) => {
+            {taskCategories.map((category) => {
               return (
-                <React.Fragment key={index}>
+                <React.Fragment key={category}>
                   <div className="ion-padding">
                     <div
                       style={{
@@ -74,9 +81,9 @@ const AvailableTasksSegment: React.FC<{
                       }}>
                       <h1 style={{ margin: '0', marginBottom: '-4px' }}>
                         {(location === 'HYDERABAD' || location === 'CHENNAI') &&
-                        (key === 'IMAGE_LABELLING' || key === 'MENU_PHOTO_REVIEW')
-                          ? t(`dcag.tasks.${key}.CHENNAI_HYD.title`)
-                          : t(`dcag.tasks.${key}.title`)}
+                        (category === 'IMAGE_LABELLING' || category === 'MENU_PHOTO_REVIEW')
+                          ? t(`dcag.tasks.${category}.CHENNAI_HYD.title`)
+                          : t(`dcag.tasks.${category}.title`)}
                       </h1>
                       {selectedCategory !== 'ALL' && (
                         <span>
@@ -89,7 +96,7 @@ const AvailableTasksSegment: React.FC<{
                     </div>
 
                     <p style={{ margin: '0' }}>
-                      {availableCount === 0 ? (
+                      {availableCountByCategory[selectedCategory] === 0 ? (
                         <small>
                           {completedCount > 0
                             ? t('dcag.tasks.text.all_task_completed')
@@ -97,28 +104,20 @@ const AvailableTasksSegment: React.FC<{
                           {selectedTaskType?.title}. {t('dcag.tasks.text.continue_other_task')}
                         </small>
                       ) : (
-                        <small>{t(`dcag.tasks.${key}.taskDesc`)}</small>
+                        <small>{t(`dcag.tasks.${category}.taskDesc`)}</small>
                       )}
                     </p>
                   </div>
 
-                  {showLoading ? (
-                    <TasksSkeleton />
-                  ) : (
-                    tasks[key].map((task: Task, index: number) => {
-                      return (
-                        <TaskListRow
-                          key={index}
-                          task={task}
-                          showPayout={showPayout}
-                          taskKey={key}
-                          goToPerformTask={goToPerformTask}
-                          goToPerformResumeWork={goToPerformResumeWork}
-                        />
-                      );
-                    })
-                  )}
-                  <LoadMoreButton loadMore={loadMore} taskKey={key} />
+                  <TaskList
+                    setIsError={setIsError}
+                    goToPerformTask={goToPerformTask}
+                    goToPerformResumeWork={goToPerformResumeWork}
+                    myTasks={myTasks}
+                    showPayout={showPayout}
+                    setAvailableCount={setAvailableCountByCategory}
+                    category={category}
+                  />
                 </React.Fragment>
               );
             })}

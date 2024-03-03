@@ -1,4 +1,5 @@
 // apiService.ts
+import type { Task } from '../types/tasks-types';
 
 const API_BASE_URL = 'https://dcag-gateway-cpypkzbg.an.gateway.dev';
 
@@ -28,7 +29,15 @@ const apiService = {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
     return response.json();
   },
-  async getMyTasksList({ userId, user, status }: { userId: string; user: any; status: any }) {
+  async getMyTasksList({
+    userId,
+    user,
+    status
+  }: {
+    userId: string;
+    user: any;
+    status: any;
+  }): Promise<Task[]> {
     const endpoint = `users/${userId}/tasks?status=${status}`;
     const headers = getHeaders({ user });
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, { headers });
@@ -42,7 +51,7 @@ const apiService = {
     userId: string;
     user: any;
     selectedCategory: any;
-  }) {
+  }): Promise<Task[]> {
     const endpoint =
       selectedCategory === 'ALL'
         ? `tasks?available=true&userId=${userId}`

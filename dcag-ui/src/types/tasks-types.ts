@@ -1,13 +1,12 @@
 export interface Task {
   id: string;
   taskId: string;
+  taskType: string;
   status: string;
   userId: string;
 }
 
 export type goToPerformTaskFunctionType = (e: any, task: any) => void;
-
-export type loadMoreFunctionType = (key: any) => Promise<void>;
 
 export type TaskCategoryType = {
   id: string;

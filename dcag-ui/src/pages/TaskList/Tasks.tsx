@@ -1,58 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonSegment,
-  IonSegmentButton,
-  IonBadge
-} from '@ionic/react';
+import { IonContent, IonPage, IonSegment, IonSegmentButton, IonBadge } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import MyTasks from './MyTasks';
 import { useTranslation } from 'react-i18next';
 import apiService from '../../BE-services/apiService';
-import { filterTaskWithType, filterTaskWithSelectedCategory, orderTasksByType } from '../../utils';
-import {
-  FILTER_OUT_TEXT_TO_AUDIO_TASK,
-  TEXT_TO_AUDIO_TASK_TYPE,
-  taskTypeMapperRoute,
-  taskCategoriesToShow,
-  ANALYTICS_PAGE,
-  TaskOrderByLocation
-} from '../../constants/constant';
+import { taskTypeMapperRoute, ANALYTICS_PAGE } from '../../constants/constant';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { useCategory } from '../../context/TaskCategoryContext';
 import { showPayout } from '../../constants/flags';
-import ErrorView from '../../components/ErrorView';
+import EmptyPageWithLoader from './components/EmptyPageWithLoader';
 import useAnalytics from '../../hooks/useAnanlytics';
-import { useStyletron } from 'baseui';
 import SurveyModal from './SurveyModal';
 import { LabelSmall } from 'baseui/typography';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import AvailableTasksSegment from './components/AvailableTasksSegment';
 import PayoutCards from './components/PayoutCards';
-import type { goToPerformTaskFunctionType } from '../../types/tasks-types';
+import type { Task, goToPerformTaskFunctionType } from '../../types/tasks-types';
 
 const Tasks: React.FC = () => {
   const { t } = useTranslation();
   const [selectedSegment, setSelectedSegment] = useState('available_task');
-  const [tasks, setTasks] = useState({});
   const [isError, setIsError] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
   const [todayCount, setTodayCount] = useState(0);
-  const [availableCount, setAvailableCount] = useState(0);
-  const [myTasksCount, setMyTasksCount] = useState(0);
   const [totalEarned, setTotalEarned] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
   const history = useHistory();
   const { user } = useUserAuth();
   const { selectedCategory, location } = useCategory();
-  const [isImageUploadAvailable, setIsImageUploadAvailable] = useState(false);
-  const [finalTasks, setFinalTasks] = useState([]);
+  const [isImageUploadAvailable, setIsImageUploadAvailable] = useState<boolean>(false);
+  const [myTasks, setMyTasks] = useState<Task[]>([]);
   const [todayEarnings, setTodayEarnings] = useState(0);
-  const [css, theme] = useStyletron();
   const [isOpen, setIsOpen] = useState(true);
   const [taskSummary, setTaskSummary] = useState(null);
 
@@ -82,47 +60,13 @@ const Tasks: React.FC = () => {
       setIsError(false);
       const userId = JSON.parse(localStorage.getItem('loggedInUser'));
       const myTasks = await apiService.getMyTasksList({ userId, user, status: 'IN_PROGRESS' });
-      const myCompletedTasks = await apiService.getMyTasksList({
-        userId,
-        user,
-        status: 'COMPLETED'
-      });
-      setMyTasksCount(myCompletedTasks.length);
-
-      let availableTasks = [];
-
-      if (selectedCategory === 'ALL') {
-        // Fetch tasks for each category concurrently
-        const tasksPromises = Object.entries(taskCategoriesToShow)
-          .filter(([category, value]) => value)
-          .map(([category]) =>
-            apiService.getAvailableTasks({ userId, user, selectedCategory: category })
-          );
-        const categoryTasks = await Promise.all(tasksPromises);
-        availableTasks = [...myTasks, ...categoryTasks.flat()];
-      } else {
-        availableTasks = await apiService.getAvailableTasks({ userId, user, selectedCategory });
-      }
+      setMyTasks(myTasks);
 
       setShowLoading(false);
       setIsError(false);
 
-      const filteredMyTasks = filterTaskWithSelectedCategory(myTasks, selectedCategory);
       const isImageUploadAvailable = myTasks.some((task) => task.taskType === 'UPLOAD_IMAGE');
       setIsImageUploadAvailable(isImageUploadAvailable);
-
-      const finalTaskList = [...filteredMyTasks, ...availableTasks];
-      setFinalTasks(finalTaskList);
-      // Temporary - this filter should be removed in the future;
-      const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-        ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
-        : finalTaskList;
-      const orderedTasks = orderTasksByType(
-        result,
-        TaskOrderByLocation[location] || TaskOrderByLocation['OTHER']
-      );
-      setAvailableCount(orderedTasks.length);
-      setTasks(groupBy(orderedTasks, 'taskType'));
     } catch (error) {
       setShowLoading(false);
       setIsError(true);
@@ -158,18 +102,10 @@ const Tasks: React.FC = () => {
   useEffect(() => {
     setShowLoading(true);
     getTaskSummary();
-  }, []);
-  useEffect(() => {
-    setShowLoading(true);
-    getTaskSummary();
   }, [selectedCategory]);
 
-  const goBack = () => {
-    history.goBack(); // This function navigates back to the previous page
-  };
-
-  const assignTask = async (task) => {
-    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+  const assignTask = async (task: Task) => {
+    const userId = JSON.parse(localStorage.getItem('loggedInUser'));
     apiService
       .assignTask({ userId, taskId: task.id, user })
       .then((result) => {
@@ -198,11 +134,11 @@ const Tasks: React.FC = () => {
   };
 
   const goToUploadImageTask = async () => {
-    let userId = JSON.parse(localStorage.getItem('loggedInUser'));
+    const userId = JSON.parse(localStorage.getItem('loggedInUser'));
     try {
-      let result = await apiService.createImageUploadTask({ user });
+      const result = await apiService.createImageUploadTask({ user });
       console.log(result);
-      let res = await apiService.assignTask({ userId, taskId: result.id, user });
+      const res = await apiService.assignTask({ userId, taskId: result.id, user });
       console.log(res);
       history.push('/dashboard/tasks/image-upload-task/' + res.taskId);
     } catch (err) {
@@ -210,59 +146,13 @@ const Tasks: React.FC = () => {
     }
   };
 
-  const findUniqueTasks = (finalTasks: any, tasks: any) => {
-    // Use an object to keep track of seen IDs
-    const uniqueTaskIds = {};
-
-    // Combine the arrays while ensuring unique tasks based on ID
-    const finalTaskList = [...finalTasks, ...tasks].reduce((accumulator, task) => {
-      if (!uniqueTaskIds[task.id]) {
-        uniqueTaskIds[task.id] = true;
-        accumulator.push(task);
-      }
-      return accumulator;
-    }, []);
-    return finalTaskList;
-  };
-
   const handleTabClick = (e) => {
     logEvent({ actions: 'click_tab', properties: e.detail.value });
     setSelectedSegment(e.detail.value);
   };
 
-  const loadMore = async (key) => {
-    logEvent({ actions: 'click_load_more' });
-    setShowLoading(true);
-    const userId = JSON.parse(localStorage.getItem('loggedInUser'));
-    let tasks = await apiService.getAvailableTasks({ userId, user, selectedCategory: key });
-    const finalTaskList = findUniqueTasks(finalTasks, tasks);
-    setFinalTasks(finalTaskList);
-    // Temporary - this filter should be removed in the future;
-    const result = FILTER_OUT_TEXT_TO_AUDIO_TASK
-      ? filterTaskWithType(finalTaskList, TEXT_TO_AUDIO_TASK_TYPE)
-      : finalTaskList;
-    const orderedTasks = orderTasksByType(
-      result,
-      TaskOrderByLocation[location] || TaskOrderByLocation['OTHER']
-    );
-
-    setAvailableCount(orderedTasks.length);
-    setTasks(groupBy(orderedTasks, 'taskType'));
-    setShowLoading(false);
-  };
   if (isError) {
-    return (
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>{t(`dcag.tasks.page.heading`)}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding-start" style={{ '--padding-bottom': '77px' }}>
-          <ErrorView />
-        </IonContent>
-      </IonPage>
-    );
+    return <EmptyPageWithLoader />;
   }
   return (
     <IonPage>
@@ -320,9 +210,9 @@ const Tasks: React.FC = () => {
 
           {selectedSegment === 'available_task' && (
             <AvailableTasksSegment
-              tasks={tasks}
+              myTasks={myTasks}
               location={location}
-              availableCount={availableCount}
+              setIsError={setIsError}
               showLoading={showLoading}
               completedCount={completedCount}
               selectedCategory={selectedCategory}
@@ -330,9 +220,7 @@ const Tasks: React.FC = () => {
               showPayout={showPayout}
               goToPerformTask={goToPerformTask}
               goToPerformResumeWork={goToPerformResumeWork}
-              loadMore={loadMore}
               goToUploadImageTask={goToUploadImageTask}
-              taskCategoriesToShow={taskCategoriesToShow}
               isImageUploadAvailable={isImageUploadAvailable}
             />
           )}

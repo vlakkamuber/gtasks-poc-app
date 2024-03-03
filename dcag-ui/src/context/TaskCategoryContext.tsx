@@ -1,4 +1,12 @@
-import { createContext, useContext, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type Dispatch,
+  type SetStateAction
+} from 'react';
+import type { TaskOrderByLocation } from '../constants/constant';
 
 const TaskCategoryContext = createContext<useCategoryType | null>(null);
 
@@ -30,12 +38,12 @@ export const CategoryProvider = ({ children }) => {
   return <TaskCategoryContext.Provider value={value}>{children}</TaskCategoryContext.Provider>;
 };
 
-type useCategoryType = {
+interface useCategoryType {
   selectedCategory: string;
   setSelectedCategory: Dispatch<SetStateAction<string>>;
-  location: string;
+  location: keyof typeof TaskOrderByLocation;
   setLocation: Dispatch<SetStateAction<string>>;
-};
+}
 
 export const useCategory = () => {
   const context = useContext(TaskCategoryContext);
