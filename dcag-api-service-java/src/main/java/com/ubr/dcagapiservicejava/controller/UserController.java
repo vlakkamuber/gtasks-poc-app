@@ -124,7 +124,7 @@ public class UserController {
 
     @CrossOrigin
     @GetMapping(value = "/{userId}/earnings/{taskType}", produces = "application/json")
-    ResponseEntity<UserEarningDetailsResponse> getUserEarnings(@PathVariable String userId,
+    ResponseEntity<UserEarningDetailsResponse> getUserEarningDetails(@PathVariable String userId,
                                                                @PathVariable TaskType taskType,
                                                                @RequestParam Long startDate,
                                                                @RequestParam Long completionDate) {

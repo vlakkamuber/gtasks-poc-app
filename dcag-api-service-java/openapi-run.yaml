@@ -654,7 +654,7 @@ paths:
       security:
         - firebase: [ ]
       summary: "Fetch UserEarnings Details by TaskType"
-      operationId: "getUserEarnings"
+      operationId: "getUserEarningDetails"
       parameters:
         - name: userId
           in: path
@@ -682,8 +682,8 @@ paths:
           schema:
             type: object
     options:
-      description: "Cors for getUserEarnings"
-      operationId: "getUserEarnings CORS"
+      description: "Cors for getUserEarningDetails"
+      operationId: "getUserEarningDetails CORS"
       parameters:
         - name: userId
           in: path
