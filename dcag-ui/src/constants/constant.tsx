@@ -56,7 +56,7 @@ export const TasksOrder = [
   'IMAGE_LABELLING',
   'MENU_PHOTO_REVIEW'
 ];
-export const TaskOrderByLocation = {
+export const TaskOrderByLocation: Record<string, Array<keyof typeof taskCategoriesToShow>> = {
   DELHI: [
     'IMAGE_LABELLING',
     'MENU_PHOTO_REVIEW',

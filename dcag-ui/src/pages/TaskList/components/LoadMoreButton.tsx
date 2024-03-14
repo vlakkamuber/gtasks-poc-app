@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import type { loadMoreFunctionType } from '../../../types/tasks-types';
 
-const LoadMoreButton: React.FC<{ loadMore: loadMoreFunctionType; taskKey: string }> = ({
+const LoadMoreButton: React.FC<{ loadMore: (key: any) => Promise<void>; taskKey: string }> = ({
   loadMore,
   taskKey: key
 }) => {

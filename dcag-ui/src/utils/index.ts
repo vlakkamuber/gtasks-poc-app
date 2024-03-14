@@ -1,4 +1,5 @@
 import { COMPLETED_TASK_STATUS, IN_PROGRESS_TASK_STATUS } from '../constants/constant';
+import type { Task } from '../types/tasks-types';
 
 export function mapTeluguDigitsToNumeric(inputText) {
   const teluguDigitsMap = {
@@ -29,11 +30,11 @@ export function formatDate(timestamp) {
   return formattedDate;
 }
 
-export const filterTaskWithType = (tasks: { taskType: string }[], taskType: string) => {
+export const filterTaskWithType = (tasks: Task[], taskType: string): Task[] => {
   return tasks.filter((task) => task.taskType !== taskType);
 };
 
-export const filterTaskWithSelectedCategory = (tasks: { taskType: string }[], taskType: string) => {
+export const filterTaskWithSelectedCategory = (tasks: Task[], taskType: string): Task[] => {
   return tasks.filter((task) => task.taskType === taskType);
 };
 

@@ -9,11 +9,11 @@ import type { Task } from '../../../types/tasks-types';
 
 const TaskListRow: React.FC<{
   task: Task;
-  taskKey: string;
+  category: string;
   showPayout: boolean;
   goToPerformTask: (arg1: any, arg2: Task) => void;
   goToPerformResumeWork: (arg1: any, arg2: Task) => void;
-}> = ({ task, taskKey: key, showPayout, goToPerformTask, goToPerformResumeWork }) => {
+}> = ({ task, category, showPayout, goToPerformTask, goToPerformResumeWork }) => {
   const { t } = useTranslation();
   const taskLabel = capitalizeFirstLetter(t('dcag.home.text.task'));
 
@@ -33,7 +33,7 @@ const TaskListRow: React.FC<{
             {showPayout && (
               <p>
                 <TagFilled color={'#0E8345'} style={{ marginRight: 4 }} /> ₹
-                {to2DecimalPlaces(TASK_RATE[key])}
+                {to2DecimalPlaces(TASK_RATE[category])}
               </p>
             )}
           </IonLabel>
