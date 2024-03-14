@@ -73,8 +73,8 @@ paths:
           schema:
             type: array
     post:
-#      security:
-#        - firebase: [ ]
+      #      security:
+      #        - firebase: [ ]
       summary: "Create new user"
       operationId: "createUser"
       responses:
@@ -127,8 +127,8 @@ paths:
             type: object
   /users/byPhoneNumber/{phoneNumber}:
     get:
-#      security:
-#        - firebase: [ ]
+      #      security:
+      #        - firebase: [ ]
       summary: "Get user by phone number"
       operationId: "getUserByPhoneNumber"
       parameters:
@@ -593,6 +593,118 @@ paths:
           required: true
           type: string
           description: "ID of the user"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
+  /users/{userId}/earnings:
+    get:
+      security:
+        - firebase: [ ]
+      summary: "Fetch UserEarnings"
+      operationId: "getUserEarnings"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: startDate
+          in: query
+          required: true
+          type: string
+          description: "Start Date of the completed tasks"
+        - name: completionDate
+          in: query
+          required: true
+          type: string
+          description: "Completion Date of the completed tasks"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+    options:
+      description: "Cors for getUserEarnings"
+      operationId: "getUserEarnings CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: startDate
+          in: query
+          required: true
+          type: string
+          description: "Start Date of the completed tasks"
+        - name: completionDate
+          in: query
+          required: true
+          type: string
+          description: "Completion Date of the completed tasks"
+      responses:
+        200:
+          description: "Allow"
+        401:
+          description: "Cors not allowed"
+  /users/{userId}/earnings/{taskType}:
+    get:
+      security:
+        - firebase: [ ]
+      summary: "Fetch UserEarnings Details by TaskType"
+      operationId: "getUserEarnings"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskType
+          in: path
+          required: true
+          type: string
+          description: "Task type of the user"
+        - name: startDate
+          in: query
+          required: true
+          type: string
+          description: "Start Date of the completed tasks"
+        - name: completionDate
+          in: query
+          required: true
+          type: string
+          description: "Completion Date of the completed tasks"
+      responses:
+        '200':
+          description: "A successful response"
+          schema:
+            type: object
+    options:
+      description: "Cors for getUserEarnings"
+      operationId: "getUserEarnings CORS"
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+          description: "ID of the user"
+        - name: taskType
+          in: path
+          required: true
+          type: string
+          description: "Task type of the user"
+        - name: startDate
+          in: query
+          required: true
+          type: string
+          description: "Start Date of the completed tasks"
+        - name: completionDate
+          in: query
+          required: true
+          type: string
+          description: "Completion Date of the completed tasks"
       responses:
         200:
           description: "Allow"

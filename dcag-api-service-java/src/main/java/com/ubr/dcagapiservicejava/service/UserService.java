@@ -3,21 +3,19 @@ package com.ubr.dcagapiservicejava.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ubr.dcagapiservicejava.domain.User;
-import com.ubr.dcagapiservicejava.domain.UserEvents;
-import com.ubr.dcagapiservicejava.domain.UserIssue;
-import com.ubr.dcagapiservicejava.domain.UserSurvey;
+import com.ubr.dcagapiservicejava.domain.*;
+import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.dto.*;
+import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.error.UserNotFoundException;
-import com.ubr.dcagapiservicejava.repository.UserEventsRepository;
-import com.ubr.dcagapiservicejava.repository.UserIssueRepository;
-import com.ubr.dcagapiservicejava.repository.UserRepository;
-import com.ubr.dcagapiservicejava.repository.UserSurveyRepository;
+import com.ubr.dcagapiservicejava.repository.*;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -39,6 +37,9 @@ public class UserService {
 
     @Autowired
     UserSurveyRepository userSurveyRepository;
+
+    @Autowired
+    UserTasksRepository userTasksRepository;
 
     final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -163,5 +164,66 @@ public class UserService {
             throw new UserNotFoundException("User not found: " + userId);
         }
 
+    }
+
+    public UserEarningResponse getUserEarnings(String userId, Long startDate, Long completionDate) {
+
+        List<UserTask> userTasks = userTasksRepository.getEarnings(userId, DcagUtils.convertEpochToLocalDateTime(startDate), DcagUtils.convertEpochToLocalDateTime(completionDate));
+        if (CollectionUtils.isEmpty(userTasks)) {
+            throw new TaskNotFoundException("User Task Not found for this date range: " + userId);
+        }
+        return UserEarningResponse.builder().
+                dateRange(DateRangeResponse.builder().startDate(startDate).endDate(completionDate).build())
+                .totals(getTotalEarningResponse(userTasks))
+                .taskTypes(EarningTaskTypesResponse.builder()
+                        .imageLabelling(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.IMAGE_LABELLING)).collect(toList())))
+                        .recordAudio(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.RECORD_AUDIO)).collect(toList())))
+                        .menuReviewResponse(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.MENU_PHOTO_REVIEW)).collect(toList())))
+                        .localizationQuality(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.LOCALIZATION_QUALITY)).collect(toList())))
+                        .receiptDigitization(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.RECEIPT_DIGITIZATION)).collect(toList())))
+                        .build()
+                )
+                .build();
+
+    }
+
+    private TotalEarningsResponse getTotalEarningResponse(List<UserTask> userTasks) {
+        return TotalEarningsResponse.builder().currency("USD")
+                .tasksCompleted((long) userTasks.size()).
+                durationInSeconds(userTasks.stream().mapToLong(e -> DcagUtils.convertLocalDateTimeToEpoch(e.completionTime()) - DcagUtils.convertLocalDateTimeToEpoch(e.startTime())).sum()).
+                amount(userTasks.stream().mapToDouble(e -> e.task().price()).sum()).build();
+    }
+
+    public UserEarningDetailsResponse getUserEarningsDetails(String userId, TaskType taskType, Long startDate, Long completionDate) {
+
+        List<UserTask> userTasks = userTasksRepository.getEarnings(userId, DcagUtils.convertEpochToLocalDateTime(startDate), DcagUtils.convertEpochToLocalDateTime(completionDate));
+        if (CollectionUtils.isEmpty(userTasks)) {
+            throw new TaskNotFoundException("User Task Not found for this date range: " + userId);
+        }
+
+        userTasks = userTasks.stream().filter(userTask -> userTask.task().taskType().equals(taskType)).toList();
+
+        return UserEarningDetailsResponse.builder()
+                .taskType(taskType)
+                .dateRange(DateRangeResponse.builder()
+                        .startDate(startDate)
+                        .endDate(completionDate).build())
+                .tasks(getTasks(userTasks))
+                .build();
+
+    }
+
+    private List<UserEarningTaskDetailsResponse> getTasks(List<UserTask> userTasks) {
+
+        List<UserEarningTaskDetailsResponse> userEarningTaskDetailsResponseList = new ArrayList<>();
+
+        userTasks.forEach(e -> userEarningTaskDetailsResponseList.add(UserEarningTaskDetailsResponse.builder()
+                .taskId(e.task().id())
+                .amount(e.task().price())
+                .currency(e.task().currency())
+                .completedOn(DcagUtils.convertLocalDateTimeToEpoch(e.completionTime()))
+                .build()));
+
+        return userEarningTaskDetailsResponseList;
     }
 }
