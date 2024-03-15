@@ -26,7 +26,7 @@ public interface UserTasksRepository extends JpaRepository<UserTask, Long> {
     @Query("Select T from UserTask T where T.task.id = :taskId and T.user.userType = 'DRIVER'")
     List<UserTask> findByTaskIdAndUserType(Long taskId);
 
-    @Query("Select T from UserTask T where T.user.id = :userId and T.user.userType = 'DRIVER' and T.status = 'COMPLETED' and T.completionTime >=:startDate and T.completionTime <= :endDate")
+    @Query("Select T from UserTask T where T.user.id = :userId and T.status = 'COMPLETED' and T.completionTime >=:startDate and T.completionTime <= :endDate")
     List<UserTask> getEarnings(String userId, LocalDateTime startDate, LocalDateTime endDate);
 }
 
