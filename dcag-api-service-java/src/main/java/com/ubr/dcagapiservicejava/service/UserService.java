@@ -188,7 +188,7 @@ public class UserService {
     }
 
     private TotalEarningsResponse getTotalEarningResponse(List<UserTask> userTasks) {
-        return TotalEarningsResponse.builder().currency("USD")
+        return TotalEarningsResponse.builder().currency("INR")
                 .tasksCompleted((long) userTasks.size()).
                 durationInSeconds(userTasks.stream().mapToLong(e -> DcagUtils.convertLocalDateTimeToEpoch(e.completionTime()) - DcagUtils.convertLocalDateTimeToEpoch(e.startTime())).sum()).
                 amount(userTasks.stream().mapToDouble(e -> e.task().price()).sum()).build();
