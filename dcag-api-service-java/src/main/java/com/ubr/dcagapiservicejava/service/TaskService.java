@@ -46,7 +46,7 @@ public class TaskService {
     @Autowired
     private GCPUtils gcpUtils;
     @Value("${task-available-limit}")
-    Integer limit;
+    Integer availableLimit;
 
 
     @PostConstruct
@@ -174,7 +174,7 @@ public class TaskService {
                         });
     }
 
-    public List<TaskResponse> findAvailableTasks(Boolean available, String userId, TaskType type) {
+    public List<TaskResponse> findAvailableTasks(Boolean available, String userId, TaskType type, Integer limit) {
 
         Optional<User> userOptional = userRepository.findById(userId);
 
@@ -194,7 +194,7 @@ public class TaskService {
         if (type != TaskType.LOCALIZATION_QUALITY) {
             languages = null;
         }
-        return taskRepository.findAvailableTasks(available, userId, type, limit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream()
+        return taskRepository.findAvailableTasks(available, userId, type, limit != null ? limit : availableLimit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
                 .collect(toList());
