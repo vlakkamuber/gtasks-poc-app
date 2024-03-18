@@ -404,6 +404,11 @@ paths:
           required: false
           type: string
           description: "taskType such as TEXT_TO_AUDIO"
+        - name: limit
+          in: query
+          required: false
+          type: string
+          description: "Tasks limit"
       responses:
         '200':
           description: A successful response
