@@ -63,55 +63,24 @@ public class TaskService {
     GeometryFactory factory = new GeometryFactory();
 
     public List<TaskResponse> findAll() {
-        return taskRepository.findAll().stream()
-                .map(this::taskToTaskResponse)
-                .collect(toList());
+        return taskRepository.findAll().stream().map(this::taskToTaskResponse).collect(toList());
     }
 
 
     public TaskResponse create(TaskDTO taskDTO) {
-        Task task = new Task()
-                .name(taskDTO.name())
-                .taskType(taskDTO.taskType())
-                .city(taskDTO.city())
-                .language(taskDTO.language())
-                .taskCategory(taskDTO.taskCategory())
-                .input(taskDTO.input())
-                .status(TaskStatus.NEW)
-                .currency(taskDTO.currency())
-                .price(taskDTO.price())
-                .maxNoOfUsers(taskDTO.taskType() != null && taskDTO.taskType().equals(TaskType.UPLOAD_IMAGE) ? 1L : taskDTO.maxNoOfUsers())
-                .createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
-                .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
-                .dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
+        Task task = new Task().name(taskDTO.name()).taskType(taskDTO.taskType()).city(taskDTO.city()).language(taskDTO.language()).taskCategory(taskDTO.taskCategory()).input(taskDTO.input()).status(TaskStatus.NEW).currency(taskDTO.currency()).price(taskDTO.price()).maxNoOfUsers(taskDTO.taskType() != null && taskDTO.taskType().equals(TaskType.UPLOAD_IMAGE) ? 1L : taskDTO.maxNoOfUsers()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())).dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
         log.info("Task is created - {}", taskDTO.name());
         return taskToTaskResponse(savedTask);
     }
 
     public TaskResponse findById(Long taskId) {
-        return taskRepository
-                .findById(taskId)
-                .map(this::taskToTaskResponse)
-                .orElseThrow(DcagUtils.taskNotFound(taskId));
+        return taskRepository.findById(taskId).map(this::taskToTaskResponse).orElseThrow(DcagUtils.taskNotFound(taskId));
     }
 
     private TaskResponse taskToTaskResponse(Task task) {
 
-        TaskResponse.TaskResponseBuilder taskResponseBuilder = TaskResponse.builder()
-                .id(task.id())
-                .name(task.name())
-                .taskType(task.taskType())
-                .city(task.city())
-                .language(task.language())
-                .taskCategory(task.taskCategory())
-                .input(task.input())
-                .status(task.status())
-                .maxNoOfUsers(task.maxNoOfUsers())
-                .currency(task.currency())
-                .price(task.price())
-                .createDateTime(task.createTime())
-                .dueDateTime(task.dueDate());
+        TaskResponse.TaskResponseBuilder taskResponseBuilder = TaskResponse.builder().id(task.id()).name(task.name()).taskType(task.taskType()).city(task.city()).language(task.language()).taskCategory(task.taskCategory()).input(task.input()).status(task.status()).maxNoOfUsers(task.maxNoOfUsers()).currency(task.currency()).price(task.price()).createDateTime(task.createTime()).dueDateTime(task.dueDate());
 
         /*String objectName = task.taskType().equals(TaskType.RECORD_AUDIO) ? task.input() : task.input() + ".mp3";
 
@@ -131,50 +100,22 @@ public class TaskService {
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
 
         log.info("Update Task start - {}", taskDTO.name());
-        Task task = new Task()
-                .name(taskDTO.name())
-                .taskType(taskDTO.taskType())
-                .city(taskDTO.city())
-                .language(taskDTO.language())
-                .input(taskDTO.input())
-                .status(taskDTO.status())
-                .maxNoOfUsers(taskDTO.maxNoOfUsers())
-                .currency(taskDTO.currency())
-                .price(taskDTO.price())
-                .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+        Task task = new Task().name(taskDTO.name()).taskType(taskDTO.taskType()).city(taskDTO.city()).language(taskDTO.language()).input(taskDTO.input()).status(taskDTO.status()).maxNoOfUsers(taskDTO.maxNoOfUsers()).currency(taskDTO.currency()).price(taskDTO.price()).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
 //                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
 
-        return taskRepository
-                .findById(taskId)
-                .map(existingUser -> taskRepository.save(task.createTime(existingUser.createTime())
-                        .dueDate(existingUser.dueDate())
-                        .city(existingUser.city())))
-                .map(savedTask -> TaskResponse.builder()
-                        .id(savedTask.id())
-                        .name(savedTask.name())
-                        .taskType(savedTask.taskType())
-                        .taskCategory(savedTask.taskCategory())
-                        .input(savedTask.input())
-                        .status(savedTask.status())
-                        .maxNoOfUsers(savedTask.maxNoOfUsers())
-                        .currency(savedTask.currency())
-                        .price(savedTask.price())
-                        .build())
-                .orElseThrow(DcagUtils.taskNotFound(taskId));
+        return taskRepository.findById(taskId).map(existingUser -> taskRepository.save(task.createTime(existingUser.createTime()).dueDate(existingUser.dueDate()).city(existingUser.city()))).map(savedTask -> TaskResponse.builder().id(savedTask.id()).name(savedTask.name()).taskType(savedTask.taskType()).taskCategory(savedTask.taskCategory()).input(savedTask.input()).status(savedTask.status()).maxNoOfUsers(savedTask.maxNoOfUsers()).currency(savedTask.currency()).price(savedTask.price()).build()).orElseThrow(DcagUtils.taskNotFound(taskId));
     }
 
     public void delete(Long taskId) {
 
         log.info("Delete Task start - {}", taskId);
 
-        taskRepository.findById(taskId)
-                .ifPresentOrElse(taskRepository::delete,
-                        () -> {
-                            throw new TaskNotFoundException("User not found: " + taskId);
-                        });
+        taskRepository.findById(taskId).ifPresentOrElse(taskRepository::delete, () -> {
+            throw new TaskNotFoundException("User not found: " + taskId);
+        });
     }
 
-    public List<TaskResponse> findAvailableTasks(Boolean available, String userId, TaskType type, Integer limit) {
+    public List<TaskResponse> findAvailableTasks(Boolean available, Boolean isTrial, String userId, TaskType type, Integer limit) {
 
         Optional<User> userOptional = userRepository.findById(userId);
 
@@ -194,10 +135,13 @@ public class TaskService {
         if (type != TaskType.LOCALIZATION_QUALITY) {
             languages = null;
         }
-        return taskRepository.findAvailableTasks(available, userId, type, limit != null ? limit : availableLimit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream()
-                .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
-                .map(this::taskToTaskResponse)
-                .collect(toList());
+        return taskRepository.findAvailableTasks(available, isTrial, userId, type, limit != null ? limit : availableLimit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream().filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE).map(this::taskToTaskResponse).collect(toList());
+    }
+
+    public List<TaskResponse> findAvailableTrialTasks(Boolean available, Boolean isTrial, String userId, TaskType taskType) {
+
+        return taskRepository.findAvailableTrialTasks(available, isTrial, userId, taskType).stream().map(this::taskToTaskResponse).collect(toList());
+
     }
 
 

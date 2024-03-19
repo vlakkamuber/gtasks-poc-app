@@ -26,9 +26,16 @@ public class TaskController {
 //    }
 
     @GetMapping(produces = "application/json")
-    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false, defaultValue = "true") Boolean available, @RequestParam(required = false, defaultValue = "RECORD_AUDIO") TaskType taskType, @RequestParam(required = false, defaultValue = "test") String userId,
+    ResponseEntity<List<TaskResponse>> findAvailableTasks(@RequestParam(required = false, defaultValue = "true") Boolean available,
+                                                          @RequestParam(required = false, defaultValue = "false") Boolean trial,
+                                                          @RequestParam(required = false, defaultValue = "RECORD_AUDIO") TaskType taskType,
+                                                          @RequestParam(required = false, defaultValue = "test") String userId,
                                                           @RequestParam(required = false) Integer limit) {
-        return ResponseEntity.ok(taskService.findAvailableTasks(available, userId, taskType,limit));
+
+        if (trial) {
+            return ResponseEntity.ok(taskService.findAvailableTrialTasks(available, true, userId, taskType));
+        }
+        return ResponseEntity.ok(taskService.findAvailableTasks(available, false, userId, taskType, limit));
     }
 
     @GetMapping(value = "/{taskId}", produces = "application/json")

@@ -394,6 +394,11 @@ paths:
           required: false
           type: string
           description: "set available flag to true to retrieve only available tasks"
+        - name: trial
+          in: query
+          required: false
+          type: string
+          description: "set trial flag to true to retrieve only trial available tasks"
         - name: userId
           in: query
           required: false

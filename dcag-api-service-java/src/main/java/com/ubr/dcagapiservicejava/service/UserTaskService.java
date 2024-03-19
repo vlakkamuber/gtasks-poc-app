@@ -284,6 +284,7 @@ public class UserTaskService {
                 .taskName(task.name())
                 .taskType(taskType)
                 .input(task.input())
+                .answer(task.answer())
                 .output(userTask.output())
                 .outputFileType(userTask.outputFileType())
                 .outputDesc(userTask.outputDesc())

@@ -18,6 +18,7 @@ public class UserTaskResponse {
     private String taskName;
     private TaskType taskType;
     private String input;
+    private String answer;
     private String output;
     private String outputFileType;
     private String outputDesc;

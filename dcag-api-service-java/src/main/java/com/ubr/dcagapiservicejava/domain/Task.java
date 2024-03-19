@@ -77,6 +77,12 @@ public class Task implements Serializable {
     @Column(name = "task_category")
     private TaskCategory taskCategory = TaskCategory.NA;
 
+    @Column(name = "is_trial")
+    private Boolean isTrial = false;
+
+    @Column(columnDefinition = "json")
+    private String answer;
+
     @OneToMany(mappedBy = "task")
     Set<UserTask> userTasks;
 
