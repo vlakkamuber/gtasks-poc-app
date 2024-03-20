@@ -32,10 +32,7 @@ public class TaskController {
                                                           @RequestParam(required = false, defaultValue = "test") String userId,
                                                           @RequestParam(required = false) Integer limit) {
 
-        if (trial) {
-            return ResponseEntity.ok(taskService.findAvailableTrialTasks(available, true, userId, taskType));
-        }
-        return ResponseEntity.ok(taskService.findAvailableTasks(available, false, userId, taskType, limit));
+        return ResponseEntity.ok(taskService.findAvailableTasks(available, trial, userId, taskType, limit));
     }
 
     @GetMapping(value = "/{taskId}", produces = "application/json")

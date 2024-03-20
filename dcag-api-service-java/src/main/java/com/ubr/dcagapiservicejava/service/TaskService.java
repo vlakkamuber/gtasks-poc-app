@@ -138,12 +138,6 @@ public class TaskService {
         return taskRepository.findAvailableTasks(available, isTrial, userId, type, limit != null ? limit : availableLimit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream().filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE).map(this::taskToTaskResponse).collect(toList());
     }
 
-    public List<TaskResponse> findAvailableTrialTasks(Boolean available, Boolean isTrial, String userId, TaskType taskType) {
-
-        return taskRepository.findAvailableTrialTasks(available, isTrial, userId, taskType).stream().map(this::taskToTaskResponse).collect(toList());
-
-    }
-
 
 //    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
 //
