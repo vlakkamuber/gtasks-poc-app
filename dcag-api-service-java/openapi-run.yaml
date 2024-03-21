@@ -625,11 +625,11 @@ paths:
           required: true
           type: string
           description: "Start Date of the completed tasks"
-        - name: completionDate
+        - name: endDate
           in: query
           required: true
           type: string
-          description: "Completion Date of the completed tasks"
+          description: "End Date of the completed tasks"
       responses:
         '200':
           description: "A successful response"
@@ -649,11 +649,11 @@ paths:
           required: true
           type: string
           description: "Start Date of the completed tasks"
-        - name: completionDate
+        - name: endDate
           in: query
           required: true
           type: string
-          description: "Completion Date of the completed tasks"
+          description: "End Date of the completed tasks"
       responses:
         200:
           description: "Allow"
@@ -681,11 +681,11 @@ paths:
           required: true
           type: string
           description: "Start Date of the completed tasks"
-        - name: completionDate
+        - name: endDate
           in: query
           required: true
           type: string
-          description: "Completion Date of the completed tasks"
+          description: "End Date of the completed tasks"
       responses:
         '200':
           description: "A successful response"
@@ -710,11 +710,11 @@ paths:
           required: true
           type: string
           description: "Start Date of the completed tasks"
-        - name: completionDate
+        - name: endDate
           in: query
           required: true
           type: string
-          description: "Completion Date of the completed tasks"
+          description: "End Date of the completed tasks"
       responses:
         200:
           description: "Allow"

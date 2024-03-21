@@ -17,8 +17,10 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -166,21 +168,27 @@ public class UserService {
 
     }
 
-    public UserEarningResponse getUserEarnings(String userId, Long startDate, Long completionDate) {
+    public UserEarningResponse getUserEarnings(String userId, Long startDate, Long endDate) {
 
-        List<UserTask> userTasks = userTasksRepository.getEarnings(userId, DcagUtils.convertEpochToLocalDateTime(startDate), DcagUtils.convertEpochToLocalDateTime(completionDate));
+        List<UserTask> userTasks = userTasksRepository.getEarnings(userId, DcagUtils.convertEpochToLocalDateTime(startDate), DcagUtils.convertEpochToLocalDateTime(endDate));
         if (CollectionUtils.isEmpty(userTasks)) {
             throw new TaskNotFoundException("User Task Not found for this date range: " + userId);
         }
+
+        // Grouping the data based on task type
+        Map<TaskType, List<UserTask>> taskTypeMap = userTasks.stream()
+                .collect(Collectors.groupingBy(userTask -> userTask.task().taskType()));
+
+
         return UserEarningResponse.builder().
-                dateRange(DateRangeResponse.builder().startDate(startDate).endDate(completionDate).build())
+                dateRange(DateRangeResponse.builder().startDate(startDate).endDate(endDate).build())
                 .totals(getTotalEarningResponse(userTasks))
                 .taskTypes(EarningTaskTypesResponse.builder()
-                        .imageLabelling(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.IMAGE_LABELLING)).collect(toList())))
-                        .recordAudio(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.RECORD_AUDIO)).collect(toList())))
-                        .menuReviewResponse(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.MENU_PHOTO_REVIEW)).collect(toList())))
-                        .localizationQuality(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.LOCALIZATION_QUALITY)).collect(toList())))
-                        .receiptDigitization(getTotalEarningResponse(userTasks.stream().filter(ut -> ut.task().taskType().equals(TaskType.RECEIPT_DIGITIZATION)).collect(toList())))
+                        .imageLabelling(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.IMAGE_LABELLING, new ArrayList<>())))
+                        .recordAudio(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECORD_AUDIO, new ArrayList<>())))
+                        .menuReviewResponse(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.MENU_PHOTO_REVIEW, new ArrayList<>())))
+                        .localizationQuality(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.LOCALIZATION_QUALITY, new ArrayList<>())))
+                        .receiptDigitization(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECEIPT_DIGITIZATION, new ArrayList<>())))
                         .build()
                 )
                 .build();
@@ -194,9 +202,9 @@ public class UserService {
                 amount(userTasks.stream().mapToDouble(e -> e.task().price()).sum()).build();
     }
 
-    public UserEarningDetailsResponse getUserEarningsDetails(String userId, TaskType taskType, Long startDate, Long completionDate) {
+    public UserEarningDetailsResponse getUserEarningsDetails(String userId, TaskType taskType, Long startDate, Long endDate) {
 
-        List<UserTask> userTasks = userTasksRepository.getEarnings(userId, DcagUtils.convertEpochToLocalDateTime(startDate), DcagUtils.convertEpochToLocalDateTime(completionDate));
+        List<UserTask> userTasks = userTasksRepository.getEarnings(userId, DcagUtils.convertEpochToLocalDateTime(startDate), DcagUtils.convertEpochToLocalDateTime(endDate));
         if (CollectionUtils.isEmpty(userTasks)) {
             throw new TaskNotFoundException("User Task Not found for this date range: " + userId);
         }
@@ -207,7 +215,7 @@ public class UserService {
                 .taskType(taskType)
                 .dateRange(DateRangeResponse.builder()
                         .startDate(startDate)
-                        .endDate(completionDate).build())
+                        .endDate(endDate).build())
                 .tasks(getTasks(userTasks))
                 .build();
 

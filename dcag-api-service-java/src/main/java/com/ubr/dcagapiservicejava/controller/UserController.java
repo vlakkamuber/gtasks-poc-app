@@ -118,8 +118,8 @@ public class UserController {
     @GetMapping(value = "/{userId}/earnings", produces = "application/json")
     ResponseEntity<UserEarningResponse> getUserEarnings(@PathVariable String userId,
                                                         @RequestParam Long startDate,
-                                                        @RequestParam Long completionDate) {
-        return ResponseEntity.ok(userService.getUserEarnings(userId, startDate, completionDate));
+                                                        @RequestParam Long endDate) {
+        return ResponseEntity.ok(userService.getUserEarnings(userId, startDate, endDate));
     }
 
     @CrossOrigin
@@ -127,7 +127,7 @@ public class UserController {
     ResponseEntity<UserEarningDetailsResponse> getUserEarningDetails(@PathVariable String userId,
                                                                @PathVariable TaskType taskType,
                                                                @RequestParam Long startDate,
-                                                               @RequestParam Long completionDate) {
-        return ResponseEntity.ok(userService.getUserEarningsDetails(userId, taskType, startDate, completionDate));
+                                                               @RequestParam Long endDate) {
+        return ResponseEntity.ok(userService.getUserEarningsDetails(userId, taskType, startDate, endDate));
     }
 }
