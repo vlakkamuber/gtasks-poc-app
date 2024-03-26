@@ -149,12 +149,6 @@ public class TaskService {
                 .map(this::taskToTaskResponse)
                 .collect(toList());    }
 
-    public void expireTasks() {
-
-        log.info("Expiring tasks started");
-
-    }
-
 
 //    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
 //

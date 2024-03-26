@@ -20,14 +20,15 @@ import com.ubr.dcagapiservicejava.utils.DcagUtils;
 import com.ubr.dcagapiservicejava.utils.GCPUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.ZoneOffset;
+import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
@@ -48,6 +49,9 @@ public class UserTaskService {
 
     @Autowired
     private UserSurveyRepository userSurveyRepository;
+
+    @Value("${expiry_time_for_in_progress_tasks}")
+    int timeInHour;
 
     public UserTaskResponse createUserTask(String userId, Long taskId, UserTaskDTO userTaskDTO) {
 
@@ -234,7 +238,7 @@ public class UserTaskService {
         long totalCount = 0;
         Task task = null;
         if (!userTaskList.isEmpty() && taskOptional.isPresent()) {
-            totalCount = userTaskList.stream().filter(e -> !e.status().equals(UserTaskStatus.CANCELLED)).count();
+            totalCount = userTaskList.stream().filter(e -> !(e.status().equals(UserTaskStatus.CANCELLED) || e.status().equals(UserTaskStatus.EXPIRED))).count();
             task = taskOptional.get();
 
             completedCount = userTaskList.stream().filter(e -> e.status().equals(UserTaskStatus.COMPLETED)).count();
@@ -391,5 +395,40 @@ public class UserTaskService {
             throw new TaskNotFoundException("Task not found for user: " + userId);
         }
 
+    }
+
+    public void expireTasks() {
+
+        List<UserTask> userTasks = userTasksRepository.getEligibleForExpirationTasks(LocalDateTime.now(ZoneOffset.UTC),timeInHour);
+
+        if (!CollectionUtils.isEmpty(userTasks)){
+            Set<Long> taskList = new HashSet<>();
+            userTasks.forEach(userTask -> {
+                taskList.add(userTask.task().id());
+                userTask.status(UserTaskStatus.EXPIRED);
+            });
+
+            userTasksRepository.saveAll(userTasks);
+
+            taskList.parallelStream().forEach(this::updateTaskStatusAfterExpiry);
+        }
+
+        log.info("Task expiry process completed");
+    }
+
+    private void updateTaskStatusAfterExpiry(Long taskId) {
+
+        List<UserTask> userTaskList = userTasksRepository.getTaskByIdWithoutExpired(taskId);
+
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+
+        if(taskOptional.isEmpty()){
+            return;
+        }
+        Task task = taskOptional.get();
+        if(task.status().equals(TaskStatus.IN_PROGRESS) && userTaskList.isEmpty()){
+            task.status(TaskStatus.NEW);
+            taskRepository.save(task);
+        }
     }
 }

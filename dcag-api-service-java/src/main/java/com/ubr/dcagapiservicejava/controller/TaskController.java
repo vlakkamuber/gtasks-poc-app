@@ -4,6 +4,7 @@ import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.dto.TaskDTO;
 import com.ubr.dcagapiservicejava.dto.TaskResponse;
 import com.ubr.dcagapiservicejava.service.TaskService;
+import com.ubr.dcagapiservicejava.service.UserTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ public class TaskController {
 
     @Autowired
     TaskService taskService;
+
+    @Autowired
+    UserTaskService userTaskService;
 
 //    @GetMapping(produces = "application/json")
 //    ResponseEntity<List<TaskResponse>> findAll() {
@@ -65,7 +69,7 @@ public class TaskController {
     @CrossOrigin
     @PostMapping(value = "/expire",produces = "application/json")
     ResponseEntity<?> expireTasks() {
-        taskService.expireTasks();
+        userTaskService.expireTasks();
         return ResponseEntity.noContent().build();
     }
 }

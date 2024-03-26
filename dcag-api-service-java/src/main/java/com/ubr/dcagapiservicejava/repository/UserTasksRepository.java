@@ -18,6 +18,9 @@ public interface UserTasksRepository extends JpaRepository<UserTask, Long> {
 
     List<UserTask> findByUserIdAndStatus(String userId, UserTaskStatus status);
 
+    @Query("Select T from UserTask T where T.task.id = :taskId and T.status != 'EXPIRED'")
+    List<UserTask> getTaskByIdWithoutExpired(Long taskId);
+
     Optional<UserTask> findByUserIdAndTaskId(String userId, Long taskId);
 
 
@@ -28,5 +31,9 @@ public interface UserTasksRepository extends JpaRepository<UserTask, Long> {
 
     @Query("Select T from UserTask T where T.user.id = :userId and T.status = 'COMPLETED' and T.completionTime >=:startDate and T.completionTime <= :endDate")
     List<UserTask> getEarnings(String userId, LocalDateTime startDate, LocalDateTime endDate);
+
+
+    @Query("SELECT UT FROM UserTask UT WHERE FUNCTION('TIMESTAMPDIFF', HOUR, UT.startTime, :now) > :hour")
+    List<UserTask> getEligibleForExpirationTasks(LocalDateTime now, int hour);
 }
 
