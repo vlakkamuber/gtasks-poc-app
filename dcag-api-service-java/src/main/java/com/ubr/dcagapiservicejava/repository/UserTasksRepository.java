@@ -33,7 +33,7 @@ public interface UserTasksRepository extends JpaRepository<UserTask, Long> {
     List<UserTask> getEarnings(String userId, LocalDateTime startDate, LocalDateTime endDate);
 
 
-    @Query("SELECT UT FROM UserTask UT WHERE FUNCTION('TIMESTAMPDIFF', HOUR, UT.startTime, :now) > :hour limit 1")
+    @Query("SELECT UT FROM UserTask UT WHERE UT.status = 'IN_PROGRESS' and FUNCTION('TIMESTAMPDIFF', HOUR, UT.startTime, :now) > :hour limit 1")
     List<UserTask> getEligibleForExpirationTasks(LocalDateTime now, int hour);
 }
 
