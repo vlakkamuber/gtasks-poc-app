@@ -135,8 +135,19 @@ public class TaskService {
         if (type != TaskType.LOCALIZATION_QUALITY) {
             languages = null;
         }
-        return taskRepository.findAvailableTasks(available, isTrial, userId, type, limit != null ? limit : availableLimit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream().filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE).map(this::taskToTaskResponse).collect(toList());
-    }
+        return (isTrial ?
+                taskRepository.findAvailableTrialTasks(available, true, userId, type,
+                        (cities == null || cities.isEmpty()) ? null : cities,
+                        (languages == null || languages.isEmpty()) ? null : languages)
+                :
+                taskRepository.findAvailableTasks(available, false, userId, type,
+                        (limit != null ? limit : availableLimit),
+                        (cities == null || cities.isEmpty()) ? null : cities,
+                        (languages == null || languages.isEmpty()) ? null : languages))
+                .stream()
+                .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
+                .map(this::taskToTaskResponse)
+                .collect(toList());    }
 
     public void expireTasks() {
 

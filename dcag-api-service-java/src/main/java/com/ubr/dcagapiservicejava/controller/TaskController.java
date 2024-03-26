@@ -63,7 +63,7 @@ public class TaskController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "expire",produces = "application/json")
+    @PostMapping(value = "/expire",produces = "application/json")
     ResponseEntity<?> expireTasks() {
         taskService.expireTasks();
         return ResponseEntity.noContent().build();
