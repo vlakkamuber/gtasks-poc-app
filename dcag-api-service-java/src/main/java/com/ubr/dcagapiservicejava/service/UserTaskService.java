@@ -404,7 +404,6 @@ public class UserTaskService {
         if (!CollectionUtils.isEmpty(userTasks)){
             Set<Long> taskList = new HashSet<>();
             userTasks.forEach(userTask -> {
-                log.info("User task for id: {}",userTask.id());
                 taskList.add(userTask.task().id());
                 userTask.status(UserTaskStatus.EXPIRED);
             });
