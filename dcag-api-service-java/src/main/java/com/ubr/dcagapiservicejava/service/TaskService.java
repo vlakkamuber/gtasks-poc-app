@@ -138,6 +138,12 @@ public class TaskService {
         return taskRepository.findAvailableTasks(available, isTrial, userId, type, limit != null ? limit : availableLimit, (cities == null || cities.isEmpty()) ? null : cities, (languages == null || languages.isEmpty()) ? null : languages).stream().filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE).map(this::taskToTaskResponse).collect(toList());
     }
 
+    public void expireTasks() {
+
+        log.info("Expiring tasks started");
+
+    }
+
 
 //    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
 //
