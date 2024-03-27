@@ -16,6 +16,8 @@ public class UserTaskSummaryResponse {
 
     private Double totalEarning;
 
+    private String currency;
+
     private Long todayCompletedTasks;
 
     private Double todayEarnings;

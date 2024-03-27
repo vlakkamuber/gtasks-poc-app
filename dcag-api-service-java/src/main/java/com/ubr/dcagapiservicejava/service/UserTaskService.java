@@ -14,6 +14,7 @@ import com.ubr.dcagapiservicejava.dto.UserTaskSummaryResponse;
 import com.ubr.dcagapiservicejava.error.TaskException;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
 import com.ubr.dcagapiservicejava.repository.TaskRepository;
+import com.ubr.dcagapiservicejava.repository.UserRepository;
 import com.ubr.dcagapiservicejava.repository.UserSurveyRepository;
 import com.ubr.dcagapiservicejava.repository.UserTasksRepository;
 import com.ubr.dcagapiservicejava.utils.DcagUtils;
@@ -49,6 +50,9 @@ public class UserTaskService {
 
     @Autowired
     private UserSurveyRepository userSurveyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Value("${expiry_time_for_in_progress_tasks}")
     int timeInHour;
@@ -196,6 +200,9 @@ public class UserTaskService {
 
         Optional<UserSurvey> userSurvey = userSurveyRepository.findByUserId(userId);
 
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElse(null);
+
         UserSurveyStatus status = null;
         if (userSurvey.isPresent()) {
             status = userSurvey.get().status();
@@ -219,11 +226,11 @@ public class UserTaskService {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount((long) userTasks.size()).totalEarning(totalEarning)
                     .todayCompletedTasks((long) todayTasks.size()).todayEarnings(todayEarning)
-                    .surveyStatus(status);
+                    .surveyStatus(status).currency(user!=null ? user.currency() : "INR");
         } else {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount(0L).totalEarning(0.0).todayEarnings(0.0).todayCompletedTasks(0L)
-                    .surveyStatus(status);
+                    .surveyStatus(status).currency(user!=null ? user.currency() : "INR");
         }
         return summaryResponseBuilder.build();
     }

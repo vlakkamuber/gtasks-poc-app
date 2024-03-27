@@ -53,6 +53,10 @@ public class User implements Serializable {
     @Column(name = "native_lang")
     private String nativeLanguage;
 
+    private String country;
+
+    private String currency;
+
     @Column(name = "create_time")
     private LocalDateTime createTime;
 

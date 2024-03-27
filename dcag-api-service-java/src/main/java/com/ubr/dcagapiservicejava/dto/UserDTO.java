@@ -20,6 +20,10 @@ public record UserDTO(
 
         String preferredLanguage,
 
-        String nativeLanguage
+        String nativeLanguage,
+
+        String country,
+
+        String currency
 ) {
 }

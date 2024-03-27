@@ -24,7 +24,11 @@ public record UserResponse(
 
         UserType userType,
 
-        UserStatus status
+        UserStatus status,
+
+        String country,
+
+        String currency
 
 ) {
 
@@ -38,6 +42,8 @@ public record UserResponse(
                 user.preferredLanguage(),
                 user.nativeLanguage(),
                 user.userType(),
-                user.status());
+                user.status(),
+                user.country(),
+                user.currency());
     }
 }

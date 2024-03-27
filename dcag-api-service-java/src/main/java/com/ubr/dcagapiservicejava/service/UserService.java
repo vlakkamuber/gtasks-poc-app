@@ -175,28 +175,30 @@ public class UserService {
             throw new TaskNotFoundException("User Task Not found for this date range: " + userId);
         }
 
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElse(null);
+
         // Grouping the data based on task type
         Map<TaskType, List<UserTask>> taskTypeMap = userTasks.stream()
                 .collect(Collectors.groupingBy(userTask -> userTask.task().taskType()));
 
-
-        return UserEarningResponse.builder().
+               return UserEarningResponse.builder().
                 dateRange(DateRangeResponse.builder().startDate(startDate).endDate(endDate).build())
-                .totals(getTotalEarningResponse(userTasks))
+                .totals(getTotalEarningResponse(userTasks, user))
                 .taskTypes(EarningTaskTypesResponse.builder()
-                        .imageLabelling(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.IMAGE_LABELLING, new ArrayList<>())))
-                        .recordAudio(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECORD_AUDIO, new ArrayList<>())))
-                        .menuReviewResponse(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.MENU_PHOTO_REVIEW, new ArrayList<>())))
-                        .localizationQuality(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.LOCALIZATION_QUALITY, new ArrayList<>())))
-                        .receiptDigitization(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECEIPT_DIGITIZATION, new ArrayList<>())))
+                        .imageLabelling(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.IMAGE_LABELLING, new ArrayList<>()), user))
+                        .recordAudio(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECORD_AUDIO, new ArrayList<>()), user))
+                        .menuReviewResponse(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.MENU_PHOTO_REVIEW, new ArrayList<>()), user))
+                        .localizationQuality(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.LOCALIZATION_QUALITY, new ArrayList<>()), user))
+                        .receiptDigitization(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECEIPT_DIGITIZATION, new ArrayList<>()), user))
                         .build()
                 )
                 .build();
 
     }
 
-    private TotalEarningsResponse getTotalEarningResponse(List<UserTask> userTasks) {
-        return TotalEarningsResponse.builder().currency("INR")
+    private TotalEarningsResponse getTotalEarningResponse(List<UserTask> userTasks, User user) {
+        return TotalEarningsResponse.builder().currency(user!=null ? user.currency() : "INR")
                 .tasksCompleted((long) userTasks.size()).
                 durationInSeconds(userTasks.stream().mapToLong(e -> DcagUtils.convertLocalDateTimeToEpoch(e.completionTime()) - DcagUtils.convertLocalDateTimeToEpoch(e.startTime())).sum()).
                 amount(userTasks.stream().mapToDouble(e -> e.task().price()).sum()).build();
