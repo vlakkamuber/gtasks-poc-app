@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.math.BigDecimal;
 import java.nio.channels.Channels;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class MenuPhotoReviewTaskParser implements TaskParser {
     String taskCurrency;
 
     @Value("${menu_photo_review_task_price}")
-    Double taskPrice;
+    BigDecimal taskPrice;
 
     @Value("${menu_photo_review_max_no_user}")
     Long maxNumberOfUser;

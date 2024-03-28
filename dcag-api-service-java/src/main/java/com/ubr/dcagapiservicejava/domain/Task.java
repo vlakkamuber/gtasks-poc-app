@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -56,7 +57,7 @@ public class Task implements Serializable {
 
     private String currency;
 
-    private Double price;
+    private BigDecimal price;
 
     @Column(name = "create_time")
     private LocalDateTime createTime;

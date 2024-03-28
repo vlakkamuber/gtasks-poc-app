@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -201,7 +202,7 @@ public class UserService {
         return TotalEarningsResponse.builder().currency(user!=null ? user.currency() : "INR")
                 .tasksCompleted((long) userTasks.size()).
                 durationInSeconds(userTasks.stream().mapToLong(e -> DcagUtils.convertLocalDateTimeToEpoch(e.completionTime()) - DcagUtils.convertLocalDateTimeToEpoch(e.startTime())).sum()).
-                amount(userTasks.stream().mapToDouble(e -> e.task().price()).sum()).build();
+                amount(userTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO, BigDecimal::add)).build();
     }
 
     public UserEarningDetailsResponse getUserEarningsDetails(String userId, TaskType taskType, Long startDate, Long endDate) {

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,7 +17,7 @@ public class UserEarningTaskDetailsResponse {
     @JsonProperty("task_id")
     Long taskId;
 
-    Double amount;
+    BigDecimal amount;
 
     String currency;
 

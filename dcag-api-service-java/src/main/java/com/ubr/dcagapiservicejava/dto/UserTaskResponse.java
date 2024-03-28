@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -24,7 +26,7 @@ public class UserTaskResponse {
     private String outputDesc;
     private UserTaskStatus status;
     private String currency;
-    private Double price;
+    private BigDecimal price;
     private Long startTime;
     private Long completedTime;
     private String inputUrl;

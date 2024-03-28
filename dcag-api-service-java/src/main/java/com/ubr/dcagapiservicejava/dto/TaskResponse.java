@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -25,7 +26,7 @@ public class TaskResponse {
     private TaskStatus status;
     private long maxNoOfUsers;
     private String currency;
-    private Double price;
+    private BigDecimal price;
     private String inputUrl;
     private String outputUrl;
     private String uploadUrl;

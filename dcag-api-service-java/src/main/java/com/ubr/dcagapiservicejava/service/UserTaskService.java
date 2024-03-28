@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -210,7 +211,7 @@ public class UserTaskService {
 
         List<UserTask> userTasks = userTasksRepository.findByUserIdAndStatus(userId, UserTaskStatus.COMPLETED);
 
-        double totalEarning = userTasks.stream().mapToDouble(e -> e.task().price()).sum();
+        BigDecimal totalEarning = userTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO,BigDecimal::add);
 
         LocalDate todayDate = DcagUtils.convertEpochToSytemLocalDate(System.currentTimeMillis());
 
@@ -219,7 +220,7 @@ public class UserTaskService {
             return completionDate.equals(todayDate.atStartOfDay()) || completionDate.isAfter(todayDate.atStartOfDay());
         }).toList();
 
-        double todayEarning = todayTasks.stream().mapToDouble(e -> e.task().price()).sum();
+        BigDecimal todayEarning = todayTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO,BigDecimal::add);
 
         UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder;
         if (!userTasks.isEmpty()) {
@@ -229,7 +230,7 @@ public class UserTaskService {
                     .surveyStatus(status).currency(user!=null ? user.currency() : "INR");
         } else {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
-                    .completedTaskCount(0L).totalEarning(0.0).todayEarnings(0.0).todayCompletedTasks(0L)
+                    .completedTaskCount(0L).totalEarning(BigDecimal.ZERO).todayEarnings(BigDecimal.ZERO).todayCompletedTasks(0L)
                     .surveyStatus(status).currency(user!=null ? user.currency() : "INR");
         }
         return summaryResponseBuilder.build();

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,13 +16,13 @@ public class UserTaskSummaryResponse {
 
     private Long completedTaskCount;
 
-    private Double totalEarning;
+    private BigDecimal totalEarning;
 
     private String currency;
 
     private Long todayCompletedTasks;
 
-    private Double todayEarnings;
+    private BigDecimal todayEarnings;
 
     private UserSurveyStatus surveyStatus;
 }

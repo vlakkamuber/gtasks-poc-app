@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -68,7 +69,7 @@ public class TaskService {
 
 
     public TaskResponse create(TaskDTO taskDTO) {
-        Task task = new Task().name(taskDTO.name()).taskType(taskDTO.taskType()).city(taskDTO.city()).language(taskDTO.language()).taskCategory(taskDTO.taskCategory()).input(taskDTO.input()).status(TaskStatus.NEW).currency(taskDTO.currency()).price(taskDTO.price()).maxNoOfUsers(taskDTO.taskType() != null && taskDTO.taskType().equals(TaskType.UPLOAD_IMAGE) ? 1L : taskDTO.maxNoOfUsers()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())).dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
+        Task task = new Task().name(taskDTO.name()).taskType(taskDTO.taskType()).city(taskDTO.city()).language(taskDTO.language()).taskCategory(taskDTO.taskCategory()).input(taskDTO.input()).status(TaskStatus.NEW).currency(taskDTO.currency()).price(BigDecimal.valueOf(taskDTO.price())).maxNoOfUsers(taskDTO.taskType() != null && taskDTO.taskType().equals(TaskType.UPLOAD_IMAGE) ? 1L : taskDTO.maxNoOfUsers()).createTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis())).dueDate(DcagUtils.covertDateStringToLocalDateTime(taskDTO.dueDateTime()));
         Task savedTask = taskRepository.save(task);
         log.info("Task is created - {}", taskDTO.name());
         return taskToTaskResponse(savedTask);
@@ -100,7 +101,7 @@ public class TaskService {
     public TaskResponse update(Long taskId, TaskDTO taskDTO) {
 
         log.info("Update Task start - {}", taskDTO.name());
-        Task task = new Task().name(taskDTO.name()).taskType(taskDTO.taskType()).city(taskDTO.city()).language(taskDTO.language()).input(taskDTO.input()).status(taskDTO.status()).maxNoOfUsers(taskDTO.maxNoOfUsers()).currency(taskDTO.currency()).price(taskDTO.price()).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
+        Task task = new Task().name(taskDTO.name()).taskType(taskDTO.taskType()).city(taskDTO.city()).language(taskDTO.language()).input(taskDTO.input()).status(taskDTO.status()).maxNoOfUsers(taskDTO.maxNoOfUsers()).currency(taskDTO.currency()).price(BigDecimal.valueOf(taskDTO.price())).lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
 //                .location(factory.createPoint(new Coordinate(taskDTO.latitude(),taskDTO.longitude(),4326)));
 
         return taskRepository.findById(taskId).map(existingUser -> taskRepository.save(task.createTime(existingUser.createTime()).dueDate(existingUser.dueDate()).city(existingUser.city()))).map(savedTask -> TaskResponse.builder().id(savedTask.id()).name(savedTask.name()).taskType(savedTask.taskType()).taskCategory(savedTask.taskCategory()).input(savedTask.input()).status(savedTask.status()).maxNoOfUsers(savedTask.maxNoOfUsers()).currency(savedTask.currency()).price(savedTask.price()).build()).orElseThrow(DcagUtils.taskNotFound(taskId));
