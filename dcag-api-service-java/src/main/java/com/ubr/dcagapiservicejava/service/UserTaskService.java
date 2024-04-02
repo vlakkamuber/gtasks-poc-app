@@ -211,7 +211,7 @@ public class UserTaskService {
 
         List<UserTask> userTasks = userTasksRepository.findByUserIdAndStatus(userId, UserTaskStatus.COMPLETED);
 
-        BigDecimal totalEarning = userTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO,BigDecimal::add);
+        BigDecimal totalEarning = userTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         LocalDate todayDate = DcagUtils.convertEpochToSytemLocalDate(System.currentTimeMillis());
 
@@ -220,18 +220,18 @@ public class UserTaskService {
             return completionDate.equals(todayDate.atStartOfDay()) || completionDate.isAfter(todayDate.atStartOfDay());
         }).toList();
 
-        BigDecimal todayEarning = todayTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO,BigDecimal::add);
+        BigDecimal todayEarning = todayTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         UserTaskSummaryResponse.UserTaskSummaryResponseBuilder summaryResponseBuilder;
         if (!userTasks.isEmpty()) {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount((long) userTasks.size()).totalEarning(totalEarning)
                     .todayCompletedTasks((long) todayTasks.size()).todayEarnings(todayEarning)
-                    .surveyStatus(status).currency(user!=null ? user.currency() : "INR");
+                    .surveyStatus(status).currency(user != null ? user.currency() : "INR");
         } else {
             summaryResponseBuilder = UserTaskSummaryResponse.builder()
                     .completedTaskCount(0L).totalEarning(BigDecimal.ZERO).todayEarnings(BigDecimal.ZERO).todayCompletedTasks(0L)
-                    .surveyStatus(status).currency(user!=null ? user.currency() : "INR");
+                    .surveyStatus(status).currency(user != null ? user.currency() : "INR");
         }
         return summaryResponseBuilder.build();
     }
@@ -356,11 +356,11 @@ public class UserTaskService {
 
     private static String getOutputFileName(UserTask userTask, Task task, TaskType taskType) {
         String outputFilename = null;
-        if(taskType.equals(TaskType.TEXT_TO_AUDIO)){
-           outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + ".mp3";
+        if (taskType.equals(TaskType.TEXT_TO_AUDIO)) {
+            outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + ".mp3";
         }
 
-        if(taskType.equals(TaskType.RECORD_AUDIO)){
+        if (taskType.equals(TaskType.RECORD_AUDIO)) {
 
             String fileType = userTask.outputFileType() == null ? ".mp3" : "." + userTask.outputFileType();
 
@@ -407,9 +407,9 @@ public class UserTaskService {
 
     public void expireTasks() {
 
-        List<UserTask> userTasks = userTasksRepository.getEligibleForExpirationTasks(LocalDateTime.now(ZoneOffset.UTC),timeInHour);
+        List<UserTask> userTasks = userTasksRepository.getEligibleForExpirationTasks(LocalDateTime.now(ZoneOffset.UTC), timeInHour);
 
-        if (!CollectionUtils.isEmpty(userTasks)){
+        if (!CollectionUtils.isEmpty(userTasks)) {
             Set<Long> taskList = new HashSet<>();
             userTasks.forEach(userTask -> {
                 taskList.add(userTask.task().id());
@@ -430,11 +430,11 @@ public class UserTaskService {
 
         Optional<Task> taskOptional = taskRepository.findById(taskId);
 
-        if(taskOptional.isEmpty()){
+        if (taskOptional.isEmpty()) {
             return;
         }
         Task task = taskOptional.get();
-        if(task.status().equals(TaskStatus.IN_PROGRESS) && userTaskList.isEmpty()){
+        if (task.status().equals(TaskStatus.IN_PROGRESS) && userTaskList.isEmpty()) {
             task.status(TaskStatus.NEW);
             taskRepository.save(task);
         }

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +40,7 @@ public class IngestTaskService {
     Map<TaskType, TaskParser> taskParserMap = new HashMap<>();
 
     @PostConstruct
-    public void init(){
+    public void init() {
 
         taskParserMap.put(TaskType.RECORD_AUDIO, recordAudioTaskParser);
         taskParserMap.put(TaskType.IMAGE_LABELLING, imageLabellingTaskParser);
@@ -51,7 +51,7 @@ public class IngestTaskService {
 
     public IngestTaskResponse ingestTasks(IngestTaskDTO ingestTaskDTO) throws IOException {
 
-        log.info("Ingesting Task File:" + ingestTaskDTO.file()+ " for task type:" + ingestTaskDTO.taskType().name() + " started");
+        log.info("Ingesting Task File:" + ingestTaskDTO.file() + " for task type:" + ingestTaskDTO.taskType().name() + " started");
 
         TaskParser taskParser = taskParserMap.get(ingestTaskDTO.taskType());
 

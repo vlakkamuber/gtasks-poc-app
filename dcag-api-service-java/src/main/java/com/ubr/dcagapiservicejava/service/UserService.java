@@ -183,7 +183,7 @@ public class UserService {
         Map<TaskType, List<UserTask>> taskTypeMap = userTasks.stream()
                 .collect(Collectors.groupingBy(userTask -> userTask.task().taskType()));
 
-               return UserEarningResponse.builder().
+        return UserEarningResponse.builder().
                 dateRange(DateRangeResponse.builder().startDate(startDate).endDate(endDate).build())
                 .totals(getTotalEarningResponse(userTasks, user))
                 .taskTypes(EarningTaskTypesResponse.builder()
@@ -199,7 +199,7 @@ public class UserService {
     }
 
     private TotalEarningsResponse getTotalEarningResponse(List<UserTask> userTasks, User user) {
-        return TotalEarningsResponse.builder().currency(user!=null ? user.currency() : "INR")
+        return TotalEarningsResponse.builder().currency(user != null ? user.currency() : "INR")
                 .tasksCompleted((long) userTasks.size()).
                 durationInSeconds(userTasks.stream().mapToLong(e -> DcagUtils.convertLocalDateTimeToEpoch(e.completionTime()) - DcagUtils.convertLocalDateTimeToEpoch(e.startTime())).sum()).
                 amount(userTasks.stream().map(e -> e.task().price()).reduce(BigDecimal.ZERO, BigDecimal::add)).build();

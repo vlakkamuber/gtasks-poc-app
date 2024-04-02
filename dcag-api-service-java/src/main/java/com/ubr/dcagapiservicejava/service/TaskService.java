@@ -148,7 +148,8 @@ public class TaskService {
                 .stream()
                 .filter(task -> task.status() != TaskStatus.COMPLETED && task.taskType() != TaskType.UPLOAD_IMAGE)
                 .map(this::taskToTaskResponse)
-                .collect(toList());    }
+                .collect(toList());
+    }
 
 
 //    public List<TaskResponse> findAAllNearerTasks(double latitude, double longitude, Integer distance) {
