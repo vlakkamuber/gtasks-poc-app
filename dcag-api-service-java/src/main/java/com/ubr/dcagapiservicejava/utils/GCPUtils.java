@@ -105,7 +105,7 @@ public class GCPUtils {
 
         // Generate Signed URL
         Map<String, String> extensionHeaders = new HashMap<>();
-        extensionHeaders.put("Content-Type", "application/octet-stream");
+        extensionHeaders.put("Content-Type", "audio/mpeg");
         extensionHeaders.put("Access-Control-Allow-Origin", "*"); //TODO: Remove this as this is a response header
 
         URL url =
@@ -119,7 +119,7 @@ public class GCPUtils {
 
         System.out.println("Generated PUT signed URL:" + url);
         System.out.println(
-                "You can use this URL with any user agent, for example: curl -X PUT -H 'Content-Type: application/octet-stream' --upload-file test.txt '"
+                "You can use this URL with any user agent, for example: curl -X PUT -H 'Content-Type: audio/mpeg' --upload-file test.txt '"
                         + url
                         + "'");
         return url.toString();
