@@ -30,7 +30,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT T FROM Task T WHERE T.isAvailable =:available and T.isTrial =:isTrial and T.taskType =:type and" +
             " (:cities is null or T.city in :cities) and" +
             " (:languages is null or T.language in :languages) and" +
-            " T.id not in (select UT.task.id from UserTask UT where UT.task.id = T.id and UT.user.id =:userId and UT.status = 'COMPLETED') " +
+            " T.id not in (select UT.task.id from UserTask UT where UT.task.id = T.id and UT.user.id =:userId and UT.status in ('COMPLETED','CANCELLED')) " +
             " order by RAND()")
     List<Task> findAvailableTrialTasks(boolean available, boolean isTrial, String userId, TaskType type, List<String> cities, List<String> languages);
 

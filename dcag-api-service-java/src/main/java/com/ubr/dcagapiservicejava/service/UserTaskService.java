@@ -80,10 +80,11 @@ public class UserTaskService {
 
             if (userTaskList.isEmpty() || task.get().isAvailable()) {
                 UserTaskStatus status = userTaskDTO.status();
-                UserTask userTask = new UserTask()
+                UserTask userTask = userIdAndTaskId.orElseGet(() -> new UserTask()
                         .user(new User().id(userId))
-                        .task(new Task().id(taskId))
-                        .status(status)
+                        .task(new Task().id(taskId)));
+
+                userTask.status(status)
                         .startTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()))
                         .lastUpdatedTime(DcagUtils.convertEpochToLocalDateTime(System.currentTimeMillis()));
                 userTask = userTasksRepository.save(userTask);
