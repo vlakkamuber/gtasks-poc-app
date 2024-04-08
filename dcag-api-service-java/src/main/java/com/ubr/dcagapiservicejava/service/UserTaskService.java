@@ -340,7 +340,7 @@ public class UserTaskService {
             userTaskResponse.setOutputUrl(gcpUtils.signTaskOutputImageUrl(outputFilename));
         }
 
-        if (taskType.equals(TaskType.TEXT_TO_AUDIO) || taskType.equals(TaskType.RECORD_AUDIO)) {
+        if (taskType.equals(TaskType.RECORD_SURVEY) || taskType.equals(TaskType.RECORD_AUDIO)) {
             String outputFilename = getOutputFileName(userTask, task, taskType);
 
             if (userTask.status().equals(UserTaskStatus.IN_PROGRESS)) {
@@ -357,7 +357,7 @@ public class UserTaskService {
 
     private static String getOutputFileName(UserTask userTask, Task task, TaskType taskType) {
         String outputFilename = null;
-        if (taskType.equals(TaskType.TEXT_TO_AUDIO)) {
+        if (taskType.equals(TaskType.RECORD_SURVEY)) {
             outputFilename = userTask.user().id() + "_" + userTask.id() + "_" + task.input() + ".mp3";
         }
 
