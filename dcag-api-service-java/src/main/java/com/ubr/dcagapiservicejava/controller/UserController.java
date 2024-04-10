@@ -39,6 +39,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(userId));
     }
 
+    @CrossOrigin
     @GetMapping(value = "/{userId}/gigs", produces = "application/json")
     ResponseEntity<List<TaskType>> getGigs(@PathVariable String userId) {
         return ResponseEntity.ok(userService.getGigs(userId));
