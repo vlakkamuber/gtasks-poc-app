@@ -18,7 +18,7 @@ CREATE TABLE users
 -- Tasks table
 CREATE TABLE tasks
 (
-    idBIGINT                       NOT NULL AUTO_INCREMENT,
+    id                BIGINT       NOT NULL AUTO_INCREMENT,
     name              VARCHAR(255),
     task_type         VARCHAR(255),
     task_category     VARCHAR(255)

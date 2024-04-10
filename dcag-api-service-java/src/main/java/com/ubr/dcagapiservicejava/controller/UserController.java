@@ -39,6 +39,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(userId));
     }
 
+    @GetMapping(value = "/{userId}/gigs", produces = "application/json")
+    ResponseEntity<List<TaskType>> getGigs(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.getGigs(userId));
+    }
+
     @GetMapping("/byPhoneNumber/{phoneNumber}")
     ResponseEntity<UserResponse> getUserByPhoneNumber(@PathVariable String phoneNumber) {
         return ResponseEntity.ok(userService.getUserByPhoneNumber(phoneNumber));

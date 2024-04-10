@@ -44,6 +44,9 @@ public class UserService {
     @Autowired
     UserTasksRepository userTasksRepository;
 
+    @Autowired
+    GigsRepository gigsRepository;
+
     final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<UserResponse> findAll() {
@@ -236,5 +239,12 @@ public class UserService {
                 .build()));
 
         return userEarningTaskDetailsResponseList;
+    }
+
+    public List<TaskType> getGigs(String userId) {
+
+        List<Gigs> gigs = gigsRepository.findAll();
+
+        return gigs.stream().map(Gigs::taskType).toList();
     }
 }
