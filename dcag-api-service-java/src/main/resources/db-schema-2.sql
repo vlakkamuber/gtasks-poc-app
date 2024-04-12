@@ -29,3 +29,6 @@ insert into gigs (task_type)
 values ('MENU_PHOTO_REVIEW');
 insert into gigs (task_type)
 values ('RECORD_SURVEY');
+
+
+Alter table gigs add column status VARCHAR(50) NOT NULL default 'ENABLED';
