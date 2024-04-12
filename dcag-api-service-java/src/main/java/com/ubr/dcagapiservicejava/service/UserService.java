@@ -4,6 +4,7 @@ package com.ubr.dcagapiservicejava.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ubr.dcagapiservicejava.domain.*;
+import com.ubr.dcagapiservicejava.domain.enums.GigStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import com.ubr.dcagapiservicejava.dto.*;
 import com.ubr.dcagapiservicejava.error.TaskNotFoundException;
@@ -195,6 +196,7 @@ public class UserService {
                         .menuReviewResponse(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.MENU_PHOTO_REVIEW, new ArrayList<>()), user))
                         .localizationQuality(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.LOCALIZATION_QUALITY, new ArrayList<>()), user))
                         .receiptDigitization(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECEIPT_DIGITIZATION, new ArrayList<>()), user))
+                        .recordSurvey(getTotalEarningResponse(taskTypeMap.getOrDefault(TaskType.RECORD_SURVEY, new ArrayList<>()), user))
                         .build()
                 )
                 .build();
@@ -245,6 +247,6 @@ public class UserService {
 
         List<Gigs> gigs = gigsRepository.findAll();
 
-        return gigs.stream().map(Gigs::taskType).toList();
+        return gigs.stream().filter(gig -> gig.status().equals(GigStatus.ENABLED)).map(Gigs::taskType).toList();
     }
 }

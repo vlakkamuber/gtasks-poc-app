@@ -1,5 +1,6 @@
 package com.ubr.dcagapiservicejava.domain;
 
+import com.ubr.dcagapiservicejava.domain.enums.GigStatus;
 import com.ubr.dcagapiservicejava.domain.enums.TaskType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,7 @@ public class Gigs {
     @Enumerated(EnumType.STRING)
     @Column(name = "task_type")
     private TaskType taskType;
+
+    @Enumerated(EnumType.STRING)
+    private GigStatus status;
 }

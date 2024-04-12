@@ -26,4 +26,7 @@ public class EarningTaskTypesResponse {
 
     @JsonProperty("LOCALIZATION_QUALITY")
     TotalEarningsResponse localizationQuality;
+
+    @JsonProperty("RECORD_SURVEY")
+    TotalEarningsResponse recordSurvey;
 }
